@@ -44,11 +44,4 @@ extern const LevelScript level_castle_grounds_entry[];
 
 #include "levels/castle_grounds/header.inc.h"
 
-
-#include "levels/castle_grounds/boat/header.h"
-
-#include "levels/castle_grounds/boat/geo_header.h"
-
-#include "levels/castle_grounds/boat/collision_header.h"
-
 #endif

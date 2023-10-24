@@ -320,6 +320,7 @@
 #define MODEL_HOOT                        0x56        // hoot_geo
 #define MODEL_YOSHI_EGG                   0x57        // yoshi_egg_geo
 #define MODEL_THWOMP                      0x58        // thwomp_geo
+#define MODEL_THWIMP                      0x8D        // thwomp_geo
 #define MODEL_HEAVE_HO                    0x59        // heave_ho_geo
 
 // group 2

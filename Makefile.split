@@ -62,7 +62,7 @@ YAY0_OBJ_FILES := $(YAY0_FILES:.szp=.szp.o)
 KOOPA_DIRS       := koopa_flag poundable_pole koopa piranha_plant whomp chain_ball chain_chomp koopa_red
 CAPSWITCH_DIRS   := capswitch springboard
 CHILLYCHIEF_DIRS := chillychief moneybag
-BULLY_DIRS       := bully blargg
+BULLY_DIRS       := bully blargg 
 SPINDRIFT_DIRS   := spindrift penguin snowman
 KING_BOBOMB_DIRS := king_bobomb water_bubble
 BOO_DIRS         := bookend book chair small_key mad_piano boo haunted_cage
@@ -78,7 +78,7 @@ MOLE_DIRS        := monty_mole_hole monty_mole smoke ukiki fwoosh
 LAKITU_DIRS      := lakitu_cameraman toad mips boo_castle toadsworth mipsy
 PEACH_DIRS       := bird peach yoshi
 BOWSER_DIRS      := bowser_flame impact_ring yellow_sphere bowser bomb impact_smoke
-MARIO_DIRS       := mario luigi wario waluigi bubble walk_smoke burn_smoke small_water_splash water_wave sparkle water_splash white_particle_small sparkle_animation 
+MARIO_DIRS       := mario luigi wario waluigi bubble walk_smoke burn_smoke small_water_splash water_wave sparkle water_splash white_particle_small sparkle_animation motos
 
 # Actor Textures
 AMP_CHUCKYA_TEXTURES            := $(foreach dir,$(AMP_DIRS),        $(wildcard actors/$(dir)/*.png))

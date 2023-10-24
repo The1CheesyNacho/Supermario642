@@ -1258,6 +1258,9 @@
 #define /*0x0FC*/ oYoshiChosenHome OBJECT_FIELD_S32(0x1D)
 #define /*0x100*/ oYoshiTargetYaw  OBJECT_FIELD_S32(0x1E)
 
+#define oThwimpTimer OBJECT_FIELD_U32(0x1B)
+#define oThwimpState OBJECT_FIELD_U32(0x1D)
+
 
 /*Custom general defines:
 

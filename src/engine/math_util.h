@@ -62,6 +62,7 @@ extern f32 gSineTable[];
 #define radians_to_degrees(x) (f32)( (f32)(x) * DEG_PER_RAD       )
 
 #define signum_positive(x) ((x < 0) ? -1 : 1)
+#define signum(x) ((x) == 0 ? 0 : (x) < 0 ? -1 : 1)
 
 // #define min(a, b) MIN((a), (b)) // ((a) < (b) ? (a) : (b))
 // #define max(a, b) MAX((a), (b)) // ((a) > (b) ? (a) : (b))

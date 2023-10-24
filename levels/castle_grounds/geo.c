@@ -20,5 +20,3 @@
 #include "levels/castle_grounds/areas/1/geo.inc.c"
 
 #include "levels/castle_grounds/geo.inc.c"
-
-#include "levels/castle_grounds/boat/geo.inc.c"

@@ -13,3 +13,4 @@
 #include "thwomp/geo.inc.c"
 #include "bullet_bill/geo.inc.c"
 #include "heave_ho/geo.inc.c"
+#include "thwimp/geo.inc.c"

@@ -130,17 +130,7 @@ extern const Gfx yoshi_egg_seg5_dl_05009898[];
 extern const Gfx yoshi_egg_seg5_dl_050098B0[];
 extern const Gfx yoshi_egg_seg5_dl_050098C8[];
 
-
-// birdo_egg
-extern const GeoLayout birdo_egg_geo[];
-extern const Gfx birdo_egg_seg5_dl_050097B8[];
-extern const Gfx birdo_egg_seg5_dl_05009820[];
-extern const Gfx birdo_egg_seg5_dl_05009838[];
-extern const Gfx birdo_egg_seg5_dl_05009850[];
-extern const Gfx birdo_egg_seg5_dl_05009868[];
-extern const Gfx birdo_egg_seg5_dl_05009880[];
-extern const Gfx birdo_egg_seg5_dl_05009898[];
-extern const Gfx birdo_egg_seg5_dl_050098B0[];
-extern const Gfx birdo_egg_seg5_dl_050098C8[];
+#include "thwimp/collision_header.h"
+#include "thwimp/geo_header.h"
 
 #endif

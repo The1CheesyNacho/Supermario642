@@ -33,6 +33,3 @@
 #include "levels/castle_grounds/areas/1/movtext.inc.c"
 
 #include "levels/castle_grounds/leveldata.inc.c"
-
-#include "levels/castle_grounds/boat/model.inc.c"
-#include "levels/castle_grounds/boat/collision.inc.c"
