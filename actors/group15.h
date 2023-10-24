@@ -86,4 +86,36 @@ extern const Gfx toad_seg6_dl_06008A90[];
 extern const Gfx toad_seg6_dl_06008BD8[];
 extern const struct Animation *const toad_seg6_anims_0600FB58[];
 
+
+#include "mipsy/geo_header.h"
+
+// toadsworth
+extern const GeoLayout toadsworth_geo_000114[];
+extern const GeoLayout toadsworth_geo_00027C[];
+extern const GeoLayout toadsworth_geo[];
+extern const Gfx toadsworth_seg6_dl_06007300[];
+extern const Gfx toadsworth_seg6_dl_06007498[];
+extern const Gfx toadsworth_seg6_dl_060076C0[];
+extern const Gfx toadsworth_seg6_dl_06007710[];
+extern const Gfx toadsworth_seg6_us_dl_06007788[];
+extern const Gfx toadsworth_seg6_dl_06007960[];
+extern const Gfx toadsworth_seg6_dl_06007A48[];
+extern const Gfx toadsworth_seg6_us_dl_06007B00[];
+extern const Gfx toadsworth_seg6_dl_06007D10[];
+extern const Gfx toadsworth_seg6_dl_06007EB0[];
+extern const Gfx toadsworth_seg6_dl_060080C0[];
+extern const Gfx toadsworth_seg6_dl_060081F8[];
+extern const Gfx toadsworth_seg6_dl_060083E8[];
+extern const Gfx toadsworth_seg6_dl_06008520[];
+extern const Gfx toadsworth_seg6_us_dl_06008608[];
+extern const Gfx toadsworth_seg6_dl_06008748[];
+extern const Gfx toadsworth_seg6_dl_06008890[];
+extern const Gfx toadsworth_seg6_dl_06008A90[];
+extern const Gfx toadsworth_seg6_dl_06008BD8[];
+extern const struct Animation *const toadsworth_seg6_anims_0600FB58[];
+
+#include "toadsworth/geo_header.h"
+
+#include "toad/geo_header.h"
+
 #endif

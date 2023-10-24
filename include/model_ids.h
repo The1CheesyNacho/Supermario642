@@ -7,6 +7,8 @@
 
 #define MODEL_MARIO                            0x01        // mario_geo
 #define MODEL_LUIGI                            0x02        // unused
+#define MODEL_WARIO                            0xE2        // unused
+#define MODEL_WALUIGI                          0xE3        // unused
 
 /* Various static level geometry, the geo layout differs but terrain object presets treat them the same.*/
 
@@ -39,7 +41,7 @@
 #define MODEL_COURTYARD_SPIKY_TREE             0x18        // spiky_tree_geo
 #define MODEL_CCM_SNOW_TREE                    0x19        // snow_tree_geo
 #define MODEL_SL_SNOW_TREE                     0x19        // snow_tree_geo
-#define MODEL_UNKNOWN_TREE_1A                  0x1A        // referenced in special presets, undefined
+#define MODEL_UNKNOWN_TREE_1A                             0x1A        // referenced in special presets, undefined
 #define MODEL_SSL_PALM_TREE                    0x1B        // palm_tree_geo
 #define MODEL_CASTLE_CASTLE_DOOR_UNUSED        0x1C        // castle_door_geo - unused, original id
 #define MODEL_CASTLE_WOODEN_DOOR_UNUSED        0x1D        // wooden_door_geo - unused, original id
@@ -408,6 +410,7 @@
 #define MODEL_PIRANHA_PLANT               0x64        // piranha_plant_geo
 #define MODEL_WHOMP                       0x67        // whomp_geo
 #define MODEL_KOOPA_WITH_SHELL            0x68        // koopa_with_shell_geo
+#define MODEL_RED_KOOPA_WITH_SHELL        0x7E        // koopa_with_shell_geo
 #define MODEL_METALLIC_BALL               0x65        // metallic_ball_geo
 #define MODEL_CHAIN_CHOMP                 0x66        // chain_chomp
 #define MODEL_KOOPA_FLAG                  0x6A        // koopa_flag_geo
@@ -442,7 +445,6 @@
 #define MODEL_TTM_SLIDE_EXIT_PODIUM       0x7B        // ttm_geo_000DF4
 #define MODEL_WOODEN_SIGNPOST             0x7C        // wooden_signpost_geo
 #define MODEL_UNKNOWN_7D                  0x7D        // referenced in macro presets. Unknown usage
-// find me
 #define MODEL_CANNON_BARREL               0x7F        // cannon_barrel_geo
 #define MODEL_CANNON_BASE                 0x80        // cannon_base_geo
 #define MODEL_BREAKABLE_BOX               0x81        // breakable_box_geo
@@ -514,6 +516,8 @@
 #define MODEL_SEAWEED                     0xC1        // seaweed_geo
 #define MODEL_AMP                         0xC2        // dAmpGeo
 #define MODEL_BOBOMB_BUDDY                0xC3        // bobomb_buddy_geo
+#define MODEL_MIPSY                       0xC4        // silver_coin_geo
+#define MODEL_TOADSWORTH                  0xC5        // silver_coin_no_shadow_geo
 // find me
 // find me
 // find me
@@ -545,11 +549,6 @@
 #define MODEL_WHITE_PUFF                  0xE0        // white_puff_geo
 #define MODEL_TRAJECTORY_MARKER_BALL      0xE1        // bowling_ball_track_geo - duplicate used in SSL Pyramid small sized and as a track ball
 
-#ifdef IA8_30FPS_COINS
-#define MODEL_SILVER_COIN                 0xE2        // silver_coin_geo
-#define MODEL_SILVER_COIN_NO_SHADOW       0xE3        // silver_coin_no_shadow_geo
-#endif
-
 // Menu Models (overwrites Level Geometry IDs)
 #define MODEL_MAIN_MENU_MARIO_SAVE_BUTTON         MODEL_LEVEL_GEOMETRY_03   // main_menu_geo_0001D0
 #define MODEL_MAIN_MENU_RED_ERASE_BUTTON          MODEL_LEVEL_GEOMETRY_04   // main_menu_geo_000290
@@ -557,6 +556,9 @@
 #define MODEL_MAIN_MENU_YELLOW_FILE_BUTTON        MODEL_LEVEL_GEOMETRY_06   // main_menu_geo_0002E0
 #define MODEL_MAIN_MENU_GREEN_SCORE_BUTTON        MODEL_LEVEL_GEOMETRY_07   // main_menu_geo_000308
 #define MODEL_MAIN_MENU_MARIO_SAVE_BUTTON_FADE    MODEL_LEVEL_GEOMETRY_08   // main_menu_geo_000200
+#define MODEL_MAIN_MENU_WARIO_SAVE_BUTTON_FADE    MODEL_LEVEL_GEOMETRY_0D   // main_menu_geo_000200
+#define MODEL_MAIN_MENU_LUIGI_SAVE_BUTTON_FADE    MODEL_LEVEL_GEOMETRY_0E   // main_menu_geo_000200
+#define MODEL_MAIN_MENU_WALUIGI_SAVE_BUTTON_FADE  MODEL_LEVEL_GEOMETRY_0F   // main_menu_geo_000200
 #define MODEL_MAIN_MENU_MARIO_NEW_BUTTON          MODEL_LEVEL_GEOMETRY_09   // main_menu_geo_000230
 #define MODEL_MAIN_MENU_MARIO_NEW_BUTTON_FADE     MODEL_LEVEL_GEOMETRY_0A   // main_menu_geo_000260
 #define MODEL_MAIN_MENU_PURPLE_SOUND_BUTTON       MODEL_LEVEL_GEOMETRY_0B   // main_menu_geo_000330

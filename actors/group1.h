@@ -66,10 +66,49 @@ extern const Gfx hoot_seg5_dl_05004D48[];
 extern const struct Animation *const hoot_seg5_anims_05005768[];
 
 // thwomp
+extern Lights1 mimir_f3dlite_material_002_lights;
+extern Lights1 scream_f3dlite_material_006_lights;
+extern u8 scream_thwomp_surface_rgba16_ci8_ci8[];
+extern u8 scream_thwomp_surface_rgba16_ci8_pal_rgba16[];
+extern u8 scream__3__ci8[];
+extern u8 scream__3__pal_rgba16[];
+extern Vtx scream_000_displaylist_mesh_layer_1_vtx_0[56];
+extern Gfx scream_000_displaylist_mesh_layer_1_tri_0[];
+extern Vtx scream_000_displaylist_mesh_layer_1_vtx_1[4];
+extern Gfx scream_000_displaylist_mesh_layer_1_tri_1[];
+extern Gfx mat_mimir_f3dlite_material_002[];
+extern Gfx mat_revert_mimmir_f3dlite_material_002[];
+extern Gfx mat_scream_f3dlite_material_006[];
+extern Gfx mat_revert_scream_f3dlite_material_006[];
+extern Gfx scream_000_displaylist_mesh_layer_1[];
+extern Gfx scream_material_revert_render_settings[];
+extern Lights1 awoken_f3dlite_material_005_lights;
+extern u8 awoken_thwomp_surface_rgba16_ci8_ci8[];
+extern u8 awoken_thwomp_surface_rgba16_ci8_pal_rgba16[];
+extern u8 awoken__2__ci8[];
+extern u8 awoken__2__pal_rgba16[];
+extern Vtx awoken_000_displaylist_mesh_layer_1_vtx_0[56];
+extern Gfx awoken_000_displaylist_mesh_layer_1_tri_0[];
+extern Vtx awoken_000_displaylist_mesh_layer_1_vtx_1[4];
+extern Gfx awoken_000_displaylist_mesh_layer_1_tri_1[];
+extern Gfx mat_awoken_f3dlite_material_005[];
+extern Gfx mat_revert_awoken_f3dlite_material_005[];
+extern Gfx awoken_000_displaylist_mesh_layer_1[];
+extern Gfx awoken_material_revert_render_settings[];
+extern Lights1 mimir_f3dlite_material_003_lights;
+extern u8 mimir_thwomp_surface_rgba16_ci8_ci8[];
+extern u8 mimir_thwomp_surface_rgba16_ci8_pal_rgba16[];
+extern u8 mimir__1__ci8[];
+extern u8 mimir__1__pal_rgba16[];
+extern Vtx mimir_000_displaylist_mesh_layer_1_vtx_0[56];
+extern Gfx mimir_000_displaylist_mesh_layer_1_tri_0[];
+extern Vtx mimir_000_displaylist_mesh_layer_1_vtx_1[4];
+extern Gfx mimir_000_displaylist_mesh_layer_1_tri_1[];
+extern Gfx mat_mimir_f3dlite_material_003[];
+extern Gfx mat_revert_mimir_f3dlite_material_003[];
+extern Gfx mimir_000_displaylist_mesh_layer_1[];
+extern Gfx mimir_material_revert_render_settings[];
 extern const GeoLayout thwomp_geo[];
-extern const Gfx thwomp_seg5_dl_0500B570[];
-extern const Gfx thwomp_seg5_dl_0500B718[];
-extern const Gfx thwomp_seg5_dl_0500B750[];
 extern const Collision thwomp_seg5_collision_0500B7D0[];
 extern const Collision thwomp_seg5_collision_0500B92C[];
 
@@ -90,5 +129,18 @@ extern const Gfx yoshi_egg_seg5_dl_05009880[];
 extern const Gfx yoshi_egg_seg5_dl_05009898[];
 extern const Gfx yoshi_egg_seg5_dl_050098B0[];
 extern const Gfx yoshi_egg_seg5_dl_050098C8[];
+
+
+// birdo_egg
+extern const GeoLayout birdo_egg_geo[];
+extern const Gfx birdo_egg_seg5_dl_050097B8[];
+extern const Gfx birdo_egg_seg5_dl_05009820[];
+extern const Gfx birdo_egg_seg5_dl_05009838[];
+extern const Gfx birdo_egg_seg5_dl_05009850[];
+extern const Gfx birdo_egg_seg5_dl_05009868[];
+extern const Gfx birdo_egg_seg5_dl_05009880[];
+extern const Gfx birdo_egg_seg5_dl_05009898[];
+extern const Gfx birdo_egg_seg5_dl_050098B0[];
+extern const Gfx birdo_egg_seg5_dl_050098C8[];
 
 #endif

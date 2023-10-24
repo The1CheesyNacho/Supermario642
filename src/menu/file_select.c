@@ -119,7 +119,7 @@ unsigned char textCopyFileButton[] = { TEXT_COPY_FILE_BUTTON };
 unsigned char textEraseFileButton[] = { TEXT_ERASE_FILE_BUTTON };
 
 #ifdef ENABLE_STEREO_HEADSET_EFFECTS
-unsigned char textSoundModes[][8] = { { TEXT_STEREO }, { TEXT_MONO }, { TEXT_HEADSET } };
+unsigned char textSoundModes[][8] = { { TEXT_STEREO }, { TEXT_MONO }, { TEXT_HEADSET } , { TEXT_HEADSET2 } };
 #else
 unsigned char textSoundModes[][8] = { { TEXT_STEREO }, { TEXT_MONO } };
 #endif
@@ -794,16 +794,19 @@ void render_sound_mode_menu_buttons(struct Object *soundModeButton) {
 #ifdef ENABLE_STEREO_HEADSET_EFFECTS
     // Stereo option button
     sMainMenuButtons[MENU_BUTTON_STEREO] = spawn_object_rel_with_rot(
-        soundModeButton, MODEL_MAIN_MENU_GENERIC_BUTTON, bhvMenuButton,  533, SOUND_BUTTON_Y, -100, 0x0, -0x8000, 0x0);
-    sMainMenuButtons[MENU_BUTTON_STEREO]->oMenuButtonScale = MENU_BUTTON_SCALE;
+        soundModeButton, MODEL_MAIN_MENU_MARIO_SAVE_BUTTON_FADE, bhvMenuButton, 533, SOUND_BUTTON_Y, -100, 0, -0x8000, 0);
+    sMainMenuButtons[MENU_BUTTON_STEREO]->oMenuButtonScale = 0.11111111f;
     // Mono option button
     sMainMenuButtons[MENU_BUTTON_MONO] = spawn_object_rel_with_rot(
-        soundModeButton, MODEL_MAIN_MENU_GENERIC_BUTTON, bhvMenuButton,    0, SOUND_BUTTON_Y, -100, 0x0, -0x8000, 0x0);
-    sMainMenuButtons[MENU_BUTTON_MONO]->oMenuButtonScale = MENU_BUTTON_SCALE;
+        soundModeButton, MODEL_MAIN_MENU_LUIGI_SAVE_BUTTON_FADE, bhvMenuButton, 0, SOUND_BUTTON_Y, -100, 0, -0x8000, 0);
+    sMainMenuButtons[MENU_BUTTON_MONO]->oMenuButtonScale = 0.11111111f;
     // Headset option button
     sMainMenuButtons[MENU_BUTTON_HEADSET] = spawn_object_rel_with_rot(
-        soundModeButton, MODEL_MAIN_MENU_GENERIC_BUTTON, bhvMenuButton, -533, SOUND_BUTTON_Y, -100, 0x0, -0x8000, 0x0);
-    sMainMenuButtons[MENU_BUTTON_HEADSET]->oMenuButtonScale = MENU_BUTTON_SCALE;
+        soundModeButton, MODEL_MAIN_MENU_WARIO_SAVE_BUTTON_FADE, bhvMenuButton, -533, SOUND_BUTTON_Y, -100, 0, -0x8000, 0);
+    sMainMenuButtons[MENU_BUTTON_HEADSET]->oMenuButtonScale = 0.11111111f;
+    sMainMenuButtons[MENU_BUTTON_HEADSET2] = spawn_object_rel_with_rot(
+        soundModeButton, MODEL_MAIN_MENU_WALUIGI_SAVE_BUTTON_FADE, bhvMenuButton,    -1066, SOUND_BUTTON_Y, -100, 0x0, -0x8000, 0x0);
+    sMainMenuButtons[MENU_BUTTON_HEADSET2]->oMenuButtonScale = MENU_BUTTON_SCALE;    
 #else
     // Stereo option button
     sMainMenuButtons[MENU_BUTTON_STEREO] = spawn_object_rel_with_rot(
@@ -1165,6 +1168,7 @@ void bhv_menu_button_manager_loop(void) {
         case MENU_BUTTON_MONO:    return_to_main_menu(MENU_BUTTON_SOUND_MODE, sMainMenuButtons[MENU_BUTTON_MONO   ]); break;
 #ifdef ENABLE_STEREO_HEADSET_EFFECTS
         case MENU_BUTTON_HEADSET: return_to_main_menu(MENU_BUTTON_SOUND_MODE, sMainMenuButtons[MENU_BUTTON_HEADSET]); break;
+        case MENU_BUTTON_HEADSET2: return_to_main_menu(MENU_BUTTON_SOUND_MODE, sMainMenuButtons[MENU_BUTTON_HEADSET2]); break;
 #endif
     }
 

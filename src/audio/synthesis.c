@@ -10,6 +10,7 @@
 #include "external.h"
 #include "game/game_init.h"
 #include "game/debug.h"
+#include "game/mario.h"
 #include "engine/math_util.h"
 
 

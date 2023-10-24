@@ -128,6 +128,8 @@ u32 get_mario_cap_flag(struct Object *capObject) {
         return MARIO_WING_CAP;
     } else if (script == bhvVanishCap) {
         return MARIO_VANISH_CAP;
+    } else if (script == bhvGoldCap) {
+        return MARIO_GOLD_CAP;
     }
 
     return 0;
@@ -1579,6 +1581,7 @@ u32 interact_cap(struct MarioState *m, UNUSED u32 interactType, struct Object *o
 
         switch (capFlag) {
             case MARIO_VANISH_CAP: capTime =  600; capMusic = SEQUENCE_ARGS(4, SEQ_EVENT_POWERUP  ); break;
+            case MARIO_GOLD_CAP: capTime =  600; capMusic = SEQUENCE_ARGS(4, SEQ_STARMAN  ); break;
             case MARIO_METAL_CAP:  capTime =  600; capMusic = SEQUENCE_ARGS(4, SEQ_EVENT_METAL_CAP); break;
             case MARIO_WING_CAP:   capTime = 1800; capMusic = SEQUENCE_ARGS(4, SEQ_EVENT_POWERUP  ); break;
         }

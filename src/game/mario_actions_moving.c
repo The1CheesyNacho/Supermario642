@@ -589,7 +589,12 @@ void anim_and_audio_for_walk(struct MarioState *m) {
                     } else {
                         //! (Speed Crash) If Mario's speed is more than 2^17.
                         animSpeed = (s32)(intendedSpeed / 4.0f * 0x10000);
+                        if (Character == FALSE){
                         set_mario_anim_with_accel(m, MARIO_ANIM_RUNNING, animSpeed);
+                        }
+                        else{
+                        set_mario_anim_with_accel(m, LUIGI_ANIM_RUNNING, animSpeed);
+                        }
                         play_step_sound(m, 9, 45);
                         targetPitch = tilt_body_running(m);
 
@@ -1855,6 +1860,12 @@ s32 act_double_jump_land(struct MarioState *m) {
 }
 
 s32 act_triple_jump_land(struct MarioState *m) {
+      if (Character == TRUE){
+    if (m->input & INPUT_A_PRESSED){
+        m->vel[1] = 76.0f;
+        return set_mario_action(m, ACT_TWIRLING, 0);
+    }
+ }
     m->input &= ~INPUT_A_PRESSED;
 
     if (common_landing_cancels(m, &sTripleJumpLandAction, set_jumping_action)) {

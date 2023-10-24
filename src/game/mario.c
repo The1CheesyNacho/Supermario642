@@ -3,6 +3,7 @@
 #include "sm64.h"
 #include "area.h"
 #include "audio/external.h"
+#include "audio/load.h"
 #include "behavior_actions.h"
 #include "behavior_data.h"
 #include "camera.h"
@@ -33,6 +34,7 @@
 #include "sound_init.h"
 #include "rumble_init.h"
 
+int Character;
 
 /**************************************************
  *                    ANIMATIONS                  *
@@ -245,6 +247,7 @@ void play_sound_if_no_flag(struct MarioState *m, u32 soundBits, u32 flags) {
  * Plays a jump sound if one has not been played since the last action change.
  */
 void play_mario_jump_sound(struct MarioState *m) {
+if (Character == FALSE){
     if (!(m->flags & MARIO_MARIO_SOUND_PLAYED)) {
         if (m->action == ACT_TRIPLE_JUMP) {
             play_sound(SOUND_MARIO_YAHOO_WAHA_YIPPEE + ((gAudioRandom % 5) << 16),
@@ -255,6 +258,43 @@ void play_mario_jump_sound(struct MarioState *m) {
         }
         m->flags |= MARIO_MARIO_SOUND_PLAYED;
     }
+}
+if (Character == 1){
+    if (!(m->flags & MARIO_MARIO_SOUND_PLAYED)) {
+        if (m->action == ACT_TRIPLE_JUMP) {
+            play_sound(SOUND_LUIGI_YAHOO_WAHA_YIPPEE + ((gAudioRandom % 5) << 16),
+                       m->marioObj->header.gfx.cameraToObject);
+        } else {
+            play_sound(SOUND_LUIGI_YAH_WAH_HOO + ((gAudioRandom % 3) << 16),
+                       m->marioObj->header.gfx.cameraToObject);
+        }
+        m->flags |= MARIO_MARIO_SOUND_PLAYED;
+    }
+}
+if (Character == 2){
+    if (!(m->flags & MARIO_MARIO_SOUND_PLAYED)) {
+        if (m->action == ACT_TRIPLE_JUMP) {
+            play_sound(SOUND_WARIO_YAHOO_WAHA_YIPPEE + ((gAudioRandom % 5) << 16),
+                       m->marioObj->header.gfx.cameraToObject);
+        } else {
+            play_sound(SOUND_WARIO_YAH_WAH_HOO + ((gAudioRandom % 3) << 16),
+                       m->marioObj->header.gfx.cameraToObject);
+        }
+        m->flags |= MARIO_MARIO_SOUND_PLAYED;
+    }
+}
+if (Character == 3){
+    if (!(m->flags & MARIO_MARIO_SOUND_PLAYED)) {
+        if (m->action == ACT_TRIPLE_JUMP) {
+            play_sound(SOUND_WALUIGI_YAHOO_WAHA_YIPPEE + ((gAudioRandom % 5) << 16),
+                       m->marioObj->header.gfx.cameraToObject);
+        } else {
+            play_sound(SOUND_WALUIGI_YAH_WAH_HOO + ((gAudioRandom % 3) << 16),
+                       m->marioObj->header.gfx.cameraToObject);
+        }
+        m->flags |= MARIO_MARIO_SOUND_PLAYED;
+    }
+}
 }
 
 /**
@@ -1217,7 +1257,7 @@ void debug_print_speed_action_normal(struct MarioState *m) {
 /**
  * Update the button inputs for Mario.
  */
-void update_mario_button_inputs(struct MarioState *m) {
+void update_mario_button_inputs(struct MarioState *m ) {
     if (m->controller->buttonPressed & A_BUTTON) m->input |= INPUT_A_PRESSED;
     if (m->controller->buttonDown    & A_BUTTON) m->input |= INPUT_A_DOWN;
 
@@ -1228,6 +1268,38 @@ void update_mario_button_inputs(struct MarioState *m) {
         if (m->controller->buttonDown    & Z_TRIG  ) m->input |= INPUT_Z_DOWN;
         if (m->controller->buttonPressed & Z_TRIG  ) m->input |= INPUT_Z_PRESSED;
     }
+
+if (gSoundMode == SOUND_MODE_STEREO){
+ Character = FALSE;
+}
+if (gSoundMode == SOUND_MODE_MONO){
+ Character = TRUE;
+}
+if (gSoundMode == SOUND_MODE_HEADSET){
+ Character = 2;
+}
+if (gSoundMode == SOUND_MODE_HEADSET2){
+ Character = 3;
+}
+
+
+
+    if (Character == FALSE) {
+        m->marioObj->header.gfx.sharedChild = gLoadedGraphNodes[MODEL_MARIO];
+
+    }
+    if (Character == TRUE) {
+        m->marioObj->header.gfx.sharedChild = gLoadedGraphNodes[MODEL_LUIGI]; 
+    }
+
+    if (Character == 2) {
+        m->marioObj->header.gfx.sharedChild = gLoadedGraphNodes[MODEL_WARIO];
+
+    }
+    if (Character == 3) {
+        m->marioObj->header.gfx.sharedChild = gLoadedGraphNodes[MODEL_WALUIGI]; 
+    }
+
 
     if (m->input & INPUT_A_PRESSED) {
         m->framesSinceA = 0;
@@ -1628,6 +1700,10 @@ void mario_update_hitbox_and_cap_model(struct MarioState *m) {
         bodyState->modelState |= MODEL_STATE_METAL;
     }
 
+    if (flags & (MARIO_GOLD_CAP)) {
+        bodyState->modelState |= MODEL_STATE_GOLD;
+    }
+
     //! (Pause buffered hitstun) Since the global timer increments while paused,
     //  this can be paused through to give continual invisibility. This leads to
     //  no interaction with objects.
@@ -1870,6 +1946,7 @@ void init_mario(void) {
 }
 
 void init_mario_from_save_file(void) {
+
     gMarioState->playerID = 0;
     gMarioState->flags = MARIO_NONE;
     gMarioState->action = ACT_UNINITIALIZED;

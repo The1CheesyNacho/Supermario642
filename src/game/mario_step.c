@@ -618,10 +618,30 @@ void apply_gravity(struct MarioState *m) {
         }
     } else if (m->action == ACT_LONG_JUMP || m->action == ACT_SLIDE_KICK
                || m->action == ACT_BBH_ENTER_SPIN) {
+    if (Character == FALSE){
         m->vel[1] -= 2.0f;
         if (m->vel[1] < -75.0f) {
             m->vel[1] = -75.0f;
         }
+    }
+    if (Character == TRUE) {
+        m->vel[1] -= 1.7f;
+        if (m->vel[1] < -75.0f) {
+            m->vel[1] = -75.0f;
+        }
+    }
+    if (Character == 2){
+        m->vel[1] -= 3.5f;
+        if (m->vel[1] < -75.0f) {
+            m->vel[1] = -75.0f;
+        }
+    }   
+    if (Character == 3) {
+        m->vel[1] -= 1.2f;
+        if (m->vel[1] < -75.0f) {
+            m->vel[1] = -75.0f;
+        }
+    }
     } else if (m->action == ACT_LAVA_BOOST || m->action == ACT_FALL_AFTER_STAR_GRAB) {
         m->vel[1] -= 3.2f;
         if (m->vel[1] < -65.0f) {
@@ -649,11 +669,32 @@ void apply_gravity(struct MarioState *m) {
             }
         }
     } else {
+        
+    if (Character == FALSE){
         m->vel[1] -= 4.0f;
         if (m->vel[1] < -75.0f) {
             m->vel[1] = -75.0f;
         }
     }
+    if (Character == TRUE) {
+        m->vel[1] -= 3.7f;
+        if (m->vel[1] < -75.0f) {
+            m->vel[1] = -75.0f;
+        }
+    }
+    if (Character == 2){
+        m->vel[1] -= 6.0f;
+        if (m->vel[1] < -75.0f) {
+            m->vel[1] = -75.0f;
+        }
+    }  
+    if (Character == 3) {
+        m->vel[1] -= 2.7f;
+        if (m->vel[1] < -75.0f) {
+            m->vel[1] = -75.0f;
+        }
+    }
+  }
 }
 
 void apply_vertical_wind(struct MarioState *m) {

@@ -2042,7 +2042,174 @@ sound_ref .sound_peach_something_special
 sound_ref .sound_peach_bake_a_cake
 sound_ref .sound_peach_for_mario
 sound_ref .sound_peach_mario2
-
+sound_ref .sound_luigi_jump_yah
+sound_ref .sound_luigi_jump_wah
+sound_ref .sound_luigi_jump_hoo
+sound_ref .sound_luigi_hoohoo
+sound_ref .sound_luigi_yahoo
+sound_ref .sound_luigi_uh
+sound_ref .sound_luigi_hrmm
+sound_ref .sound_luigi_wah2
+sound_ref .sound_luigi_whoa
+sound_ref .sound_luigi_eeuh
+sound_ref .sound_luigi_attacked
+sound_ref .sound_luigi_ooof
+sound_ref .sound_luigi_here_we_go
+sound_ref .sound_luigi_yawning
+sound_ref .sound_luigi_snoring1
+sound_ref .sound_luigi_snoring2
+sound_ref .sound_luigi_waaaooow
+sound_ref .sound_luigi_haha
+sound_ref .sound_luigi_panting1
+sound_ref .sound_luigi_uh2
+sound_ref .sound_luigi_on_fire
+sound_ref .sound_luigi_dying
+sound_ref .sound_luigi_panting_cold
+sound_ref .sound_luigi_coughing3
+sound_ref .sound_luigi_panting1
+sound_ref .sound_luigi_panting2
+sound_ref .sound_luigi_panting3
+sound_ref .sound_luigi_coughing1
+sound_ref .sound_luigi_coughing2
+sound_ref .sound_luigi_coughing3
+sound_ref .sound_luigi_punch_yah
+sound_ref .sound_luigi_punch_hoo
+sound_ref .sound_luigi_mama_mia
+sound_ref .sound_luigi_okey_dokey
+sound_ref .sound_luigi_ground_pound_wah
+sound_ref .sound_luigi_drowning
+sound_ref .sound_luigi_punch_wah
+sound_ref .sound_luigi_uh
+sound_ref .sound_luigi_hrmm
+sound_ref .sound_luigi_wah2
+sound_ref .sound_peach_dear_luigi
+sound_ref .sound_luigi_jump_hoo
+sound_ref .sound_luigi_jump_hoo
+sound_ref .sound_luigi_yahoo
+sound_ref .sound_luigi_yahoo
+sound_ref .sound_luigi_yahoo
+sound_ref .sound_luigi_waha
+sound_ref .sound_luigi_yippee
+sound_ref .sound_luigi_doh
+sound_ref .sound_luigi_game_over
+sound_ref .sound_luigi_hello
+sound_ref .sound_luigi_press_start_to_play
+sound_ref .sound_luigi_twirl_bounce
+sound_ref .sound_luigi_snoring3
+sound_ref .sound_luigi_so_longa_bowser
+sound_ref .sound_luigi_ima_tired
+sound_ref .sound_wario_jump_yah
+sound_ref .sound_wario_jump_wah
+sound_ref .sound_wario_jump_hoo
+sound_ref .sound_wario_hoohoo
+sound_ref .sound_wario_yahoo
+sound_ref .sound_wario_uh
+sound_ref .sound_wario_hrmm
+sound_ref .sound_wario_wah2
+sound_ref .sound_wario_whoa
+sound_ref .sound_wario_eeuh
+sound_ref .sound_wario_attacked
+sound_ref .sound_wario_ooof
+sound_ref .sound_wario_here_we_go
+sound_ref .sound_wario_yawning
+sound_ref .sound_wario_snoring1
+sound_ref .sound_wario_snoring2
+sound_ref .sound_wario_waaaooow
+sound_ref .sound_wario_haha
+sound_ref .sound_wario_panting1
+sound_ref .sound_wario_uh2
+sound_ref .sound_wario_on_fire
+sound_ref .sound_wario_dying
+sound_ref .sound_wario_panting_cold
+sound_ref .sound_wario_coughing3
+sound_ref .sound_wario_panting1
+sound_ref .sound_wario_panting2
+sound_ref .sound_wario_panting3
+sound_ref .sound_wario_coughing1
+sound_ref .sound_wario_coughing2
+sound_ref .sound_wario_coughing3
+sound_ref .sound_wario_punch_yah
+sound_ref .sound_wario_punch_hoo
+sound_ref .sound_wario_mama_mia
+sound_ref .sound_wario_okey_dokey
+sound_ref .sound_wario_ground_pound_wah
+sound_ref .sound_wario_drowning
+sound_ref .sound_wario_punch_wah
+sound_ref .sound_wario_uh
+sound_ref .sound_wario_hrmm
+sound_ref .sound_wario_wah2
+sound_ref .sound_peach_dear_wario
+sound_ref .sound_wario_jump_hoo
+sound_ref .sound_wario_jump_hoo
+sound_ref .sound_wario_yahoo
+sound_ref .sound_wario_yahoo
+sound_ref .sound_wario_yahoo
+sound_ref .sound_wario_waha
+sound_ref .sound_wario_yippee
+sound_ref .sound_wario_doh
+sound_ref .sound_wario_game_over
+sound_ref .sound_wario_hello
+sound_ref .sound_wario_press_start_to_play
+sound_ref .sound_wario_twirl_bounce
+sound_ref .sound_wario_snoring3
+sound_ref .sound_wario_so_longa_bowser
+sound_ref .sound_wario_ima_tired
+sound_ref .sound_waluigi_jump_yah
+sound_ref .sound_waluigi_jump_wah
+sound_ref .sound_waluigi_jump_hoo
+sound_ref .sound_waluigi_hoohoo
+sound_ref .sound_waluigi_yahoo
+sound_ref .sound_waluigi_uh
+sound_ref .sound_waluigi_hrmm
+sound_ref .sound_waluigi_wah2
+sound_ref .sound_waluigi_whoa
+sound_ref .sound_waluigi_eeuh
+sound_ref .sound_waluigi_attacked
+sound_ref .sound_waluigi_ooof
+sound_ref .sound_waluigi_here_we_go
+sound_ref .sound_waluigi_yawning
+sound_ref .sound_waluigi_snoring1
+sound_ref .sound_waluigi_snoring2
+sound_ref .sound_waluigi_waaaooow
+sound_ref .sound_waluigi_haha
+sound_ref .sound_waluigi_panting1
+sound_ref .sound_waluigi_uh2
+sound_ref .sound_waluigi_on_fire
+sound_ref .sound_waluigi_dying
+sound_ref .sound_waluigi_panting_cold
+sound_ref .sound_waluigi_coughing3
+sound_ref .sound_waluigi_panting1
+sound_ref .sound_waluigi_panting2
+sound_ref .sound_waluigi_panting3
+sound_ref .sound_waluigi_coughing1
+sound_ref .sound_waluigi_coughing2
+sound_ref .sound_waluigi_coughing3
+sound_ref .sound_waluigi_punch_yah
+sound_ref .sound_waluigi_punch_hoo
+sound_ref .sound_waluigi_mama_mia
+sound_ref .sound_waluigi_okey_dokey
+sound_ref .sound_waluigi_ground_pound_wah
+sound_ref .sound_waluigi_drowning
+sound_ref .sound_waluigi_punch_wah
+sound_ref .sound_waluigi_uh
+sound_ref .sound_waluigi_hrmm
+sound_ref .sound_waluigi_wah2
+sound_ref .sound_peach_dear_waluigi
+sound_ref .sound_waluigi_jump_hoo
+sound_ref .sound_waluigi_jump_hoo
+sound_ref .sound_waluigi_yahoo
+sound_ref .sound_waluigi_yahoo
+sound_ref .sound_waluigi_yahoo
+sound_ref .sound_waluigi_waha
+sound_ref .sound_waluigi_yippee
+sound_ref .sound_waluigi_doh
+sound_ref .sound_waluigi_game_over
+sound_ref .sound_waluigi_hello
+sound_ref .sound_waluigi_press_start_to_play
+sound_ref .sound_waluigi_twirl_bounce
+sound_ref .sound_waluigi_snoring3
+sound_ref .sound_waluigi_so_longa_bowser
+sound_ref .sound_waluigi_ima_tired
 .sound_mario_jump_hoo:
 chan_setbank 8
 chan_setinstr 0
@@ -8089,3 +8256,1596 @@ envelope_line 1000 32700
 envelope_line 10 16000
 envelope_line 200 32760
 envelope_goto 3
+
+.sound_luigi_jump_hoo:
+chan_setbank 11
+chan_setinstr 0
+chan_setlayer 0, .layer_F3C
+chan_end
+
+.layer_F3C:
+#if defined(VERSION_EU) || defined(VERSION_SH)
+  layer_transpose 2
+#endif
+layer_portamento 0x82, 41, 127
+layer_note1 37, 0x14, 127
+layer_end
+
+.sound_luigi_jump_wah:
+chan_setbank 11
+chan_setinstr 1
+chan_setlayer 0, .layer_F4C
+chan_end
+
+.layer_F4C:
+layer_transpose -2
+.layer_F4E:
+layer_note1 38, 0x18, 127
+layer_end
+
+.sound_luigi_jump_yah:
+chan_setbank 10
+chan_setinstr 9
+chan_setlayer 0, .layer_F5A
+chan_end
+
+.layer_F5A:
+layer_transpose -2
+.layer_F5C:
+layer_portamento 0x82, 39, 200
+layer_note1 38, 0x24, 120
+layer_end
+
+.sound_luigi_hoohoo:
+chan_setbank 10
+chan_setinstr 1
+chan_setlayer 0, .layer_F6C
+chan_end
+
+.layer_F6C:
+layer_portamento 0x82, 44, 200
+layer_note1 39, 0x30, 127
+layer_end
+
+.sound_luigi_yahoo:
+chan_setbank 11
+chan_setinstr 4
+chan_setlayer 0, .layer_F8C
+chan_end
+
+.layer_F8C:
+layer_transpose -2
+layer_somethingon
+layer_portamento 0x85, 39, 255
+layer_note1 42, 0x1e, 110
+layer_note1 39, 0x41, 110
+layer_end
+
+.sound_luigi_uh:
+chan_setbank 11
+chan_setinstr 5
+chan_setlayer 0, .layer_F92
+chan_end
+
+.layer_F92:
+layer_transpose -2
+layer_portamento 0x81, 41, 255
+layer_note1 38, 0x2b, 115
+layer_end
+
+.sound_luigi_hrmm:
+chan_setbank 11
+chan_setinstr 6
+chan_setlayer 0, .layer_FA4
+chan_end
+
+.layer_FA4:
+layer_transpose -2
+layer_note1 44, 0x1e, 110
+layer_end
+
+.sound_luigi_wah2:
+chan_setbank 11
+chan_setinstr 7
+chan_setlayer 0, .layer_FB2
+chan_end
+
+.layer_FB2:
+layer_transpose -3
+layer_note1 39, 0x1c, 127
+layer_end
+
+.sound_luigi_whoa:
+chan_setbank 11
+chan_setinstr 8
+chan_setlayer 0, .layer_FC0
+chan_end
+
+.layer_FC0:
+layer_transpose -2
+layer_note1 40, 0x30, 110
+layer_end
+
+.sound_luigi_eeuh:
+chan_setbank 11
+chan_setinstr 9
+chan_setlayer 0, .layer_FCE
+chan_end
+
+.layer_FCE:
+layer_transpose -2
+layer_note1 40, 0x44, 105
+layer_end
+
+.sound_luigi_attacked:
+chan_setbank 11
+chan_setinstr 10
+chan_setlayer 0, .layer_FDC
+chan_end
+
+.layer_F0C:
+layer_transpose -2
+layer_note1 41, 0x30, 120
+layer_end
+
+.sound_luigi_ooof:
+chan_setbank 11
+chan_setinstr 11
+chan_setlayer 0, .layer_FEA
+chan_end
+
+.layer_FEA:
+layer_transpose -2
+layer_note1 38, 0x30, 127
+layer_end
+
+.sound_luigi_here_we_go:
+chan_setbank 11
+chan_setinstr 12
+chan_setlayer 0, .layer_FF8
+chan_end
+
+.layer_FF8:
+layer_portamento 0x81, 38, 200
+layer_note1 41, 0x85, 127
+layer_end
+
+.sound_luigi_yawning:
+chan_setbank 11
+chan_setinstr 13
+chan_setlayer 0, .layer_F09
+chan_end
+
+.layer_F09:
+layer_transpose -2
+layer_note1 39, 0x7f, 105
+layer_end
+
+.sound_luigi_snoring1:
+chan_setbank 11
+chan_setinstr 14
+chan_setlayer 0, .layer_F17
+chan_end
+
+.layer_F17:
+layer_transpose -2
+layer_note1 39, 0x60, 64
+layer_end
+
+.sound_luigi_snoring2:
+chan_setbank 11
+chan_setinstr 15
+chan_setlayer 0, .layer_F25
+chan_end
+
+.layer_F25:
+layer_transpose -2
+layer_note1 39, 0x5c, 52
+layer_end
+
+.sound_luigi_waaaooow:
+chan_setbank 10
+chan_setinstr 0
+chan_setlayer 0, .layer_F33
+chan_end
+
+.layer_F33:
+layer_transpose -2
+layer_note1 39, 0xaa, 127
+layer_end
+
+.sound_luigi_haha:
+chan_setbank 11
+chan_setinstr 3
+chan_setlayer 0, .layer_F42
+chan_end
+
+.layer_F42:
+layer_transpose -1
+layer_note1 39, 0x4d, 120
+layer_end
+
+.sound_luigi_uh2:
+chan_setbank 10
+chan_setinstr 6
+chan_setlayer 0, .layer_F50
+chan_end
+
+.layer_F50:
+layer_transpose -2
+layer_note1 43, 0x1e, 105
+layer_end
+
+.sound_luigi_on_fire:
+chan_setbank 10
+chan_setinstr 5
+chan_setlayer 0, .layer_F5E
+chan_end
+
+.layer_F5E:
+layer_transpose -2
+layer_note1 39, 0xc8, 127
+layer_end
+
+.sound_luigi_dying:
+chan_setbank 10
+chan_setinstr 4
+chan_setlayer 0, .layer_F6D
+chan_end
+
+.layer_F6D:
+layer_transpose -2
+layer_note1 39, 0x8c, 110
+layer_end
+
+.sound_luigi_panting_cold:
+chan_setbank 10
+chan_setinstr 2
+chan_setlayer 0, .layer_F7C
+chan_end
+
+.layer_F7C:
+layer_transpose -2
+layer_portamento 0x82, 35, 255
+layer_note1 38, 0x30, 127
+layer_end
+
+.sound_luigi_panting1:
+chan_setbank 10
+chan_setinstr 2
+chan_setlayer 0, .layer_F8E
+chan_end
+
+.layer_F8E:
+layer_transpose -2
+layer_note1 39, 0x3c, 100
+layer_end
+
+.sound_luigi_panting2:
+chan_setbank 10
+chan_setinstr 2
+chan_setlayer 0, .layer_F9C
+chan_end
+
+.layer_F9C:
+layer_transpose -2
+layer_delay 0x4
+layer_note1 38, 0x3c, 100
+layer_end
+
+.sound_luigi_panting3:
+chan_setbank 10
+chan_setinstr 2
+chan_setlayer 0, .layer_FAC
+chan_end
+
+.layer_FAC:
+layer_transpose -2
+layer_delay 0x8
+layer_note1 40, 0x3c, 100
+layer_end
+
+.sound_luigi_coughing1:
+chan_setbank 10
+chan_setinstr 7
+chan_setlayer 0, .layer_FBC
+chan_end
+
+.layer_FBC:
+layer_transpose -2
+layer_note1 39, 0x10, 115
+layer_end
+
+.sound_luigi_coughing2:
+chan_setbank 10
+chan_setinstr 7
+chan_setlayer 0, .layer_FCA
+chan_end
+
+.layer_FCA:
+layer_transpose -2
+layer_portamento 0x81, 38, 255
+layer_note1 41, 0x18, 115
+layer_end
+
+.sound_luigi_coughing3:
+chan_setbank 10
+chan_setinstr 7
+chan_setlayer 0, .layer_FDC
+chan_end
+
+.layer_FDC:
+layer_transpose -2
+layer_somethingon
+layer_portamento 0x85, 38, 255
+layer_note1 41, 0xc, 115
+layer_note1 35, 0x12, 115
+layer_end
+
+.sound_luigi_punch_yah:
+chan_setbank 10
+chan_setinstr 9
+chan_setlayer 0, .layer_FFE
+chan_setval 1
+chan_call .delay
+chan_setbank 0
+chan_setinstr 0
+chan_setlayer 1, .layer_538
+chan_end
+
+.layer_FFE:
+layer_transpose -2
+layer_jump .layer_F5C
+
+.sound_luigi_punch_hoo:
+chan_setbank 10
+chan_setinstr 10
+chan_setlayer 0, .layer_FE7
+chan_setval 1
+chan_call .delay
+chan_setbank 0
+chan_setinstr 0
+chan_setlayer 1, .layer_548
+chan_end
+
+.layer_FE7:
+layer_transpose -2
+layer_portamento 0x81, 42, 255
+layer_note1 38, 0x30, 115
+layer_end
+
+.sound_luigi_mama_mia:
+chan_setbank 10
+chan_setinstr 11
+chan_setlayer 0, .layer_F29
+chan_end
+
+.layer_F29:
+layer_portamento 0x81, 38, 255
+layer_note1 36, 0x8c, 115
+layer_end
+
+.sound_luigi_okey_dokey:
+chan_setbank 10
+chan_setinstr 12
+chan_setlayer 0, .layer_F3A
+chan_end
+
+.layer_F3A:
+layer_note1 39, 0x60, 115
+layer_end
+
+.sound_luigi_ground_pound_wah:
+chan_jump .sound_luigi_wah2
+
+.sound_luigi_drowning:
+chan_setbank 10
+chan_setinstr 13
+chan_setlayer 0, .layer_F49
+chan_end
+
+.layer_F49:
+layer_note1 38, 0x91, 127
+layer_end
+
+.sound_luigi_punch_wah:
+chan_setbank 11
+chan_setinstr 1
+chan_setlayer 0, .layer_F62
+chan_setval 1
+chan_call .delay
+chan_setbank 0
+chan_setinstr 0
+chan_setlayer 1, .layer_536
+chan_end
+
+.layer_F62:
+layer_transpose -1
+layer_jump .layer_F4E
+
+.sound_peach_dear_luigi:
+chan_setbank 10
+chan_setinstr 15
+chan_setlayer 0, .layer_F6F
+chan_end
+
+.layer_F6F:
+layer_note1 39, 0x2bc, 127
+layer_end
+
+.sound_luigi_waha:
+chan_setbank 11
+chan_setinstr 24
+chan_setlayer 0, .layer_FFC
+chan_end
+
+.layer_FFC:
+layer_note1 39, 0x5a, 127
+layer_end
+
+.sound_luigi_yippee:
+chan_setbank 11
+chan_setinstr 25
+chan_setlayer 0, .layer_F88
+chan_end
+
+.layer_F88:
+layer_note1 39, 0x5a, 97
+layer_end
+
+.sound_luigi_doh:
+chan_setbank 11
+chan_setinstr 16
+chan_setlayer 0, .layer_F94
+chan_end
+
+.layer_F94:
+layer_note1 41, 0x46, 127
+layer_end
+
+.sound_luigi_game_over:
+chan_setbank 11
+chan_setinstr 17
+chan_setlayer 0, .layer_FA0
+chan_end
+
+.layer_FA0:
+layer_note1 39, 0x55, 110
+layer_end
+
+.sound_luigi_hello:
+chan_setbank 11
+chan_setinstr 18
+chan_setlayer 0, .layer_F51
+chan_end
+
+.layer_F51:
+layer_note1 39, 0x46, 127
+layer_end
+
+.sound_luigi_press_start_to_play:
+chan_setbank 11
+chan_setinstr 19
+chan_setlayer 0, .layer_FB8
+chan_end
+
+.layer_FB8:
+layer_note1 39, 0x12c, 127
+layer_end
+
+.sound_luigi_twirl_bounce:
+chan_setbank 11
+chan_setinstr 20
+chan_setlayer 0, .layer_FC5
+chan_end
+
+.layer_FC5:
+layer_note1 39, 0x30, 127
+layer_end
+
+.sound_luigi_snoring3:
+chan_setbank 11
+chan_setlayer 0, .layer_FCF
+chan_end
+
+.layer_FCF:
+layer_delay 0x4e
+.layer_FD1:
+layer_loop 50
+layer_call .layer_0_EF1
+layer_loopend
+layer_setinstr 21
+layer_note1 39, 0x44c, 127
+layer_jump .layer_FD1
+layer_end
+
+.layer_0_EF1:
+layer_setinstr 21
+layer_note1 37, 0x53, 127
+layer_setinstr 15
+layer_note1 37, 0x4e, 64
+layer_end
+
+.sound_luigi_so_longa_bowser:
+chan_setbank 11
+chan_setinstr 22
+chan_setlayer 0, .layer_FF7
+chan_setlayer 1, .layer_FF7
+chan_end
+
+.layer_FF7:
+layer_portamento 0x82, 42, 200
+layer_note1 39, 0xc8, 110
+layer_end
+
+.sound_luigi_ima_tired:
+chan_setbank 11
+chan_setinstr 23
+chan_setlayer 0, .layer_F58
+chan_end
+
+.layer_F58:
+layer_note1 39, 0x96, 110
+layer_end
+
+.sound_wario_jump_hoo:
+chan_setbank 11
+chan_setinstr 0
+chan_setlayer 0, .layer_P3C
+chan_end
+
+.layer_P3C:
+#if defined(VERSION_EU) || defined(VERSION_SH)
+  layer_transpose 2
+#endif
+layer_portamento 0x82, 41, 127
+layer_note1 37, 0x14, 127
+layer_end
+
+.sound_wario_jump_wah:
+chan_setbank 11
+chan_setinstr 1
+chan_setlayer 0, .layer_P4C
+chan_end
+
+.layer_P4C:
+layer_transpose -2
+.layer_P4E:
+layer_note1 38, 0x18, 127
+layer_end
+
+.sound_wario_jump_yah:
+chan_setbank 10
+chan_setinstr 9
+chan_setlayer 0, .layer_P5A
+chan_end
+
+.layer_P5A:
+layer_transpose -2
+.layer_P5C:
+layer_portamento 0x82, 39, 200
+layer_note1 38, 0x24, 120
+layer_end
+
+.sound_wario_hoohoo:
+chan_setbank 10
+chan_setinstr 1
+chan_setlayer 0, .layer_P6C
+chan_end
+
+.layer_P6C:
+layer_portamento 0x82, 44, 200
+layer_note1 39, 0x30, 127
+layer_end
+
+.sound_wario_yahoo:
+chan_setbank 11
+chan_setinstr 4
+chan_setlayer 0, .layer_P8C
+chan_end
+
+.layer_P8C:
+layer_transpose -2
+layer_somethingon
+layer_portamento 0x85, 39, 255
+layer_note1 42, 0x1e, 110
+layer_note1 39, 0x41, 110
+layer_end
+
+.sound_wario_uh:
+chan_setbank 11
+chan_setinstr 5
+chan_setlayer 0, .layer_P92
+chan_end
+
+.layer_P92:
+layer_transpose -2
+layer_portamento 0x81, 41, 255
+layer_note1 38, 0x2b, 115
+layer_end
+
+.sound_wario_hrmm:
+chan_setbank 11
+chan_setinstr 6
+chan_setlayer 0, .layer_PA4
+chan_end
+
+.layer_PA4:
+layer_transpose -2
+layer_note1 44, 0x1e, 110
+layer_end
+
+.sound_wario_wah2:
+chan_setbank 11
+chan_setinstr 7
+chan_setlayer 0, .layer_PB2
+chan_end
+
+.layer_PB2:
+layer_transpose -3
+layer_note1 39, 0x1c, 127
+layer_end
+
+.sound_wario_whoa:
+chan_setbank 11
+chan_setinstr 8
+chan_setlayer 0, .layer_PC0
+chan_end
+
+.layer_PC0:
+layer_transpose -2
+layer_note1 40, 0x30, 110
+layer_end
+
+.sound_wario_eeuh:
+chan_setbank 11
+chan_setinstr 9
+chan_setlayer 0, .layer_PCE
+chan_end
+
+.layer_PCE:
+layer_transpose -2
+layer_note1 40, 0x44, 105
+layer_end
+
+.sound_wario_attacked:
+chan_setbank 11
+chan_setinstr 10
+chan_setlayer 0, .layer_PDC
+chan_end
+
+.layer_P0C:
+layer_transpose -2
+layer_note1 41, 0x30, 120
+layer_end
+
+.sound_wario_ooof:
+chan_setbank 11
+chan_setinstr 11
+chan_setlayer 0, .layer_PEA
+chan_end
+
+.layer_PEA:
+layer_transpose -2
+layer_note1 38, 0x30, 127
+layer_end
+
+.sound_wario_here_we_go:
+chan_setbank 11
+chan_setinstr 12
+chan_setlayer 0, .layer_PF8
+chan_end
+
+.layer_PF8:
+layer_portamento 0x81, 38, 200
+layer_note1 41, 0x85, 127
+layer_end
+
+.sound_wario_yawning:
+chan_setbank 11
+chan_setinstr 13
+chan_setlayer 0, .layer_P09
+chan_end
+
+.layer_P09:
+layer_transpose -2
+layer_note1 39, 0x7f, 105
+layer_end
+
+.sound_wario_snoring1:
+chan_setbank 11
+chan_setinstr 14
+chan_setlayer 0, .layer_P17
+chan_end
+
+.layer_P17:
+layer_transpose -2
+layer_note1 39, 0x60, 64
+layer_end
+
+.sound_wario_snoring2:
+chan_setbank 11
+chan_setinstr 15
+chan_setlayer 0, .layer_P25
+chan_end
+
+.layer_P25:
+layer_transpose -2
+layer_note1 39, 0x5c, 52
+layer_end
+
+.sound_wario_waaaooow:
+chan_setbank 10
+chan_setinstr 0
+chan_setlayer 0, .layer_P33
+chan_end
+
+.layer_P33:
+layer_transpose -2
+layer_note1 39, 0xaa, 127
+layer_end
+
+.sound_wario_haha:
+chan_setbank 11
+chan_setinstr 3
+chan_setlayer 0, .layer_P42
+chan_end
+
+.layer_P42:
+layer_transpose -1
+layer_note1 39, 0x4d, 120
+layer_end
+
+.sound_wario_uh2:
+chan_setbank 10
+chan_setinstr 6
+chan_setlayer 0, .layer_P50
+chan_end
+
+.layer_P50:
+layer_transpose -2
+layer_note1 43, 0x1e, 105
+layer_end
+
+.sound_wario_on_fire:
+chan_setbank 10
+chan_setinstr 5
+chan_setlayer 0, .layer_P5E
+chan_end
+
+.layer_P5E:
+layer_transpose -2
+layer_note1 39, 0xc8, 127
+layer_end
+
+.sound_wario_dying:
+chan_setbank 10
+chan_setinstr 4
+chan_setlayer 0, .layer_P6D
+chan_end
+
+.layer_P6D:
+layer_transpose -2
+layer_note1 39, 0x8c, 110
+layer_end
+
+.sound_wario_panting_cold:
+chan_setbank 10
+chan_setinstr 2
+chan_setlayer 0, .layer_P7C
+chan_end
+
+.layer_P7C:
+layer_transpose -2
+layer_portamento 0x82, 35, 255
+layer_note1 38, 0x30, 127
+layer_end
+
+.sound_wario_panting1:
+chan_setbank 10
+chan_setinstr 2
+chan_setlayer 0, .layer_P8E
+chan_end
+
+.layer_P8E:
+layer_transpose -2
+layer_note1 39, 0x3c, 100
+layer_end
+
+.sound_wario_panting2:
+chan_setbank 10
+chan_setinstr 2
+chan_setlayer 0, .layer_P9C
+chan_end
+
+.layer_P9C:
+layer_transpose -2
+layer_delay 0x4
+layer_note1 38, 0x3c, 100
+layer_end
+
+.sound_wario_panting3:
+chan_setbank 10
+chan_setinstr 2
+chan_setlayer 0, .layer_PAC
+chan_end
+
+.layer_PAC:
+layer_transpose -2
+layer_delay 0x8
+layer_note1 40, 0x3c, 100
+layer_end
+
+.sound_wario_coughing1:
+chan_setbank 10
+chan_setinstr 7
+chan_setlayer 0, .layer_PBC
+chan_end
+
+.layer_PBC:
+layer_transpose -2
+layer_note1 39, 0x10, 115
+layer_end
+
+.sound_wario_coughing2:
+chan_setbank 10
+chan_setinstr 7
+chan_setlayer 0, .layer_PCA
+chan_end
+
+.layer_PCA:
+layer_transpose -2
+layer_portamento 0x81, 38, 255
+layer_note1 41, 0x18, 115
+layer_end
+
+.sound_wario_coughing3:
+chan_setbank 10
+chan_setinstr 7
+chan_setlayer 0, .layer_PDC
+chan_end
+
+.layer_PDC:
+layer_transpose -2
+layer_somethingon
+layer_portamento 0x85, 38, 255
+layer_note1 41, 0xc, 115
+layer_note1 35, 0x12, 115
+layer_end
+
+.sound_wario_punch_yah:
+chan_setbank 10
+chan_setinstr 9
+chan_setlayer 0, .layer_PFE
+chan_setval 1
+chan_call .delay
+chan_setbank 0
+chan_setinstr 0
+chan_setlayer 1, .layer_538
+chan_end
+
+.layer_PFE:
+layer_transpose -2
+layer_jump .layer_P5C
+
+.sound_wario_punch_hoo:
+chan_setbank 10
+chan_setinstr 10
+chan_setlayer 0, .layer_PE7
+chan_setval 1
+chan_call .delay
+chan_setbank 0
+chan_setinstr 0
+chan_setlayer 1, .layer_548
+chan_end
+
+.layer_PE7:
+layer_transpose -2
+layer_portamento 0x81, 42, 255
+layer_note1 38, 0x30, 115
+layer_end
+
+.sound_wario_mama_mia:
+chan_setbank 10
+chan_setinstr 11
+chan_setlayer 0, .layer_P29
+chan_end
+
+.layer_P29:
+layer_portamento 0x81, 38, 255
+layer_note1 36, 0x8c, 115
+layer_end
+
+.sound_wario_okey_dokey:
+chan_setbank 10
+chan_setinstr 12
+chan_setlayer 0, .layer_P3A
+chan_end
+
+.layer_P3A:
+layer_note1 39, 0x60, 115
+layer_end
+
+.sound_wario_ground_pound_wah:
+chan_jump .sound_wario_wah2
+
+.sound_wario_drowning:
+chan_setbank 10
+chan_setinstr 13
+chan_setlayer 0, .layer_P49
+chan_end
+
+.layer_P49:
+layer_note1 38, 0x91, 127
+layer_end
+
+.sound_wario_punch_wah:
+chan_setbank 11
+chan_setinstr 1
+chan_setlayer 0, .layer_P62
+chan_setval 1
+chan_call .delay
+chan_setbank 0
+chan_setinstr 0
+chan_setlayer 1, .layer_536
+chan_end
+
+.layer_P62:
+layer_transpose -1
+layer_jump .layer_P4E
+
+.sound_peach_dear_wario:
+chan_setbank 10
+chan_setinstr 15
+chan_setlayer 0, .layer_P6F
+chan_end
+
+.layer_P6F:
+layer_note1 39, 0x2bc, 127
+layer_end
+
+.sound_wario_waha:
+chan_setbank 11
+chan_setinstr 24
+chan_setlayer 0, .layer_PFC
+chan_end
+
+.layer_PFC:
+layer_note1 39, 0x5a, 127
+layer_end
+
+.sound_wario_yippee:
+chan_setbank 11
+chan_setinstr 25
+chan_setlayer 0, .layer_P88
+chan_end
+
+.layer_P88:
+layer_note1 39, 0x5a, 97
+layer_end
+
+.sound_wario_doh:
+chan_setbank 11
+chan_setinstr 16
+chan_setlayer 0, .layer_P94
+chan_end
+
+.layer_P94:
+layer_note1 41, 0x46, 127
+layer_end
+
+.sound_wario_game_over:
+chan_setbank 11
+chan_setinstr 17
+chan_setlayer 0, .layer_PA0
+chan_end
+
+.layer_PA0:
+layer_note1 39, 0x55, 110
+layer_end
+
+.sound_wario_hello:
+chan_setbank 11
+chan_setinstr 18
+chan_setlayer 0, .layer_P51
+chan_end
+
+.layer_P51:
+layer_note1 39, 0x46, 127
+layer_end
+
+.sound_wario_press_start_to_play:
+chan_setbank 11
+chan_setinstr 19
+chan_setlayer 0, .layer_PB8
+chan_end
+
+.layer_PB8:
+layer_note1 39, 0x12c, 127
+layer_end
+
+.sound_wario_twirl_bounce:
+chan_setbank 11
+chan_setinstr 20
+chan_setlayer 0, .layer_PC5
+chan_end
+
+.layer_PC5:
+layer_note1 39, 0x30, 127
+layer_end
+
+.sound_wario_snoring3:
+chan_setbank 11
+chan_setlayer 0, .layer_PCF
+chan_end
+
+.layer_PCF:
+layer_delay 0x4e
+.layer_PD1:
+layer_loop 50
+layer_call .layer_0_PF1
+layer_loopend
+layer_setinstr 21
+layer_note1 39, 0x44c, 127
+layer_jump .layer_PD1
+layer_end
+
+.layer_0_PF1:
+layer_setinstr 21
+layer_note1 37, 0x53, 127
+layer_setinstr 15
+layer_note1 37, 0x4e, 64
+layer_end
+
+.sound_wario_so_longa_bowser:
+chan_setbank 11
+chan_setinstr 22
+chan_setlayer 0, .layer_PF7
+chan_setlayer 1, .layer_PF7
+chan_end
+
+.layer_PF7:
+layer_portamento 0x82, 42, 200
+layer_note1 39, 0xc8, 110
+layer_end
+
+.sound_wario_ima_tired:
+chan_setbank 11
+chan_setinstr 23
+chan_setlayer 0, .layer_P58
+chan_end
+
+.layer_P58:
+layer_note1 39, 0x96, 110
+layer_end
+
+.sound_waluigi_jump_hoo:
+chan_setbank 11
+chan_setinstr 0
+chan_setlayer 0, .layer_Z3C
+chan_end
+
+.layer_Z3C:
+#if defined(VERSION_EU) || defined(VERSION_SH)
+  layer_transpose 2
+#endif
+layer_portamento 0x82, 41, 127
+layer_note1 37, 0x14, 127
+layer_end
+
+.sound_waluigi_jump_wah:
+chan_setbank 11
+chan_setinstr 1
+chan_setlayer 0, .layer_Z4C
+chan_end
+
+.layer_Z4C:
+layer_transpose -2
+.layer_Z4E:
+layer_note1 38, 0x18, 127
+layer_end
+
+.sound_waluigi_jump_yah:
+chan_setbank 10
+chan_setinstr 9
+chan_setlayer 0, .layer_Z5A
+chan_end
+
+.layer_Z5A:
+layer_transpose -2
+.layer_Z5C:
+layer_portamento 0x82, 39, 200
+layer_note1 38, 0x24, 120
+layer_end
+
+.sound_waluigi_hoohoo:
+chan_setbank 10
+chan_setinstr 1
+chan_setlayer 0, .layer_Z6C
+chan_end
+
+.layer_Z6C:
+layer_portamento 0x82, 44, 200
+layer_note1 39, 0x30, 127
+layer_end
+
+.sound_waluigi_yahoo:
+chan_setbank 11
+chan_setinstr 4
+chan_setlayer 0, .layer_Z8C
+chan_end
+
+.layer_Z8C:
+layer_transpose -2
+layer_somethingon
+layer_portamento 0x85, 39, 255
+layer_note1 42, 0x1e, 110
+layer_note1 39, 0x41, 110
+layer_end
+
+.sound_waluigi_uh:
+chan_setbank 11
+chan_setinstr 5
+chan_setlayer 0, .layer_Z92
+chan_end
+
+.layer_Z92:
+layer_transpose -2
+layer_portamento 0x81, 41, 255
+layer_note1 38, 0x2b, 115
+layer_end
+
+.sound_waluigi_hrmm:
+chan_setbank 11
+chan_setinstr 6
+chan_setlayer 0, .layer_ZA4
+chan_end
+
+.layer_ZA4:
+layer_transpose -2
+layer_note1 44, 0x1e, 110
+layer_end
+
+.sound_waluigi_wah2:
+chan_setbank 11
+chan_setinstr 7
+chan_setlayer 0, .layer_ZB2
+chan_end
+
+.layer_ZB2:
+layer_transpose -3
+layer_note1 39, 0x1c, 127
+layer_end
+
+.sound_waluigi_whoa:
+chan_setbank 11
+chan_setinstr 8
+chan_setlayer 0, .layer_ZC0
+chan_end
+
+.layer_ZC0:
+layer_transpose -2
+layer_note1 40, 0x30, 110
+layer_end
+
+.sound_waluigi_eeuh:
+chan_setbank 11
+chan_setinstr 9
+chan_setlayer 0, .layer_ZCE
+chan_end
+
+.layer_ZCE:
+layer_transpose -2
+layer_note1 40, 0x44, 105
+layer_end
+
+.sound_waluigi_attacked:
+chan_setbank 11
+chan_setinstr 10
+chan_setlayer 0, .layer_ZDC
+chan_end
+
+.layer_Z0C:
+layer_transpose -2
+layer_note1 41, 0x30, 120
+layer_end
+
+.sound_waluigi_ooof:
+chan_setbank 11
+chan_setinstr 11
+chan_setlayer 0, .layer_ZEA
+chan_end
+
+.layer_ZEA:
+layer_transpose -2
+layer_note1 38, 0x30, 127
+layer_end
+
+.sound_waluigi_here_we_go:
+chan_setbank 11
+chan_setinstr 12
+chan_setlayer 0, .layer_ZF8
+chan_end
+
+.layer_ZF8:
+layer_portamento 0x81, 38, 200
+layer_note1 41, 0x85, 127
+layer_end
+
+.sound_waluigi_yawning:
+chan_setbank 11
+chan_setinstr 13
+chan_setlayer 0, .layer_Z09
+chan_end
+
+.layer_Z09:
+layer_transpose -2
+layer_note1 39, 0x7f, 105
+layer_end
+
+.sound_waluigi_snoring1:
+chan_setbank 11
+chan_setinstr 14
+chan_setlayer 0, .layer_Z17
+chan_end
+
+.layer_Z17:
+layer_transpose -2
+layer_note1 39, 0x60, 64
+layer_end
+
+.sound_waluigi_snoring2:
+chan_setbank 11
+chan_setinstr 15
+chan_setlayer 0, .layer_Z25
+chan_end
+
+.layer_Z25:
+layer_transpose -2
+layer_note1 39, 0x5c, 52
+layer_end
+
+.sound_waluigi_waaaooow:
+chan_setbank 10
+chan_setinstr 0
+chan_setlayer 0, .layer_Z33
+chan_end
+
+.layer_Z33:
+layer_transpose -2
+layer_note1 39, 0xaa, 127
+layer_end
+
+.sound_waluigi_haha:
+chan_setbank 11
+chan_setinstr 3
+chan_setlayer 0, .layer_Z42
+chan_end
+
+.layer_Z42:
+layer_transpose -1
+layer_note1 39, 0x4d, 120
+layer_end
+
+.sound_waluigi_uh2:
+chan_setbank 10
+chan_setinstr 6
+chan_setlayer 0, .layer_Z50
+chan_end
+
+.layer_Z50:
+layer_transpose -2
+layer_note1 43, 0x1e, 105
+layer_end
+
+.sound_waluigi_on_fire:
+chan_setbank 10
+chan_setinstr 5
+chan_setlayer 0, .layer_Z5E
+chan_end
+
+.layer_Z5E:
+layer_transpose -2
+layer_note1 39, 0xc8, 127
+layer_end
+
+.sound_waluigi_dying:
+chan_setbank 10
+chan_setinstr 4
+chan_setlayer 0, .layer_Z6D
+chan_end
+
+.layer_Z6D:
+layer_transpose -2
+layer_note1 39, 0x8c, 110
+layer_end
+
+.sound_waluigi_panting_cold:
+chan_setbank 10
+chan_setinstr 2
+chan_setlayer 0, .layer_Z7C
+chan_end
+
+.layer_Z7C:
+layer_transpose -2
+layer_portamento 0x82, 35, 255
+layer_note1 38, 0x30, 127
+layer_end
+
+.sound_waluigi_panting1:
+chan_setbank 10
+chan_setinstr 2
+chan_setlayer 0, .layer_Z8E
+chan_end
+
+.layer_Z8E:
+layer_transpose -2
+layer_note1 39, 0x3c, 100
+layer_end
+
+.sound_waluigi_panting2:
+chan_setbank 10
+chan_setinstr 2
+chan_setlayer 0, .layer_Z9C
+chan_end
+
+.layer_Z9C:
+layer_transpose -2
+layer_delay 0x4
+layer_note1 38, 0x3c, 100
+layer_end
+
+.sound_waluigi_panting3:
+chan_setbank 10
+chan_setinstr 2
+chan_setlayer 0, .layer_ZAC
+chan_end
+
+.layer_ZAC:
+layer_transpose -2
+layer_delay 0x8
+layer_note1 40, 0x3c, 100
+layer_end
+
+.sound_waluigi_coughing1:
+chan_setbank 10
+chan_setinstr 7
+chan_setlayer 0, .layer_ZBC
+chan_end
+
+.layer_ZBC:
+layer_transpose -2
+layer_note1 39, 0x10, 115
+layer_end
+
+.sound_waluigi_coughing2:
+chan_setbank 10
+chan_setinstr 7
+chan_setlayer 0, .layer_ZCA
+chan_end
+
+.layer_ZCA:
+layer_transpose -2
+layer_portamento 0x81, 38, 255
+layer_note1 41, 0x18, 115
+layer_end
+
+.sound_waluigi_coughing3:
+chan_setbank 10
+chan_setinstr 7
+chan_setlayer 0, .layer_ZDC
+chan_end
+
+.layer_ZDC:
+layer_transpose -2
+layer_somethingon
+layer_portamento 0x85, 38, 255
+layer_note1 41, 0xc, 115
+layer_note1 35, 0x12, 115
+layer_end
+
+.sound_waluigi_punch_yah:
+chan_setbank 10
+chan_setinstr 9
+chan_setlayer 0, .layer_ZFE
+chan_setval 1
+chan_call .delay
+chan_setbank 0
+chan_setinstr 0
+chan_setlayer 1, .layer_538
+chan_end
+
+.layer_ZFE:
+layer_transpose -2
+layer_jump .layer_Z5C
+
+.sound_waluigi_punch_hoo:
+chan_setbank 10
+chan_setinstr 10
+chan_setlayer 0, .layer_ZE7
+chan_setval 1
+chan_call .delay
+chan_setbank 0
+chan_setinstr 0
+chan_setlayer 1, .layer_548
+chan_end
+
+.layer_ZE7:
+layer_transpose -2
+layer_portamento 0x81, 42, 255
+layer_note1 38, 0x30, 115
+layer_end
+
+.sound_waluigi_mama_mia:
+chan_setbank 10
+chan_setinstr 11
+chan_setlayer 0, .layer_Z29
+chan_end
+
+.layer_Z29:
+layer_portamento 0x81, 38, 255
+layer_note1 36, 0x8c, 115
+layer_end
+
+.sound_waluigi_okey_dokey:
+chan_setbank 10
+chan_setinstr 12
+chan_setlayer 0, .layer_Z3A
+chan_end
+
+.layer_Z3A:
+layer_note1 39, 0x60, 115
+layer_end
+
+.sound_waluigi_ground_pound_wah:
+chan_jump .sound_waluigi_wah2
+
+.sound_waluigi_drowning:
+chan_setbank 10
+chan_setinstr 13
+chan_setlayer 0, .layer_Z49
+chan_end
+
+.layer_Z49:
+layer_note1 38, 0x91, 127
+layer_end
+
+.sound_waluigi_punch_wah:
+chan_setbank 11
+chan_setinstr 1
+chan_setlayer 0, .layer_Z62
+chan_setval 1
+chan_call .delay
+chan_setbank 0
+chan_setinstr 0
+chan_setlayer 1, .layer_536
+chan_end
+
+.layer_Z62:
+layer_transpose -1
+layer_jump .layer_Z4E
+
+.sound_peach_dear_waluigi:
+chan_setbank 10
+chan_setinstr 15
+chan_setlayer 0, .layer_Z6F
+chan_end
+
+.layer_Z6F:
+layer_note1 39, 0x2bc, 127
+layer_end
+
+.sound_waluigi_waha:
+chan_setbank 11
+chan_setinstr 24
+chan_setlayer 0, .layer_ZFC
+chan_end
+
+.layer_ZFC:
+layer_note1 39, 0x5a, 127
+layer_end
+
+.sound_waluigi_yippee:
+chan_setbank 11
+chan_setinstr 25
+chan_setlayer 0, .layer_Z88
+chan_end
+
+.layer_Z88:
+layer_note1 39, 0x5a, 97
+layer_end
+
+.sound_waluigi_doh:
+chan_setbank 11
+chan_setinstr 16
+chan_setlayer 0, .layer_Z94
+chan_end
+
+.layer_Z94:
+layer_note1 41, 0x46, 127
+layer_end
+
+.sound_waluigi_game_over:
+chan_setbank 11
+chan_setinstr 17
+chan_setlayer 0, .layer_ZA0
+chan_end
+
+.layer_ZA0:
+layer_note1 39, 0x55, 110
+layer_end
+
+.sound_waluigi_hello:
+chan_setbank 11
+chan_setinstr 18
+chan_setlayer 0, .layer_Z51
+chan_end
+
+.layer_Z51:
+layer_note1 39, 0x46, 127
+layer_end
+
+.sound_waluigi_press_start_to_play:
+chan_setbank 11
+chan_setinstr 19
+chan_setlayer 0, .layer_ZB8
+chan_end
+
+.layer_ZB8:
+layer_note1 39, 0x12c, 127
+layer_end
+
+.sound_waluigi_twirl_bounce:
+chan_setbank 11
+chan_setinstr 20
+chan_setlayer 0, .layer_ZC5
+chan_end
+
+.layer_ZC5:
+layer_note1 39, 0x30, 127
+layer_end
+
+.sound_waluigi_snoring3:
+chan_setbank 11
+chan_setlayer 0, .layer_ZCF
+chan_end
+
+.layer_ZCF:
+layer_delay 0x4e
+.layer_ZD1:
+layer_loop 50
+layer_call .layer_0_ZF1
+layer_loopend
+layer_setinstr 21
+layer_note1 39, 0x44c, 127
+layer_jump .layer_ZD1
+layer_end
+
+.layer_0_ZF1:
+layer_setinstr 21
+layer_note1 37, 0x53, 127
+layer_setinstr 15
+layer_note1 37, 0x4e, 64
+layer_end
+
+.sound_waluigi_so_longa_bowser:
+chan_setbank 11
+chan_setinstr 22
+chan_setlayer 0, .layer_ZF7
+chan_setlayer 1, .layer_ZF7
+chan_end
+
+.layer_ZF7:
+layer_portamento 0x82, 42, 200
+layer_note1 39, 0xc8, 110
+layer_end
+
+.sound_waluigi_ima_tired:
+chan_setbank 11
+chan_setinstr 23
+chan_setlayer 0, .layer_Z58
+chan_end
+
+.layer_Z58:
+layer_note1 39, 0x96, 110
+layer_end

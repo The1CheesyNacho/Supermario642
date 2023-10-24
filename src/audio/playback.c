@@ -8,6 +8,7 @@
 #include "synthesis.h"
 #include "effects.h"
 #include "external.h"
+#include "game/mario.h"
 
 void note_set_resampling_rate(struct Note *note, f32 resamplingRateInput);
 
@@ -835,6 +836,7 @@ s32 build_synthetic_wave(struct Note *note, struct SequenceChannelLayer *seqLaye
 
 #else
 void build_synthetic_wave(struct Note *note, struct SequenceChannelLayer *seqLayer) {
+
     s32 i;
     s32 j;
     s32 pos;

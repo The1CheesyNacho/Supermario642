@@ -24,6 +24,7 @@
 #include "game/profiling.h"
 #include "game/emutest.h"
 
+
 // Message IDs
 enum MessageIDs {
     MESG_SP_COMPLETE = 100,

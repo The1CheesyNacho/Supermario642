@@ -78,4 +78,10 @@ extern Gfx dl_billboard_num_E[];
 extern Gfx dl_billboard_num_F[];
 #endif
 
+extern u8 render_hud_p1_texture[];
+extern u8 render_hud_p1_texture_pal_rgba16[];
+
+extern u8 render_hud_p2_texture[];
+extern u8 render_hud_p2_texture_pal_rgba16[];
+
 #endif // SEGMENT2_H

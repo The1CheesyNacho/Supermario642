@@ -628,7 +628,18 @@ s32 act_long_jump(struct MarioState *m) {
         animation = MARIO_ANIM_SLOW_LONGJUMP;
     }
 
+if (Character == TRUE){
     play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_MARIO_YAHOO);
+}
+if (Character == FALSE){
+    play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_LUIGI_YAHOO);
+}
+if (Character == 2){
+    play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_WARIO_YAHOO);
+}
+if (Character == 3){
+    play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_WALUIGI_YAHOO);
+}
 
     if (m->floor->type == SURFACE_VERTICAL_WIND && m->actionState == 0) {
         play_sound(SOUND_MARIO_HERE_WE_GO, m->marioObj->header.gfx.cameraToObject);

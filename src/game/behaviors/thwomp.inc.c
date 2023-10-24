@@ -7,6 +7,8 @@ void grindel_thwomp_act_on_ground(void) {
     if (o->oTimer > o->oThwompRandomTimer) {
         o->oAction = GRINDEL_THWOMP_ACT_RISING;
     }
+
+    o->oAnimState = 2;
 }
 
 void grindel_thwomp_act_falling(void) {
@@ -17,6 +19,7 @@ void grindel_thwomp_act_falling(void) {
         o->oVelY = 0.0f;
         o->oAction = GRINDEL_THWOMP_ACT_LAND;
     }
+    o->oAnimState = 3;
 }
 
 void grindel_thwomp_act_land(void) {
@@ -27,6 +30,7 @@ void grindel_thwomp_act_land(void) {
     if (o->oTimer >= 10) {
         o->oAction = GRINDEL_THWOMP_ACT_ON_GROUND;
     }
+    o->oAnimState = 3;
 }
 
 void grindel_thwomp_act_floating(void) {
@@ -36,6 +40,7 @@ void grindel_thwomp_act_floating(void) {
     if (o->oTimer > o->oThwompRandomTimer) {
         o->oAction = GRINDEL_THWOMP_ACT_FALLING;
     }
+    o->oAnimState = 2;
 }
 
 void grindel_thwomp_act_rising(void) {
@@ -45,6 +50,7 @@ void grindel_thwomp_act_rising(void) {
     } else {
         o->oPosY += 10.0f;
     }
+    o->oAnimState = 1;
 }
 
 ObjActionFunc sGrindelThwompActions[] = {

@@ -1694,7 +1694,7 @@ static void intro_cutscene_peach_lakitu_scene(struct MarioState *m) {
         if (m->actionTimer++ == TIMER_SPAWN_PIPE) {
             sIntroWarpPipeObj =
                 spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_CASTLE_GROUNDS_WARP_PIPE,
-                                          bhvStaticObject, -1328, 60, 4664, 0, 180, 0);
+                                          bhvStaticObject, -3764, 618, 11447, 0, 180, 0);
             advance_cutscene_step(m);
         }
     }

@@ -15,17 +15,17 @@
  * By modifying `globalLightDirection`, you can choose the direction that points TOWARDS the light,
  * but keep in mind that this direction should be normalized to roughly ~127 if changed.
  */
-// #define WORLDSPACE_LIGHTING
+//#define WORLDSPACE_LIGHTING
 
 /**
  * Show a watermark on the title screen that reads "Made with HackerSM64", instead of the copyright message.
  */
-#define INTRO_CREDIT
+//#define INTRO_CREDIT
 
 /**
  * Spawns floombas on the title screen.
  */
-#define INTRO_FLOOMBAS
+//#define INTRO_FLOOMBAS
 
 /**
  * Enables widescreen (16:9) support.
@@ -50,22 +50,22 @@
  * Enables Puppyprint, a display library for text and large images.
  * Automatically enabled when PUPPYPRINT_DEBUG is enabled.
  */
-// #define PUPPYPRINT
+#define PUPPYPRINT
 
 /**
  * Disables AA (Improves console performance but causes visible seams between unconnected geometry).
  */
-// #define DISABLE_AA
+#define DISABLE_AA
 
 /**
  * Makes the coins ia8 64x64 instead of ia16 32x32. Uses new ia8 textures so that vanilla coins look better.
  */
-#define IA8_COINS
+//#define IA8_COINS
 
 /**
  * Similar to the above, but 30 FPS (Textures by InTheBeef, cleaned up by Arceveti).
  */
-#define IA8_30FPS_COINS
+//#define IA8_30FPS_COINS
 
 /**
  * Use .rej microcode for certain objects (experimental - only should be used when F3DEX_GBI_2 is defined).
@@ -82,7 +82,7 @@
  * Also, this also disables anti-aliasing on Mario.
  * NOTE: Regarding performance, silhouette seems to lose 1-2 frames on console.
  */
-// #define SILHOUETTE 127
+#define SILHOUETTE 127
 
 /**
  * Use 64x64 quarter shadow textures (Vanilla are 16x16).

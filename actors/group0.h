@@ -331,4 +331,16 @@ extern const Gfx white_particle_small_dl_end[];
 extern const Gfx white_particle_small_dl[];
 extern const Gfx white_particle_small_unused_dl[];
 
+#include "luigi/geo_header.h"
+
+#include "boat/header.h"
+
+#include "wario/geo_header.h"
+
+#include "waluigi/geo_header.h"
+
+#include "mario/geo_header.h"
+
+#include "motos/geo_header.h"
+
 #endif

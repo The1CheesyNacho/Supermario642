@@ -22,12 +22,12 @@
 /**
  * Allows for retries on collecting the remaining blue coins from a blue coin switch.
  */
-// #define BLUE_COIN_SWITCH_RETRY
+#define BLUE_COIN_SWITCH_RETRY
 
 /**
  * Allow previewing blue coin locations from a blue coin switch when Mario is standing on the blue coin switch.
  */
-// #define BLUE_COIN_SWITCH_PREVIEW
+#define BLUE_COIN_SWITCH_PREVIEW
 
 /****************
  * -- GOOMBA --
@@ -65,7 +65,7 @@
 /**
  * Enables Mr I to shoot his particle in any direction.
  */
-// #define MR_I_PITCH_SHOOTING
+#define MR_I_PITCH_SHOOTING
 
 /********************
  * -- WATER RING --

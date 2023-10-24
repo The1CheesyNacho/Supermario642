@@ -153,7 +153,7 @@ static void toad_message_opacifying(void) {
 }
 
 static void toad_message_fading(void) {
-    if ((o->oOpacity -= 6) == 81) {
+    if ((o->oOpacity -= 6) == 255) {
         o->oToadMessageState = TOAD_MESSAGE_FADED;
     }
 }

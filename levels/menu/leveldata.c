@@ -1849,3 +1849,45 @@ const Collision main_menu_seg7_collision[] = {
 #undef COURSE_TABLE
 
 #endif
+
+// 0x07003330 - 0x07003380
+const Gfx dl_menu_wario_save_button_base[] = {
+    gsSPDisplayList(dl_tex_block_menu_save_button_base),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture_menu_stone),
+    gsDPLoadSync(),
+    gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
+    gsSPDisplayList(dl_vertex_menu_save_button_borders),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture_menu_hud_char_katakana_u),
+    gsDPLoadSync(),
+    gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 64 * 32 - 1, CALC_DXT(64, G_IM_SIZ_16b_BYTES)),
+    gsSPDisplayList(dl_vertex_menu_save_button_front),
+    gsSPEndDisplayList(),
+};
+
+// 0x07003330 - 0x07003380
+const Gfx dl_menu_luigi_save_button_base[] = {
+    gsSPDisplayList(dl_tex_block_menu_save_button_base),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture_menu_stone),
+    gsDPLoadSync(),
+    gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
+    gsSPDisplayList(dl_vertex_menu_save_button_borders),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture_menu_hud_char_katakana_sa),
+    gsDPLoadSync(),
+    gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 64 * 32 - 1, CALC_DXT(64, G_IM_SIZ_16b_BYTES)),
+    gsSPDisplayList(dl_vertex_menu_save_button_front),
+    gsSPEndDisplayList(),
+};
+
+// 0x07003330 - 0x07003380
+const Gfx dl_menu_waluigi_save_button_base[] = {
+    gsSPDisplayList(dl_tex_block_menu_save_button_base),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture_menu_stone),
+    gsDPLoadSync(),
+    gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
+    gsSPDisplayList(dl_vertex_menu_save_button_borders),
+    gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture_menu_hud_char_katakana_n),
+    gsDPLoadSync(),
+    gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 64 * 32 - 1, CALC_DXT(64, G_IM_SIZ_16b_BYTES)),
+    gsSPDisplayList(dl_vertex_menu_save_button_front),
+    gsSPEndDisplayList(),
+};
