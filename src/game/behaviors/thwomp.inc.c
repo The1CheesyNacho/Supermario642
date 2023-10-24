@@ -62,25 +62,33 @@ void bhv_grindel_thwomp_loop(void) {
     cur_obj_call_action_function(sGrindelThwompActions);
 }
 
+void bhv_thwimp_init(void) {
+    o->oThwimpState = 0;
+    o->oThwimpTimer = 30;
+    o->oGravity = 2;
+}
+
 void bhv_thwimp_loop(void) {
-   int diff = signum(gMarioState->faceAngle[1] - o->oFaceAngleYaw);
     switch (o->oThwimpState) {
         case 0: // waiting
-            o->oThwimpTimer--;
+            if (o->oDistanceToMario < 4000) o->oThwimpTimer--;
             if (o->oThwimpTimer == 0) o->oThwimpState = 1;
             break;
         case 1: // rotating
-            
-            o->oFaceAngleYaw = approach_angle(o->oFaceAngleYaw, gMarioState->faceAngle[1], 1024);
-            if (diff != signum(gMarioState->faceAngle[1] - o->oFaceAngleYaw)) {
+            int diff = signum(o->oAngleToMario - o->oFaceAngleYaw);
+            o->oFaceAngleYaw = approach_angle(o->oFaceAngleYaw, o->oAngleToMario, 1024);
+            if (diff != signum(o->oAngleToMario - o->oFaceAngleYaw)) {
+                o->oMoveAngleYaw = o->oFaceAngleYaw;
                 o->oThwimpState = 2;
                 o->oForwardVel = 5;
-                o->oVelY = 10;
+                o->oVelY = 50;
             }
             break;
         case 2: // jumping
+            o->oVelY -= o->oGravity;
+            cur_obj_move_using_vel();
+            cur_obj_move_xz_using_fvel_and_yaw();
             cur_obj_if_hit_wall_bounce_away();
-            cur_obj_move_using_fvel_and_gravity();
             cur_obj_update_floor_and_walls();
             s16 collisionFlags = object_step();
             if (collisionFlags & OBJ_COL_FLAG_GROUNDED) {

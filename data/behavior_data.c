@@ -6081,8 +6081,9 @@ const BehaviorScript bhvIntroScene[] = {
 
 const BehaviorScript bhvThwimp[] = {
     BEGIN(OBJ_LIST_SURFACE),
-    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
+    OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_COMPUTE_DIST_TO_MARIO),
     LOAD_COLLISION_DATA(thwimp_collision),
+    CALL_NATIVE(bhv_thwimp_init),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_thwimp_loop),
         CALL_NATIVE(load_object_collision_model),
