@@ -7,6 +7,7 @@
 #include "sm64.h"
 #include "audio/external.h"
 #include "game/game_init.h"
+#include "game/mario.h"
 #include "game/debug.h"
 #include "game/memory.h"
 #include "game/sound_init.h"
@@ -25,6 +26,7 @@
 #include "game/emutest.h"
 
 
+
 // Message IDs
 enum MessageIDs {
     MESG_SP_COMPLETE = 100,
@@ -34,6 +36,7 @@ enum MessageIDs {
     MESG_NMI_REQUEST,
     MESG_RCP_HUNG,
 };
+
 
 // OSThread gUnkThread; // unused?
 OSThread gIdleThread;

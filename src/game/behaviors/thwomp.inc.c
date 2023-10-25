@@ -64,24 +64,40 @@ void bhv_grindel_thwomp_loop(void) {
 
 void bhv_thwimp_init(void) {
     o->oThwimpState = 0;
+<<<<<<< Updated upstream
     o->oThwimpTimer = 30;
     o->oGravity = 2;
 }
 
 void bhv_thwimp_loop(void) {
+=======
+    o->oThwimpTimer = 10;
+    o->oGravity = 4;
+}
+
+void bhv_thwimp_loop(void) {
+            int diff = signum(o->oAngleToMario - o->oFaceAngleYaw);
+>>>>>>> Stashed changes
     switch (o->oThwimpState) {
         case 0: // waiting
             if (o->oDistanceToMario < 4000) o->oThwimpTimer--;
             if (o->oThwimpTimer == 0) o->oThwimpState = 1;
             break;
         case 1: // rotating
+<<<<<<< Updated upstream
             int diff = signum(o->oAngleToMario - o->oFaceAngleYaw);
+=======
+>>>>>>> Stashed changes
             o->oFaceAngleYaw = approach_angle(o->oFaceAngleYaw, o->oAngleToMario, 1024);
             if (diff != signum(o->oAngleToMario - o->oFaceAngleYaw)) {
                 o->oMoveAngleYaw = o->oFaceAngleYaw;
                 o->oThwimpState = 2;
                 o->oForwardVel = 5;
+<<<<<<< Updated upstream
                 o->oVelY = 50;
+=======
+                o->oVelY = 90;
+>>>>>>> Stashed changes
             }
             break;
         case 2: // jumping

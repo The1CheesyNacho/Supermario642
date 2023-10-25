@@ -90,5 +90,18 @@ void end_master_display_list(void);
 void render_init(void);
 void select_gfx_pool(void);
 void display_and_vsync(void);
+extern u8 sky_Skybox_mesh_no_sun_rgba16[];
+extern u8 sky_Skybox_mesh_bob_rgba16[];
+extern Vtx sky_Skybox_mesh_vtx_cull[8];
+extern Vtx sky_Skybox_mesh_vtx_0[89];
+extern Gfx sky_Skybox_mesh_tri_0[];
+extern Vtx sky_Skybox_mesh_vtx_1[13];
+extern Gfx sky_Skybox_mesh_tri_1[];
+extern Gfx mat_sky_Skybox_mesh_no_sun_layer1[];
+extern Gfx mat_revert_sky_Skybox_mesh_no_sun_layer1[];
+extern Gfx mat_sky_Skybox_mesh_sun_layer1[];
+extern Gfx mat_revert_sky_Skybox_mesh_sun_layer1[];
+extern Gfx sky_Skybox_mesh[];
+
 
 #endif // GAME_INIT_H

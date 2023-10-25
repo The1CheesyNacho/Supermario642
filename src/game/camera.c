@@ -3585,7 +3585,7 @@ s32 set_cam_angle(s32 mode) {
             sSelectionFlags |= CAM_MODE_LAKITU_WAS_ZOOMED_OUT;
             gCameraMovementFlags &= ~CAM_MOVE_ZOOMED_OUT;
         }
-        sCameraSoundFlags |= CAM_SOUND_MARIO_ACTIVE;
+        sCameraSoundFlags |= CAM_SOUND_CHARACTER_ACTIVE;
     }
 
     // Switch back to normal mode
@@ -4565,13 +4565,13 @@ void play_sound_rbutton_changed(void) {
 }
 
 void play_sound_if_cam_switched_to_lakitu_or_mario(void) {
-    if (sCameraSoundFlags & CAM_SOUND_MARIO_ACTIVE) {
+    if (sCameraSoundFlags & CAM_SOUND_CHARACTER_ACTIVE) {
         play_sound_rbutton_changed();
     }
     if (sCameraSoundFlags & CAM_SOUND_NORMAL_ACTIVE) {
         play_sound_rbutton_changed();
     }
-    sCameraSoundFlags &= ~(CAM_SOUND_MARIO_ACTIVE | CAM_SOUND_NORMAL_ACTIVE);
+    sCameraSoundFlags &= ~(CAM_SOUND_CHARACTER_ACTIVE | CAM_SOUND_NORMAL_ACTIVE);
 }
 
 /**

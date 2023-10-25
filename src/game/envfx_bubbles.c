@@ -547,3 +547,6 @@ Gfx *envfx_update_bubbles(s32 mode, Vec3s marioPos, Vec3s camTo, Vec3s camFrom) 
 
     return gfx;
 }
+
+
+#undef DISTANCE

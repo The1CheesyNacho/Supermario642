@@ -36,7 +36,7 @@ s32 mario_update_punch_sequence(struct MarioState *m) {
 
     switch (m->actionArg) {
         case ACT_ARG_PUNCH_SEQUENCE_YAH:
-            play_sound(SOUND_MARIO_PUNCH_YAH, m->marioObj->header.gfx.cameraToObject);
+            play_sound(SOUND_CHARACTER_PUNCH_YAH, m->marioObj->header.gfx.cameraToObject);
             FALL_THROUGH;
         case ACT_ARG_PUNCH_SEQUENCE_FIRST_PUNCH:
             set_mario_animation(m, MARIO_ANIM_FIRST_PUNCH);
@@ -76,7 +76,7 @@ s32 mario_update_punch_sequence(struct MarioState *m) {
             break;
 
         case ACT_ARG_PUNCH_SEQUENCE_WAH:
-            play_sound(SOUND_MARIO_PUNCH_WAH, m->marioObj->header.gfx.cameraToObject);
+            play_sound(SOUND_CHARACTER_PUNCH_WAH, m->marioObj->header.gfx.cameraToObject);
             // fallthrough
         case ACT_ARG_PUNCH_SEQUENCE_SECOND_PUNCH:
             set_mario_animation(m, MARIO_ANIM_SECOND_PUNCH);
@@ -111,7 +111,7 @@ s32 mario_update_punch_sequence(struct MarioState *m) {
             break;
 
         case ACT_ARG_PUNCH_SEQUENCE_GROUND_KICK:
-            play_mario_action_sound(m, SOUND_MARIO_PUNCH_HOO, 1);
+            play_mario_action_sound(m, SOUND_CHARACTER_PUNCH_HOO, 1);
             animFrame = set_mario_animation(m, MARIO_ANIM_GROUND_KICK);
             if (animFrame == 0) {
                 m->marioBodyState->punchState = (PUNCH_STATE_TYPE_KICK | 0x6);
@@ -127,7 +127,7 @@ s32 mario_update_punch_sequence(struct MarioState *m) {
             break;
 
         case ACT_ARG_PUNCH_SEQUENCE_BREAKDANCE:
-            play_mario_action_sound(m, SOUND_MARIO_PUNCH_HOO, 1);
+            play_mario_action_sound(m, SOUND_CHARACTER_PUNCH_HOO, 1);
             set_mario_animation(m, MARIO_ANIM_BREAKDANCE);
             animFrame = m->marioObj->header.gfx.animInfo.animFrame;
 
@@ -186,7 +186,7 @@ s32 act_picking_up(struct MarioState *m) {
         // to unload. This allows you to pick up a vacant or newly loaded object
         // slot (cloning via fake object).
         mario_grab_used_object(m);
-        play_sound_if_no_flag(m, SOUND_MARIO_HRMM, MARIO_MARIO_SOUND_PLAYED);
+        play_sound_if_no_flag(m, SOUND_CHARACTER_HRMM, MARIO_MARIO_SOUND_PLAYED);
         m->actionState = ACT_STATE_PICKING_UP_HOLDING;
     }
 
@@ -271,7 +271,7 @@ s32 act_throwing(struct MarioState *m) {
 
     if (++m->actionTimer == 7) {
         mario_throw_held_object(m);
-        play_sound_if_no_flag(m, SOUND_MARIO_WAH2, MARIO_MARIO_SOUND_PLAYED);
+        play_sound_if_no_flag(m, SOUND_CHARACTER_WAH2, MARIO_MARIO_SOUND_PLAYED);
         play_sound_if_no_flag(m, SOUND_ACTION_THROW, MARIO_ACTION_SOUND_PLAYED);
 #if ENABLE_RUMBLE
         queue_rumble_data(3, 50);
@@ -293,7 +293,7 @@ s32 act_heavy_throw(struct MarioState *m) {
 
     if (++m->actionTimer == 13) {
         mario_drop_held_object(m);
-        play_sound_if_no_flag(m, SOUND_MARIO_WAH2, MARIO_MARIO_SOUND_PLAYED);
+        play_sound_if_no_flag(m, SOUND_CHARACTER_WAH2, MARIO_MARIO_SOUND_PLAYED);
         play_sound_if_no_flag(m, SOUND_ACTION_THROW, MARIO_ACTION_SOUND_PLAYED);
 #if ENABLE_RUMBLE
         queue_rumble_data(3, 50);
@@ -330,7 +330,7 @@ s32 act_picking_up_bowser(struct MarioState *m) {
 #if ENABLE_RUMBLE
         queue_rumble_data(5, 80);
 #endif
-        play_sound(SOUND_MARIO_HRMM, m->marioObj->header.gfx.cameraToObject);
+        play_sound(SOUND_CHARACTER_HRMM, m->marioObj->header.gfx.cameraToObject);
     }
 
     set_mario_animation(m, MARIO_ANIM_GRAB_BOWSER);
@@ -347,9 +347,9 @@ s32 act_holding_bowser(struct MarioState *m) {
 
     if (m->input & INPUT_B_PRESSED) {
         if (m->angleVel[1] <= -0xE00 || m->angleVel[1] >= 0xE00) {
-            play_sound(SOUND_MARIO_SO_LONGA_BOWSER, m->marioObj->header.gfx.cameraToObject);
+            play_sound(SOUND_CHARACTER_SO_LONGA_BOWSER, m->marioObj->header.gfx.cameraToObject);
         } else {
-            play_sound(SOUND_MARIO_HERE_WE_GO, m->marioObj->header.gfx.cameraToObject);
+            play_sound(SOUND_CHARACTER_HERE_WE_GO, m->marioObj->header.gfx.cameraToObject);
         }
         return set_mario_action(m, ACT_RELEASING_BOWSER, 0);
     }

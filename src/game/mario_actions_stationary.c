@@ -230,11 +230,11 @@ s32 act_start_sleeping(struct MarioState *m) {
     }
 
     if (m->actionState == ACT_STATE_START_SLEEPING_YAWN && animFrame == -1) {
-        play_sound(SOUND_MARIO_YAWNING, m->marioObj->header.gfx.cameraToObject);
+        play_sound(SOUND_CHARACTER_YAWNING, m->marioObj->header.gfx.cameraToObject);
     }
 
     if (m->actionState == ACT_STATE_START_SLEEPING_SCRATCH && animFrame == -1) {
-        play_sound(SOUND_MARIO_IMA_TIRED, m->marioObj->header.gfx.cameraToObject);
+        play_sound(SOUND_CHARACTER_IMA_TIRED, m->marioObj->header.gfx.cameraToObject);
     }
 
     stationary_ground_step(m);
@@ -268,11 +268,11 @@ s32 act_sleeping(struct MarioState *m) {
             }
 
             if (animFrame == 2) {
-                play_sound(SOUND_MARIO_SNORING1, m->marioObj->header.gfx.cameraToObject);
+                play_sound(SOUND_CHARACTER_SNORING1, m->marioObj->header.gfx.cameraToObject);
             }
 
             if (animFrame == 20) {
-                play_sound(SOUND_MARIO_SNORING2, m->marioObj->header.gfx.cameraToObject);
+                play_sound(SOUND_CHARACTER_SNORING2, m->marioObj->header.gfx.cameraToObject);
             }
 
             if (is_anim_at_end(m)) {
@@ -295,7 +295,7 @@ s32 act_sleeping(struct MarioState *m) {
 
         case ACT_SLEEPING_STATE_LYING:
             animFrame = set_mario_animation(m, MARIO_ANIM_SLEEP_LYING);
-            play_sound_if_no_flag(m, SOUND_MARIO_SNORING3, MARIO_ACTION_SOUND_PLAYED);
+            play_sound_if_no_flag(m, SOUND_CHARACTER_SNORING3, MARIO_ACTION_SOUND_PLAYED);
             break;
     }
     return FALSE;
@@ -303,9 +303,9 @@ s32 act_sleeping(struct MarioState *m) {
 
 s32 act_waking_up(struct MarioState *m) {
     if (!m->actionTimer) {
-        stop_sound(SOUND_MARIO_SNORING1, m->marioObj->header.gfx.cameraToObject);
-        stop_sound(SOUND_MARIO_SNORING2, m->marioObj->header.gfx.cameraToObject);
-        stop_sound(SOUND_MARIO_SNORING3, m->marioObj->header.gfx.cameraToObject);
+        stop_sound(SOUND_CHARACTER_SNORING1, m->marioObj->header.gfx.cameraToObject);
+        stop_sound(SOUND_CHARACTER_SNORING2, m->marioObj->header.gfx.cameraToObject);
+        stop_sound(SOUND_CHARACTER_SNORING3, m->marioObj->header.gfx.cameraToObject);
         raise_background_noise(2);
     }
 
@@ -361,7 +361,7 @@ s32 act_shivering(struct MarioState *m) {
             animFrame = set_mario_animation(m, MARIO_ANIM_SHIVERING_WARMING_HAND);
             if (animFrame == 49) {
                 m->particleFlags |= PARTICLE_BREATH;
-                play_sound(SOUND_MARIO_PANTING_COLD, m->marioObj->header.gfx.cameraToObject);
+                play_sound(SOUND_CHARACTER_PANTING_COLD, m->marioObj->header.gfx.cameraToObject);
             }
             if (animFrame == 7 || animFrame == 81) {
                 play_sound(SOUND_ACTION_CLAP_HANDS_COLD, m->marioObj->header.gfx.cameraToObject);
@@ -398,15 +398,15 @@ s32 act_coughing(struct MarioState *m) {
     stationary_ground_step(m);
     animFrame = set_mario_animation(m, MARIO_ANIM_COUGHING);
     if (animFrame == 25 || animFrame == 35) {
-        play_sound(SOUND_MARIO_COUGHING3, m->marioObj->header.gfx.cameraToObject);
+        play_sound(SOUND_CHARACTER_COUGHING3, m->marioObj->header.gfx.cameraToObject);
     }
 
     if (animFrame == 50 || animFrame == 58) {
-        play_sound(SOUND_MARIO_COUGHING2, m->marioObj->header.gfx.cameraToObject);
+        play_sound(SOUND_CHARACTER_COUGHING2, m->marioObj->header.gfx.cameraToObject);
     }
 
     if (animFrame == 71 || animFrame == 80) {
-        play_sound(SOUND_MARIO_COUGHING1, m->marioObj->header.gfx.cameraToObject);
+        play_sound(SOUND_CHARACTER_COUGHING1, m->marioObj->header.gfx.cameraToObject);
     }
 
     return FALSE;
@@ -553,7 +553,7 @@ s32 act_panting(struct MarioState *m) {
     }
 
     if (set_mario_animation(m, MARIO_ANIM_WALK_PANTING) == 1) {
-        play_sound(SOUND_MARIO_PANTING + ((gAudioRandom % 3U) << 0x10),
+        play_sound(SOUND_CHARACTER_PANTING + ((gAudioRandom % 3U) << 0x10),
                    m->marioObj->header.gfx.cameraToObject);
     }
 

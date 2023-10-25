@@ -568,25 +568,26 @@ ALIGNED8 static const Texture texture_menu_hud_char_question[] = {
 #include "levels/menu/main_menu_seg7.0A1D0.rgba16.inc.c"
 };
 
-// 0x0700A3D0
-ALIGNED8 static const Texture texture_menu_hud_char_katakana_sa[] = {
-#include "levels/menu/main_menu_seg7.0A3D0.rgba16.inc.c"
-};
-
-// 0x0700A5D0
-ALIGNED8 static const Texture texture_menu_hud_char_katakana_u[] = {
-#include "levels/menu/main_menu_seg7.0A5D0.rgba16.inc.c"
-};
-
-// 0x0700A7D0
-ALIGNED8 static const Texture texture_menu_hud_char_katakana_n[] = {
-#include "levels/menu/main_menu_seg7.0A7D0.rgba16.inc.c"
-};
-
 // 0x0700A9D0
 ALIGNED8 static const Texture texture_menu_hud_char_kana_dakuten_do[] = {
 #include "levels/menu/main_menu_seg7.0A9D0.rgba16.inc.c"
 };
+
+// 0x0700A3D0
+ALIGNED8 static const Texture texture_menu_hud_char_katakana_sa[] = {
+#include "levels/menu/custom_main_menu_seg7.0A3D0.rgba16.inc.c"
+};
+
+// 0x0700A5D0
+ALIGNED8 static const Texture texture_menu_hud_char_katakana_u[] = {
+#include "levels/menu/custom_main_menu_seg7.0A5D0.rgba16.inc.c"
+};
+
+// 0x0700A7D0
+ALIGNED8 static const Texture texture_menu_hud_char_katakana_n[] = {
+#include "levels/menu/custom_main_menu_seg7.0A7D0.rgba16.inc.c"
+};
+
 
 // Menu HUD print table, only used in JP
 // 0x0700ABD0

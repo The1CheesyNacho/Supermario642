@@ -6,8 +6,10 @@
 #include "memory.h"
 #include "ingame_menu.h"
 #include "envfx_snow.h"
+#include "camera.h"
 #include "envfx_bubbles.h"
 #include "engine/surface_collision.h"
+#include "engine/graph_node.h"
 #include "engine/math_util.h"
 #include "engine/behavior_script.h"
 #include "audio/external.h"
@@ -506,3 +508,4 @@ Gfx *envfx_update_particles(s32 mode, Vec3s marioPos, Vec3s camTo, Vec3s camFrom
 
     return gfx;
 }
+
