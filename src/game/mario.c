@@ -1281,6 +1281,7 @@ if (gSoundMode == SOUND_MODE_HEADSET){
 if (gSoundMode == SOUND_MODE_HEADSET2){
  Character = 3;
 }
+    set_character_sound();
 
 
 
