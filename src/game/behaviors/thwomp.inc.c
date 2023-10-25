@@ -10,6 +10,8 @@ void grindel_thwomp_act_on_ground(void) {
     if (o->oTimer > o->oThwompRandomTimer) {
         o->oAction = GRINDEL_THWOMP_ACT_RISING;
     }
+
+    o->oAnimState = 2;
 }
 
 void grindel_thwomp_act_falling(void) {
@@ -20,6 +22,7 @@ void grindel_thwomp_act_falling(void) {
         o->oVelY = 0.0f;
         o->oAction = GRINDEL_THWOMP_ACT_LAND;
     }
+    o->oAnimState = 3;
 }
 
 void grindel_thwomp_act_land(void) {
@@ -30,6 +33,7 @@ void grindel_thwomp_act_land(void) {
     if (o->oTimer >= 10) {
         o->oAction = GRINDEL_THWOMP_ACT_ON_GROUND;
     }
+    o->oAnimState = 3;
 }
 
 void grindel_thwomp_act_floating(void) {
@@ -39,6 +43,7 @@ void grindel_thwomp_act_floating(void) {
     if (o->oTimer > o->oThwompRandomTimer) {
         o->oAction = GRINDEL_THWOMP_ACT_FALLING;
     }
+    o->oAnimState = 2;
 }
 
 void grindel_thwomp_act_rising(void) {
@@ -48,6 +53,7 @@ void grindel_thwomp_act_rising(void) {
     } else {
         o->oPosY += 10.0f;
     }
+    o->oAnimState = 1;
 }
 
 ObjActionFunc sGrindelThwompActions[] = {
@@ -62,42 +68,27 @@ void bhv_grindel_thwomp_loop(void) {
     cur_obj_call_action_function(sGrindelThwompActions);
 }
 
+
 void bhv_thwimp_init(void) {
     o->oThwimpState = 0;
-<<<<<<< Updated upstream
-    o->oThwimpTimer = 30;
-    o->oGravity = 2;
-}
-
-void bhv_thwimp_loop(void) {
-=======
     o->oThwimpTimer = 10;
     o->oGravity = 4;
 }
 
 void bhv_thwimp_loop(void) {
             int diff = signum(o->oAngleToMario - o->oFaceAngleYaw);
->>>>>>> Stashed changes
     switch (o->oThwimpState) {
         case 0: // waiting
             if (o->oDistanceToMario < 4000) o->oThwimpTimer--;
             if (o->oThwimpTimer == 0) o->oThwimpState = 1;
             break;
         case 1: // rotating
-<<<<<<< Updated upstream
-            int diff = signum(o->oAngleToMario - o->oFaceAngleYaw);
-=======
->>>>>>> Stashed changes
             o->oFaceAngleYaw = approach_angle(o->oFaceAngleYaw, o->oAngleToMario, 1024);
             if (diff != signum(o->oAngleToMario - o->oFaceAngleYaw)) {
                 o->oMoveAngleYaw = o->oFaceAngleYaw;
                 o->oThwimpState = 2;
                 o->oForwardVel = 5;
-<<<<<<< Updated upstream
-                o->oVelY = 50;
-=======
                 o->oVelY = 90;
->>>>>>> Stashed changes
             }
             break;
         case 2: // jumping
