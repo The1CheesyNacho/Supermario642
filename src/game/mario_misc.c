@@ -25,6 +25,7 @@
 #include "skybox.h"
 #include "sound_init.h"
 #include "puppycam2.h"
+#include "include/types.h"
 
 #include "config.h"
 
@@ -41,10 +42,8 @@
 #define TOAD_STAR_3_DIALOG_AFTER DIALOG_156
 
 enum ToadMessageStates {
-    TOAD_MESSAGE_FADED,
-    TOAD_MESSAGE_OPAQUE,
-    TOAD_MESSAGE_OPACIFYING,
-    TOAD_MESSAGE_FADING,
+    TOAD_MESSAGE_WALKING,
+    TOAD_MESSAGE_IDLE,
     TOAD_MESSAGE_TALKING
 };
 
@@ -102,33 +101,56 @@ Gfx *geo_draw_mario_head_goddard(s32 callContext, struct GraphNode *node, UNUSED
 }
 #endif
 
-static void toad_message_faded(void) {
-    if (o->oDistanceToMario > 700.0f) {
-        o->oToadMessageRecentlyTalked = FALSE;
-    }
-    if (!o->oToadMessageRecentlyTalked && o->oDistanceToMario < 600.0f) {
-        o->oToadMessageState = TOAD_MESSAGE_OPACIFYING;
+static void toad_message_walking(void) {
+    s16 angle, temp;
+    Vec3f toad, home;
+    float dist;
+    vec3f_set(toad, o->oPosX, o->oPosY, o->oPosZ);
+    vec3f_set(home, o->oHomeX, o->oHomeY, o->oHomeZ);
+    vec3f_get_dist_and_angle(toad, home, &dist, &temp, &angle);
+    o->oFaceAngleYaw = approach_angle(o->oFaceAngleYaw, angle, 1024);
+    o->oMoveAngleYaw = angle;
+    o->oForwardVel = 15;
+    cur_obj_move_xz_using_fvel_and_yaw();
+    cur_obj_update_floor_and_walls();
+    if (dist < 15) {
+        o->oToadMessageState = TOAD_MESSAGE_IDLE;
+        o->oPosX = o->oHomeX;
+        o->oPosZ = o->oHomeZ;
     }
 }
 
-static void toad_message_opaque(void) {
-    if (o->oDistanceToMario > 700.0f) {
-        o->oToadMessageState = TOAD_MESSAGE_FADING;
-    } else if (!o->oToadMessageRecentlyTalked) {
-        o->oInteractionSubtype = INT_SUBTYPE_NPC;
-        if (o->oInteractStatus & INT_STATUS_INTERACTED) {
-            o->oInteractStatus = INT_STATUS_NONE;
-            o->oToadMessageState = TOAD_MESSAGE_TALKING;
-            play_toads_jingle();
+static void toad_message_idle(void) {
+    o->oForwardVel = 0;
+    if (o->oTimer == 60) {
+        o->oTimer = 0;
+        o->oToadMessageState = TOAD_MESSAGE_WALKING;
+        u32 positions[32];
+        struct ObjectNode* objList = &gObjectListArray[OBJ_LIST_LEVEL];
+        struct ObjectNode* firstObj = objList->next;
+        int ptr = 0;
+        while (objList != firstObj) {
+            struct Object* obj = (struct Object*)firstObj;
+            if (obj->behavior == bhvToadNpcNode && GET_BPARAM2(o->oBehParams) == GET_BPARAM2(obj->oBehParams)) {
+                positions[ptr * 2 + 0] = obj->oPosX;
+                positions[ptr * 2 + 1] = obj->oPosZ;
+                ptr++;
+            }
+            firstObj = firstObj->next;
         }
+        if (ptr == 0) return;
+        ptr = rand() % ptr;
+        o->oHomeX = positions[ptr * 2 + 0];
+        o->oHomeZ = positions[ptr * 2 + 1];
     }
 }
 
 static void toad_message_talking(void) {
+    o->oFaceAngleYaw = approach_angle(o->oFaceAngleYaw, o->oAngleToMario, 1024);
     if (cur_obj_update_dialog_with_cutscene(MARIO_DIALOG_LOOK_DOWN,
         DIALOG_FLAG_TURN_TO_MARIO, CUTSCENE_DIALOG, o->oToadMessageDialogId)) {
         o->oToadMessageRecentlyTalked = TRUE;
-        o->oToadMessageState = TOAD_MESSAGE_FADING;
+        o->oToadMessageState = TOAD_MESSAGE_IDLE;
         switch (o->oToadMessageDialogId) {
             case TOAD_STAR_1_DIALOG:
                 o->oToadMessageDialogId = TOAD_STAR_1_DIALOG_AFTER;
@@ -146,33 +168,15 @@ static void toad_message_talking(void) {
     }
 }
 
-static void toad_message_opacifying(void) {
-    if ((o->oOpacity += 6) == 255) {
-        o->oToadMessageState = TOAD_MESSAGE_OPAQUE;
-    }
-}
-
-static void toad_message_fading(void) {
-    if ((o->oOpacity -= 6) == 255) {
-        o->oToadMessageState = TOAD_MESSAGE_FADED;
-    }
-}
-
 void bhv_toad_message_loop(void) {
     if (o->header.gfx.node.flags & GRAPH_RENDER_ACTIVE) {
         o->oInteractionSubtype = INT_STATUS_NONE;
         switch (o->oToadMessageState) {
-            case TOAD_MESSAGE_FADED:
-                toad_message_faded();
+            case TOAD_MESSAGE_WALKING:
+                toad_message_walking();
                 break;
-            case TOAD_MESSAGE_OPAQUE:
-                toad_message_opaque();
-                break;
-            case TOAD_MESSAGE_OPACIFYING:
-                toad_message_opacifying();
-                break;
-            case TOAD_MESSAGE_FADING:
-                toad_message_fading();
+            case TOAD_MESSAGE_IDLE:
+                toad_message_idle();
                 break;
             case TOAD_MESSAGE_TALKING:
                 toad_message_talking();
@@ -214,8 +218,7 @@ void bhv_toad_message_init(void) {
     if (enoughStars) {
         o->oToadMessageDialogId = dialogId;
         o->oToadMessageRecentlyTalked = FALSE;
-        o->oToadMessageState = TOAD_MESSAGE_FADED;
-        o->oOpacity = 81;
+        o->oToadMessageState = TOAD_MESSAGE_IDLE;
     } else {
         obj_mark_for_deletion(o);
     }
