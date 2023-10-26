@@ -1052,6 +1052,8 @@
 #define /*0x108*/ oToadMessageDialogId       OBJECT_FIELD_U32(0x20)
 #define /*0x10C*/ oToadMessageRecentlyTalked OBJECT_FIELD_S32(0x21)
 #define /*0x110*/ oToadMessageState          OBJECT_FIELD_S32(0x22)
+#define /*0x110*/ oToadMessageTargetX        OBJECT_FIELD_S32(0x23)
+#define /*0x110*/ oToadMessageTargetZ        OBJECT_FIELD_S32(0x24)
 
 /* Tox Box */
 #define /*0x1AC*/ oToxBoxMovementPattern OBJECT_FIELD_VPTR(0x49)
@@ -1259,7 +1261,9 @@
 #define /*0x100*/ oYoshiTargetYaw  OBJECT_FIELD_S32(0x1E)
 
 #define oThwimpTimer OBJECT_FIELD_U32(0x1B)
-#define oThwimpState OBJECT_FIELD_U32(0x1D)
+#define oThwimpState OBJECT_FIELD_U32(0x1C)
+
+#define oToadNodeActive OBJECT_FIELD_U32(0x1B)
 
 
 /*Custom general defines:

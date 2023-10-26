@@ -26,6 +26,7 @@
 #include "sound_init.h"
 #include "puppycam2.h"
 #include "include/types.h"
+#include "engine/surface_collision.h"
 
 #include "config.h"
 
@@ -103,45 +104,62 @@ Gfx *geo_draw_mario_head_goddard(s32 callContext, struct GraphNode *node, UNUSED
 
 static void toad_message_walking(void) {
     s16 angle, temp;
-    Vec3f toad, home;
+    Vec3f toad, target;
     float dist;
-    vec3f_set(toad, o->oPosX, o->oPosY, o->oPosZ);
-    vec3f_set(home, o->oHomeX, o->oHomeY, o->oHomeZ);
-    vec3f_get_dist_and_angle(toad, home, &dist, &temp, &angle);
+    vec3f_get_dist_and_angle((float[]){ o->oPosX, o->oPosY, o->oPosZ }, (float[]){ o->oToadMessageTargetX, o->oPosY, o->oToadMessageTargetZ }, &dist, &temp, &angle);
     o->oFaceAngleYaw = approach_angle(o->oFaceAngleYaw, angle, 1024);
     o->oMoveAngleYaw = angle;
-    o->oForwardVel = 15;
+    o->oForwardVel = 5;
     cur_obj_move_xz_using_fvel_and_yaw();
     cur_obj_update_floor_and_walls();
-    if (dist < 15) {
+    object_step();
+    if (dist < 5) {
+        o->oTimer = 0;
         o->oToadMessageState = TOAD_MESSAGE_IDLE;
-        o->oPosX = o->oHomeX;
-        o->oPosZ = o->oHomeZ;
+        o->oPosX = o->oToadMessageTargetX;
+        o->oPosY = find_floor_height(o->oPosX, o->oPosY + 200, o->oPosZ);
+        o->oPosZ = o->oToadMessageTargetZ;
     }
 }
 
 static void toad_message_idle(void) {
     o->oForwardVel = 0;
-    if (o->oTimer == 60) {
+    if (o->oTimer >= 60) {
         o->oTimer = 0;
-        o->oToadMessageState = TOAD_MESSAGE_WALKING;
-        u32 positions[32];
+        f32 positions[32];
+        struct Object* objs[16];
         struct ObjectNode* objList = &gObjectListArray[OBJ_LIST_LEVEL];
         struct ObjectNode* firstObj = objList->next;
         int ptr = 0;
-        while (objList != firstObj) {
+        uintptr_t bhv = segmented_to_virtual(bhvToadNpcNode);
+        while (objList != firstObj || ptr == 16) {
             struct Object* obj = (struct Object*)firstObj;
-            if (obj->behavior == bhvToadNpcNode && GET_BPARAM2(o->oBehParams) == GET_BPARAM2(obj->oBehParams)) {
+            if (obj->behavior == bhv && (o->oBehParams2ndByte & 0xFF) == (obj->oBehParams2ndByte & 0xFF)) {
+                if (obj->oToadNodeActive) {
+                    obj->oToadNodeActive = 0;
+                    firstObj = firstObj->next;
+                    continue;
+                }
                 positions[ptr * 2 + 0] = obj->oPosX;
                 positions[ptr * 2 + 1] = obj->oPosZ;
+                objs[ptr] = obj;
                 ptr++;
             }
             firstObj = firstObj->next;
         }
         if (ptr == 0) return;
         ptr = random_u16() % ptr;
-        o->oHomeX = positions[ptr * 2 + 0];
-        o->oHomeZ = positions[ptr * 2 + 1];
+        objs[ptr]->oToadNodeActive = 1;
+        o->oToadMessageState = TOAD_MESSAGE_WALKING;
+        o->oToadMessageTargetX = positions[ptr * 2 + 0];
+        o->oToadMessageTargetZ = positions[ptr * 2 + 1];
+    }
+}
+
+static void toad_message_talk(void) {
+    if (o->oDistanceToMario < 200 && gMarioState->controller->buttonPressed & B_BUTTON) {
+        o->oToadMessageState = TOAD_MESSAGE_TALKING;
+        play_toads_jingle();
     }
 }
 
@@ -151,6 +169,7 @@ static void toad_message_talking(void) {
         DIALOG_FLAG_TURN_TO_MARIO, CUTSCENE_DIALOG, o->oToadMessageDialogId)) {
         o->oToadMessageRecentlyTalked = TRUE;
         o->oToadMessageState = TOAD_MESSAGE_IDLE;
+        o->oTimer = 0;
         switch (o->oToadMessageDialogId) {
             case TOAD_STAR_1_DIALOG:
                 o->oToadMessageDialogId = TOAD_STAR_1_DIALOG_AFTER;
@@ -173,9 +192,11 @@ void bhv_toad_message_loop(void) {
         o->oInteractionSubtype = INT_STATUS_NONE;
         switch (o->oToadMessageState) {
             case TOAD_MESSAGE_WALKING:
+                toad_message_talk();
                 toad_message_walking();
                 break;
             case TOAD_MESSAGE_IDLE:
+                toad_message_talk();
                 toad_message_idle();
                 break;
             case TOAD_MESSAGE_TALKING:
