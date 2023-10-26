@@ -269,7 +269,6 @@ enum SoundBank {
 
 /* Luigi Sound Effects */
 // A random number 0-2 is added to the sound ID before playing, producing Yah/Wah/Hoo
-<<<<<<< Updated upstream
 #define SOUND_LUIGI_YAH_WAH_HOO                 SOUND_ARG_LOAD(SOUND_BANK_VOICE, 0x40, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_LUIGI_HOOHOO                      SOUND_ARG_LOAD(SOUND_BANK_VOICE, 0x03, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_LUIGI_YAHOO                       SOUND_ARG_LOAD(SOUND_BANK_VOICE, 0x04, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
@@ -317,7 +316,6 @@ enum SoundBank {
 #define SOUND_LUIGI_ON_FIRE                      /* 0x2414A081 */ SOUND_ARG_LOAD(SOUND_BANK_CUSTOM_FOREGROUND1,    0x14, 0xA0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
 #define SOUND_LUIGI_DYING                        /* 0x2415FF81 */ SOUND_ARG_LOAD(SOUND_BANK_CUSTOM_FOREGROUND1,    0x15, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE) // unverified
 #define SOUND_LUIGI_PANTING_COLD                 /* 0x24168081 */ SOUND_ARG_LOAD(SOUND_BANK_CUSTOM_FOREGROUND1,    0x16, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
->>>>>>> Stashed changes
 
 // A random number 0-2 is added to the sound ID before playing
 #define SOUND_LUIGI_PANTING                     SOUND_ARG_LOAD(SOUND_BANK_CUSTOM_FOREGROUND1, 0x18, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
@@ -348,7 +346,6 @@ enum SoundBank {
 
 /* Wario Sound Effects */
 // A random number 0-2 is added to the sound ID before playing, producing Yah/Wah/Hoo
-<<<<<<< Updated upstream
 #define SOUND_WARIO_YAH_WAH_HOO                 SOUND_ARG_LOAD(SOUND_BANK_VOICE, 0x70, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_WARIO_HOOHOO                      SOUND_ARG_LOAD(SOUND_BANK_VOICE, 0x03, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_WARIO_YAHOO                       SOUND_ARG_LOAD(SOUND_BANK_VOICE, 0x04, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
@@ -396,7 +393,6 @@ enum SoundBank {
 #define SOUND_WARIO_ON_FIRE                     SOUND_ARG_LOAD(SOUND_BANK_CUSTOM_FOREGROUND2, 0x14, 0xA0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_WARIO_DYING                       SOUND_ARG_LOAD(SOUND_BANK_CUSTOM_FOREGROUND2, 0x15, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_WARIO_PANTING_COLD                SOUND_ARG_LOAD(SOUND_BANK_CUSTOM_FOREGROUND2, 0x16, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
->>>>>>> Stashed changes
 
 // A random number 0-2 is added to the sound ID before playing
 #define SOUND_WARIO_PANTING                     SOUND_ARG_LOAD(SOUND_BANK_CUSTOM_FOREGROUND2, 0x18, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
@@ -427,7 +423,6 @@ enum SoundBank {
 
 /* Waluigi Sound Effects */
 // A random number 0-2 is added to the sound ID before playing, producing Yah/Wah/Hoo
-<<<<<<< Updated upstream
 #define SOUND_WALUIGI_YAH_WAH_HOO                 SOUND_ARG_LOAD(SOUND_BANK_VOICE, 0xA0, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_WALUIGI_HOOHOO                      SOUND_ARG_LOAD(SOUND_BANK_VOICE, 0x03, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_WALUIGI_YAHOO                       SOUND_ARG_LOAD(SOUND_BANK_VOICE, 0x04, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
@@ -475,7 +470,6 @@ enum SoundBank {
 #define SOUND_WALUIGI_ON_FIRE                     SOUND_ARG_LOAD(SOUND_BANK_CUSTOM_FOREGROUND3, 0x14, 0xA0, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_WALUIGI_DYING                       SOUND_ARG_LOAD(SOUND_BANK_CUSTOM_FOREGROUND3, 0x15, 0xFF, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
 #define SOUND_WALUIGI_PANTING_COLD                SOUND_ARG_LOAD(SOUND_BANK_CUSTOM_FOREGROUND3, 0x16, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
->>>>>>> Stashed changes
 
 // A random number 0-2 is added to the sound ID before playing
 #define SOUND_WALUIGI_PANTING                     SOUND_ARG_LOAD(SOUND_BANK_CUSTOM_FOREGROUND3, 0x18, 0x80, SOUND_NO_PRIORITY_LOSS | SOUND_DISCRETE)
@@ -892,8 +886,4 @@ enum SoundBank {
 extern u32 gCharacterSounds[];
 extern void set_character_sound();
 
-<<<<<<< Updated upstream
 #endif // SOUNDS_H
-=======
-#endif // SOUNDS_H
->>>>>>> Stashed changes
