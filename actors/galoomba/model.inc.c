@@ -18,24 +18,14 @@ Lights1 galoomba_f3dlite_material_055_lights = gdSPDefLights1(
 	0x0, 0x7F, 0x0,
 	0x0, 0xFF, 0x0, 0x28, 0x28, 0x28);
 
-Gfx galoomba_goomba_body_rgba16_ci8_aligner[] = {gsSPEndDisplayList()};
-u8 galoomba_goomba_body_rgba16_ci8[] = {
-	#include "actors/galoomba/goomba_body.rgba16.ci8.inc.c"
+Gfx galoomba_goomba_body_rgba16_rgba16_aligner[] = {gsSPEndDisplayList()};
+u8 galoomba_goomba_body_rgba16_rgba16[] = {
+	#include "actors/galoomba/goomba_body.rgba16.inc.c"
 };
 
-Gfx galoomba_goomba_body_rgba16_pal_rgba16_aligner[] = {gsSPEndDisplayList()};
-u8 galoomba_goomba_body_rgba16_pal_rgba16[] = {
-	#include "actors/galoomba/goomba_body.rgba16.pal"
-};
-
-Gfx galoomba_goomba_face_rgba16_ci8_aligner[] = {gsSPEndDisplayList()};
-u8 galoomba_goomba_face_rgba16_ci8[] = {
-	#include "actors/galoomba/goomba_face.rgba16.ci8.inc.c"
-};
-
-Gfx galoomba_goomba_face_rgba16_pal_rgba16_aligner[] = {gsSPEndDisplayList()};
-u8 galoomba_goomba_face_rgba16_pal_rgba16[] = {
-	#include "actors/galoomba/goomba_face.rgba16.pal"
+Gfx galoomba_goomba_face_rgba16_rgba16_aligner[] = {gsSPEndDisplayList()};
+u8 galoomba_goomba_face_rgba16_rgba16[] = {
+	#include "actors/galoomba/goomba_face.rgba16.inc.c"
 };
 
 Gfx galoomba_galoomba_face_closed_rgba16_rgba16_aligner[] = {gsSPEndDisplayList()};
@@ -436,46 +426,26 @@ Gfx galoomba_000_offset_004_mesh_layer_1_tri_0[] = {
 Gfx mat_galoomba_f3dlite_material_053[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
-	gsDPSetTextureLUT(G_TT_RGBA16),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsSPSetLights1(galoomba_f3dlite_material_053_lights),
-	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, galoomba_goomba_body_rgba16_pal_rgba16),
-	gsDPSetTile(0, 0, 0, 256, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
-	gsDPLoadTLUTCmd(5, 116),
-	gsDPSetTextureImage(G_IM_FMT_CI, G_IM_SIZ_8b_LOAD_BLOCK, 1, galoomba_goomba_body_rgba16_ci8),
-	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_8b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
-	gsDPLoadBlock(7, 0, 0, 511, 512),
-	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0),
+	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, galoomba_goomba_body_rgba16_rgba16),
+	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
+	gsDPLoadBlock(7, 0, 0, 1023, 256),
+	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0),
 	gsDPSetTileSize(0, 0, 0, 124, 124),
-	gsSPEndDisplayList(),
-};
-
-Gfx mat_revert_galoomba_f3dlite_material_053[] = {
-	gsDPPipeSync(),
-	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };
 
 Gfx mat_galoomba_f3dlite_material_054[] = {
 	gsDPPipeSync(),
 	gsDPSetCombineLERP(TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, ENVIRONMENT),
-	gsDPSetTextureLUT(G_TT_RGBA16),
 	gsSPTexture(65535, 65535, 0, 0, 1),
 	gsSPSetLights1(galoomba_f3dlite_material_054_lights),
-	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, galoomba_goomba_face_rgba16_pal_rgba16),
-	gsDPSetTile(0, 0, 0, 256, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
-	gsDPLoadTLUTCmd(5, 152),
-	gsDPSetTextureImage(G_IM_FMT_CI, G_IM_SIZ_8b_LOAD_BLOCK, 1, galoomba_goomba_face_rgba16_ci8),
-	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_8b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
-	gsDPLoadBlock(7, 0, 0, 1023, 512),
-	gsDPSetTile(G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 6, 0, G_TX_WRAP | G_TX_MIRROR, 5, 0),
+	gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, galoomba_goomba_face_rgba16_rgba16),
+	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0),
+	gsDPLoadBlock(7, 0, 0, 2047, 256),
+	gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 6, 0, G_TX_WRAP | G_TX_MIRROR, 5, 0),
 	gsDPSetTileSize(0, 0, 0, 124, 252),
-	gsSPEndDisplayList(),
-};
-
-Gfx mat_revert_galoomba_f3dlite_material_054[] = {
-	gsDPPipeSync(),
-	gsDPSetTextureLUT(G_TT_NONE),
 	gsSPEndDisplayList(),
 };
 
@@ -516,14 +486,12 @@ Gfx mat_galoomba_f3dlite_material_055[] = {
 Gfx galoomba_000_displaylist_mesh_layer_1[] = {
 	gsSPDisplayList(mat_galoomba_f3dlite_material_053),
 	gsSPDisplayList(galoomba_000_displaylist_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_galoomba_f3dlite_material_053),
 	gsSPEndDisplayList(),
 };
 
 Gfx galoomba_000_offset_002_mesh_layer_1[] = {
 	gsSPDisplayList(mat_galoomba_f3dlite_material_054),
 	gsSPDisplayList(galoomba_000_offset_002_mesh_layer_1_tri_0),
-	gsSPDisplayList(mat_revert_galoomba_f3dlite_material_054),
 	gsSPEndDisplayList(),
 };
 
