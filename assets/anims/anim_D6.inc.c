@@ -1,17 +1,17 @@
-static const struct Animation anim_D5[] = {
+static const struct Animation anim_D6[] = {
     1,
     189,
     0,
     0,
     0x0A,
-    ANIMINDEX_NUMPARTS(anim_D5_indices),
-    anim_D5_values,
-    anim_D5_indices,
+    ANIMINDEX_NUMPARTS(anim_D6_indices),
+    anim_D6_values,
+    anim_D6_indices,
     0,
 };
 
 
-static const u16 anim_D5_indices[] = {
+static const u16 anim_D6_indices[] = {
 	   80,    1,	/* chn14translate x */
 	   80,   81,	/* chn14 translate y */
 	   80,  161,	/* chn14 translate z */
@@ -82,7 +82,7 @@ static const u16 anim_D5_indices[] = {
 };
 
 
-static const s16 anim_D5_values[] = {
+static const s16 anim_D6_values[] = {
 	    0,    0,    0,    0,    1,    2,    3,    4,
 	    5,    6,    7,    8,   10,   11,   12,   12,
 	   13,   13,   14,   14,   14,   14,   13,   13,
