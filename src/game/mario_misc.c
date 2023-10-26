@@ -139,7 +139,7 @@ static void toad_message_idle(void) {
             firstObj = firstObj->next;
         }
         if (ptr == 0) return;
-        ptr = rand() % ptr;
+        ptr = random_u16() % ptr;
         o->oHomeX = positions[ptr * 2 + 0];
         o->oHomeZ = positions[ptr * 2 + 1];
     }
