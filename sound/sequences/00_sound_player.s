@@ -8357,7 +8357,7 @@ envelope_line 200 32760
 envelope_goto 3
 
 .sound_luigi_jump_hoo:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 0
 chan_setlayer 0, .layer_F3C
 chan_end
@@ -8383,7 +8383,7 @@ layer_note1 38, 0x18, 127
 layer_end
 
 .sound_luigi_jump_yah:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 9
 chan_setlayer 0, .layer_F5A
 chan_end
@@ -8396,7 +8396,7 @@ layer_note1 38, 0x24, 120
 layer_end
 
 .sound_luigi_hoohoo:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 1
 chan_setlayer 0, .layer_F6C
 chan_end
@@ -8413,10 +8413,7 @@ chan_setlayer 0, .layer_F8C
 chan_end
 
 .layer_F8C:
-layer_somethingon
-layer_portamento 0x85, 39, 255
-layer_note1 42, 0x1e, 110
-layer_note1 39, 0x41, 110
+layer_note1 39, 0x6f, 110
 layer_end
 
 .sound_luigi_uh:
@@ -8542,7 +8539,7 @@ layer_note1 39, 0x5c, 52
 layer_end
 
 .sound_luigi_waaaooow:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 0
 chan_setlayer 0, .layer_F33
 chan_end
@@ -8564,7 +8561,7 @@ layer_note1 39, 0x4d, 120
 layer_end
 
 .sound_luigi_uh2:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 6
 chan_setlayer 0, .layer_F50
 chan_end
@@ -8575,7 +8572,7 @@ layer_note1 43, 0x1e, 105
 layer_end
 
 .sound_luigi_on_fire:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 5
 chan_setlayer 0, .layer_F5E
 chan_end
@@ -8586,7 +8583,7 @@ layer_note1 39, 0xc8, 127
 layer_end
 
 .sound_luigi_dying:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 4
 chan_setlayer 0, .layer_F6D
 chan_end
@@ -8597,7 +8594,7 @@ layer_note1 39, 0x8c, 110
 layer_end
 
 .sound_luigi_panting_cold:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 2
 chan_setlayer 0, .layer_F7C
 chan_end
@@ -8609,7 +8606,7 @@ layer_note1 38, 0x30, 127
 layer_end
 
 .sound_luigi_panting1:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 2
 chan_setlayer 0, .layer_F8E
 chan_end
@@ -8620,7 +8617,7 @@ layer_note1 39, 0x3c, 100
 layer_end
 
 .sound_luigi_panting2:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 2
 chan_setlayer 0, .layer_F9C
 chan_end
@@ -8632,7 +8629,7 @@ layer_note1 38, 0x3c, 100
 layer_end
 
 .sound_luigi_panting3:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 2
 chan_setlayer 0, .layer_FAC
 chan_end
@@ -8644,7 +8641,7 @@ layer_note1 40, 0x3c, 100
 layer_end
 
 .sound_luigi_coughing1:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 7
 chan_setlayer 0, .layer_FBC
 chan_end
@@ -8655,7 +8652,7 @@ layer_note1 39, 0x10, 115
 layer_end
 
 .sound_luigi_coughing2:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 7
 chan_setlayer 0, .layer_FCA
 chan_end
@@ -8667,7 +8664,7 @@ layer_note1 41, 0x18, 115
 layer_end
 
 .sound_luigi_coughing3:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 7
 chan_setlayer 0, .layer_FDC
 chan_end
@@ -8681,7 +8678,7 @@ layer_note1 35, 0x12, 115
 layer_end
 
 .sound_luigi_punch_yah:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 9
 chan_setlayer 0, .layer_FFE
 chan_setval 1
@@ -8696,7 +8693,7 @@ layer_transpose -2
 layer_jump .layer_F5C
 
 .sound_luigi_punch_hoo:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 10
 chan_setlayer 0, .layer_FE7
 chan_setval 1
@@ -8713,7 +8710,7 @@ layer_note1 38, 0x30, 115
 layer_end
 
 .sound_luigi_mama_mia:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 11
 chan_setlayer 0, .layer_F29
 chan_end
@@ -8724,7 +8721,7 @@ layer_note1 36, 0x8c, 115
 layer_end
 
 .sound_luigi_okey_dokey:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 12
 chan_setlayer 0, .layer_F3A
 chan_end
@@ -8737,7 +8734,7 @@ layer_end
 chan_jump .sound_luigi_wah2
 
 .sound_luigi_drowning:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 13
 chan_setlayer 0, .layer_F49
 chan_end
@@ -8762,7 +8759,7 @@ layer_transpose -1
 layer_jump .layer_F4E
 
 .sound_peach_dear_luigi:
-chan_setbank 11
+chan_setbank 12
 chan_setinstr 15
 chan_setlayer 0, .layer_F6F
 chan_end
@@ -8887,7 +8884,7 @@ layer_note1 39, 0x96, 110
 layer_end
 
 .sound_wario_jump_hoo:
-chan_setbank 13
+chan_setbank 12
 chan_setinstr 0
 chan_setlayer 0, .layer_P3C
 chan_end
@@ -8907,26 +8904,22 @@ chan_setlayer 0, .layer_P4C
 chan_end
 
 .layer_P4C:
-layer_transpose -2
-.layer_P4E:
-layer_note1 38, 0x18, 127
+layer_note1 39, 0x18, 127
 layer_end
 
+
 .sound_wario_jump_yah:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 9
-chan_setlayer 0, .layer_P5A
+chan_setlayer 0, .layer_P5C
 chan_end
 
-.layer_P5A:
-layer_transpose -2
 .layer_P5C:
-layer_portamento 0x82, 39, 200
-layer_note1 38, 0x24, 120
+layer_note1 39, 0x24, 127
 layer_end
 
 .sound_wario_hoohoo:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 1
 chan_setlayer 0, .layer_P6C
 chan_end
@@ -8943,11 +8936,7 @@ chan_setlayer 0, .layer_P8C
 chan_end
 
 .layer_P8C:
-layer_transpose -2
-layer_somethingon
-layer_portamento 0x85, 39, 255
-layer_note1 42, 0x1e, 110
-layer_note1 39, 0x41, 110
+layer_note1 39, 0x6f, 110
 layer_end
 
 .sound_wario_uh:
@@ -9073,7 +9062,7 @@ layer_note1 39, 0x5c, 52
 layer_end
 
 .sound_wario_waaaooow:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 0
 chan_setlayer 0, .layer_P33
 chan_end
@@ -9095,7 +9084,7 @@ layer_note1 39, 0x4d, 120
 layer_end
 
 .sound_wario_uh2:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 6
 chan_setlayer 0, .layer_P50
 chan_end
@@ -9106,7 +9095,7 @@ layer_note1 43, 0x1e, 105
 layer_end
 
 .sound_wario_on_fire:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 5
 chan_setlayer 0, .layer_P5E
 chan_end
@@ -9117,7 +9106,7 @@ layer_note1 39, 0xc8, 127
 layer_end
 
 .sound_wario_dying:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 4
 chan_setlayer 0, .layer_P6D
 chan_end
@@ -9128,7 +9117,7 @@ layer_note1 39, 0x8c, 110
 layer_end
 
 .sound_wario_panting_cold:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 2
 chan_setlayer 0, .layer_P7C
 chan_end
@@ -9140,7 +9129,7 @@ layer_note1 38, 0x30, 127
 layer_end
 
 .sound_wario_panting1:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 2
 chan_setlayer 0, .layer_P8E
 chan_end
@@ -9151,7 +9140,7 @@ layer_note1 39, 0x3c, 100
 layer_end
 
 .sound_wario_panting2:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 2
 chan_setlayer 0, .layer_P9C
 chan_end
@@ -9163,7 +9152,7 @@ layer_note1 38, 0x3c, 100
 layer_end
 
 .sound_wario_panting3:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 2
 chan_setlayer 0, .layer_PAC
 chan_end
@@ -9175,7 +9164,7 @@ layer_note1 40, 0x3c, 100
 layer_end
 
 .sound_wario_coughing1:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 7
 chan_setlayer 0, .layer_PBC
 chan_end
@@ -9186,7 +9175,7 @@ layer_note1 39, 0x10, 115
 layer_end
 
 .sound_wario_coughing2:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 7
 chan_setlayer 0, .layer_PCA
 chan_end
@@ -9198,7 +9187,7 @@ layer_note1 41, 0x18, 115
 layer_end
 
 .sound_wario_coughing3:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 7
 chan_setlayer 0, .layer_PDC
 chan_end
@@ -9212,7 +9201,7 @@ layer_note1 35, 0x12, 115
 layer_end
 
 .sound_wario_punch_yah:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 9
 chan_setlayer 0, .layer_PFE
 chan_setval 1
@@ -9227,7 +9216,7 @@ layer_transpose -2
 layer_jump .layer_P5C
 
 .sound_wario_punch_hoo:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 10
 chan_setlayer 0, .layer_PE7
 chan_setval 1
@@ -9244,7 +9233,7 @@ layer_note1 38, 0x30, 115
 layer_end
 
 .sound_wario_mama_mia:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 11
 chan_setlayer 0, .layer_P29
 chan_end
@@ -9255,7 +9244,7 @@ layer_note1 36, 0x8c, 115
 layer_end
 
 .sound_wario_okey_dokey:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 12
 chan_setlayer 0, .layer_P3A
 chan_end
@@ -9268,7 +9257,7 @@ layer_end
 chan_jump .sound_wario_wah2
 
 .sound_wario_drowning:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 13
 chan_setlayer 0, .layer_P49
 chan_end
@@ -9290,10 +9279,10 @@ chan_end
 
 .layer_P62:
 layer_transpose -1
-layer_jump .layer_P4E
+layer_jump .layer_P4C
 
 .sound_peach_dear_wario:
-chan_setbank 12
+chan_setbank 13
 chan_setinstr 15
 chan_setlayer 0, .layer_P6F
 chan_end
@@ -9444,7 +9433,7 @@ layer_note1 38, 0x18, 127
 layer_end
 
 .sound_waluigi_jump_yah:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 9
 chan_setlayer 0, .layer_Z5A
 chan_end
@@ -9457,7 +9446,7 @@ layer_note1 38, 0x24, 120
 layer_end
 
 .sound_waluigi_hoohoo:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 1
 chan_setlayer 0, .layer_Z6C
 chan_end
@@ -9474,11 +9463,7 @@ chan_setlayer 0, .layer_Z8C
 chan_end
 
 .layer_Z8C:
-layer_transpose -2
-layer_somethingon
-layer_portamento 0x85, 39, 255
-layer_note1 42, 0x1e, 110
-layer_note1 39, 0x41, 110
+layer_note1 39, 0x6f, 110
 layer_end
 
 .sound_waluigi_uh:
@@ -9604,7 +9589,7 @@ layer_note1 39, 0x5c, 52
 layer_end
 
 .sound_waluigi_waaaooow:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 0
 chan_setlayer 0, .layer_Z33
 chan_end
@@ -9626,7 +9611,7 @@ layer_note1 39, 0x4d, 120
 layer_end
 
 .sound_waluigi_uh2:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 6
 chan_setlayer 0, .layer_Z50
 chan_end
@@ -9637,7 +9622,7 @@ layer_note1 43, 0x1e, 105
 layer_end
 
 .sound_waluigi_on_fire:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 5
 chan_setlayer 0, .layer_Z5E
 chan_end
@@ -9648,7 +9633,7 @@ layer_note1 39, 0xc8, 127
 layer_end
 
 .sound_waluigi_dying:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 4
 chan_setlayer 0, .layer_Z6D
 chan_end
@@ -9659,7 +9644,7 @@ layer_note1 39, 0x8c, 110
 layer_end
 
 .sound_waluigi_panting_cold:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 2
 chan_setlayer 0, .layer_Z7C
 chan_end
@@ -9671,7 +9656,7 @@ layer_note1 38, 0x30, 127
 layer_end
 
 .sound_waluigi_panting1:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 2
 chan_setlayer 0, .layer_Z8E
 chan_end
@@ -9682,7 +9667,7 @@ layer_note1 39, 0x3c, 100
 layer_end
 
 .sound_waluigi_panting2:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 2
 chan_setlayer 0, .layer_Z9C
 chan_end
@@ -9694,7 +9679,7 @@ layer_note1 38, 0x3c, 100
 layer_end
 
 .sound_waluigi_panting3:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 2
 chan_setlayer 0, .layer_ZAC
 chan_end
@@ -9706,7 +9691,7 @@ layer_note1 40, 0x3c, 100
 layer_end
 
 .sound_waluigi_coughing1:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 7
 chan_setlayer 0, .layer_ZBC
 chan_end
@@ -9717,7 +9702,7 @@ layer_note1 39, 0x10, 115
 layer_end
 
 .sound_waluigi_coughing2:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 7
 chan_setlayer 0, .layer_ZCA
 chan_end
@@ -9729,7 +9714,7 @@ layer_note1 41, 0x18, 115
 layer_end
 
 .sound_waluigi_coughing3:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 7
 chan_setlayer 0, .layer_ZDC
 chan_end
@@ -9743,7 +9728,7 @@ layer_note1 35, 0x12, 115
 layer_end
 
 .sound_waluigi_punch_yah:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 9
 chan_setlayer 0, .layer_ZFE
 chan_setval 1
@@ -9758,7 +9743,7 @@ layer_transpose -2
 layer_jump .layer_Z5C
 
 .sound_waluigi_punch_hoo:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 10
 chan_setlayer 0, .layer_ZE7
 chan_setval 1
@@ -9775,7 +9760,7 @@ layer_note1 38, 0x30, 115
 layer_end
 
 .sound_waluigi_mama_mia:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 11
 chan_setlayer 0, .layer_Z29
 chan_end
@@ -9786,7 +9771,7 @@ layer_note1 36, 0x8c, 115
 layer_end
 
 .sound_waluigi_okey_dokey:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 12
 chan_setlayer 0, .layer_Z3A
 chan_end
@@ -9799,7 +9784,7 @@ layer_end
 chan_jump .sound_waluigi_wah2
 
 .sound_waluigi_drowning:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 13
 chan_setlayer 0, .layer_Z49
 chan_end
@@ -9824,7 +9809,7 @@ layer_transpose -1
 layer_jump .layer_Z4E
 
 .sound_peach_dear_waluigi:
-chan_setbank 14
+chan_setbank 15
 chan_setinstr 15
 chan_setlayer 0, .layer_Z6F
 chan_end

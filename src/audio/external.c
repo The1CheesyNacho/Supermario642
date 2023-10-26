@@ -16,7 +16,6 @@
 #include "engine/math_util.h"
 #include "seq_ids.h"
 #include "dialog_ids.h"
-#include "game/mario.h"
 
 #include "config/config_audio.h"
 
@@ -2787,8 +2786,4 @@ void set_character_sound() {
         SOUND_CHARACTER_SO_LONGA_BOWSER = SOUND_WALUIGI_SO_LONGA_BOWSER;
         SOUND_CHARACTER_IMA_TIRED = SOUND_WALUIGI_IMA_TIRED;
     }
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes
