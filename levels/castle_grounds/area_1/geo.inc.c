@@ -8,7 +8,8 @@ const GeoLayout castle_grounds_area_1_geo[] = {
 			GEO_DISPLAY_LIST(LAYER_TRANSPARENT, castle_grounds_dl_castle_courtyard_seg7_dl_070048B8_mesh_001_mesh_layer_5),
 			GEO_DISPLAY_LIST(LAYER_ALPHA, castle_grounds_dl_castle_courtyard_seg7_dl_070048B8_mesh_001_mesh_layer_4),
 		GEO_CLOSE_NODE(),
-		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, 359, -184, 791, castle_grounds_dl_Water_Box_Mesh_mesh_layer_5),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, 182, -365, 821, castle_grounds_dl_Water_Box_Mesh_mesh_layer_5),
+		GEO_TRANSLATE_NODE_WITH_DL(LAYER_TRANSPARENT, -6499, 518, -2645, castle_grounds_dl_Water_Box_Mesh_001_mesh_layer_5),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };

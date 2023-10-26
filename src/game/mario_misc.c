@@ -106,6 +106,7 @@ static void toad_message_walking(void) {
     s16 angle, temp;
     Vec3f toad, target;
     float dist;
+    cur_obj_init_animation(TOAD_ANIM_EAST_WALKING);
     vec3f_get_dist_and_angle((float[]){ o->oPosX, o->oPosY, o->oPosZ }, (float[]){ o->oToadMessageTargetX, o->oPosY, o->oToadMessageTargetZ }, &dist, &temp, &angle);
     o->oFaceAngleYaw = approach_angle(o->oFaceAngleYaw, angle, 1024);
     o->oMoveAngleYaw = angle;
@@ -128,6 +129,7 @@ static void toad_message_idle(void) {
         o->oTimer = 0;
         f32 positions[32];
         struct Object* objs[16];
+        cur_obj_init_animation_with_sound(TOAD_ANIM_EAST_STANDING);
         struct ObjectNode* objList = &gObjectListArray[OBJ_LIST_LEVEL];
         struct ObjectNode* firstObj = objList->next;
         int ptr = 0;

@@ -3477,6 +3477,7 @@ const BehaviorScript bhvToadMessage[] = {
     LOAD_ANIMATIONS(oAnimations, toad_seg6_anims_0600FB58),
     ANIMATE(TOAD_ANIM_WEST_WAVING_BOTH_ARMS),
     SET_INTERACT_TYPE(INTERACT_TEXT),
+    DROP_TO_FLOOR(),
     SET_HITBOX(/*Radius*/ 80, /*Height*/ 100),
     SET_INT(oIntangibleTimer, 0),
     CALL_NATIVE(bhv_init_room),
@@ -6102,6 +6103,7 @@ const BehaviorScript bhvGoldCap[] = {
 const BehaviorScript bhvToadNpcNode[] = {
     BEGIN(OBJ_LIST_LEVEL),
     DROP_TO_FLOOR(),
+    ANIMATE(TOAD_ANIM_WEST_WALKING),
     BEGIN_LOOP(),
     END_LOOP(),
 };
