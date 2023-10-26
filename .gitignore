@@ -1302,8 +1302,6 @@ sound/sequences/sh/21_menu_file_select.m64
 sound/sequences/sh/22_cutscene_lakitu.m64
 sound/sequences/us/01_cutscene_collect_star.m64
 sound/sequences/us/02_menu_title_screen.m64
-sound/sequences/us/03_level_grass.m64
-sound/sequences/us/04_level_inside_castle.m64
 sound/sequences/us/05_level_water.m64
 sound/sequences/us/06_level_hot.m64
 sound/sequences/us/07_level_boss_koopa.m64
@@ -1325,7 +1323,6 @@ sound/sequences/us/16_event_boss.m64
 sound/sequences/us/17_cutscene_collect_key.m64
 sound/sequences/us/18_event_endless_stairs.m64
 sound/sequences/us/19_level_boss_koopa_final.m64
-sound/sequences/us/1A_cutscene_credits.m64
 sound/sequences/us/1B_event_solve_puzzle.m64
 sound/sequences/us/1C_event_toad_message.m64
 sound/sequences/us/1D_event_peach_message.m64
