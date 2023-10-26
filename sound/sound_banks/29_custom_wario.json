@@ -13,22 +13,22 @@
         "inst0": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "00_wario_jump_hoo"
+            "sound": "00"
         },
         "inst1": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "01_wario_jump_wah"
+            "sound": "01"
         },
         "inst2": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "02_wario_yah"
+            "sound": "02"
         },
         "inst3": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "03_wario_haha"
+            "sound": "03"
         },
         "inst4": {
             "release_rate": 208,
@@ -38,68 +38,69 @@
         "inst5": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "05_wario_uh"
+            "sound": "05"
         },
         "inst6": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "06_wario_hrmm"
+            "sound": "06"
         },
         "inst7": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "07_wario_wah2"
+            "sound": "07"
         },
         "inst8": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "08_wario_whoa"
+            "sound": "08"
         },
         "inst9": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "09_wario_eeuh"
+            "sound": "09"
         },
         "inst10": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "0A_wario_attacked"
+            "sound": "0A"
         },
         "inst11": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "0B_wario_ooof"
+            "sound": "0B"
         },
         "inst12": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "0C_wario_here_we_go"
+            "sound": "0C"
         },
         "inst13": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "0D_wario_yawning"
+            "sound": "0D"
         },
         "inst14": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "0E_wario_snoring1"
+            "sound": "0E"
         },
         "inst15": {
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "0F_wario_snoring2"
+            "sound": "0F"
         },
         "inst16": {
-            "ifdef": ["VERSION_US", "VERSION_EU", "VERSION_SH"],
+            "ifdef": ["VERSION_US", "VERSION_EU"],
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "10_wario_doh"
+            "sound": "10"
         },
         "inst17": {
+            "ifdef": ["VERSION_US", "VERSION_EU"],
             "release_rate": 208,
             "envelope": "envelope0",
-            "sound": "11_wario_hoohoo"
+            "sound": "11"
         },
         "inst18": {
             "ifdef": ["VERSION_US", "VERSION_EU"],
