@@ -52,6 +52,7 @@ s32 set_water_plunge_action(struct MarioState *m);
 s32 execute_mario_action(UNUSED struct Object *obj);
 void init_mario(void);
 void init_mario_from_save_file(void);
+u8 mario_is_near_edge(struct MarioState* m);
 extern int Character;
 
 #endif // MARIO_H

@@ -16,6 +16,7 @@
 #include "sound_init.h"
 #include "surface_terrains.h"
 #include "rumble_init.h"
+#include "print.h"
 
 s32 check_common_idle_cancels(struct MarioState *m) {
     mario_drop_held_object(m);
@@ -102,8 +103,23 @@ s32 check_common_hold_idle_cancels(struct MarioState *m) {
     return FALSE;
 }
 
+u8 near_edge_flag = 0;
+
 //! TODO: actionArg names
 s32 act_idle(struct MarioState *m) {
+    u8 near_edge = mario_is_near_edge(m);
+
+    if (near_edge) {
+        set_mario_animation(m, MARIO_ANIM_BALANCING);
+        if (!near_edge_flag) {
+            near_edge_flag = 1;
+            play_sound_if_no_flag(m, SOUND_MARIO_WHOA, MARIO_MARIO_SOUND_PLAYED);
+        }
+        stationary_ground_step(m);
+        return check_common_idle_cancels(m);
+    }
+    if (near_edge_flag) near_edge_flag = 0;
+    
     if (m->quicksandDepth > 30.0f) {
         return set_mario_action(m, ACT_IN_QUICKSAND, 0);
     }
