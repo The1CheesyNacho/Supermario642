@@ -1942,7 +1942,7 @@ void init_mario_from_save_file(void) {
 
 u8 mario_is_near_edge(struct MarioState* m) {
     u8 numPoints = 4;
-    f32 radius = 50.0f;
+    f32 radius = 25.0f;
     f32 falloff = 300.0f;
     u16 step = 65536 / numPoints;
     s16 angle = 0;
