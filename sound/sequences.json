@@ -13,12 +13,11 @@
         "09",
         "0A_mario_peach",
         "26_custom_luigi",
-        "26_custom_luigi",
+        "27_custom_luigi_peach",
+        "28_custom_wario_peach",
         "29_custom_wario",
-        "29_custom_wario",
-        "29_custom_wario",
-        "29_custom_wario",
-        "30_custom_waluigi"
+        "30_custom_waluigi",
+        "31_custom_waluigi_peach"
     ],
     "01_cutscene_collect_star": [
         "22"
@@ -128,7 +127,7 @@
         "starman"
     ],
     "03_level_grass": [
-        "0C_extended_bank"
+        "main_theme"
     ],
     "24_wario": [
         "wario"

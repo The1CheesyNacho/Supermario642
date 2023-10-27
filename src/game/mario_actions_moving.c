@@ -1872,6 +1872,7 @@ s32 act_double_jump_land(struct MarioState *m) {
 s32 act_triple_jump_land(struct MarioState *m) {
       if (Character == 1){
     if (m->input & INPUT_A_PRESSED){
+        play_sound(SOUND_CHARACTER_HERE_WE_GO, m->marioObj->header.gfx.cameraToObject);
         m->vel[1] = 76.0f;
         return set_mario_action(m, ACT_TWIRLING, 0);
     }

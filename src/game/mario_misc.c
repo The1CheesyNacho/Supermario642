@@ -106,9 +106,9 @@ static void toad_message_walking(void) {
     s16 angle, temp;
     Vec3f toad, target;
     float dist;
-    cur_obj_init_animation(TOAD_ANIM_EAST_WALKING);
+    cur_obj_init_animation(TOAD_ANIM_WEST_WALKING);
     vec3f_get_dist_and_angle((float[]){ o->oPosX, o->oPosY, o->oPosZ }, (float[]){ o->oToadMessageTargetX, o->oPosY, o->oToadMessageTargetZ }, &dist, &temp, &angle);
-    o->oFaceAngleYaw = approach_angle(o->oFaceAngleYaw, angle, 1024);
+    o->oFaceAngleYaw = approach_angle(o->oFaceAngleYaw, angle, 1004);
     o->oMoveAngleYaw = angle;
     o->oForwardVel = 5;
     cur_obj_move_xz_using_fvel_and_yaw();
@@ -209,6 +209,8 @@ void bhv_toad_message_loop(void) {
 }
 
 void bhv_toad_message_init(void) {
+
+    o->oGravity = 3.0f;
     s32 saveFlags = save_file_get_flags();
 #ifdef UNLOCK_ALL
     s32 starCount = 999;

@@ -113,7 +113,7 @@ s32 act_idle(struct MarioState *m) {
         set_mario_animation(m, MARIO_ANIM_BALANCING);
         if (!near_edge_flag) {
             near_edge_flag = 1;
-            play_sound_if_no_flag(m, SOUND_MARIO_WHOA, MARIO_MARIO_SOUND_PLAYED);
+            play_sound_if_no_flag(m, SOUND_CHARACTER_WHOA, MARIO_MARIO_SOUND_PLAYED);
         }
         stationary_ground_step(m);
         return check_common_idle_cancels(m);

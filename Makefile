@@ -303,7 +303,7 @@ PYTHON := python3
 ifeq ($(filter clean distclean print-%,$(MAKECMDGOALS)),)
 
   # Make sure assets exist
-  NOEXTRACT ?= 0
+  NOEXTRACT ?= 1
   ifeq ($(NOEXTRACT),0)
     DUMMY != $(PYTHON) extract_assets.py us >&2 || echo FAIL
     ifeq ($(DUMMY),FAIL)
