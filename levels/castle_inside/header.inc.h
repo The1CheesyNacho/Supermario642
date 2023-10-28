@@ -16,7 +16,7 @@ extern Lights1 castle_inside_dl_Material11_f3d_lights;
 extern Lights1 castle_inside_dl_Material12_f3d_lights;
 extern Lights1 castle_inside_dl_Material_063_3ED452ED_c_bmp_f3d_lights;
 extern Lights1 castle_inside_dl_f3dlite_material_008_lights;
-extern u8 castle_inside_dl_Material5_rgba16[];
+extern u8 castle_inside_dl_inside_castle_textures_03800_rgba16_rgba16[];
 extern u8 castle_inside_dl_Material_rgba16[];
 extern u8 castle_inside_dl_Material1_rgba16[];
 extern u8 castle_inside_dl_Material2_rgba16[];

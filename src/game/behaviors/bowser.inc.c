@@ -1095,8 +1095,10 @@ void bowser_act_dance(void) {
 void bowser_spawn_collectable(void) {
     if (o->oBehParams2ndByte == BOWSER_BP_BITS) {
         gSecondCameraFocus = spawn_object(o, MODEL_STAR, bhvGrandStar);
+        obj_spawn_loot_yellow_coins(o, 20, 4.0f);
     } else {
         gSecondCameraFocus = spawn_object(o, MODEL_BOWSER_KEY, bhvBowserKey);
+        obj_spawn_loot_yellow_coins(o, 20, 4.0f);
         cur_obj_play_sound_2(SOUND_GENERAL2_BOWSER_KEY);
     }
     gSecondCameraFocus->oAngleVelYaw = o->oAngleVelYaw;
@@ -1506,7 +1508,7 @@ s8 sBowserRainbowLight[] = { FALSE, FALSE, TRUE };
 /**
  * Set how much health Bowser has on each stage
  */
-s8 sBowserHealth[] = { 1, 2, 0 };
+s8 sBowserHealth[] = { 3, 4, 7 };
 
 /**
  * Update Bowser's actions when he's hands free
