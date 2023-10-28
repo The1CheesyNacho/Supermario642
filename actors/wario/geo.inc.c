@@ -1,5 +1,81 @@
 #include "src/game/envfx_snow.h"
 
+const GeoLayout wario_wario_cap_on_dead[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_switch_option_000_displaylist_cap_on_dead_mesh_layer_1),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_000_switch_option_wario_cap_off_dead[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_switch_option_000_switch_option_000_displaylist_cap_off_dead_mesh_layer_1),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt0_000_switch_opt1_000_switch_opt1[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1_mat_override_wario_eyes_half_closed_001_1),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt0_000_switch_opt1_000_switch_opt2[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1_mat_override_wario_eyes_closed_001_2),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt0_000_switch_opt1_000_switch_opt3[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1_mat_override_A_f3d_002_3),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt0_000_switch_opt1_000_switch_opt4[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1_mat_override_A_f3d_003_4),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt0_000_switch_opt1_000_switch_opt5[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1_mat_override_A_f3d_002_3),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt0_000_switch_opt1_000_switch_opt6[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1_mat_override_A_f3d_002_3),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_wario_cap_off[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_SWITCH_CASE(0, geo_switch_mario_eyes),
+		GEO_OPEN_NODE(),
+			GEO_NODE_START(),
+			GEO_OPEN_NODE(),
+				GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1),
+			GEO_CLOSE_NODE(),
+			GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt0_000_switch_opt1_000_switch_opt1),
+			GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt0_000_switch_opt1_000_switch_opt2),
+			GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt0_000_switch_opt1_000_switch_opt3),
+			GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt0_000_switch_opt1_000_switch_opt4),
+			GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt0_000_switch_opt1_000_switch_opt5),
+			GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt0_000_switch_opt1_000_switch_opt6),
+			GEO_BRANCH(1, wario_000_switch_option_wario_cap_off_dead),
+		GEO_CLOSE_NODE(),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
 const GeoLayout wario_wario_left_hand_open[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
@@ -37,6 +113,82 @@ const GeoLayout wario_wario_right_hand_wing_cap[] = {
 		GEO_ANIMATED_PART(LAYER_OPAQUE, 82, 0, 0, wario_001_switch_option_000_offset_right_hand_wing_cap_mesh_layer_1),
 		GEO_OPEN_NODE(),
 			GEO_DISPLAY_LIST(LAYER_ALPHA, wario_001_switch_option_000_displaylist_right_hand_cap_wings_mesh_layer_4),
+		GEO_CLOSE_NODE(),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt1_jump_wario_wario_cap_on_dead[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_switch_option_000_displaylist_cap_on_dead_mesh_layer_1),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt1_jump_wario_wario_cap_off_jump_wario_000_switch_option_wario_cap_off_dead[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_switch_option_000_switch_option_000_displaylist_cap_off_dead_mesh_layer_1),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt1_000_switch_opt1_000_switch_opt1[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1_mat_override_wario_eyes_half_closed_001_1),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt1_000_switch_opt1_000_switch_opt2[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1_mat_override_wario_eyes_closed_001_2),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt1_000_switch_opt1_000_switch_opt3[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1_mat_override_A_f3d_002_3),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt1_000_switch_opt1_000_switch_opt4[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1_mat_override_A_f3d_003_4),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt1_000_switch_opt1_000_switch_opt5[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1_mat_override_A_f3d_002_3),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt1_000_switch_opt1_000_switch_opt6[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1_mat_override_A_f3d_002_3),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt1_jump_wario_wario_cap_off[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_SWITCH_CASE(0, geo_switch_mario_eyes),
+		GEO_OPEN_NODE(),
+			GEO_NODE_START(),
+			GEO_OPEN_NODE(),
+				GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1),
+			GEO_CLOSE_NODE(),
+			GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt1_000_switch_opt1_000_switch_opt1),
+			GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt1_000_switch_opt1_000_switch_opt2),
+			GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt1_000_switch_opt1_000_switch_opt3),
+			GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt1_000_switch_opt1_000_switch_opt4),
+			GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt1_000_switch_opt1_000_switch_opt5),
+			GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt1_000_switch_opt1_000_switch_opt6),
+			GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt1_jump_wario_wario_cap_off_jump_wario_000_switch_option_wario_cap_off_dead),
 		GEO_CLOSE_NODE(),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
@@ -106,28 +258,21 @@ const GeoLayout wario_002_switch_opt0_001_switch_opt1_000_switch_opt0_000_switch
 const GeoLayout wario_002_switch_opt0_001_switch_opt1_000_switch_opt0_000_switch_001_opt4[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_A_f3d_002_3),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_A_f3d_003_4),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
 const GeoLayout wario_002_switch_opt0_001_switch_opt1_000_switch_opt0_000_switch_001_opt5[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_wario_eyes_closed_001_4),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_wario_eyes_closed_001_5),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
 const GeoLayout wario_002_switch_opt0_001_switch_opt1_000_switch_opt0_000_switch_001_opt6[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_wario_eyes_closed_001_4),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout wario_002_switch_opt0_001_switch_opt1_000_switch_opt0_000_switch_001_opt7[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_A_f3d_001_5),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_wario_eyes_closed_001_5),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -166,9 +311,10 @@ const GeoLayout wario_002_switch_opt0_001_switch_opt1[] = {
 											GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt1_000_switch_opt0_000_switch_001_opt4),
 											GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt1_000_switch_opt0_000_switch_001_opt5),
 											GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt1_000_switch_opt0_000_switch_001_opt6),
-											GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt1_000_switch_opt0_000_switch_001_opt7),
+											GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt1_jump_wario_wario_cap_on_dead),
 										GEO_CLOSE_NODE(),
 									GEO_CLOSE_NODE(),
+									GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt1_jump_wario_wario_cap_off),
 								GEO_CLOSE_NODE(),
 								GEO_TRANSLATE_ROTATE(LAYER_FORCE, 182, -71, -168, 15, -33, -133),
 								GEO_OPEN_NODE(),
@@ -274,6 +420,34 @@ const GeoLayout wario_002_switch_opt0_001_switch_opt1[] = {
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
+const GeoLayout wario_002_switch_opt0_001_switch_opt2_jump_wario_wario_cap_on_dead[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_switch_option_000_displaylist_cap_on_dead_mesh_layer_1_mat_override_metal_002_0),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt2_jump_wario_wario_cap_off_jump_wario_000_switch_option_wario_cap_off_dead[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_switch_option_000_switch_option_000_displaylist_cap_off_dead_mesh_layer_1_mat_override_metal_002_0),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt2_jump_wario_wario_cap_off[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_SWITCH_CASE(0, geo_switch_mario_eyes),
+		GEO_OPEN_NODE(),
+			GEO_NODE_START(),
+			GEO_OPEN_NODE(),
+				GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1_mat_override_metal_002_0),
+			GEO_CLOSE_NODE(),
+			GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt2_jump_wario_wario_cap_off_jump_wario_000_switch_option_wario_cap_off_dead),
+		GEO_CLOSE_NODE(),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
 const GeoLayout wario_002_switch_opt0_001_switch_opt2_jump_wario_wario_left_hand_open[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
@@ -344,8 +518,10 @@ const GeoLayout wario_002_switch_opt0_001_switch_opt2[] = {
 											GEO_OPEN_NODE(),
 												GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_metal_002_0),
 											GEO_CLOSE_NODE(),
+											GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt2_jump_wario_wario_cap_on_dead),
 										GEO_CLOSE_NODE(),
 									GEO_CLOSE_NODE(),
+									GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt2_jump_wario_wario_cap_off),
 								GEO_CLOSE_NODE(),
 								GEO_TRANSLATE_ROTATE(LAYER_FORCE, 182, -71, -168, 15, -33, -133),
 								GEO_OPEN_NODE(),
@@ -451,6 +627,34 @@ const GeoLayout wario_002_switch_opt0_001_switch_opt2[] = {
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
+const GeoLayout wario_002_switch_opt0_001_switch_opt3_jump_wario_wario_cap_on_dead[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_switch_option_000_displaylist_cap_on_dead_mesh_layer_1_mat_override_metal_002_0),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt3_jump_wario_wario_cap_off_jump_wario_000_switch_option_wario_cap_off_dead[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_switch_option_000_switch_option_000_displaylist_cap_off_dead_mesh_layer_1_mat_override_metal_002_0),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout wario_002_switch_opt0_001_switch_opt3_jump_wario_wario_cap_off[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_SWITCH_CASE(0, geo_switch_mario_eyes),
+		GEO_OPEN_NODE(),
+			GEO_NODE_START(),
+			GEO_OPEN_NODE(),
+				GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_switch_option_000_displaylist_cap_off_mesh_layer_1_mat_override_metal_002_0),
+			GEO_CLOSE_NODE(),
+			GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt3_jump_wario_wario_cap_off_jump_wario_000_switch_option_wario_cap_off_dead),
+		GEO_CLOSE_NODE(),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
 const GeoLayout wario_002_switch_opt0_001_switch_opt3_jump_wario_wario_left_hand_open[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
@@ -521,8 +725,10 @@ const GeoLayout wario_002_switch_opt0_001_switch_opt3[] = {
 											GEO_OPEN_NODE(),
 												GEO_DISPLAY_LIST(LAYER_TRANSPARENT, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_metal_002_0),
 											GEO_CLOSE_NODE(),
+											GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt3_jump_wario_wario_cap_on_dead),
 										GEO_CLOSE_NODE(),
 									GEO_CLOSE_NODE(),
+									GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt3_jump_wario_wario_cap_off),
 								GEO_CLOSE_NODE(),
 								GEO_TRANSLATE_ROTATE(LAYER_FORCE, 182, -71, -168, 15, -33, -133),
 								GEO_OPEN_NODE(),
@@ -652,28 +858,21 @@ const GeoLayout wario_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch
 const GeoLayout wario_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt4[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_A_f3d_002_3),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_A_f3d_003_4),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
 const GeoLayout wario_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt5[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_wario_eyes_closed_001_4),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_wario_eyes_closed_001_5),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
 const GeoLayout wario_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt6[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_wario_eyes_closed_001_4),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout wario_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt7[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_A_f3d_001_5),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, wario_000_displaylist_cap_on_mesh_layer_1_mat_override_wario_eyes_closed_001_5),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -726,9 +925,10 @@ const GeoLayout wario_geo[] = {
 																	GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt4),
 																	GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt5),
 																	GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt6),
-																	GEO_BRANCH(1, wario_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt7),
+																	GEO_BRANCH(1, wario_wario_cap_on_dead),
 																GEO_CLOSE_NODE(),
 															GEO_CLOSE_NODE(),
+															GEO_BRANCH(1, wario_wario_cap_off),
 														GEO_CLOSE_NODE(),
 														GEO_TRANSLATE_ROTATE(LAYER_FORCE, 182, -71, -168, 15, -33, -133),
 														GEO_OPEN_NODE(),
