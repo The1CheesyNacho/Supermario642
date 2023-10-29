@@ -28,6 +28,7 @@
 #include "config.h"
 #include "puppyprint.h"
 #include "profiling.h"
+#include "cutscene.h"
 
 #define CBUTTON_MASK (U_CBUTTONS | D_CBUTTONS | L_CBUTTONS | R_CBUTTONS)
 
@@ -2874,6 +2875,13 @@ void update_camera(struct Camera *c) {
     PROFILER_GET_SNAPSHOT_TYPE(PROFILER_DELTA_COLLISION);
     gCamera = c;
     update_camera_hud_status(c);
+    if (cutscene_active) {
+        cutscene_step();
+        c->yaw = calculate_yaw(c->pos, c->focus);
+        vec3f_copy(gLakituState.pos, c->pos);
+        vec3f_copy(gLakituState.focus, c->focus);
+        return;
+    }
     if (c->cutscene == CUTSCENE_NONE
 #ifdef PUPPYCAM
         && !gPuppyCam.enabled
@@ -3746,6 +3754,10 @@ s32 find_c_buttons_pressed(u16 currentState, u16 buttonsPressed, u16 buttonsDown
  * Determine which icon to show on the HUD
  */
 s32 update_camera_hud_status(struct Camera *c) {
+    if (cutscene_active) {
+        set_hud_camera_status(CAM_STATUS_NONE);
+        return CAM_STATUS_NONE;
+    }
     s16 status = CAM_STATUS_NONE;
 
     if (c->cutscene != CUTSCENE_NONE

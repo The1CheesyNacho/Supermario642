@@ -1,7 +1,10 @@
-#include "cutscene.h"
+#include "game/cutscene.h"
 
-#include "object_helpers.h"
-#include "behavior_data.h"
+#include "game/object_helpers.h"
+#include "include/behavior_data.h"
+#include "include/seq_ids.h"
+#include "audio/external.h"
+#include "game/camera.h"
 
 u8 cutscene_active = 0;
 CutsceneActor cutscene_actors[32];
@@ -11,7 +14,7 @@ u32 current_frame = 0;
 u32 cutscene_num_keyframes = 0;
 u32 cutscene_num_events = 0;
 
-void cutscene_start(Cutscene cutscene) {
+void cutscene_start_func(Cutscene cutscene) {
     cutscene_stop();
     cutscene_active = 1;
     current_frame = 0;
@@ -58,6 +61,7 @@ void cutscene_start(Cutscene cutscene) {
                 cutscene_events[cutscene_num_events].arg2 = (u16)cutscene[3];
                 cutscene_events[cutscene_num_events].arg3 = (u16)cutscene[4];
                 cutscene_events[cutscene_num_events].arg4 = (u16)cutscene[5];
+                cutscene_events[cutscene_num_events].frame = frame;
                 cutscene_num_events++;
                 break;
         }
@@ -67,6 +71,7 @@ void cutscene_start(Cutscene cutscene) {
 
 void cutscene_stop() {
     if (!cutscene_active) return;
+        enable_time_stop_including_mario();
     for (u8 i = 0; i < 32; i++) {
         obj_mark_for_deletion(cutscene_actors[i]);
     }
@@ -89,8 +94,48 @@ void cutscene_step() {
         }
     }
     for (u8 i = 0; i < 32; i++) {
+        if (next_keyframes[i] == NULL && prev_keyframes[i] == NULL) continue; 
         if (next_keyframes[i] == NULL && prev_keyframes[i] != NULL) next_keyframes[i] = prev_keyframes[i];
         if (prev_keyframes[i] == NULL && next_keyframes[i] != NULL) prev_keyframes[i] = next_keyframes[i];
+        f32 interpolation = (f32)(current_frame - prev_keyframes[i]->frame) / (f32)(next_keyframes[i]->frame - prev_keyframes[i]->frame);
+        switch (prev_keyframes[i]->interpolation) {
+            case (u8)CUTIP_FAST: interpolation = 1 - (1 - interpolation) * (1 - interpolation); break;
+            case (u8)CUTIP_SLOW: interpolation = interpolation * interpolation; break;
+            case (u8)CUTIP_SMOOTH: interpolation = interpolation < 0.5 ? 2 * interpolation * interpolation : 1 - ((-2 * interpolation + 2) * (-2 * interpolation + 2)) / 2; break;
+            case (u8)CUTIP_WAIT: interpolation = floor(interpolation); break;
+        }
+        cutscene_actors[i]->oPosX = (f32)((next_keyframes[i]->x - prev_keyframes[i]->x) * interpolation + prev_keyframes[i]->x);
+        cutscene_actors[i]->oPosY = (f32)((next_keyframes[i]->y - prev_keyframes[i]->y) * interpolation + prev_keyframes[i]->y);
+        cutscene_actors[i]->oPosZ = (f32)((next_keyframes[i]->z - prev_keyframes[i]->z) * interpolation + prev_keyframes[i]->z);
     }
+    for (u8 i = 0; i < cutscene_num_events; i++) {
+        if (cutscene_events[i].frame == current_frame) {
+            switch (cutscene_events[i].type) {
+                case (u8)CUTEV_END:
+                    cutscene_stop();
+                    break;
+                case (u8)CUTEV_BGM:
+                    play_music(SEQ_PLAYER_LEVEL, SEQUENCE_ARGS(4, cutscene_events[i].arg1), 0);
+                    break;
+                case (u8)CUTEV_SFX:
+                    play_sound(cutscene_events[i].arg1, gLakituState.pos);
+                    break;
+                case (u8)CUTEV_STARTNEW:
+                    cutscene_start_func(*cutscenes[cutscene_events[i].arg1]);
+                    break;
+                case (u8)CUTEV_SET_MODEL:
+                    obj_set_model(cutscene_actors[cutscene_events[i].arg1], cutscene_events[i].arg2);
+                    break;
+                case (u8)CUTEV_SET_ANIM:
+                    struct Object* obj = cutscene_actors[cutscene_events[i].arg1];
+                    geo_obj_init_animation(&obj->header.gfx, &obj->oAnimations[cutscene_events[i].arg2]);
+                    break;
+            }
+        }
+    }
+    vec3f_set(gCamera->pos, cutscene_actors[CAMPOS]->oPosX, cutscene_actors[CAMPOS]->oPosY, cutscene_actors[CAMPOS]->oPosZ);
+    f32 yaw = cutscene_actors[CAMROT]->oPosY;
+    f32 pitch = cutscene_actors[CAMROT]->oPosX;
+    vec3f_set_dist_and_angle(gCamera->focus, gCamera->pos, 100, (s16)pitch, (s16)yaw);
     current_frame++;
 }

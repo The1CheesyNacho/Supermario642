@@ -22,6 +22,7 @@ typedef struct {
     u16 arg2;
     u16 arg3;
     u16 arg4;
+    u32 frame;
 } CutsceneEvent;
 
 #define CAMPOS 30
@@ -52,8 +53,6 @@ typedef struct {
 #define CUTSCENE_EVENT_ARG1(ev, arg1                  ) (void*)6, (void*)ev, (void*)arg1, (void*)0   , (void*)0   , (void*)0
 #define CUTSCENE_EVENT(     ev                        ) (void*)6, (void*)ev, (void*)0   , (void*)0   , (void*)0   , (void*)0
 
-extern Cutscene cutscene_test;
-
 extern u8 cutscene_active;
 extern CutsceneActor cutscene_actors[];
 extern CutsceneKeyframe cutscene_keyframes[];
@@ -62,7 +61,16 @@ extern u32 current_frame;
 extern u32 cutscene_num_keyframes;
 extern u32 cutscene_num_events;
 
-extern void cutscene_start(Cutscene cutscene);
+#define cutscene_start(id) cutscene_start_func(cutscenes[id])
+#define cutscene_test 0
+
+inline Cutscene* cutscenes[] = {
+    { // cutscene_test
+        CUTSCENE_SCRIPT_END()
+    }
+};
+
+extern void cutscene_start_func(Cutscene cutscene);
 extern void cutscene_stop();
 extern void cutscene_step();
 
