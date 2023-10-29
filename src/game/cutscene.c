@@ -23,12 +23,14 @@ Cutscene* cutscenes[] = {
 void cutscene_start_func(Cutscene cutscene) {
     u32 prev_frame = 0;
     u32 frame = 0;
+    u32 temp;
+    u32 i;
     cutscene_stop();
     enable_time_stop_including_mario();
     cutscene_active = 1;
     current_frame = 0;
     cutscene_num_keyframes = 0;
-    for (u8 i = 0; i < 32; i++) {
+    for (i = 0; i < 32; i++) {
         cutscene_actors[i] = spawn_object(NULL, MODEL_NONE, bhvCutsceneActor);
     }
     while (cutscene[0]) {
@@ -43,7 +45,7 @@ void cutscene_start_func(Cutscene cutscene) {
                 frame += prev_frame;
                 break;
             case 3:
-                u32 temp = prev_frame;
+                temp = prev_frame;
                 prev_frame = frame;
                 frame = temp;
                 break;
@@ -77,9 +79,10 @@ void cutscene_start_func(Cutscene cutscene) {
 }
 
 void cutscene_stop() {
+    u32 i;
     if (!cutscene_active) return;
     disable_time_stop_including_mario();
-    for (u8 i = 0; i < 32; i++) {
+    for (i = 0; i < 32; i++) {
         obj_mark_for_deletion(cutscene_actors[i]);
     }
     cutscene_active = 0;
@@ -120,7 +123,7 @@ void cutscene_step() {
         cutscene_actors[i]->oPosY = (f32)((next_keyframes[i]->y - prev_keyframes[i]->y) * interpolation + prev_keyframes[i]->y);
         cutscene_actors[i]->oPosZ = (f32)((next_keyframes[i]->z - prev_keyframes[i]->z) * interpolation + prev_keyframes[i]->z);
     }
-    for (u8 i = 0; i < cutscene_num_events; i++) {
+    for (i = 0; i < cutscene_num_events; i++) {
         if (cutscene_events[i].frame == current_frame) {
             switch (cutscene_events[i].type) {
                 case (u8)CUTEV_END:
