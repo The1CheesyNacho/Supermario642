@@ -92,6 +92,7 @@ void cutscene_step() {
     u8 i;
     f32 interpolation;
     f32 yaw, pitch;
+    struct Object* obj;
     if (!cutscene_active) return;
     for (i = 0; i < cutscene_num_keyframes; i++) {
         actor = cutscene_keyframes[i].actor;
@@ -138,7 +139,7 @@ void cutscene_step() {
                     obj_set_model(cutscene_actors[cutscene_events[i].arg1], cutscene_events[i].arg2);
                     break;
                 case (u8)CUTEV_SET_ANIM:
-                    struct Object* obj = cutscene_actors[cutscene_events[i].arg1];
+                    obj = cutscene_actors[cutscene_events[i].arg1];
                     geo_obj_init_animation(&obj->header.gfx, &obj->oAnimations[cutscene_events[i].arg2]);
                     break;
             }
