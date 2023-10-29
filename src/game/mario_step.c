@@ -631,7 +631,7 @@ void apply_gravity(struct MarioState *m) {
         }
     }
     if (Character == 2){
-        m->vel[1] -= 3.5f;
+        m->vel[1] -= 3.0f;
         if (m->vel[1] < -75.0f) {
             m->vel[1] = -75.0f;
         }
@@ -677,7 +677,7 @@ void apply_gravity(struct MarioState *m) {
         }
     }
     if (Character == 1) {
-        m->vel[1] -= 3.7f;
+        m->vel[1] -= 3.0f;
         if (m->vel[1] < -75.0f) {
             m->vel[1] = -75.0f;
         }

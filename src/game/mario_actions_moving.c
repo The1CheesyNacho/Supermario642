@@ -218,6 +218,7 @@ s32 update_sliding(struct MarioState *m, f32 stopSpeed) {
         forward *= 0.5f + 0.5f * m->forwardVel / 100.0f;
     }
 
+if (Character == 0){
     switch (mario_get_floor_class(m)) {
         case SURFACE_CLASS_VERY_SLIPPERY:
             accel = 10.0f;
@@ -239,6 +240,79 @@ s32 update_sliding(struct MarioState *m, f32 stopSpeed) {
             lossFactor = m->intendedMag / 32.0f * forward * 0.02f + 0.92f;
             break;
     }
+}
+
+if (Character == 1){
+    switch (mario_get_floor_class(m)) {
+        case SURFACE_CLASS_VERY_SLIPPERY:
+            accel = 12.0f;
+            lossFactor = m->intendedMag / 32.0f * forward * 0.02f + 0.98f;
+            break;
+
+        case SURFACE_CLASS_SLIPPERY:
+            accel = 10.0f;
+            lossFactor = m->intendedMag / 32.0f * forward * 0.02f + 0.96f;
+            break;
+
+        default:
+            accel = 9.0f;
+            lossFactor = m->intendedMag / 32.0f * forward * 0.02f + 0.92f;
+            break;
+
+        case SURFACE_CLASS_NOT_SLIPPERY:
+            accel = 7.0f;
+            lossFactor = m->intendedMag / 32.0f * forward * 0.02f + 0.92f;
+            break;
+    }
+}
+
+if (Character == 2){
+    switch (mario_get_floor_class(m)) {
+        case SURFACE_CLASS_VERY_SLIPPERY:
+            accel = 7.0f;
+            lossFactor = m->intendedMag / 32.0f * forward * 0.02f + 0.98f;
+            break;
+
+        case SURFACE_CLASS_SLIPPERY:
+            accel = 5.0f;
+            lossFactor = m->intendedMag / 32.0f * forward * 0.02f + 0.96f;
+            break;
+
+        default:
+            accel = 4.0f;
+            lossFactor = m->intendedMag / 32.0f * forward * 0.02f + 0.92f;
+            break;
+
+        case SURFACE_CLASS_NOT_SLIPPERY:
+            accel = 3.0f;
+            lossFactor = m->intendedMag / 32.0f * forward * 0.02f + 0.92f;
+            break;
+    }
+}
+
+if (Character == 3){
+    switch (mario_get_floor_class(m)) {
+        case SURFACE_CLASS_VERY_SLIPPERY:
+            accel = 14.0f;
+            lossFactor = m->intendedMag / 32.0f * forward * 0.02f + 0.98f;
+            break;
+
+        case SURFACE_CLASS_SLIPPERY:
+            accel = 12.0f;
+            lossFactor = m->intendedMag / 32.0f * forward * 0.02f + 0.96f;
+            break;
+
+        default:
+            accel = 11.0f;
+            lossFactor = m->intendedMag / 32.0f * forward * 0.02f + 0.92f;
+            break;
+
+        case SURFACE_CLASS_NOT_SLIPPERY:
+            accel = 9.0f;
+            lossFactor = m->intendedMag / 32.0f * forward * 0.02f + 0.92f;
+            break;
+    }
+}
 
     oldSpeed = sqrtf(m->slideVelX * m->slideVelX + m->slideVelZ * m->slideVelZ);
 

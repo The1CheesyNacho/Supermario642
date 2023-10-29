@@ -133,11 +133,6 @@ u8 castle_grounds_dl_castle_grounds_textures_04800_rgba16_i8_copy[] = {
 	#include "levels/castle_grounds/castle_grounds_textures.04800.rgba16.i8.inc.c"
 };
 
-Gfx castle_grounds_dl_castle_grounds_textures_0B400_rgba16_rgba16_aligner[] = {gsSPEndDisplayList()};
-u8 castle_grounds_dl_castle_grounds_textures_0B400_rgba16_rgba16[] = {
-	#include "levels/castle_grounds/castle_grounds_textures.0B400.rgba16.inc.c"
-};
-
 Gfx castle_grounds_dl_fes_rgba16_i8_i8_aligner[] = {gsSPEndDisplayList()};
 u8 castle_grounds_dl_fes_rgba16_i8_i8[] = {
 	#include "levels/castle_grounds/fes.rgba16.i8.inc.c"
@@ -173,6 +168,11 @@ u8 castle_grounds_dl_castle_grounds_textures_08000_rgba16_rgba16[] = {
 	#include "levels/castle_grounds/castle_grounds_textures.08000.rgba16.inc.c"
 };
 
+Gfx castle_grounds_dl_castle_grounds_textures_0B400_rgba16_rgba16_aligner[] = {gsSPEndDisplayList()};
+u8 castle_grounds_dl_castle_grounds_textures_0B400_rgba16_rgba16[] = {
+	#include "levels/castle_grounds/castle_grounds_textures.0B400.rgba16.inc.c"
+};
+
 Gfx castle_grounds_dl_imgonline_com_ua_TextureSeamless_iI5JwGKHdtJWpD_rgba16_aligner[] = {gsSPEndDisplayList()};
 u8 castle_grounds_dl_imgonline_com_ua_TextureSeamless_iI5JwGKHdtJWpD_rgba16[] = {
 	#include "levels/castle_grounds/imgonline-com-ua-TextureSeamless-iI5JwGKHdtJWpD.rgba16.inc.c"
@@ -181,5 +181,10 @@ u8 castle_grounds_dl_imgonline_com_ua_TextureSeamless_iI5JwGKHdtJWpD_rgba16[] = 
 Gfx castle_grounds_dl_castle_grounds_textures_02000_rgba16_rgba16_aligner[] = {gsSPEndDisplayList()};
 u8 castle_grounds_dl_castle_grounds_textures_02000_rgba16_rgba16[] = {
 	#include "levels/castle_grounds/castle_grounds_textures.02000.rgba16.inc.c"
+};
+
+Gfx castle_grounds_dl__0_rgba16_rgba16_aligner[] = {gsSPEndDisplayList()};
+u8 castle_grounds_dl__0_rgba16_rgba16[] = {
+	#include "levels/castle_grounds/_0.rgba16.inc.c"
 };
 

@@ -1,11 +1,97 @@
 #include "src/game/envfx_snow.h"
 
+const GeoLayout waluigi_armature_002_switch_option_003[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_SWITCH_CASE(0, geo_switch_mario_eyes),
+		GEO_OPEN_NODE(),
+			GEO_NODE_START(),
+			GEO_OPEN_NODE(),
+				GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_002_switch_option_head_hurt_mesh_layer_1),
+			GEO_CLOSE_NODE(),
+		GEO_CLOSE_NODE(),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout waluigi_002_switch_option_armature_002_switch_option_001[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_SWITCH_CASE(0, geo_switch_mario_eyes),
+		GEO_OPEN_NODE(),
+			GEO_NODE_START(),
+			GEO_OPEN_NODE(),
+				GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_002_switch_option_002_switch_option_head__no_cap__hurt_mesh_layer_1),
+			GEO_CLOSE_NODE(),
+		GEO_CLOSE_NODE(),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt1_switch_face_opt1[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_002_switch_option_head__no_cap__mesh_layer_1_mat_override_f3dlite_material_018_0),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt1_switch_face_opt2[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_002_switch_option_head__no_cap__mesh_layer_1_mat_override_f3dlite_material_019_1),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt1_switch_face_opt3[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_002_switch_option_head__no_cap__mesh_layer_1_mat_override_f3dlite_material_006_2),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt1_switch_face_opt4[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_002_switch_option_head__no_cap__mesh_layer_1_mat_override_f3dlite_material_007_3),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt1_switch_face_opt5[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_002_switch_option_head__no_cap__mesh_layer_1_mat_override_f3dlite_material_006_2),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt1_switch_face_opt6[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_002_switch_option_head__no_cap__mesh_layer_1_mat_override_f3dlite_material_006_2),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
+const GeoLayout waluigi_armature_002_switch_option_002[] = {
+	GEO_NODE_START(),
+	GEO_OPEN_NODE(),
+		GEO_SWITCH_CASE(0, geo_switch_mario_eyes),
+		GEO_OPEN_NODE(),
+			GEO_NODE_START(),
+			GEO_OPEN_NODE(),
+				GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_002_switch_option_head__no_cap__mesh_layer_1),
+			GEO_CLOSE_NODE(),
+			GEO_BRANCH(1, waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt1_switch_face_opt1),
+			GEO_BRANCH(1, waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt1_switch_face_opt2),
+			GEO_BRANCH(1, waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt1_switch_face_opt3),
+			GEO_BRANCH(1, waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt1_switch_face_opt4),
+			GEO_BRANCH(1, waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt1_switch_face_opt5),
+			GEO_BRANCH(1, waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt1_switch_face_opt6),
+			GEO_BRANCH(1, waluigi_002_switch_option_armature_002_switch_option_001),
+		GEO_CLOSE_NODE(),
+	GEO_CLOSE_NODE(),
+	GEO_RETURN(),
+};
 const GeoLayout waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt1[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_000_displaylist_mesh_layer_1_mat_override_f3dlite_material_018_0),
-		GEO_DISPLAY_LIST(LAYER_ALPHA, waluigi_000_displaylist_mesh_layer_4_mat_override_f3dlite_material_018_0),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, waluigi_000_displaylist_mesh_layer_5_mat_override_f3dlite_material_018_0),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -13,53 +99,34 @@ const GeoLayout waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_swit
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_000_displaylist_mesh_layer_1_mat_override_f3dlite_material_019_1),
-		GEO_DISPLAY_LIST(LAYER_ALPHA, waluigi_000_displaylist_mesh_layer_4_mat_override_f3dlite_material_019_1),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, waluigi_000_displaylist_mesh_layer_5_mat_override_f3dlite_material_019_1),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
 const GeoLayout waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt3[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_000_displaylist_mesh_layer_1_mat_override_f3dlite_material_001_2),
-		GEO_DISPLAY_LIST(LAYER_ALPHA, waluigi_000_displaylist_mesh_layer_4_mat_override_f3dlite_material_001_2),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, waluigi_000_displaylist_mesh_layer_5_mat_override_f3dlite_material_001_2),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_000_displaylist_mesh_layer_1_mat_override_f3dlite_material_006_2),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
 const GeoLayout waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt4[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_000_displaylist_mesh_layer_1_mat_override_f3dlite_material_001_2),
-		GEO_DISPLAY_LIST(LAYER_ALPHA, waluigi_000_displaylist_mesh_layer_4_mat_override_f3dlite_material_001_2),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, waluigi_000_displaylist_mesh_layer_5_mat_override_f3dlite_material_001_2),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_000_displaylist_mesh_layer_1_mat_override_f3dlite_material_007_3),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
 const GeoLayout waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt5[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_000_displaylist_mesh_layer_1_mat_override_f3dlite_material_019_1),
-		GEO_DISPLAY_LIST(LAYER_ALPHA, waluigi_000_displaylist_mesh_layer_4_mat_override_f3dlite_material_019_1),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, waluigi_000_displaylist_mesh_layer_5_mat_override_f3dlite_material_019_1),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_000_displaylist_mesh_layer_1_mat_override_f3dlite_material_006_2),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
 const GeoLayout waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt6[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_000_displaylist_mesh_layer_1_mat_override_f3dlite_material_019_1),
-		GEO_DISPLAY_LIST(LAYER_ALPHA, waluigi_000_displaylist_mesh_layer_4_mat_override_f3dlite_material_019_1),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, waluigi_000_displaylist_mesh_layer_5_mat_override_f3dlite_material_019_1),
-	GEO_CLOSE_NODE(),
-	GEO_RETURN(),
-};
-const GeoLayout waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt7[] = {
-	GEO_NODE_START(),
-	GEO_OPEN_NODE(),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_000_displaylist_mesh_layer_1_mat_override_f3dlite_material_015_3),
-		GEO_DISPLAY_LIST(LAYER_ALPHA, waluigi_000_displaylist_mesh_layer_4_mat_override_f3dlite_material_015_3),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, waluigi_000_displaylist_mesh_layer_5_mat_override_f3dlite_material_015_3),
+		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_000_displaylist_mesh_layer_1_mat_override_f3dlite_material_007_3),
 	GEO_CLOSE_NODE(),
 	GEO_RETURN(),
 };
@@ -104,8 +171,6 @@ const GeoLayout waluigi_geo[] = {
 																	GEO_NODE_START(),
 																	GEO_OPEN_NODE(),
 																		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_000_displaylist_mesh_layer_1),
-																		GEO_DISPLAY_LIST(LAYER_ALPHA, waluigi_000_displaylist_mesh_layer_4),
-																		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, waluigi_000_displaylist_mesh_layer_5),
 																	GEO_CLOSE_NODE(),
 																	GEO_BRANCH(1, waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt1),
 																	GEO_BRANCH(1, waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt2),
@@ -113,9 +178,10 @@ const GeoLayout waluigi_geo[] = {
 																	GEO_BRANCH(1, waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt4),
 																	GEO_BRANCH(1, waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt5),
 																	GEO_BRANCH(1, waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt6),
-																	GEO_BRANCH(1, waluigi_002_switch_opt0_001_switch_opt0_000_switch_opt0_000_switch_001_opt7),
+																	GEO_BRANCH(1, waluigi_armature_002_switch_option_003),
 																GEO_CLOSE_NODE(),
 															GEO_CLOSE_NODE(),
+															GEO_BRANCH(1, waluigi_armature_002_switch_option_002),
 														GEO_CLOSE_NODE(),
 														GEO_TRANSLATE_ROTATE(LAYER_FORCE, 142, -51, -126, 15, -33, -133),
 														GEO_OPEN_NODE(),
@@ -222,7 +288,6 @@ const GeoLayout waluigi_geo[] = {
 		GEO_CLOSE_NODE(),
 		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_material_revert_render_settings),
 		GEO_DISPLAY_LIST(LAYER_ALPHA, waluigi_material_revert_render_settings),
-		GEO_DISPLAY_LIST(LAYER_TRANSPARENT, waluigi_material_revert_render_settings),
 	GEO_CLOSE_NODE(),
 	GEO_END(),
 };
