@@ -14,16 +14,23 @@ u32 current_frame = 0;
 u32 cutscene_num_keyframes = 0;
 u32 cutscene_num_events = 0;
 
+Cutscene* cutscenes[] = {
+    { // cutscene_test
+        CUTSCENE_SCRIPT_END()
+    }
+};
+
 void cutscene_start_func(Cutscene cutscene) {
+    u32 prev_frame = 0;
+    u32 frame = 0;
     cutscene_stop();
+    enable_time_stop_including_mario();
     cutscene_active = 1;
     current_frame = 0;
     cutscene_num_keyframes = 0;
     for (u8 i = 0; i < 32; i++) {
         cutscene_actors[i] = spawn_object(NULL, MODEL_NONE, bhvCutsceneActor);
     }
-    u32 prev_frame = 0;
-    u32 frame = 0;
     while (cutscene[0]) {
         switch ((u8)cutscene[0]) {
             case 1:
@@ -71,7 +78,7 @@ void cutscene_start_func(Cutscene cutscene) {
 
 void cutscene_stop() {
     if (!cutscene_active) return;
-        enable_time_stop_including_mario();
+    disable_time_stop_including_mario();
     for (u8 i = 0; i < 32; i++) {
         obj_mark_for_deletion(cutscene_actors[i]);
     }
@@ -79,11 +86,15 @@ void cutscene_stop() {
 }
 
 void cutscene_step() {
-    if (!cutscene_active) return;
     CutsceneKeyframe* next_keyframes[32];
     CutsceneKeyframe* prev_keyframes[32];
-    for (u8 i = 0; i < cutscene_num_keyframes; i++) {
-        u8 actor = cutscene_keyframes[i].actor;
+    u8 actor;
+    u8 i;
+    f32 interpolation;
+    f32 yaw, pitch;
+    if (!cutscene_active) return;
+    for (i = 0; i < cutscene_num_keyframes; i++) {
+        actor = cutscene_keyframes[i].actor;
         if (i < cutscene_keyframes[i].frame) {
             if (next_keyframes[actor] == NULL) next_keyframes[actor] = &cutscene_keyframes[i];
             else if (next_keyframes[actor]->frame < cutscene_keyframes[i].frame) next_keyframes[actor] = &cutscene_keyframes[i];
@@ -93,11 +104,11 @@ void cutscene_step() {
             else if (prev_keyframes[actor]->frame > cutscene_keyframes[i].frame) prev_keyframes[actor] = &cutscene_keyframes[i];
         }
     }
-    for (u8 i = 0; i < 32; i++) {
+    for (i = 0; i < 32; i++) {
         if (next_keyframes[i] == NULL && prev_keyframes[i] == NULL) continue; 
         if (next_keyframes[i] == NULL && prev_keyframes[i] != NULL) next_keyframes[i] = prev_keyframes[i];
         if (prev_keyframes[i] == NULL && next_keyframes[i] != NULL) prev_keyframes[i] = next_keyframes[i];
-        f32 interpolation = (f32)(current_frame - prev_keyframes[i]->frame) / (f32)(next_keyframes[i]->frame - prev_keyframes[i]->frame);
+        interpolation = (f32)(current_frame - prev_keyframes[i]->frame) / (f32)(next_keyframes[i]->frame - prev_keyframes[i]->frame);
         switch (prev_keyframes[i]->interpolation) {
             case (u8)CUTIP_FAST: interpolation = 1 - (1 - interpolation) * (1 - interpolation); break;
             case (u8)CUTIP_SLOW: interpolation = interpolation * interpolation; break;
@@ -134,8 +145,8 @@ void cutscene_step() {
         }
     }
     vec3f_set(gCamera->pos, cutscene_actors[CAMPOS]->oPosX, cutscene_actors[CAMPOS]->oPosY, cutscene_actors[CAMPOS]->oPosZ);
-    f32 yaw = cutscene_actors[CAMROT]->oPosY;
-    f32 pitch = cutscene_actors[CAMROT]->oPosX;
+    yaw = cutscene_actors[CAMROT]->oPosY;
+    pitch = cutscene_actors[CAMROT]->oPosX;
     vec3f_set_dist_and_angle(gCamera->focus, gCamera->pos, 100, (s16)pitch, (s16)yaw);
     current_frame++;
 }

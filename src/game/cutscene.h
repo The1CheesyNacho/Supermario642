@@ -61,14 +61,10 @@ extern u32 current_frame;
 extern u32 cutscene_num_keyframes;
 extern u32 cutscene_num_events;
 
-#define cutscene_start(id) cutscene_start_func(cutscenes[id])
+#define cutscene_start(id) cutscene_start_func(*cutscenes[id])
 #define cutscene_test 0
 
-inline Cutscene* cutscenes[] = {
-    { // cutscene_test
-        CUTSCENE_SCRIPT_END()
-    }
-};
+extern Cutscene* cutscenes[];
 
 extern void cutscene_start_func(Cutscene cutscene);
 extern void cutscene_stop();
