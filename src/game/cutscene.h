@@ -62,8 +62,8 @@ extern u32 current_frame;
 extern u32 cutscene_num_keyframes;
 extern u32 cutscene_num_events;
 
-void start_cutscene(Cutscene cutscene);
-void stop_cutscene();
-void cutscene_step();
+extern void cutscene_start(Cutscene cutscene);
+extern void cutscene_stop();
+extern void cutscene_step();
 
 #endif

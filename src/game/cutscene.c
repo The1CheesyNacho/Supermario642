@@ -11,8 +11,8 @@ u32 current_frame = 0;
 u32 cutscene_num_keyframes = 0;
 u32 cutscene_num_events = 0;
 
-void start_cutscene(Cutscene cutscene) {
-    stop_cutscene();
+void cutscene_start(Cutscene cutscene) {
+    cutscene_stop();
     cutscene_active = 1;
     current_frame = 0;
     cutscene_num_keyframes = 0;
@@ -65,7 +65,7 @@ void start_cutscene(Cutscene cutscene) {
     }
 }
 
-void stop_cutscene() {
+void cutscene_stop() {
     if (!cutscene_active) return;
     for (u8 i = 0; i < 32; i++) {
         obj_mark_for_deletion(cutscene_actors[i]);
