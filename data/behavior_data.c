@@ -6107,3 +6107,10 @@ const BehaviorScript bhvToadNpcNode[] = {
     BEGIN_LOOP(),
     END_LOOP(),
 };
+
+const BehaviorScript bhvCutsceneActor[] = {
+    BEGIN(OBJ_LIST_DEFAULT),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    BEGIN_LOOP(),
+    END_LOOP(),
+};
