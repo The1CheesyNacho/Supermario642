@@ -6114,3 +6114,21 @@ const BehaviorScript bhvCutsceneActor[] = {
     BEGIN_LOOP(),
     END_LOOP(),
 };
+
+UNUSED static const u64 behavior_data_unused_0 = 0;
+const BehaviorScript bhvLuigi[] = {
+    BEGIN(OBJ_LIST_PLAYER),
+    SET_INT(oIntangibleTimer, 0),
+    OR_LONG(oFlags, (OBJ_FLAG_PLAYER | OBJ_FLAG_SILHOUETTE)),
+    OR_INT(oUnk94, 0x0001),
+    SET_HITBOX(/*Radius*/ 37, /*Height*/ 160),
+    BEGIN_LOOP(),
+#ifdef VANILLA_DEBUG
+        CALL_NATIVE(try_print_debug_mario_level_info),
+#endif
+        CALL_NATIVE(bhv_mario_update),
+#ifdef VANILLA_DEBUG
+        CALL_NATIVE(try_do_mario_debug_object_spawn),
+#endif
+    END_LOOP(),
+};
