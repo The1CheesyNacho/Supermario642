@@ -44,6 +44,7 @@ s16 gMenuOptSelectIndex;
 s16 gSaveOptSelectIndex;
 
 struct SpawnInfo *gMarioSpawnInfo = &gPlayerSpawnInfos[0];
+struct SpawnInfo *gLuigiSpawnInfo = &gPlayerSpawnInfos[1];
 struct GraphNode **gLoadedGraphNodes = gGraphNodePointers;
 struct Area *gAreas = gAreaData;
 struct Area *gCurrentArea = NULL;

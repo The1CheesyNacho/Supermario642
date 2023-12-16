@@ -6115,7 +6115,7 @@ const BehaviorScript bhvCutsceneActor[] = {
     END_LOOP(),
 };
 
-UNUSED static const u64 behavior_data_unused_0 = 0;
+UNUSED static const u64 behavior_data_unused_2 = 2;
 const BehaviorScript bhvLuigi[] = {
     BEGIN(OBJ_LIST_PLAYER),
     SET_INT(oIntangibleTimer, 0),

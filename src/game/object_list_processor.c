@@ -95,8 +95,9 @@ struct Object *gMarioObject;
  * An object variable that may have been used to represent the planned
  * second player. This is speculation, based on its position and its usage in
  * shadow.c.
+ // holy fuck lois im coming
  */
-// struct Object *gLuigiObject;
+struct Object *gLuigiObject;
 
 /**
  * The object whose behavior script is currently being updated.
@@ -493,6 +494,11 @@ void spawn_objects_from_info(UNUSED s32 unused, struct SpawnInfo *spawnInfo) {
             // This change allows any object to use that param
             if (object->behavior == segmented_to_virtual(bhvMario)) {
                 gMarioObject = object;
+                geo_make_first_child(&object->header.gfx.node);
+            }
+
+            if (object->behavior == segmented_to_virtual(bhvLuigi)) {
+                gLuigiObject = object;
                 geo_make_first_child(&object->header.gfx.node);
             }
 

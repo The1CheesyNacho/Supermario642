@@ -1869,9 +1869,15 @@ void init_mario(void) {
 
     gMarioState->waterLevel = find_water_level(gMarioSpawnInfo->startPos[0], gMarioSpawnInfo->startPos[2]);
 
+    gMarioState->waterLevel = find_water_level(gLuigiSpawnInfo->startPos[0], gLuigiSpawnInfo->startPos[2]);
+    vec3s_copy(gLuigiState->faceAngle, gLuigiSpawnInfo->startAngle);
+    vec3s_to_vec3f(gLuigiState->pos, gLuigiSpawnInfo->startPos);
     gMarioState->area = gCurrentArea;
     gMarioState->marioObj = gMarioObject;
     gMarioState->marioObj->header.gfx.animInfo.animID = -1;
+    gLuigiState->area = gCurrentArea;
+    gLuigiState->marioObj = gMarioObject;
+    gLuigiState->marioObj->header.gfx.animInfo.animID = -1;
     vec3s_copy(gMarioState->faceAngle, gMarioSpawnInfo->startAngle);
     vec3_zero(gMarioState->angleVel);
     vec3s_to_vec3f(gMarioState->pos, gMarioSpawnInfo->startPos);
@@ -1909,8 +1915,9 @@ void init_mario(void) {
     }
 }
 
-void init_mario_from_save_file(void) {
 
+
+void init_mario_from_save_file(void) {
     gMarioState->playerID = 0;
     gMarioState->flags = MARIO_NONE;
     gMarioState->action = ACT_UNINITIALIZED;
@@ -1919,6 +1926,14 @@ void init_mario_from_save_file(void) {
     gMarioState->marioBodyState = &gBodyStates[0];
     gMarioState->controller = &gControllers[0];
     gMarioState->animList = &gMarioAnimsBuf;
+    gLuigiState->playerID = 1;
+    gLuigiState->action = ACT_UNINITIALIZED;
+    gLuigiState->spawnInfo = &gPlayerSpawnInfos[1];
+    gLuigiState->marioBodyState = &gBodyStates[1];
+    gLuigiState->controller = &gControllers[1];
+    gLuigiState->animList = &gMarioAnimsBuf;
+    gLuigiState->flags = MARIO_NONE;
+
 
     gMarioState->numCoins = 0;
     gMarioState->numStars = save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);

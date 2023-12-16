@@ -74,6 +74,8 @@ enum LevelCommands {
     /*0x3F*/ LEVEL_CMD_PUPPYLIGHT_ENVIRONMENT,
     /*0x40*/ LEVEL_CMD_PUPPYLIGHT_NODE,
     /*0x41*/ LEVEL_CMD_SET_ECHO,
+    /*0x42*/ LEVEL_CMD_SET_LUIGI_START_POS,
+    /*0x43*/ LEVEL_CMD_INIT_LUIGI,
 };
 
 enum LevelActs {
@@ -362,6 +364,11 @@ enum GoddardScene {
     CMD_W(behArg), \
     CMD_PTR(beh)
 
+#define LUIGI(model, behArg, beh) \
+    CMD_BBH(LEVEL_CMD_INIT_MARIO, 0x0C, model), \
+    CMD_W(behArg), \
+    CMD_PTR(beh)
+
 #define WARP_NODE(id, destLevel, destArea, destNode, flags) \
     CMD_BBBB(LEVEL_CMD_CREATE_WARP_NODE, 0x08, id, destLevel), \
     CMD_BBBB(destArea, destNode, flags, 0x00)
@@ -384,6 +391,11 @@ enum GoddardScene {
 
 #define MARIO_POS(area, yaw, posX, posY, posZ) \
     CMD_BBBB(LEVEL_CMD_SET_MARIO_START_POS, 0x0C, area, 0x00), \
+    CMD_HH(yaw, posX), \
+    CMD_HH(posY, posZ)
+
+#define LUIGI_POS(area, yaw, posX, posY, posZ) \
+    CMD_BBBB(LEVEL_CMD_SET_LUIGI_START_POS, 0x0C, area, 0x00), \
     CMD_HH(yaw, posX), \
     CMD_HH(posY, posZ)
 

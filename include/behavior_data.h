@@ -543,6 +543,7 @@ extern const BehaviorScript bhvIntroScene[];
 extern const BehaviorScript bhvThwimp[];
 extern const BehaviorScript bhvToadNpcNode[];
 extern const BehaviorScript bhvCutsceneActor[];
+extern const BehaviorScript bhvLuigi[];
 extern const BehaviorScript bhvUnusedFakeStar[];
 
 #endif // BEHAVIOR_DATA_H

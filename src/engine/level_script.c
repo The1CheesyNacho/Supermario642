@@ -480,6 +480,20 @@ static void level_cmd_init_mario(void) {
     sCurrentCmd = CMD_NEXT;
 }
 
+static void level_cmd_init_luigi(void) {
+    vec3_zero(gLuigiSpawnInfo->startPos);
+    vec3_zero(gLuigiSpawnInfo->startAngle);
+
+    gLuigiSpawnInfo->activeAreaIndex = -1;
+    gLuigiSpawnInfo->areaIndex = 0;
+    gLuigiSpawnInfo->behaviorArg = CMD_GET(u32, 4);
+    gLuigiSpawnInfo->behaviorScript = CMD_GET(void *, 8);
+    gLuigiSpawnInfo->model = gLoadedGraphNodes[CMD_GET(ModelID16, 0x2)]; // u8, 3?
+    gLuigiSpawnInfo->next = NULL;
+
+    sCurrentCmd = CMD_NEXT;
+}
+
 static void level_cmd_place_object(void) {
     if (
         sCurrAreaIndex != -1
@@ -703,6 +717,20 @@ static void level_cmd_set_mario_start_pos(void) {
     vec3s_copy(gMarioSpawnInfo->startPos, CMD_GET(Vec3s, 6));
 #endif
     vec3s_set(gMarioSpawnInfo->startAngle, 0, CMD_GET(s16, 4) * 0x8000 / 180, 0);
+
+    sCurrentCmd = CMD_NEXT;
+}
+
+
+static void level_cmd_set_luigi_start_pos(void) {
+    gLuigiSpawnInfo->areaIndex = CMD_GET(u8, 2);
+
+#if IS_64_BIT
+    vec3s_set(gLuigiSpawnInfo->startPos, CMD_GET(s16, 6), CMD_GET(s16, 8), CMD_GET(s16, 10));
+#else
+    vec3s_copy(gLuigiSpawnInfo->startPos, CMD_GET(Vec3s, 6));
+#endif
+    vec3s_set(gLuigiSpawnInfo->startAngle, 0, CMD_GET(s16, 4) * 0x8000 / 180, 0);
 
     sCurrentCmd = CMD_NEXT;
 }
@@ -983,6 +1011,8 @@ static void (*LevelScriptJumpTable[])(void) = {
     /*LEVEL_CMD_PUPPYLIGHT_ENVIRONMENT      */ level_cmd_puppylight_environment,
     /*LEVEL_CMD_PUPPYLIGHT_NODE             */ level_cmd_puppylight_node,
     /*LEVEL_CMD_SET_ECHO                    */ level_cmd_set_echo,
+    /*LEVEL_CMD_SET_LUIGI_START_POS         */ level_cmd_set_luigi_start_pos,
+    /*LEVEL_CMD_INIT_MARIO                  */ level_cmd_init_luigi,
 };
 
 struct LevelCommand *level_script_execute(struct LevelCommand *cmd) {

@@ -173,6 +173,7 @@ extern s16 gMenuOptSelectIndex;
 extern s16 gSaveOptSelectIndex;
 
 extern struct SpawnInfo *gMarioSpawnInfo;
+extern struct SpawnInfo *gLuigiSpawnInfo;
 
 extern struct Area *gAreas;
 extern struct Area *gCurrentArea;
