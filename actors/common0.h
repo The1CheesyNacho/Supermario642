@@ -196,6 +196,25 @@ extern const Gfx unknown_seg8_dl_08026260[];
 extern const Collision unknown_seg8_collision_080262F8[];
 
 
+// micro_goomba
+extern const GeoLayout micro_goomba_geo[];
+extern const Gfx micro_goomba_seg8_dl_0801B2E8[];
+extern const Gfx micro_goomba_seg8_dl_0801B560[];
+extern const Gfx micro_goomba_seg8_dl_0801B5A0[];
+extern const Gfx micro_goomba_seg8_dl_0801B5C8[];
+extern const Gfx micro_goomba_seg8_dl_0801B5F0[];
+#ifdef FLOOMBAS
+extern const Gfx floomba_seg8_dl_face[];
+extern const Gfx floomba_seg8_dl_blink[];
+#endif
+extern const Gfx micro_goomba_seg8_dl_0801B658[];
+extern const Gfx micro_goomba_seg8_dl_0801B690[];
+extern const Gfx micro_goomba_seg8_dl_0801CE20[];
+extern const Gfx micro_goomba_seg8_dl_0801CF78[];
+extern const Gfx micro_goomba_seg8_dl_0801D0D0[];
+extern const Gfx micro_goomba_seg8_dl_0801D360[];
+extern const Gfx micro_goomba_seg8_dl_0801D760[];
+
 #include "galoomba/geo_header.h"
 
 #endif

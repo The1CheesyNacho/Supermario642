@@ -126,9 +126,6 @@
     "26_starman": [
         "starman"
     ],
-    "03_level_grass": [
-        "main_theme"
-    ],
     "24_wario": [
         "wario"
     ],
@@ -140,5 +137,8 @@
     ],
     "1A_cutscene_credits": [
         "credits"
+    ],
+    "03_level_grass": [
+        "overworld"
     ]
 }

@@ -277,7 +277,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt1[] = {
 			GEO_ANIMATED_PART(LAYER_TRANSPARENT, 0, 0, 0, luigi_000_offset_pelvis_mesh_layer_1),
 			GEO_OPEN_NODE(),
 				GEO_ASM(0, geo_move_mario_part_from_parent),
-				GEO_ASM(0, geo_mario_tilt_torso),
+				
 				GEO_ROTATION_NODE(LAYER_FORCE, 0, 0, 0),
 				GEO_OPEN_NODE(),
 					GEO_ANIMATED_PART(LAYER_TRANSPARENT, 81, 0, 0, luigi_000_offset_chest_mesh_layer_1),
@@ -474,7 +474,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt2[] = {
 			GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, luigi_000_offset_pelvis_mesh_layer_1_mat_override_metal_001_0),
 			GEO_OPEN_NODE(),
 				GEO_ASM(0, geo_move_mario_part_from_parent),
-				GEO_ASM(0, geo_mario_tilt_torso),
+				
 				GEO_ROTATION_NODE(LAYER_FORCE, 0, 0, 0),
 				GEO_OPEN_NODE(),
 					GEO_ANIMATED_PART(LAYER_OPAQUE, 81, 0, 0, luigi_000_offset_chest_mesh_layer_1_mat_override_metal_001_0),
@@ -664,7 +664,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt3[] = {
 			GEO_ANIMATED_PART(LAYER_TRANSPARENT, 0, 0, 0, luigi_000_offset_pelvis_mesh_layer_1_mat_override_metal_001_0),
 			GEO_OPEN_NODE(),
 				GEO_ASM(0, geo_move_mario_part_from_parent),
-				GEO_ASM(0, geo_mario_tilt_torso),
+				
 				GEO_ROTATION_NODE(LAYER_FORCE, 0, 0, 0),
 				GEO_OPEN_NODE(),
 					GEO_ANIMATED_PART(LAYER_TRANSPARENT, 81, 0, 0, luigi_000_offset_chest_mesh_layer_1_mat_override_metal_001_0),
@@ -854,7 +854,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt4[] = {
 			GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, luigi_000_offset_pelvis_mesh_layer_1_mat_override_gold_001_1),
 			GEO_OPEN_NODE(),
 				GEO_ASM(0, geo_move_mario_part_from_parent),
-				GEO_ASM(0, geo_mario_tilt_torso),
+				
 				GEO_ROTATION_NODE(LAYER_FORCE, 0, 0, 0),
 				GEO_OPEN_NODE(),
 					GEO_ANIMATED_PART(LAYER_OPAQUE, 81, 0, 0, luigi_000_offset_chest_mesh_layer_1_mat_override_gold_001_1),
@@ -1044,7 +1044,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt5[] = {
 			GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, luigi_000_offset_pelvis_mesh_layer_1_mat_override_gold_001_1),
 			GEO_OPEN_NODE(),
 				GEO_ASM(0, geo_move_mario_part_from_parent),
-				GEO_ASM(0, geo_mario_tilt_torso),
+				
 				GEO_ROTATION_NODE(LAYER_FORCE, 0, 0, 0),
 				GEO_OPEN_NODE(),
 					GEO_ANIMATED_PART(LAYER_OPAQUE, 81, 0, 0, luigi_000_offset_chest_mesh_layer_1_mat_override_gold_001_1),
@@ -1243,7 +1243,7 @@ const GeoLayout luigi_geo[] = {
 									GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, luigi_000_offset_pelvis_mesh_layer_1),
 									GEO_OPEN_NODE(),
 										GEO_ASM(0, geo_move_mario_part_from_parent),
-										GEO_ASM(0, geo_mario_tilt_torso),
+										
 										GEO_ROTATION_NODE(LAYER_FORCE, 0, 0, 0),
 										GEO_OPEN_NODE(),
 											GEO_ANIMATED_PART(LAYER_OPAQUE, 81, 0, 0, luigi_000_offset_chest_mesh_layer_1),

@@ -80,3 +80,6 @@ UNUSED static const u64 binid_17 = 17;
 #include "koopa_shell/model.inc.c"
 UNUSED static const u64 binid_18 = 18;
 #include "galoomba/model.inc.c"
+
+#include "micro_goomba/model.inc.c"
+UNUSED static const u64 binid_19 = 19;

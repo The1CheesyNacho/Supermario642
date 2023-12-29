@@ -800,21 +800,14 @@ void render_sound_mode_menu_buttons(struct Object *soundModeButton) {
     sMainMenuButtons[MENU_BUTTON_MONO] = spawn_object_rel_with_rot(
         soundModeButton, MODEL_MAIN_MENU_LUIGI_SAVE_BUTTON_FADE, bhvMenuButton, 0, SOUND_BUTTON_Y, -100, 0, -0x8000, 0);
     sMainMenuButtons[MENU_BUTTON_MONO]->oMenuButtonScale = 0.11111111f;
-    // Headset option button
-    sMainMenuButtons[MENU_BUTTON_HEADSET] = spawn_object_rel_with_rot(
-        soundModeButton, MODEL_MAIN_MENU_WARIO_SAVE_BUTTON_FADE, bhvMenuButton, -533, SOUND_BUTTON_Y, -100, 0, -0x8000, 0);
-    sMainMenuButtons[MENU_BUTTON_HEADSET]->oMenuButtonScale = 0.11111111f;
-    sMainMenuButtons[MENU_BUTTON_HEADSET2] = spawn_object_rel_with_rot(
-        soundModeButton, MODEL_MAIN_MENU_WALUIGI_SAVE_BUTTON_FADE, bhvMenuButton,    -1066, SOUND_BUTTON_Y, -100, 0x0, -0x8000, 0x0);
-    sMainMenuButtons[MENU_BUTTON_HEADSET2]->oMenuButtonScale = MENU_BUTTON_SCALE;    
 #else
     // Stereo option button
     sMainMenuButtons[MENU_BUTTON_STEREO] = spawn_object_rel_with_rot(
-        soundModeButton, MODEL_MAIN_MENU_GENERIC_BUTTON, bhvMenuButton,  355, SOUND_BUTTON_Y, -100, 0x0, -0x8000, 0x0);
+        soundModeButton, MODEL_MAIN_MENU_MARIO_SAVE_BUTTON_FADE, bhvMenuButton,  355, SOUND_BUTTON_Y, -100, 0x0, -0x8000, 0x0);
     sMainMenuButtons[MENU_BUTTON_STEREO]->oMenuButtonScale = MENU_BUTTON_SCALE;
     // Mono option button
     sMainMenuButtons[MENU_BUTTON_MONO] = spawn_object_rel_with_rot(
-        soundModeButton, MODEL_MAIN_MENU_GENERIC_BUTTON, bhvMenuButton, -355, SOUND_BUTTON_Y, -100, 0x0, -0x8000, 0x0);
+        soundModeButton, MODEL_MAIN_MENU_LUIGI_SAVE_BUTTON_FADE, bhvMenuButton, -355, SOUND_BUTTON_Y, -100, 0x0, -0x8000, 0x0);
     sMainMenuButtons[MENU_BUTTON_MONO]->oMenuButtonScale = MENU_BUTTON_SCALE;
 #endif
 

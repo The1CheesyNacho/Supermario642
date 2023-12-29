@@ -520,7 +520,7 @@
 #define MODEL_BOBOMB_BUDDY                0xC3        // bobomb_buddy_geo
 #define MODEL_MIPSY                       0xC4        // silver_coin_geo
 #define MODEL_TOADSWORTH                  0xC5        // silver_coin_no_shadow_geo
-// find me
+#define MODEL_MICRO_GOOMBA                0xC6        // micro_goomba_geo
 // find me
 // find me
 #define MODEL_SSL_TOX_BOX                 0xC7        // ssl_geo_000630

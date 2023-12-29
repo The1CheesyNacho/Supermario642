@@ -439,6 +439,7 @@ void bhv_pokey_body_part_update(void);
 void bhv_swoop_update(void);
 void bhv_fly_guy_update(void);
 void bhv_goomba_init(void);
+void bhv_gum_init(void);
 void bhv_goomba_update(void);
 void bhv_goomba_triplet_spawner_update(void);
 void bhv_chain_chomp_update(void);
@@ -552,6 +553,7 @@ void bhv_yoshi_loop(void);
 void bhv_volcano_trap_loop(void);
 void bhv_thwimp_loop(void);
 void bhv_thwimp_init(void);
+void bhv_gum_update(void);
 
 Gfx *geo_move_mario_part_from_parent(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx);
 

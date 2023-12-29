@@ -23,6 +23,7 @@
 #include "bowling_ball/geo.inc.c"
 #include "exclamation_box/geo.inc.c"
 #include "goomba/geo.inc.c"
+#include "micro_goomba/geo.inc.c"
 #include "bobomb/geo.inc.c"
 #include "metal_box/geo.inc.c"
 #include "exclamation_box_outline/geo.inc.c"

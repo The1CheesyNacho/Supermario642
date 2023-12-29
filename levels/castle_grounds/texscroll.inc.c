@@ -1,6 +1,6 @@
 void scroll_castle_grounds_dl_castle_courtyard_seg7_dl_070048B8_mesh_001_mesh_layer_5_vtx_4() {
 	int i = 0;
-	int count = 15;
+	int count = 30;
 	int height = 64 * 0x20;
 
 	static int currentY = 0;

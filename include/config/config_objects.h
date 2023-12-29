@@ -36,7 +36,7 @@
 /**
  * Tiny Goombas (from THI) always drop their coin.
  */
-// #define TINY_GOOMBA_ALWAYS_DROPS_COIN
+#define TINY_GOOMBA_ALWAYS_DROPS_COIN
 
 /**
  * Floombas! These fellas sport custom behaviors (bhvFloomba, bhvFloombaTripletSpawner) and of course the iconic Floomba texture.
@@ -110,7 +110,7 @@
 /**
  * The number of chain balls the Chain Chomp has. Vanilla is 5.
  */
-#define CHAIN_CHOMP_NUM_SEGMENTS 5
+#define CHAIN_CHOMP_NUM_SEGMENTS 23
 
 /***************
  * -- POKEY --

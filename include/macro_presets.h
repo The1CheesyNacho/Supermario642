@@ -44,7 +44,7 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvBetaFishSplashSpawner,          MODEL_NONE,                         0}, // macro_beta_fish_splash_spawner
     {bhvHidden1upInPoleSpawner,         MODEL_NONE,                         0}, // macro_hidden_1up_in_pole
     {bhvGoomba,                         MODEL_GOOMBA,                       GOOMBA_SIZE_HUGE}, // macro_huge_goomba
-    {bhvGoomba,                         MODEL_GOOMBA,                       GOOMBA_SIZE_TINY}, // macro_tiny_goomba
+    {bhvGoomba,                         MODEL_MICRO_GOOMBA,                 GOOMBA_SIZE_TINY}, // macro_tiny_goomba
     {bhvGoombaTripletSpawner,           MODEL_NONE,                         0}, // macro_goomba_triplet_spawner
     {bhvGoombaTripletSpawner,           MODEL_NONE,                         8}, // macro_goomba_quintuplet_spawner - unused
     {bhvSignOnWall,                     MODEL_NONE,                         0}, // macro_sign_on_wall

@@ -450,6 +450,7 @@ extern const BehaviorScript bhvPokeyBodyPart[];
 extern const BehaviorScript bhvSwoop[];
 extern const BehaviorScript bhvFlyGuy[];
 extern const BehaviorScript bhvGoomba[];
+extern const BehaviorScript bhvGum[];
 extern const BehaviorScript bhvGoombaTripletSpawner[];
 #ifdef FLOOMBAS
 extern const BehaviorScript bhvFloomba[];

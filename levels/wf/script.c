@@ -94,7 +94,7 @@ static const LevelScript script_func_local_4[] = {
 const LevelScript level_wf_entry[] = {
     INIT_LEVEL(),
     LOAD_YAY0(        /*seg*/ 0x07, _wf_segment_7SegmentRomStart, _wf_segment_7SegmentRomEnd),
-    LOAD_YAY0(        /*seg*/ 0x0A, _cloud_floor_skybox_yay0SegmentRomStart, _cloud_floor_skybox_yay0SegmentRomEnd),
+    LOAD_YAY0(        /*seg*/ 0x0A, _clouds_skybox_yay0SegmentRomStart, _clouds_skybox_yay0SegmentRomEnd),
     LOAD_YAY0_TEXTURE(/*seg*/ 0x09, _grass_yay0SegmentRomStart, _grass_yay0SegmentRomEnd),
     LOAD_YAY0(        /*seg*/ 0x05, _group1_yay0SegmentRomStart, _group1_yay0SegmentRomEnd),
     LOAD_RAW(         /*seg*/ 0x0C, _group1_geoSegmentRomStart,  _group1_geoSegmentRomEnd),
@@ -107,7 +107,7 @@ const LevelScript level_wf_entry[] = {
     JUMP_LINK(script_func_global_1),
     JUMP_LINK(script_func_global_2),
     JUMP_LINK(script_func_global_15),
-    LOAD_MODEL_FROM_GEO(MODEL_WF_BUBBLY_TREE,                   bubbly_tree_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_WF_BUBBLY_TREE,                   spiky_tree_geo),
     LOAD_MODEL_FROM_GEO(MODEL_LEVEL_GEOMETRY_03,                wf_geo_0007E0),
     LOAD_MODEL_FROM_GEO(MODEL_LEVEL_GEOMETRY_04,                wf_geo_000820),
     LOAD_MODEL_FROM_GEO(MODEL_LEVEL_GEOMETRY_05,                wf_geo_000860),

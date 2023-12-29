@@ -102,7 +102,7 @@
 /**
  * Disables the fix to Koopa's unshelled model.
  */
-#define KOOPA_KEEP_PINK_SHORTS
+//#define KOOPA_KEEP_PINK_SHORTS
 
 /**
  * Uses the star object's model in the star dance cutscene.
