@@ -19,7 +19,7 @@ const GeoLayout gummy_geo[] = {
 						GEO_OPEN_NODE(),
 							GEO_NODE_START(),
 							GEO_OPEN_NODE(),
-								GEO_ANIMATED_PART(LAYER_OPAQUE, 48, 0, 0, gummy_000_offset_002_mesh_layer_1),
+								GEO_ANIMATED_PART(LAYER_ALPHA, 48, 0, 0, gummy_000_offset_002_mesh_layer_4),
 							GEO_CLOSE_NODE(),
 						GEO_CLOSE_NODE(),
 						GEO_ANIMATED_PART(LAYER_OPAQUE, -60, -16, 45, NULL),
