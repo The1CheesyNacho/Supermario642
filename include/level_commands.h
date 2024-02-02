@@ -342,8 +342,7 @@ enum GoddardScene {
     CMD_BBH(LEVEL_CMD_LOAD_MODEL_FROM_GEO, 0x08, model), \
     CMD_PTR(geo)
 
-// unk8 is float, but doesn't really matter since CMD23 is unused
-#define CMD23(model, behArg, beh) \
+#define LUIGI(model, behArg, beh) \
     CMD_BBH(LEVEL_CMD_23, 0x0C, model), \
     CMD_W(behArg), \
     CMD_PTR(beh)
@@ -359,11 +358,6 @@ enum GoddardScene {
     OBJECT_WITH_ACTS(model, posX, posY, posZ, angleX, angleY, angleZ, behParam, beh, ALL_ACTS)
 
 #define MARIO(model, behArg, beh) \
-    CMD_BBH(LEVEL_CMD_INIT_MARIO, 0x0C, model), \
-    CMD_W(behArg), \
-    CMD_PTR(beh)
-
-#define LUIGI(model, behArg, beh) \
     CMD_BBH(LEVEL_CMD_INIT_MARIO, 0x0C, model), \
     CMD_W(behArg), \
     CMD_PTR(beh)

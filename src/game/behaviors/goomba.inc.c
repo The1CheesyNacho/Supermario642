@@ -61,6 +61,15 @@ static u8 sGoombaAttackHandlers[][6] = {
         /* ATTACK_FAST_ATTACK:           */ ATTACK_HANDLER_SPECIAL_HUGE_GOOMBA_WEAKLY_ATTACKED,
         /* ATTACK_FROM_BELOW:            */ ATTACK_HANDLER_SPECIAL_HUGE_GOOMBA_WEAKLY_ATTACKED,
     },
+    // gummies
+    {
+        /* ATTACK_PUNCH:                 */ ATTACK_HANDLER_SPECIAL_GUMMY_PUNCH,
+        /* ATTACK_KICK_OR_TRIP:          */ ATTACK_HANDLER_SPECIAL_GUMMY_PUNCH,
+        /* ATTACK_FROM_ABOVE:            */ ATTACK_HANDLER_SPECIAL_GUMMY,
+        /* ATTACK_GROUND_POUND_OR_TWIRL: */ ATTACK_HANDLER_SPECIAL_GUMMY,
+        /* ATTACK_FAST_ATTACK:           */ ATTACK_HANDLER_SPECIAL_GUMMY_PUNCH,
+        /* ATTACK_FROM_BELOW:            */ ATTACK_HANDLER_SPECIAL_GUMMY_PUNCH,
+    },
 };
 
 /**
@@ -315,6 +324,8 @@ void bhv_goomba_update(void) {
 
     f32 animSpeed;
 
+    cur_obj_set_model(MODEL_GUMMY);
+
     if (obj_update_standard_actions(o->oGoombaScale)) {
         // If this goomba has a spawner and mario moved away from the spawner, unload
         if (o->parentObj != o) {
@@ -359,7 +370,7 @@ void bhv_goomba_update(void) {
 #endif
         }
         if (obj_handle_attacks(&sGoombaHitbox, GOOMBA_ACT_ATTACKED_MARIO,
-                               sGoombaAttackHandlers[o->oGoombaSize & 0x1])
+                               sGoombaAttackHandlers[cur_obj_has_model(MODEL_GUMMY) ? 2 : (o->oGoombaSize & 0x1)])
                                && (o->oAction != GOOMBA_ACT_ATTACKED_MARIO)) {
             mark_goomba_as_dead();
         }

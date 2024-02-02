@@ -596,6 +596,16 @@ static s32 obj_handle_attacks(struct ObjectHitbox *hitbox, s32 attackedMarioActi
                     o->oNumLootCoins = -1;
                     obj_set_squished_action();
                     break;
+                
+                case ATTACK_HANDLER_SPECIAL_GUMMY:
+                    gMarioState->vel[1] = 100.f;
+                    cur_obj_play_sound_2(SOUND_OBJ_STOMPED);
+                    break;
+                
+                case ATTACK_HANDLER_SPECIAL_GUMMY_PUNCH:
+                    gMarioState->forwardVel = -100.f;
+                    cur_obj_play_sound_2(SOUND_OBJ_STOMPED);
+                    break;
             }
 
             o->oInteractStatus = INT_STATUS_NONE;

@@ -40,7 +40,7 @@ const LevelScript level_castle_grounds_entry[] = {
 	LOAD_MIO0(0x6, _group15_mio0SegmentRomStart, _group15_mio0SegmentRomEnd), 
 	ALLOC_LEVEL_POOL(),
 	MARIO(MODEL_MARIO, 0x00000000, bhvMario),
-	CMD23(MODEL_LUIGI, 0x00000001, bhvLuigi), 
+	LUIGI(MODEL_LUIGI, 0x00000001, bhvLuigi), 
 	JUMP_LINK(script_func_global_1), 
 	JUMP_LINK(script_func_global_11), 
 	JUMP_LINK(script_func_global_16), 

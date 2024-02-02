@@ -38,7 +38,7 @@ const LevelScript level_bob_entry[] = {
 	LOAD_MIO0(0x5, _group1_mio0SegmentRomStart, _group1_mio0SegmentRomEnd), 
 	ALLOC_LEVEL_POOL(),
 	MARIO(MODEL_MARIO, 0x00000000, bhvMario),
-	CMD23(MODEL_LUIGI, 0x00000001, bhvLuigi), 
+	LUIGI(MODEL_LUIGI, 0x00000001, bhvLuigi), 
 	JUMP_LINK(script_func_global_1), 
 	JUMP_LINK(script_func_global_2), 
 	JUMP_LINK(script_func_global_15), 
