@@ -298,4 +298,6 @@ extern const Collision wooden_signpost_seg3_collision_0302DD80[];
 
 #include "iceflower/geo_header.h"
 
+#include "gummy/geo_header.h"
+
 #endif

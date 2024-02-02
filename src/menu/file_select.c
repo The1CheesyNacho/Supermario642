@@ -1285,12 +1285,18 @@ void bhv_menu_button_manager_init(void) {
                                       bhvMenuButton, 6400, 0, 0, 0, 0, 0);
 
     sMainMenuButtons[MENU_BUTTON_WARIO] =
-            spawn_object_rel_with_rot(gCurrentObject, MODEL_MAIN_MENU_MARIO_NEW_BUTTON_FADE,
+            spawn_object_rel_with_rot(gCurrentObject, MODEL_MAIN_MENU_WARIO_SAVE_BUTTON_FADE,
                                       bhvMenuButton, 2400, 2800, 0, 0, 0, 0);
+
+    sMainMenuButtons[MENU_BUTTON_WALUIGI] =
+            spawn_object_rel_with_rot(gCurrentObject, MODEL_MAIN_MENU_WALUIGI_SAVE_BUTTON_FADE,
+                                      bhvMenuButton, 2400, 0, 0, 0, 0, 0);
+
 
     sMainMenuButtons[MENU_BUTTON_MARIO]->oMenuButtonScale = 1.0f;
     sMainMenuButtons[MENU_BUTTON_LUIGI]->oMenuButtonScale = 1.0f;
     sMainMenuButtons[MENU_BUTTON_WARIO]->oMenuButtonScale = 1.0f;
+    sMainMenuButtons[MENU_BUTTON_WALUIGI]->oMenuButtonScale = 1.0f;
 
     // Score menu button
     sMainMenuButtons[MENU_BUTTON_SCORE] = spawn_object_rel_with_rot(
@@ -1342,7 +1348,7 @@ void check_main_menu_clicked_buttons(void) {
 
                 if (check_clicked_button(buttonX, buttonY, 200.0f) == TRUE) {
                     // If menu button clicked, select it
-                    if (buttonID == MENU_BUTTON_MARIO || buttonID == MENU_BUTTON_LUIGI || buttonID == MENU_BUTTON_WARIO)
+                    if (buttonID == MENU_BUTTON_MARIO || buttonID == MENU_BUTTON_LUIGI || buttonID == MENU_BUTTON_WARIO|| buttonID == MENU_BUTTON_WALUIGI)
                         sMainMenuButtons[buttonID]->oMenuButtonState = MENU_BUTTON_STATE_ZOOM_IN_OUT;
                     else sMainMenuButtons[buttonID]->oMenuButtonState = MENU_BUTTON_STATE_GROWING;
                     sSelectedButtonID = buttonID;
@@ -1364,6 +1370,7 @@ void check_main_menu_clicked_buttons(void) {
             case MENU_BUTTON_MARIO:
             case MENU_BUTTON_WARIO:
             case MENU_BUTTON_LUIGI:
+            case MENU_BUTTON_WALUIGI:
                 play_sound(SOUND_MENU_CLICK_FILE_SELECT, gGlobalSoundSource);
                 break;
             case MENU_BUTTON_PLAY_FILE_A:
@@ -1451,9 +1458,16 @@ void bhv_menu_button_manager_loop(void) {
             break;
         case MENU_BUTTON_WARIO:
             gMarioStates[0].playerModel = 2; // luigi
-            gMarioStates[1].playerModel = 0; // mario
+            gMarioStates[1].playerModel = 3; // mario
             gMarioStates[0].animList = &gWarioAnimsBuf;
-            gMarioStates[1].animList = &gMarioAnimsBuf;
+            gMarioStates[1].animList = &gLuigiAnimsBuf;
+            sSelectedButtonID = MENU_BUTTON_NONE;
+            break;
+            case MENU_BUTTON_WALUIGI:
+            gMarioStates[0].playerModel = 3; // luigi
+            gMarioStates[1].playerModel = 2; // mario
+            gMarioStates[0].animList = &gLuigiAnimsBuf;
+            gMarioStates[1].animList = &gWarioAnimsBuf;
             sSelectedButtonID = MENU_BUTTON_NONE;
             break;
         case MENU_BUTTON_SCORE_FILE_A:
@@ -1814,8 +1828,6 @@ void print_main_menu_strings(void) {
     print_hud_lut_string(HUD_LUT_DIFF, SELECT_FILE_X, 35, textSelectFile);
 #endif
     // Print file star counts
-    print_save_file_star_count(SAVE_FILE_A, SAVEFILE_X1, 78);
-    print_save_file_star_count(SAVE_FILE_C, SAVEFILE_X1, 118);
     gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
 #ifndef VERSION_EU
     // Print menu names
@@ -1833,8 +1845,8 @@ void print_main_menu_strings(void) {
     // Print file names
     gSPDisplayList(gDisplayListHead++, dl_menu_ia8_text_begin);
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, sTextBaseAlpha);
-    print_menu_generic_string(MARIOTEXT_X1, 65, textMarioA);
-    print_menu_generic_string(MARIOTEXT_X1, 105, textMarioC);
+    print_menu_generic_string(MARIOTEXT_X1, 75, textMarioA);
+    print_menu_generic_string(MARIOTEXT_X1, 115, textMarioC);
     gSPDisplayList(gDisplayListHead++, dl_menu_ia8_text_end);
 }
 
@@ -2759,6 +2771,7 @@ static void print_file_select_strings(void) {
         case MENU_BUTTON_MARIO:
         case MENU_BUTTON_WARIO:
         case MENU_BUTTON_LUIGI:
+        case MENU_BUTTON_WALUIGI:
 #ifdef VERSION_EU
             // Ultimately calls print_main_menu_strings, but prints main language strings first.
             print_main_lang_strings();

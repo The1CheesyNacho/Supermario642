@@ -279,6 +279,8 @@ void bhv_mario_update(void) {
         break;
         case 2: cur_obj_set_model(MODEL_WARIO); 
         break;
+        case 3: cur_obj_set_model(MODEL_WALUIGI); 
+        break;
     }
 
     // Mario code updates MarioState's versions of position etc, so we need

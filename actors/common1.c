@@ -90,3 +90,4 @@ UNUSED static const u64 binid_22 = 22;
 
 #include "fireflower/model.inc.c"
 #include "iceflower/model.inc.c"
+#include "gummy/model.inc.c"

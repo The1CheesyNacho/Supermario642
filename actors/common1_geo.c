@@ -28,3 +28,4 @@
 
 #include "fireflower/geo.inc.c"
 #include "iceflower/geo.inc.c"
+#include "gummy/geo.inc.c"

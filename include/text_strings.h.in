@@ -196,10 +196,10 @@
 #define TEXT_CHECK_FILE _("CHECK FILE")
 #define TEXT_COPY_FILE _("COPY FILE")
 #define TEXT_ERASE_FILE _("ERASE FILE")
-#define TEXT_SOUND_SELECT _("CHARACTER SELECT")
-#define TEXT_FILE_MARIO_A _("MARIO A")
+#define TEXT_SOUND_SELECT _("SELECT MODE")
+#define TEXT_FILE_MARIO_A _("MARIO A ... NEW")
 #define TEXT_FILE_MARIO_B _("MARIO B")
-#define TEXT_FILE_MARIO_C _("MARIO C")
+#define TEXT_FILE_MARIO_C _("MARIO B ... NEW")
 #define TEXT_FILE_MARIO_D _("MARIO D")
 
 // Menu Options
@@ -208,9 +208,9 @@
 #define TEXT_ERASE _("ERASE")
 
 // Sound Options
-#define TEXT_STEREO _("MARIO")
-#define TEXT_MONO _("LUIGI")
-#define TEXT_HEADSET _("WARIO")
+#define TEXT_STEREO _("ALLY")
+#define TEXT_MONO _("SINGLE")
+#define TEXT_HEADSET _("HARD")
 #define TEXT_HEADSET2 _("WALUIGI")
 
 // Misc Menu Text
