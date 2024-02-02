@@ -265,9 +265,21 @@ void spawn_particle(u32 activeParticleFlag, ModelID16 model, const BehaviorScrip
 void bhv_mario_update(void) {
     u32 particleFlags = 0;
     s32 i;
+    
+    gMarioState = &gMarioStates[gCurrentObject->oBehParams & 0xFF];
+    gMarioState->marioObj = gCurrentObject;
 
     particleFlags = execute_mario_action(gCurrentObject);
     gCurrentObject->oMarioParticleFlags = particleFlags;
+
+    switch (gMarioState->playerModel) {
+        case 0: cur_obj_set_model(MODEL_MARIO);
+         break;
+        case 1: cur_obj_set_model(MODEL_LUIGI); 
+        break;
+        case 2: cur_obj_set_model(MODEL_WARIO); 
+        break;
+    }
 
     // Mario code updates MarioState's versions of position etc, so we need
     // to sync it with the Mario object

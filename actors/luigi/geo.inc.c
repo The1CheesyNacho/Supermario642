@@ -272,7 +272,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt1_000_switch_opt0_000_switch
 const GeoLayout luigi_002_switch_opt0_001_switch_opt1[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 15, 0, NULL),
+		GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 14, 0, NULL),
 		GEO_OPEN_NODE(),
 			GEO_ANIMATED_PART(LAYER_TRANSPARENT, 0, 0, 0, luigi_000_offset_pelvis_mesh_layer_1),
 			GEO_OPEN_NODE(),
@@ -284,7 +284,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt1[] = {
 					GEO_OPEN_NODE(),
 						GEO_ANIMATED_PART(LAYER_OPAQUE, 90, 0, 0, NULL),
 						GEO_OPEN_NODE(),
-							GEO_ASM(0, geo_mario_head_rotation),
+							
 							GEO_ROTATION_NODE(LAYER_FORCE, 0, 0, 0),
 							GEO_OPEN_NODE(),
 								GEO_SWITCH_CASE(0, geo_switch_mario_cap_on_off),
@@ -362,7 +362,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt1[] = {
 										GEO_OPEN_NODE(),
 											GEO_ANIMATED_PART(LAYER_OPAQUE, 71, 0, 0, NULL),
 											GEO_OPEN_NODE(),
-												GEO_ASM(0, geo_mario_hand_foot_scaler),
+												
 												GEO_SCALE(LAYER_FORCE, 65536),
 												GEO_OPEN_NODE(),
 													GEO_DISPLAY_LIST(LAYER_TRANSPARENT, luigi_000_displaylist_right_hand_fist_mesh_layer_1),
@@ -469,7 +469,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt2_jump_luigi_ArmatureObj_rig
 const GeoLayout luigi_002_switch_opt0_001_switch_opt2[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 15, 0, NULL),
+		GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 14, 0, NULL),
 		GEO_OPEN_NODE(),
 			GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, luigi_000_offset_pelvis_mesh_layer_1_mat_override_metal_001_0),
 			GEO_OPEN_NODE(),
@@ -481,7 +481,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt2[] = {
 					GEO_OPEN_NODE(),
 						GEO_ANIMATED_PART(LAYER_OPAQUE, 90, 0, 0, NULL),
 						GEO_OPEN_NODE(),
-							GEO_ASM(0, geo_mario_head_rotation),
+							
 							GEO_ROTATION_NODE(LAYER_FORCE, 0, 0, 0),
 							GEO_OPEN_NODE(),
 								GEO_SWITCH_CASE(0, geo_switch_mario_cap_on_off),
@@ -552,7 +552,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt2[] = {
 										GEO_OPEN_NODE(),
 											GEO_ANIMATED_PART(LAYER_OPAQUE, 71, 0, 0, NULL),
 											GEO_OPEN_NODE(),
-												GEO_ASM(0, geo_mario_hand_foot_scaler),
+												
 												GEO_SCALE(LAYER_FORCE, 65536),
 												GEO_OPEN_NODE(),
 													GEO_DISPLAY_LIST(LAYER_OPAQUE, luigi_000_displaylist_right_hand_fist_mesh_layer_1_mat_override_metal_001_0),
@@ -659,7 +659,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt3_jump_luigi_ArmatureObj_rig
 const GeoLayout luigi_002_switch_opt0_001_switch_opt3[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 15, 0, NULL),
+		GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 14, 0, NULL),
 		GEO_OPEN_NODE(),
 			GEO_ANIMATED_PART(LAYER_TRANSPARENT, 0, 0, 0, luigi_000_offset_pelvis_mesh_layer_1_mat_override_metal_001_0),
 			GEO_OPEN_NODE(),
@@ -671,7 +671,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt3[] = {
 					GEO_OPEN_NODE(),
 						GEO_ANIMATED_PART(LAYER_OPAQUE, 90, 0, 0, NULL),
 						GEO_OPEN_NODE(),
-							GEO_ASM(0, geo_mario_head_rotation),
+							
 							GEO_ROTATION_NODE(LAYER_FORCE, 0, 0, 0),
 							GEO_OPEN_NODE(),
 								GEO_SWITCH_CASE(0, geo_switch_mario_cap_on_off),
@@ -742,7 +742,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt3[] = {
 										GEO_OPEN_NODE(),
 											GEO_ANIMATED_PART(LAYER_OPAQUE, 71, 0, 0, NULL),
 											GEO_OPEN_NODE(),
-												GEO_ASM(0, geo_mario_hand_foot_scaler),
+												
 												GEO_SCALE(LAYER_FORCE, 65536),
 												GEO_OPEN_NODE(),
 													GEO_DISPLAY_LIST(LAYER_TRANSPARENT, luigi_000_displaylist_right_hand_fist_mesh_layer_1_mat_override_metal_001_0),
@@ -849,7 +849,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt4_jump_luigi_ArmatureObj_rig
 const GeoLayout luigi_002_switch_opt0_001_switch_opt4[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 15, 0, NULL),
+		GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 14, 0, NULL),
 		GEO_OPEN_NODE(),
 			GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, luigi_000_offset_pelvis_mesh_layer_1_mat_override_gold_001_1),
 			GEO_OPEN_NODE(),
@@ -861,7 +861,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt4[] = {
 					GEO_OPEN_NODE(),
 						GEO_ANIMATED_PART(LAYER_OPAQUE, 90, 0, 0, NULL),
 						GEO_OPEN_NODE(),
-							GEO_ASM(0, geo_mario_head_rotation),
+							
 							GEO_ROTATION_NODE(LAYER_FORCE, 0, 0, 0),
 							GEO_OPEN_NODE(),
 								GEO_SWITCH_CASE(0, geo_switch_mario_cap_on_off),
@@ -932,7 +932,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt4[] = {
 										GEO_OPEN_NODE(),
 											GEO_ANIMATED_PART(LAYER_OPAQUE, 71, 0, 0, NULL),
 											GEO_OPEN_NODE(),
-												GEO_ASM(0, geo_mario_hand_foot_scaler),
+												
 												GEO_SCALE(LAYER_FORCE, 65536),
 												GEO_OPEN_NODE(),
 													GEO_DISPLAY_LIST(LAYER_OPAQUE, luigi_000_displaylist_right_hand_fist_mesh_layer_1_mat_override_gold_001_1),
@@ -1039,7 +1039,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt5_jump_luigi_ArmatureObj_rig
 const GeoLayout luigi_002_switch_opt0_001_switch_opt5[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
-		GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 15, 0, NULL),
+		GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 14, 0, NULL),
 		GEO_OPEN_NODE(),
 			GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, luigi_000_offset_pelvis_mesh_layer_1_mat_override_gold_001_1),
 			GEO_OPEN_NODE(),
@@ -1051,7 +1051,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt5[] = {
 					GEO_OPEN_NODE(),
 						GEO_ANIMATED_PART(LAYER_OPAQUE, 90, 0, 0, NULL),
 						GEO_OPEN_NODE(),
-							GEO_ASM(0, geo_mario_head_rotation),
+							
 							GEO_ROTATION_NODE(LAYER_FORCE, 0, 0, 0),
 							GEO_OPEN_NODE(),
 								GEO_SWITCH_CASE(0, geo_switch_mario_cap_on_off),
@@ -1122,7 +1122,7 @@ const GeoLayout luigi_002_switch_opt0_001_switch_opt5[] = {
 										GEO_OPEN_NODE(),
 											GEO_ANIMATED_PART(LAYER_OPAQUE, 71, 0, 0, NULL),
 											GEO_OPEN_NODE(),
-												GEO_ASM(0, geo_mario_hand_foot_scaler),
+												
 												GEO_SCALE(LAYER_FORCE, 65536),
 												GEO_OPEN_NODE(),
 													GEO_DISPLAY_LIST(LAYER_OPAQUE, luigi_000_displaylist_right_hand_fist_mesh_layer_1_mat_override_gold_001_1),
@@ -1238,7 +1238,7 @@ const GeoLayout luigi_geo[] = {
 						GEO_OPEN_NODE(),
 							GEO_NODE_START(),
 							GEO_OPEN_NODE(),
-								GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 15, 0, NULL),
+								GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 14, 0, NULL),
 								GEO_OPEN_NODE(),
 									GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, luigi_000_offset_pelvis_mesh_layer_1),
 									GEO_OPEN_NODE(),
@@ -1250,7 +1250,7 @@ const GeoLayout luigi_geo[] = {
 											GEO_OPEN_NODE(),
 												GEO_ANIMATED_PART(LAYER_OPAQUE, 90, 0, 0, NULL),
 												GEO_OPEN_NODE(),
-													GEO_ASM(0, geo_mario_head_rotation),
+													
 													GEO_ROTATION_NODE(LAYER_FORCE, 0, 0, 0),
 													GEO_OPEN_NODE(),
 														GEO_SWITCH_CASE(0, geo_switch_mario_cap_on_off),
@@ -1328,7 +1328,7 @@ const GeoLayout luigi_geo[] = {
 																GEO_OPEN_NODE(),
 																	GEO_ANIMATED_PART(LAYER_OPAQUE, 71, 0, 0, NULL),
 																	GEO_OPEN_NODE(),
-																		GEO_ASM(0, geo_mario_hand_foot_scaler),
+																		
 																		GEO_SCALE(LAYER_FORCE, 65536),
 																		GEO_OPEN_NODE(),
 																			GEO_DISPLAY_LIST(LAYER_OPAQUE, luigi_000_displaylist_right_hand_fist_mesh_layer_1),

@@ -75,7 +75,6 @@ enum LevelCommands {
     /*0x40*/ LEVEL_CMD_PUPPYLIGHT_NODE,
     /*0x41*/ LEVEL_CMD_SET_ECHO,
     /*0x42*/ LEVEL_CMD_SET_LUIGI_START_POS,
-    /*0x43*/ LEVEL_CMD_INIT_LUIGI,
 };
 
 enum LevelActs {
@@ -344,11 +343,11 @@ enum GoddardScene {
     CMD_PTR(geo)
 
 // unk8 is float, but doesn't really matter since CMD23 is unused
-#define CMD23(model, unk4, unk8) \
-    CMD_BBH(LEVEL_CMD_23, 0x08, 0), \
-    CMD_PTR(unk4), \
-    CMD_W(unk8)
-
+#define CMD23(model, behArg, beh) \
+    CMD_BBH(LEVEL_CMD_23, 0x0C, model), \
+    CMD_W(behArg), \
+    CMD_PTR(beh)
+    
 #define OBJECT_WITH_ACTS(model, posX, posY, posZ, angleX, angleY, angleZ, behParam, beh, acts) \
     CMD_BBBB(LEVEL_CMD_PLACE_OBJECT, 0x1C, acts, 0x00), \
     CMD_HHHHHH(posX, posY, posZ, angleX, angleY, angleZ), \

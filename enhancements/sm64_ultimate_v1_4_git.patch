@@ -1,0 +1,2085 @@
+diff --git a/Makefile b/Makefile
+index ae68f64..31daa59 100644
+--- a/Makefile
++++ b/Makefile
+@@ -32,6 +32,10 @@ $(eval $(call validate-option,COMPILER,ido gcc))
+ #   us - builds the 1996 North American version
+ #   eu - builds the 1997 PAL version
+ #   sh - builds the 1997 Japanese Shindou version, with rumble pak support
++#   jpu - builds the 1996 Japanese version with f3dzex, optimized build, bug fixes and rumble support
++#   usu - builds the 1996 North American version with f3dzex, optimized build, bug fixes and rumble support
++#   euu - builds the 1997 PAL version with bug fixes and rumble support
++#   shu - builds the 1997 Japanese Shindou version, with rumble pak support and bug fixes
+ VERSION ?= us
+ $(eval $(call validate-option,VERSION,jp us eu sh))
+ 
+@@ -40,21 +44,49 @@ ifeq      ($(VERSION),jp)
+   OPT_FLAGS := -g
+   GRUCODE   ?= f3d_old
+   VERSION_JP_US  ?= true
++else ifeq ($(VERSION),jpu)
++  NON_MATCHING := 1
++  DEFINES   += VERSION_JP=1
++  DEFINES   += VERSION_JP_ULTIMATE=1
++  OPT_FLAGS := -O2
++  GRUCODE   ?= f3dzex
++  VERSION_JP_US  ?= true
+ else ifeq ($(VERSION),us)
+   DEFINES   += VERSION_US=1
+   OPT_FLAGS := -g
+   GRUCODE   ?= f3d_old
+   VERSION_JP_US  ?= true
++else ifeq ($(VERSION),usu)
++  NON_MATCHING := 1
++  DEFINES   += VERSION_US=1
++  DEFINES   += VERSION_US_ULTIMATE=1
++  OPT_FLAGS := -O2
++  GRUCODE   ?= f3dzex
++  VERSION_JP_US  ?= true
+ else ifeq ($(VERSION),eu)
+   DEFINES   += VERSION_EU=1
+   OPT_FLAGS := -O2
+   GRUCODE   ?= f3d_new
+   VERSION_JP_US  ?= false
++else ifeq ($(VERSION),euu)
++  NON_MATCHING := 1
++  DEFINES   += VERSION_EU=1
++  DEFINES   += VERSION_EU_ULTIMATE=1
++  OPT_FLAGS := -O2
++  GRUCODE   ?= f3dzex
++  VERSION_JP_US  ?= false
+ else ifeq ($(VERSION),sh)
+   DEFINES   += VERSION_SH=1
+   OPT_FLAGS := -O2
+   GRUCODE   ?= f3d_new
+   VERSION_JP_US  ?= false
++else ifeq ($(VERSION),shu)
++  NON_MATCHING := 1
++  DEFINES   += VERSION_SH=1
++  DEFINES   += VERSION_SH_ULTIMATE=1
++  OPT_FLAGS := -O2
++  GRUCODE   ?= f3dzex
++  VERSION_JP_US  ?= false
+ endif
+ 
+ TARGET := sm64.$(VERSION)
+diff --git a/actors/burn_smoke/model.inc.c b/actors/burn_smoke/model.inc.c
+index 36616b5..20b585d 100644
+--- a/actors/burn_smoke/model.inc.c
++++ b/actors/burn_smoke/model.inc.c
+@@ -44,7 +44,11 @@ const Gfx burn_smoke_seg4_dl_04022048[] = {
+ // 0x04022070 - 0x040220C8
+ const Gfx burn_smoke_seg4_dl_04022070[] = {
+     gsSPDisplayList(burn_smoke_seg4_dl_04022000),
++#if BUGFIX_BURN_SMOKE
++    gsDPLoadTextureBlock(burn_smoke_seg4_texture_04021800, G_IM_FMT_IA, G_IM_SIZ_16b, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
++#else
+     gsDPLoadTextureBlock(burn_smoke_seg4_texture_04021800, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, 5, 5, G_TX_NOLOD, G_TX_NOLOD),
++#endif
+     gsSPDisplayList(burn_smoke_seg4_dl_04022028),
+     gsSPDisplayList(burn_smoke_seg4_dl_04022048),
+     gsSPEndDisplayList(),
+diff --git a/actors/koopa/model.inc.c b/actors/koopa/model.inc.c
+index 24c7728..1ff604a 100644
+--- a/actors/koopa/model.inc.c
++++ b/actors/koopa/model.inc.c
+@@ -2077,8 +2077,13 @@ const Gfx koopa_seg6_dl_0600C498[] = {
+     gsSPVertex(koopa_seg6_vertex_0600B560, 9, 0),
+     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
+     gsSP1Triangle( 6,  7,  8, 0x0),
++#if BUGFIX_KOOPA_PINK_SHORTS
++    gsSPLight(&koopa_seg6_lights_06002630.l, 1),
++    gsSPLight(&koopa_seg6_lights_06002630.a, 2),
++#else
+     gsSPLight((u8*)koopa_seg6_texture_06002648 + 0x20, 1), //! this malformed light results in a
+     gsSPLight((u8*)koopa_seg6_texture_06002648 + 0x18, 2), //! koopa appearing to wear pink shorts.
++#endif
+     gsSPVertex(koopa_seg6_vertex_0600B5F0, 15, 0),
+     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
+     gsSP2Triangles( 6,  7,  0, 0x0,  8,  5,  9, 0x0),
+diff --git a/bin/title_screen_bg.c b/bin/title_screen_bg.c
+index d6deb09..ecc3556 100644
+--- a/bin/title_screen_bg.c
++++ b/bin/title_screen_bg.c
+@@ -123,7 +123,7 @@ const Texture *const game_over_texture_table[] = {
+ 
+ UNUSED static const u64 title_screen_bg_unused_0 = 0;
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ const Gfx title_screen_bg_dl_0A0065E8[] = {
+     gsDPPipeSync(),
+     gsDPSetCycleType(G_CYC_COPY),
+diff --git a/include/config.h b/include/config.h
+index 211a086..99c80f7 100644
+--- a/include/config.h
++++ b/include/config.h
+@@ -10,18 +10,40 @@
+ // Bug Fixes
+ // --| US Version Nintendo Bug Fixes
+ /// Fixes bug where obtaining over 999 coins sets the number of lives to 999 (or -25)
+-#define BUGFIX_MAX_LIVES (0 || VERSION_US || VERSION_EU || VERSION_SH)
++#define BUGFIX_MAX_LIVES (0 || VERSION_US || VERSION_EU || VERSION_SH || VERSION_JP_ULTIMATE)
+ /// Fixes bug where the Boss music won't fade out after defeating King Bob-omb
+-#define BUGFIX_KING_BOB_OMB_FADE_MUSIC (0 || VERSION_US || VERSION_EU || VERSION_SH)
++#define BUGFIX_KING_BOB_OMB_FADE_MUSIC (0 || VERSION_US || VERSION_EU || VERSION_SH || VERSION_JP_ULTIMATE)
+ /// Fixes bug in Bob-Omb Battlefield where entering a warp stops the Koopa race music
+-#define BUGFIX_KOOPA_RACE_MUSIC (0 || VERSION_US || VERSION_EU || VERSION_SH)
++#define BUGFIX_KOOPA_RACE_MUSIC (0 || VERSION_US || VERSION_EU || VERSION_SH || VERSION_JP_ULTIMATE)
+ /// Fixes bug where Piranha Plants do not reset their action state when the
+ /// player exits their activation radius.
+-#define BUGFIX_PIRANHA_PLANT_STATE_RESET (0 || VERSION_US || VERSION_EU || VERSION_SH)
++#define BUGFIX_PIRANHA_PLANT_STATE_RESET (0 || VERSION_US || VERSION_EU || VERSION_SH || VERSION_JP_ULTIMATE)
+ /// Fixes bug where sleeping Piranha Plants damage players that bump into them
+-#define BUGFIX_PIRANHA_PLANT_SLEEP_DAMAGE (0 || VERSION_US || VERSION_SH)
++#define BUGFIX_PIRANHA_PLANT_SLEEP_DAMAGE (0 || VERSION_US || VERSION_SH || VERSION_EU_ULTIMATE || VERSION_JP_ULTIMATE)
+ /// Fixes bug where it shows a star when you grab a key in bowser battle stages
+-#define BUGFIX_STAR_BOWSER_KEY (0 || VERSION_US || VERSION_EU || VERSION_SH)
++#define BUGFIX_STAR_BOWSER_KEY (0 || VERSION_US || VERSION_EU || VERSION_SH || VERSION_JP_ULTIMATE)
++
++// --| Shindou Version Nintendo Bug Fixes
++#define BUGFIX_BACKWARDS_LONGJUMP (0 || VERSION_SH) //most people probably wont like this in any other build!
++
++// --| Ultimate Version Bug Fixes
++/// Fixes bug where it shows burn smoke incorrectly
++#define BUGFIX_BURN_SMOKE (0 || VERSION_US_ULTIMATE || VERSION_JP_ULTIMATE || VERSION_EU_ULTIMATE || VERSION_SH_ULTIMATE)
++#define BUGFIX_TUXIE_HELD_STATE (0 || VERSION_US_ULTIMATE || VERSION_JP_ULTIMATE || VERSION_EU_ULTIMATE || VERSION_SH_ULTIMATE)
++#define BUGFIX_KLEPTO_STAR_ANIMATION (0 || VERSION_US_ULTIMATE || VERSION_JP_ULTIMATE || VERSION_EU_ULTIMATE || VERSION_SH_ULTIMATE)
++#define BUGFIX_CASTLE_TRAP_OPEN_SOUND (0 || VERSION_US_ULTIMATE || VERSION_JP_ULTIMATE || VERSION_EU_ULTIMATE || VERSION_SH_ULTIMATE)
++#define BUGFIX_BULLY_KNOCKBACK_TIMER (0 || VERSION_US_ULTIMATE || VERSION_JP_ULTIMATE || VERSION_EU_ULTIMATE || VERSION_SH_ULTIMATE)
++#define BUGFIX_SHADOW_WATERLEVEL (0 || VERSION_US_ULTIMATE || VERSION_JP_ULTIMATE || VERSION_EU_ULTIMATE || VERSION_SH_ULTIMATE)
++#define BUGFIX_COLLISION_HITBOX_OVERLAP (0 || VERSION_US_ULTIMATE || VERSION_JP_ULTIMATE || VERSION_EU_ULTIMATE || VERSION_SH_ULTIMATE)
++#define BUGFIX_COLLISION_HURTBOX_OVERLAP (0 || VERSION_US_ULTIMATE || VERSION_JP_ULTIMATE || VERSION_EU_ULTIMATE || VERSION_SH_ULTIMATE)
++#define BUGFIX_SHELL_BACKWARDS_HYPERSPEED (0 || VERSION_US_ULTIMATE || VERSION_JP_ULTIMATE || VERSION_EU_ULTIMATE || VERSION_SH_ULTIMATE)
++#define BUGFIX_MARIO_CRAWLING_FALLTHROUGH (0 || VERSION_US_ULTIMATE || VERSION_JP_ULTIMATE || VERSION_EU_ULTIMATE || VERSION_SH_ULTIMATE)
++#define BUGFIX_AIR_HIT_WALL_VELOCITY (0 || VERSION_US_ULTIMATE || VERSION_JP_ULTIMATE || VERSION_EU_ULTIMATE || VERSION_SH_ULTIMATE)
++#define BUGFIX_AIR_HIT_WALL_ANIMATION (0 || VERSION_US_ULTIMATE || VERSION_JP_ULTIMATE || VERSION_EU_ULTIMATE || VERSION_SH_ULTIMATE)
++#define BUGFIX_CAMERA_WATER_HEIGHT (0 || VERSION_US_ULTIMATE || VERSION_JP_ULTIMATE || VERSION_EU_ULTIMATE || VERSION_SH_ULTIMATE)
++#define BUGFIX_CAMERA_BOSS_FIGHT_HEIGHT (0 || VERSION_US_ULTIMATE || VERSION_JP_ULTIMATE || VERSION_EU_ULTIMATE || VERSION_SH_ULTIMATE)
++#define BUGFIX_KOOPA_PINK_SHORTS (0 || VERSION_US_ULTIMATE || VERSION_JP_ULTIMATE || VERSION_EU_ULTIMATE || VERSION_SH_ULTIMATE)
++
+ 
+ // Screen Size Defines
+ #define SCREEN_WIDTH 320
+diff --git a/include/object_constants.h b/include/object_constants.h
+index 95f5ce5..3026fe5 100644
+--- a/include/object_constants.h
++++ b/include/object_constants.h
+@@ -895,6 +895,9 @@
+     #define KLEPTO_ANIM_STATE_HOLDING_NOTHING 0
+     #define KLEPTO_ANIM_STATE_HOLDING_CAP 1
+     #define KLEPTO_ANIM_STATE_HOLDING_STAR 2
++#if BUGFIX_KLEPTO_STAR_ANIMATION
++	#define KLEPTO_ANIM_STATE_HOLDING_BLUE_STAR 3
++#endif
+ 
+ /* Bird */
+     /* oAction */
+diff --git a/include/segments.h b/include/segments.h
+index a8c1bf9..9306214 100644
+--- a/include/segments.h
++++ b/include/segments.h
+@@ -22,7 +22,7 @@
+ 
+ #ifdef VERSION_EU
+ #define SEG_MAIN         0x80241800 // TODO: Investigate why it's different?
+-#elif defined(VERSION_SH)
++#elif defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ #define SEG_MAIN         0x80249000
+ #else
+ #define SEG_MAIN         0x80246000
+diff --git a/include/types.h b/include/types.h
+index c6e801e..7ec2b89 100644
+--- a/include/types.h
++++ b/include/types.h
+@@ -30,7 +30,7 @@ struct Controller
+   /*0x12*/ u16 buttonPressed;
+   /*0x14*/ OSContStatus *statusData;
+   /*0x18*/ OSContPad *controllerData;
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+   /*0x1C*/ int port;
+ #endif
+ };
+diff --git a/levels/intro/geo.c b/levels/intro/geo.c
+index 30a8780..ae2a38c 100644
+--- a/levels/intro/geo.c
++++ b/levels/intro/geo.c
+@@ -53,7 +53,7 @@ const GeoLayout intro_geo_mario_head_regular[] = {
+          GEO_NODE_ORTHO(100),
+          GEO_OPEN_NODE(),
+             GEO_ASM(0, geo_intro_regular_backdrop),
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             GEO_ASM(0, geo_intro_face_easter_egg),
+ #endif
+          GEO_CLOSE_NODE(),
+@@ -65,7 +65,7 @@ const GeoLayout intro_geo_mario_head_regular[] = {
+             GEO_ASM(2, geo_draw_mario_head_goddard),
+          GEO_CLOSE_NODE(),
+       GEO_CLOSE_NODE(),
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+    GEO_ZBUFFER(0),
+    GEO_OPEN_NODE(),
+       GEO_ASM(0, geo_intro_rumble_pak_graphic),
+@@ -84,7 +84,7 @@ const GeoLayout intro_geo_mario_head_dizzy[] = {
+          GEO_NODE_ORTHO(100),
+          GEO_OPEN_NODE(),
+             GEO_ASM(0, geo_intro_gameover_backdrop),
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             GEO_ASM(0, geo_intro_face_easter_egg),
+ #endif
+          GEO_CLOSE_NODE(),
+@@ -96,7 +96,7 @@ const GeoLayout intro_geo_mario_head_dizzy[] = {
+             GEO_ASM(3, geo_draw_mario_head_goddard),
+          GEO_CLOSE_NODE(),
+       GEO_CLOSE_NODE(),
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+       GEO_ZBUFFER(0),
+       GEO_OPEN_NODE(),
+          GEO_ASM(1, geo_intro_rumble_pak_graphic),
+diff --git a/levels/intro/leveldata.c b/levels/intro/leveldata.c
+index 7a4474d..27da946 100644
+--- a/levels/intro/leveldata.c
++++ b/levels/intro/leveldata.c
+@@ -3333,7 +3333,7 @@ static const Vtx intro_seg7_vertex_0700B460[] = {
+     {{{   268,    196,     -1}, 0, {     0,      0}, {0xff, 0xff, 0xff, 0xff}}},
+ };
+ 
+-#if defined(VERSION_EU) || defined(VERSION_SH)
++#if defined(VERSION_EU) || defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ // 0x0700B4A0 - 0x0700B4A2
+ ALIGNED8 static const Texture intro_seg7_texture_0700B4A0[] = {
+ #include "levels/intro/2_eu_copyright.rgba16.inc.c"
+@@ -3351,10 +3351,15 @@ ALIGNED8 static const Texture intro_seg7_texture_0700B4A0[] = {
+ ALIGNED8 static const u8 intro_seg7_texture_0700C4A0[] = {
+ #include "levels/intro/3_eu_tm.rgba16.inc.c"
+ };
+-#elif defined(VERSION_SH)
++#elif defined(VERSION_SH) || defined(VERSION_EU_ULTIMATE)
+ ALIGNED8 static const u8 intro_seg7_texture_0700C4A0[] = {
+ #include "levels/intro/3_sh_tm.rgba16.inc.c"
+ };
++#elif defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE)
++// 0x0700C4A0 - 0x0700D4A0
++ALIGNED8 static const Texture intro_seg7_texture_0700C4A0[] = {
++#include "levels/intro/3_sh_tm.rgba16.inc.c"
++};
+ #else
+ // 0x0700C4A0 - 0x0700D4A0
+ ALIGNED8 static const Texture intro_seg7_texture_0700C4A0[] = {
+diff --git a/lib/src/contramread.c b/lib/src/contramread.c
+index 3043f71..9fa1b2e 100644
+--- a/lib/src/contramread.c
++++ b/lib/src/contramread.c
+@@ -2,7 +2,7 @@
+ #include "PR/rcp.h"
+ #include "controller.h"
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ extern s32 func_8030A5C0(OSMesgQueue *, s32);
+ void __osPackRamReadData(int channel, u16 address);
+ 
+diff --git a/lib/src/contramwrite.c b/lib/src/contramwrite.c
+index 6b83dae..88af08e 100644
+--- a/lib/src/contramwrite.c
++++ b/lib/src/contramwrite.c
+@@ -2,7 +2,7 @@
+ #include "PR/rcp.h"
+ #include "controller.h"
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ extern s32 func_8030A5C0(OSMesgQueue *, s32);
+ void __osPackRamWriteData(int channel, u16 address, u8 *buffer);
+ 
+diff --git a/lib/src/crc.c b/lib/src/crc.c
+index f18dc63..8dba25c 100644
+--- a/lib/src/crc.c
++++ b/lib/src/crc.c
+@@ -1,6 +1,6 @@
+ #include "libultra_internal.h"
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ u8 __osContAddressCrc(u16 addr) {
+     u8 temp;
+     u8 temp2;
+diff --git a/lib/src/osPfsIsPlug.c b/lib/src/osPfsIsPlug.c
+index 9611c97..ae9800e 100644
+--- a/lib/src/osPfsIsPlug.c
++++ b/lib/src/osPfsIsPlug.c
+@@ -2,7 +2,7 @@
+ #include "controller.h"
+ //#include "siint.h"
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ OSPifRam __osPfsPifRam;
+ 
+ s32 osPfsIsPlug(OSMesgQueue *queue, u8 *pattern) {
+diff --git a/lib/src/unk_shindou_file_3.c b/lib/src/unk_shindou_file_3.c
+index 318e406..b840db5 100644
+--- a/lib/src/unk_shindou_file_3.c
++++ b/lib/src/unk_shindou_file_3.c
+@@ -1,7 +1,7 @@
+ #include "libultra_internal.h"
+ #include "controller.h"
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ s32 func_8030A5C0(OSMesgQueue *arg0, s32 arg1) { // TODO: This is almost certainly __osPfsGetStatus.
+     s32 sp34 = 0;
+     OSMesg sp30;
+diff --git a/sm64.ld b/sm64.ld
+index f9d769d..7566c56 100755
+--- a/sm64.ld
++++ b/sm64.ld
+@@ -94,7 +94,7 @@ SECTIONS
+       BUILD_DIR/src/game/main.o(.text);
+       BUILD_DIR/src/game/game_init.o(.text);
+       BUILD_DIR/src/game/sound_init.o(.text);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+       BUILD_DIR/src/game/rumble_init.o(.text);
+ #endif
+       BUILD_DIR/src/game/level_update.o(.text);
+@@ -194,7 +194,7 @@ SECTIONS
+       BUILD_DIR/libultra.a:osContStartReadData.o(.text);
+       BUILD_DIR/libultra.a:osContInit.o(.text);
+       BUILD_DIR/libultra.a:osEepromProbe.o(.text);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_EU_ULTIMATE)
+       BUILD_DIR/libultra.a:motor.o(.text);
+ #endif
+       BUILD_DIR/libultra.a:osInvalDCache.o(.text);
+@@ -268,7 +268,7 @@ SECTIONS
+       BUILD_DIR/libultra.a:__osSiRawStartDma.o(.text)
+       BUILD_DIR/libultra.a:osSetTimer.o(.text)
+       BUILD_DIR/libultra.a:osEepromWrite.o(.text)
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_EU_ULTIMATE)
+       BUILD_DIR/libultra.a:osPfsIsPlug.o(.text)
+       BUILD_DIR/libultra.a:crc.o(.text)
+       BUILD_DIR/libultra.a:contramwrite.o(.text)
+@@ -300,7 +300,7 @@ SECTIONS
+       BUILD_DIR/libultra.a:__osSetGlobalIntMask.o(.text)
+ #endif
+       BUILD_DIR/libultra.a:func_802F71F0.o(.text)
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_EU_ULTIMATE)
+       BUILD_DIR/libultra.a:unk_shindou_file_3.o(.text)
+ #endif
+       BUILD_DIR/lib/rsp.o(.text);
+@@ -335,6 +335,9 @@ SECTIONS
+       BUILD_DIR/libultra.a:osContStartReadData.o(.text);
+       BUILD_DIR/libultra.a:osContInit.o(.text);
+       BUILD_DIR/libultra.a:osEepromProbe.o(.text);
++#if defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE)
++      BUILD_DIR/libultra.a:motor.o(.text);
++#endif
+       BUILD_DIR/libultra.a:llmuldiv.o(.text);
+       BUILD_DIR/libultra.a:llmuldiv_gcc.o(.text);
+       BUILD_DIR/libultra.a:osInvalDCache.o(.text);
+@@ -393,6 +396,12 @@ SECTIONS
+       BUILD_DIR/libultra.a:__osSiRawStartDma.o(.text);
+       BUILD_DIR/libultra.a:osSetTimer.o(.text);
+       BUILD_DIR/libultra.a:osEepromWrite.o(.text);
++#if defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE)
++      BUILD_DIR/libultra.a:osPfsIsPlug.o(.text)
++      BUILD_DIR/libultra.a:crc.o(.text)
++      BUILD_DIR/libultra.a:contramwrite.o(.text)
++      BUILD_DIR/libultra.a:contramread.o(.text)
++#endif
+       BUILD_DIR/libultra.a:osJamMesg.o(.text);
+       BUILD_DIR/libultra.a:osPiGetCmdQueue.o(.text);
+       BUILD_DIR/libultra.a:osEepromRead.o(.text);
+@@ -413,6 +422,9 @@ SECTIONS
+       BUILD_DIR/libultra.a:__osGetCause.o(.text);
+       BUILD_DIR/libultra.a:__osAtomicDec.o(.text);
+       BUILD_DIR/libultra.a:guLookAtRef.o(.text); /* Fast3DEX2 only */
++#if defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE)
++      BUILD_DIR/libultra.a:unk_shindou_file_3.o(.text)
++#endif
+       BUILD_DIR/lib/rsp.o(.text);
+ #endif
+ 
+@@ -421,7 +433,7 @@ SECTIONS
+       BUILD_DIR/src/game/main.o(.data*);
+       BUILD_DIR/src/game/game_init.o(.data*);
+       BUILD_DIR/src/game/sound_init.o(.data*);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+       BUILD_DIR/src/game/rumble_init.o(.data*);
+ #endif
+       BUILD_DIR/src/game/level_update.o(.data*);
+@@ -492,7 +504,7 @@ SECTIONS
+       BUILD_DIR/libultra.a:osViTable.o(.data*);
+       BUILD_DIR/libultra.a:osCreatePiManager.o(.data*);
+       BUILD_DIR/libultra.a:osContInit.o(.data*);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_EU_ULTIMATE)
+       BUILD_DIR/libultra.a:motor.o(.data*);
+ #endif
+       BUILD_DIR/libultra.a:osAiSetNextBuffer.o(.data*);
+@@ -510,6 +522,9 @@ SECTIONS
+       BUILD_DIR/libultra.a:osCreatePiManager.o(.data*);
+       BUILD_DIR/libultra.a:osInitialize.o(.data*);
+       BUILD_DIR/libultra.a:osContInit.o(.data*);
++#if defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE)
++      BUILD_DIR/libultra.a:motor.o(.data*);
++#endif
+       BUILD_DIR/libultra.a:osAiSetNextBuffer.o(.data*);
+       BUILD_DIR/libultra.a:osTimer.o(.data*);
+       BUILD_DIR/libultra.a:_Printf.o(.data*);
+@@ -631,7 +646,7 @@ SECTIONS
+       BUILD_DIR/src/game/main.o(.bss*);
+       BUILD_DIR/src/game/game_init.o(.bss*);
+       BUILD_DIR/src/game/sound_init.o(.bss*);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+       BUILD_DIR/src/game/rumble_init.o(.bss*);
+ #endif
+       BUILD_DIR/src/game/level_update.o(.bss*);
+@@ -689,7 +704,7 @@ SECTIONS
+       BUILD_DIR/libultra.a:osCreatePiManager.o(.bss*);
+       BUILD_DIR/libultra.a:osContStartReadData.o(.bss*);
+       BUILD_DIR/libultra.a:osContInit.o(.bss*);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_EU_ULTIMATE)
+       BUILD_DIR/libultra.a:motor.o(.bss*);
+ #endif
+       BUILD_DIR/libultra.a:guRotateF.o(.bss*);
+@@ -705,7 +720,7 @@ SECTIONS
+ #endif
+       BUILD_DIR/libultra.a:__osPiCreateAccessQueue.o(.bss*);
+       BUILD_DIR/libultra.a:__osSiCreateAccessQueue.o(.bss*);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_EU_ULTIMATE)
+       BUILD_DIR/libultra.a:osPfsIsPlug.o(.bss*);
+ #endif
+       BUILD_DIR/libultra.a:osEepromWrite.o(.bss*);
+@@ -727,11 +742,17 @@ SECTIONS
+       BUILD_DIR/libultra.a:osInitialize.o(.bss*);
+       BUILD_DIR/libultra.a:osContStartReadData.o(.bss*);
+       BUILD_DIR/libultra.a:osContInit.o(.bss*);
++#if defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE)
++      BUILD_DIR/libultra.a:motor.o(.bss*);
++#endif
+       BUILD_DIR/libultra.a:guRotateF.o(.bss*);
+       BUILD_DIR/libultra.a:osTimer.o(.bss*);
+       BUILD_DIR/libultra.a:_Printf.o(.bss*);
+       BUILD_DIR/libultra.a:__osPiCreateAccessQueue.o(.bss*);
+       BUILD_DIR/libultra.a:__osSiCreateAccessQueue.o(.bss*);
++#if defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE)
++      BUILD_DIR/libultra.a:osPfsIsPlug.o(.bss*);
++#endif
+       BUILD_DIR/libultra.a:osEepromWrite.o(.bss*);
+       BUILD_DIR/libultra.a:kdebugserver_stack.o(.bss*);
+       BUILD_DIR/libultra.a:kdebugserver.o(.bss*);
+diff --git a/src/buffers/buffers.c b/src/buffers/buffers.c
+index 72b031b..8cf4e94 100644
+--- a/src/buffers/buffers.c
++++ b/src/buffers/buffers.c
+@@ -15,7 +15,7 @@ ALIGNED8 u8 gIdleThreadStack[0x800];
+ ALIGNED8 u8 gThread3Stack[0x2000];
+ ALIGNED8 u8 gThread4Stack[0x2000];
+ ALIGNED8 u8 gThread5Stack[0x2000];
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ ALIGNED8 u8 gThread6Stack[0x2000];
+ #endif
+ // 0x400 bytes
+diff --git a/src/buffers/buffers.h b/src/buffers/buffers.h
+index b9abbf6..25e66d9 100644
+--- a/src/buffers/buffers.h
++++ b/src/buffers/buffers.h
+@@ -18,7 +18,7 @@ extern u8 gIdleThreadStack[];
+ extern u8 gThread3Stack[];
+ extern u8 gThread4Stack[];
+ extern u8 gThread5Stack[];
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ extern u8 gThread6Stack[];
+ #endif
+ 
+diff --git a/src/game/behaviors/bully.inc.c b/src/game/behaviors/bully.inc.c
+index 21c561a..f93b853 100644
+--- a/src/game/behaviors/bully.inc.c
++++ b/src/game/behaviors/bully.inc.c
+@@ -53,7 +53,7 @@ void bhv_big_bully_init(void) {
+ 
+ void bully_check_mario_collision(void) {
+     if (
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     o->oAction != BULLY_ACT_LAVA_DEATH && o->oAction != BULLY_ACT_DEATH_PLANE_DEATH &&
+ #endif
+     o->oInteractStatus & INT_STATUS_INTERACTED) {
+@@ -341,6 +341,9 @@ void bhv_big_bully_with_minions_loop(void) {
+ 
+                 if (o->oTimer >= 91)
+                     o->oAction = BULLY_ACT_ACTIVATE_AND_FALL;
++#if BUGFIX_BULLY_KNOCKBACK_TIMER
++                    o->oBullyKBTimerAndMinionKOCounter == 0;
++#endif
+             }
+             break;
+ 
+diff --git a/src/game/behaviors/capswitch.inc.c b/src/game/behaviors/capswitch.inc.c
+index 65ae62d..0369fd8 100644
+--- a/src/game/behaviors/capswitch.inc.c
++++ b/src/game/behaviors/capswitch.inc.c
+@@ -31,7 +31,7 @@ void cap_switch_act_2(void) {
+             cur_obj_shake_screen(SHAKE_POS_SMALL);
+             spawn_mist_particles();
+             spawn_triangle_break_particles(60, 139, 0.3f, o->oBehParams2ndByte);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             queue_rumble_data(5, 80);
+ #endif
+         }
+diff --git a/src/game/behaviors/castle_floor_trap.inc.c b/src/game/behaviors/castle_floor_trap.inc.c
+index 4bceb9e..c2bd9c6 100644
+--- a/src/game/behaviors/castle_floor_trap.inc.c
++++ b/src/game/behaviors/castle_floor_trap.inc.c
+@@ -26,7 +26,11 @@ void bhv_castle_floor_trap_open_detect(void) {
+ 
+ void bhv_castle_floor_trap_open(void) {
+     if (o->oTimer == 0)
++#if BUGFIX_CASTLE_TRAP_OPEN_SOUND
++        play_sound(SOUND_GENERAL_CASTLE_TRAP_OPEN, gGlobalSoundSource);
++#else
+         cur_obj_play_sound_2(SOUND_GENERAL_CASTLE_TRAP_OPEN);
++#endif
+     o->oAngleVelRoll -= 0x100;
+     o->oFaceAngleRoll += o->oAngleVelRoll;
+     if (o->oFaceAngleRoll < -0x4000) {
+diff --git a/src/game/behaviors/controllable_platform.inc.c b/src/game/behaviors/controllable_platform.inc.c
+index 17e8bee..c68ef95 100644
+--- a/src/game/behaviors/controllable_platform.inc.c
++++ b/src/game/behaviors/controllable_platform.inc.c
+@@ -29,7 +29,7 @@ void bhv_controllable_platform_sub_loop(void) {
+ 
+             if (gMarioObject->platform == o) {
+                 D_80331694 = o->oBehParams2ndByte;
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 o->parentObj->header.gfx.node.flags &= ~GRAPH_RENDER_INVISIBLE;
+ #endif
+                 o->oAction = 1;
+@@ -79,7 +79,7 @@ void controllable_platform_hit_wall(s8 sp1B) {
+     D_80331694 = 5;
+ 
+     cur_obj_play_sound_2(SOUND_GENERAL_QUIET_POUND1);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     queue_rumble_data(50, 80);
+ #endif
+ }
+diff --git a/src/game/behaviors/exclamation_box.inc.c b/src/game/behaviors/exclamation_box.inc.c
+index 86486c3..3c786d4 100644
+--- a/src/game/behaviors/exclamation_box.inc.c
++++ b/src/game/behaviors/exclamation_box.inc.c
+@@ -78,7 +78,7 @@ void exclamation_box_act_2(void) {
+         o->oGravity = -8.0f;
+         o->oFloorHeight = o->oPosY;
+         o->oAction = 3;
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+     }
+diff --git a/src/game/behaviors/klepto.inc.c b/src/game/behaviors/klepto.inc.c
+index 46d7ffc..bcabe79 100644
+--- a/src/game/behaviors/klepto.inc.c
++++ b/src/game/behaviors/klepto.inc.c
+@@ -75,7 +75,16 @@ static void klepto_anim_dive(void) {
+ 
+ void bhv_klepto_init(void) {
+     if (o->oBehParams2ndByte != 0) {
++#if BUGFIX_KLEPTO_STAR_ANIMATION
++        if(save_file_get_star_flags(gCurrSaveFileNum - 1, COURSE_SSL) & 1) {
++            o->oAnimState = KLEPTO_ANIM_STATE_HOLDING_BLUE_STAR;
++        }
++        else {
++            o->oAnimState = KLEPTO_ANIM_STATE_HOLDING_STAR;
++        }
++#else
+         o->oAnimState = KLEPTO_ANIM_STATE_HOLDING_STAR;
++#endif
+     } else {
+         o->oKleptoStartPosX = o->oPosX;
+         o->oKleptoStartPosY = o->oPosY;
+@@ -364,6 +373,10 @@ void bhv_klepto_update(void) {
+                 spawn_object(o, MODEL_MARIOS_CAP, bhvNormalCap);
+             } else if (o->oAnimState == KLEPTO_ANIM_STATE_HOLDING_STAR) {
+                 spawn_default_star(-5550.0f, 300.0f, -930.0f);
++#if BUGFIX_KLEPTO_STAR_ANIMATION
++            } else if (o->oAnimState == KLEPTO_ANIM_STATE_HOLDING_BLUE_STAR) {
++    			spawn_default_star(-5550.0f, 300.0f, -930.0f);
++#endif
+  			}
+ 
+             o->oAnimState = KLEPTO_ANIM_STATE_HOLDING_NOTHING;
+diff --git a/src/game/behaviors/mushroom_1up.inc.c b/src/game/behaviors/mushroom_1up.inc.c
+index 1466802..389d694 100644
+--- a/src/game/behaviors/mushroom_1up.inc.c
++++ b/src/game/behaviors/mushroom_1up.inc.c
+@@ -7,7 +7,7 @@ void bhv_1up_interact(void) {
+         play_sound(SOUND_GENERAL_COLLECT_1UP, gGlobalSoundSource);
+         gMarioState->numLives++;
+         o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+     }
+diff --git a/src/game/behaviors/purple_switch.inc.c b/src/game/behaviors/purple_switch.inc.c
+index 912f7c0..ecf73db 100644
+--- a/src/game/behaviors/purple_switch.inc.c
++++ b/src/game/behaviors/purple_switch.inc.c
+@@ -32,7 +32,7 @@ void bhv_purple_switch_loop(void) {
+                 cur_obj_play_sound_2(SOUND_GENERAL2_PURPLE_SWITCH);
+                 o->oAction = PURPLE_SWITCH_TICKING;
+                 cur_obj_shake_screen(SHAKE_POS_SMALL);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+             }
+diff --git a/src/game/behaviors/pyramid_top.inc.c b/src/game/behaviors/pyramid_top.inc.c
+index 824d24f..142b9cb 100644
+--- a/src/game/behaviors/pyramid_top.inc.c
++++ b/src/game/behaviors/pyramid_top.inc.c
+@@ -95,6 +95,9 @@ void bhv_pyramid_top_loop(void) {
+         case PYRAMID_TOP_ACT_CHECK_IF_SOLVED:
+             if (o->oPyramidTopPillarsTouched == 4) {
+                 play_puzzle_jingle();
++#if defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
++                gCamera->cutscene = CUTSCENE_SSL_PYRAMID_EXPLODE;
++#endif
+                 o->oAction = PYRAMID_TOP_ACT_SPINNING;
+             }
+             break;
+diff --git a/src/game/behaviors/star_door.inc.c b/src/game/behaviors/star_door.inc.c
+index 2d7dad1..27cb81f 100644
+--- a/src/game/behaviors/star_door.inc.c
++++ b/src/game/behaviors/star_door.inc.c
+@@ -22,7 +22,7 @@ void bhv_star_door_loop(void) {
+         case 1:
+             if (o->oTimer == 0 && (s16)(o->oMoveAngleYaw) >= 0) {
+                 cur_obj_play_sound_2(SOUND_GENERAL_STAR_DOOR_OPEN);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(35, 30);
+ #endif
+             }
+@@ -39,7 +39,7 @@ void bhv_star_door_loop(void) {
+         case 3:
+             if (o->oTimer == 0 && (s16)(o->oMoveAngleYaw) >= 0) {
+                 cur_obj_play_sound_2(SOUND_GENERAL_STAR_DOOR_CLOSE);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(35, 30);
+ #endif
+             }
+diff --git a/src/game/behaviors/treasure_chest.inc.c b/src/game/behaviors/treasure_chest.inc.c
+index 938a758..13c0567 100644
+--- a/src/game/behaviors/treasure_chest.inc.c
++++ b/src/game/behaviors/treasure_chest.inc.c
+@@ -136,7 +136,7 @@ void bhv_treasure_chest_ship_loop(void) {
+                     gEnvironmentRegions[6] = -335;
+                     o->activeFlags = ACTIVE_FLAG_DEACTIVATED;
+                 }
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 reset_rumble_timers_2(2);
+ #endif
+             }
+diff --git a/src/game/behaviors/tuxie.inc.c b/src/game/behaviors/tuxie.inc.c
+index 1dae585..4c9db3a 100644
+--- a/src/game/behaviors/tuxie.inc.c
++++ b/src/game/behaviors/tuxie.inc.c
+@@ -66,6 +66,9 @@ void tuxies_mother_act_1(void) {
+             break;
+         case 1:
+             if (o->prevObj->oHeldState == HELD_FREE) {
++#if BUGFIX_TUXIE_HELD_STATE
++                o->prevObj->oInteractionSubtype &= ~INT_SUBTYPE_DROP_IMMEDIATELY;                
++#else
+                 //! This line is was almost certainly supposed to be something
+                 // like o->prevObj->oInteractionSubtype &= ~INT_SUBTYPE_DROP_IMMEDIATELY;
+                 // however, this code uses the value of o->oInteractionSubtype
+@@ -75,6 +78,7 @@ void tuxies_mother_act_1(void) {
+                 // which has no effect as o->prevObj->oUnknownUnk88 is always 0
+                 // or 1, which is not affected by the bitwise AND.
+                 o->prevObj->OBJECT_FIELD_S32(o->oInteractionSubtype) &= ~INT_SUBTYPE_DROP_IMMEDIATELY;
++#endif
+                 obj_set_behavior(o->prevObj, bhvUnused20E0);
+ #ifndef VERSION_JP
+                 cur_obj_spawn_star_at_y_offset(3167.0f, -4300.0f, 5108.0f, 200.0f);
+@@ -86,8 +90,12 @@ void tuxies_mother_act_1(void) {
+             break;
+         case 2:
+             if (o->prevObj->oHeldState == HELD_FREE) {
++#if BUGFIX_TUXIE_HELD_STATE
++                o->prevObj->oInteractionSubtype &= ~INT_SUBTYPE_DROP_IMMEDIATELY;
++#else
+                 //! Same bug as above
+                 o->prevObj->OBJECT_FIELD_S32(o->oInteractionSubtype) &= ~INT_SUBTYPE_DROP_IMMEDIATELY;            
++#endif
+                 obj_set_behavior(o->prevObj, bhvPenguinBaby);
+                 o->oAction = 2;
+             }
+diff --git a/src/game/behaviors/water_pillar.inc.c b/src/game/behaviors/water_pillar.inc.c
+index 60920c7..1307562 100644
+--- a/src/game/behaviors/water_pillar.inc.c
++++ b/src/game/behaviors/water_pillar.inc.c
+@@ -40,7 +40,7 @@ void water_level_pillar_undrained(void) {
+                     (s32) approach_f32_symmetric(gEnvironmentLevels[2], -2450.0f, 5.0f);
+                 gEnvironmentLevels[0] =
+                     (s32) approach_f32_symmetric(gEnvironmentLevels[0], -2450.0f, 5.0f);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 reset_rumble_timers_2(2);
+ #endif
+             } else
+diff --git a/src/game/behaviors/wdw_water_level.inc.c b/src/game/behaviors/wdw_water_level.inc.c
+index 6a8a346..42139be 100644
+--- a/src/game/behaviors/wdw_water_level.inc.c
++++ b/src/game/behaviors/wdw_water_level.inc.c
+@@ -49,7 +49,7 @@ void bhv_water_level_diamond_loop(void) {
+                             cur_obj_play_sound_1(SOUND_ENV_WATER_DRAIN); // same as above
+                     }
+                     o->oAngleVelYaw = 0x800;
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                     reset_rumble_timers_2(2);
+ #endif
+                 }
+diff --git a/src/game/behaviors/wiggler.inc.c b/src/game/behaviors/wiggler.inc.c
+index 3d27856..29130a0 100644
+--- a/src/game/behaviors/wiggler.inc.c
++++ b/src/game/behaviors/wiggler.inc.c
+@@ -153,7 +153,7 @@ void wiggler_init_segments(void) {
+         cur_obj_unhide();
+     }
+ 
+-#if defined(VERSION_EU) || defined(AVOID_UB)
++#if defined(VERSION_EU) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_SH_ULTIMATE) || defined(AVOID_UB)
+     o->oHealth = 4; // This fixes Wiggler reading UB on his first frame of his acceleration, as his health is not set.
+ #endif
+ }
+diff --git a/src/game/camera.c b/src/game/camera.c
+index 2ae110c..0dd73d3 100644
+--- a/src/game/camera.c
++++ b/src/game/camera.c
+@@ -667,8 +667,12 @@ BAD_RETURN(f32) calc_y_to_curr_floor(f32 *posOff, f32 posMul, f32 posBound, f32
+     UNUSED s32 filler;
+ 
+     if (!(sMarioCamState->action & ACT_FLAG_METAL_WATER)) {
++#if BUGFIX_CAMERA_WATER_HEIGHT
++        if (floorHeight < (waterHeight = sMarioGeometry.waterHeight)) {
++#else
+         //! @bug this should use sMarioGeometry.waterHeight
+         if (floorHeight < (waterHeight = find_water_level(sMarioCamState->pos[0], sMarioCamState->pos[2]))) {
++#endif
+             floorHeight = waterHeight;
+         }
+     }
+@@ -1604,6 +1608,9 @@ s32 update_boss_fight_camera(struct Camera *c, Vec3f focus, Vec3f pos) {
+         switch (gCurrLevelArea) {
+             case AREA_BOB:
+                 pos[1] += 125.f;
++#if BUGFIX_CAMERA_BOSS_FIGHT_HEIGHT
++                break;
++#endif;
+                 //! fall through, makes the BoB boss fight camera move up twice as high as it should
+             case AREA_WF:
+                 pos[1] += 125.f;
+diff --git a/src/game/game_init.c b/src/game/game_init.c
+index b633468..015201e 100644
+--- a/src/game/game_init.c
++++ b/src/game/game_init.c
+@@ -85,7 +85,7 @@ void my_rdp_init(void) {
+     gDPSetColorDither(gDisplayListHead++, G_CD_MAGICSQ);
+     gDPSetCycleType(gDisplayListHead++, G_CYC_FILL);
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     gDPSetAlphaDither(gDisplayListHead++, G_AD_PATTERN);
+ #endif
+     gDPPipeSync(gDisplayListHead++);
+@@ -481,7 +481,7 @@ void read_controller_inputs(void) {
+     if (gControllerBits) {
+         osRecvMesg(&gSIEventMesgQueue, &D_80339BEC, OS_MESG_BLOCK);
+         osContGetReadData(&gControllerPads[0]);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         release_rumble_pak_control();
+ #endif
+     }
+@@ -550,7 +550,7 @@ void init_controllers(void) {
+             // into any port in order to play the game. this was probably
+             // so if any of the ports didn't work, you can have controllers
+             // plugged into any of them and it will work.
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             gControllers[cont].port = port;
+ #endif
+             gControllers[cont].statusData = &gControllerStatuses[port];
+@@ -585,11 +585,11 @@ void thread5_game_loop(UNUSED void *arg) {
+     struct LevelCommand *addr;
+ 
+     setup_game_memory();
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     init_rumble_pak_scheduler_queue();
+ #endif
+     init_controllers();
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     create_thread_6();
+ #endif
+     save_file_load_all();
+@@ -614,7 +614,7 @@ void thread5_game_loop(UNUSED void *arg) {
+         // if any controllers are plugged in, start read the data for when
+         // read_controller_inputs is called later.
+         if (gControllerBits) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             block_until_rumble_pak_free();
+ #endif
+             osContStartReadData(&gSIEventMesgQueue);
+diff --git a/src/game/interaction.c b/src/game/interaction.c
+index 1ae0b24..5b03381 100644
+--- a/src/game/interaction.c
++++ b/src/game/interaction.c
+@@ -699,7 +699,7 @@ u32 take_damage_from_interact_object(struct MarioState *m) {
+ 
+     m->hurtCounter += 4 * damage;
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     queue_rumble_data(5, 80);
+ #endif
+     set_camera_shake_from_hit(shake);
+@@ -750,7 +750,7 @@ u32 interact_coin(struct MarioState *m, UNUSED u32 interactType, struct Object *
+         && m->numCoins >= 100) {
+         bhv_spawn_star_no_level_exit(6);
+     }
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     if (o->oDamageOrCoinValue >= 2) {
+         queue_rumble_data(5, 80);
+     }
+@@ -773,7 +773,7 @@ u32 interact_star_or_key(struct MarioState *m, UNUSED u32 interactType, struct O
+ 
+     if (m->health >= 0x100) {
+         mario_stop_riding_and_holding(m);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+ 
+@@ -876,7 +876,7 @@ u32 interact_warp(struct MarioState *m, UNUSED u32 interactType, struct Object *
+             m->interactObj = o;
+             m->usedObj = o;
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             if (o->collisionData == segmented_to_virtual(warp_pipe_seg3_collision_03009AC8)) {
+                 play_sound(SOUND_MENU_ENTER_PIPE, m->marioObj->header.gfx.cameraToObject);
+                 queue_rumble_data(15, 80);
+@@ -1100,7 +1100,7 @@ u32 interact_tornado(struct MarioState *m, UNUSED u32 interactType, struct Objec
+         marioObj->oMarioTornadoPosY = m->pos[1] - o->oPosY;
+ 
+         play_sound(SOUND_MARIO_WAAAOOOW, m->marioObj->header.gfx.cameraToObject);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(30, 60);
+ #endif
+         return set_mario_action(m, ACT_TORNADO_TWIRLING, m->action == ACT_TWIRLING);
+@@ -1123,7 +1123,7 @@ u32 interact_whirlpool(struct MarioState *m, UNUSED u32 interactType, struct Obj
+         marioObj->oMarioWhirlpoolPosY = m->pos[1] - o->oPosY;
+ 
+         play_sound(SOUND_MARIO_WAAAOOOW, m->marioObj->header.gfx.cameraToObject);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(30, 60);
+ #endif
+         return set_mario_action(m, ACT_CAUGHT_IN_WHIRLPOOL, 0);
+@@ -1159,7 +1159,7 @@ u32 interact_flame(struct MarioState *m, UNUSED u32 interactType, struct Object
+ 
+     if (!sInvulnerable && !(m->flags & MARIO_METAL_CAP) && !(m->flags & MARIO_VANISH_CAP)
+         && !(o->oInteractionSubtype & INT_SUBTYPE_DELAY_INVINCIBILITY)) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+         o->oInteractStatus = INT_STATUS_INTERACTED;
+@@ -1238,7 +1238,7 @@ u32 interact_bully(struct MarioState *m, UNUSED u32 interactType, struct Object
+     m->interactObj = o;
+ 
+     if (interaction & INT_ATTACK_NOT_FROM_BELOW) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+         push_mario_out_of_object(m, o, 5.0f);
+@@ -1263,7 +1263,7 @@ u32 interact_bully(struct MarioState *m, UNUSED u32 interactType, struct Object
+ 
+         push_mario_out_of_object(m, o, 5.0f);
+         drop_and_set_mario_action(m, bully_knock_back_mario(m), 0);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+         return TRUE;
+@@ -1282,7 +1282,7 @@ u32 interact_shock(struct MarioState *m, UNUSED u32 interactType, struct Object
+ 
+         take_damage_from_interact_object(m);
+         play_sound(SOUND_MARIO_ATTACKED, m->marioObj->header.gfx.cameraToObject);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(70, 60);
+ #endif
+ 
+@@ -1331,7 +1331,7 @@ u32 interact_hit_from_below(struct MarioState *m, UNUSED u32 interactType, struc
+     }
+ 
+     if (interaction & INT_ANY_ATTACK) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+         attack_object(o, interaction);
+@@ -1345,7 +1345,7 @@ u32 interact_hit_from_below(struct MarioState *m, UNUSED u32 interactType, struc
+             if (o->oInteractionSubtype & INT_SUBTYPE_TWIRL_BOUNCE) {
+                 bounce_off_object(m, o, 80.0f);
+                 reset_mario_pitch(m);
+-#ifndef VERSION_JP
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 play_sound(SOUND_MARIO_TWIRL_BOUNCE, m->marioObj->header.gfx.cameraToObject);
+ #endif
+                 return drop_and_set_mario_action(m, ACT_TWIRLING, 0);
+@@ -1373,7 +1373,7 @@ u32 interact_bounce_top(struct MarioState *m, UNUSED u32 interactType, struct Ob
+     }
+ 
+     if (interaction & INT_ATTACK_NOT_FROM_BELOW) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+         attack_object(o, interaction);
+@@ -1495,7 +1495,7 @@ u32 check_object_grab_mario(struct MarioState *m, UNUSED u32 interactType, struc
+ 
+             update_mario_sound_and_camera(m);
+             play_sound(SOUND_MARIO_OOOF, m->marioObj->header.gfx.cameraToObject);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             queue_rumble_data(5, 80);
+ #endif
+             return set_mario_action(m, ACT_GRABBED, 0);
+@@ -1510,7 +1510,7 @@ u32 interact_pole(struct MarioState *m, UNUSED u32 interactType, struct Object *
+     s32 actionId = m->action & ACT_ID_MASK;
+     if (actionId >= 0x080 && actionId < 0x0A0) {
+         if (!(m->prevAction & ACT_FLAG_ON_POLE) || m->usedObj != o) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             f32 velConv = m->forwardVel; // conserve the velocity.
+             struct Object *marioObj = m->marioObj;
+             u32 lowSpeed;
+@@ -1521,7 +1521,7 @@ u32 interact_pole(struct MarioState *m, UNUSED u32 interactType, struct Object *
+ 
+             mario_stop_riding_and_holding(m);
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             lowSpeed = (velConv <= 10.0f);
+ #endif
+ 
+@@ -1546,7 +1546,7 @@ u32 interact_pole(struct MarioState *m, UNUSED u32 interactType, struct Object *
+             marioObj->oMarioPoleYawVel = (s32)(m->forwardVel * 0x100 + 0x1000);
+ #endif
+             reset_mario_pitch(m);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             queue_rumble_data(5, 80);
+ #endif
+             return set_mario_action(m, ACT_GRAB_POLE_FAST, 0);
+@@ -1568,7 +1568,7 @@ u32 interact_hoot(struct MarioState *m, UNUSED u32 interactType, struct Object *
+         m->interactObj = o;
+         m->usedObj = o;
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+         update_mario_sound_and_camera(m);
+diff --git a/src/game/main.c b/src/game/main.c
+index 9615f25..7c01b53 100644
+--- a/src/game/main.c
++++ b/src/game/main.c
+@@ -253,7 +253,7 @@ void handle_vblank(void) {
+             start_sptask(M_GFXTASK);
+         }
+     }
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     rumble_thread_update_vi();
+ #endif
+ 
+diff --git a/src/game/main.h b/src/game/main.h
+index 58bd659..9e2f341 100644
+--- a/src/game/main.h
++++ b/src/game/main.h
+@@ -24,7 +24,7 @@ extern OSThread gIdleThread;
+ extern OSThread gMainThread;
+ extern OSThread gGameLoopThread;
+ extern OSThread gSoundThread;
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ extern OSThread gRumblePakThread;
+ 
+ extern s32 gRumblePakPfs; // Actually an OSPfs but we don't have that header yet
+@@ -33,7 +33,7 @@ extern s32 gRumblePakPfs; // Actually an OSPfs but we don't have that header yet
+ extern OSMesgQueue gPIMesgQueue;
+ extern OSMesgQueue gIntrMesgQueue;
+ extern OSMesgQueue gSPTaskMesgQueue;
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ extern OSMesgQueue gRumblePakSchedulerMesgQueue;
+ extern OSMesgQueue gRumbleThreadVIMesgQueue;
+ #endif
+@@ -46,7 +46,7 @@ extern OSIoMesg gDmaIoMesg;
+ extern OSMesg D_80339BEC;
+ extern OSMesgQueue gDmaMesgQueue;
+ extern OSMesgQueue gSIEventMesgQueue;
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ extern OSMesg gRumblePakSchedulerMesgBuf[1];
+ extern OSMesg gRumbleThreadVIMesgBuf[1];
+ 
+diff --git a/src/game/mario.c b/src/game/mario.c
+index 96df793..b542e2f 100644
+--- a/src/game/mario.c
++++ b/src/game/mario.c
+@@ -1495,7 +1495,7 @@ void update_mario_health(struct MarioState *m) {
+         // Play a noise to alert the player when Mario is close to drowning.
+         if (((m->action & ACT_GROUP_MASK) == ACT_GROUP_SUBMERGED) && (m->health < 0x300)) {
+             play_sound(SOUND_MOVING_ALMOST_DROWNING, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             if (!gRumblePakTimer) {
+                 gRumblePakTimer = 36;
+                 if (is_rumble_finished_and_queue_empty()) {
+@@ -1677,7 +1677,7 @@ static void debug_update_mario_cap(u16 button, s32 flags, u16 capTimer, u16 capM
+     }
+ }
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ void func_sh_8025574C(void) {
+     if (gMarioState->particleFlags & PARTICLE_HORIZONTAL_STAR) {
+         queue_rumble_data(5, 80);
+@@ -1770,7 +1770,7 @@ s32 execute_mario_action(UNUSED struct Object *o) {
+ 
+         play_infinite_stairs_music();
+         gMarioState->marioObj->oInteractStatus = 0;
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         func_sh_8025574C();
+ #endif
+ 
+diff --git a/src/game/mario_actions_airborne.c b/src/game/mario_actions_airborne.c
+index 34090a5..9a251c8 100644
+--- a/src/game/mario_actions_airborne.c
++++ b/src/game/mario_actions_airborne.c
+@@ -80,7 +80,7 @@ s32 check_fall_damage(struct MarioState *m, u32 hardFallAction) {
+         if (m->vel[1] < -55.0f) {
+             if (fallHeight > 3000.0f) {
+                 m->hurtCounter += (m->flags & MARIO_CAP_ON_HEAD) ? 16 : 24;
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+                 set_camera_shake_from_hit(SHAKE_FALL_DAMAGE);
+@@ -89,7 +89,7 @@ s32 check_fall_damage(struct MarioState *m, u32 hardFallAction) {
+             } else if (fallHeight > damageHeight && !mario_floor_is_slippery(m)) {
+                 m->hurtCounter += (m->flags & MARIO_CAP_ON_HEAD) ? 8 : 12;
+                 m->squishTimer = 30;
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+                 set_camera_shake_from_hit(SHAKE_FALL_DAMAGE);
+@@ -133,7 +133,7 @@ s32 check_fall_damage_or_get_stuck(struct MarioState *m, u32 hardFallAction) {
+ #endif
+         m->particleFlags |= PARTICLE_MIST_CIRCLE;
+         drop_and_set_mario_action(m, ACT_FEET_STUCK_IN_GROUND, 0);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+         return TRUE;
+@@ -385,7 +385,7 @@ u32 common_air_action_step(struct MarioState *m, u32 landAction, s32 animation,
+             set_mario_animation(m, animation);
+ 
+             if (m->forwardVel > 16.0f) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 40);
+ #endif
+                 mario_bonk_reflection(m, FALSE);
+@@ -493,7 +493,7 @@ s32 act_triple_jump(struct MarioState *m) {
+ #endif
+ 
+     common_air_action_step(m, ACT_TRIPLE_JUMP_LAND, MARIO_ANIM_TRIPLE_JUMP, 0);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     if (m->action == ACT_TRIPLE_JUMP_LAND) {
+         queue_rumble_data(5, 40);
+     }
+@@ -509,7 +509,7 @@ s32 act_backflip(struct MarioState *m) {
+ 
+     play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_MARIO_YAH_WAH_HOO);
+     common_air_action_step(m, ACT_BACKFLIP_LAND, MARIO_ANIM_BACKFLIP, 0);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     if (m->action == ACT_BACKFLIP_LAND) {
+         queue_rumble_data(5, 40);
+     }
+@@ -641,7 +641,7 @@ s32 act_long_jump(struct MarioState *m) {
+     }
+ 
+     common_air_action_step(m, ACT_LONG_JUMP_LAND, animation, AIR_STEP_CHECK_LEDGE_GRAB);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     if (m->action == ACT_LONG_JUMP_LAND) {
+         queue_rumble_data(5, 40);
+     }
+@@ -712,7 +712,7 @@ s32 act_twirling(struct MarioState *m) {
+     }
+ 
+     m->marioObj->header.gfx.angle[1] += m->twirlYaw;
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     reset_rumble_timers();
+ #endif
+     return FALSE;
+@@ -749,7 +749,7 @@ s32 act_dive(struct MarioState *m) {
+ 
+         case AIR_STEP_LANDED:
+             if (should_get_stuck_in_ground(m) && m->faceAngle[0] == -0x2AAA) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+ #ifdef VERSION_JP
+@@ -947,7 +947,7 @@ s32 act_ground_pound(struct MarioState *m) {
+         stepResult = perform_air_step(m, 0);
+         if (stepResult == AIR_STEP_LANDED) {
+             if (should_get_stuck_in_ground(m)) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+ #ifdef VERSION_JP
+@@ -998,7 +998,7 @@ s32 act_burning_jump(struct MarioState *m) {
+     if (m->health < 0x100) {
+         m->health = 0xFF;
+     }
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     reset_rumble_timers();
+ #endif
+     return FALSE;
+@@ -1020,7 +1020,7 @@ s32 act_burning_fall(struct MarioState *m) {
+     if (m->health < 0x100) {
+         m->health = 0xFF;
+     }
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     reset_rumble_timers();
+ #endif
+     return FALSE;
+@@ -1071,7 +1071,7 @@ s32 act_crazy_box_bounce(struct MarioState *m) {
+                 m->heldObj = NULL;
+                 set_mario_action(m, ACT_STOMACH_SLIDE, 0);
+             }
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             queue_rumble_data(5, 80);
+ #endif
+             m->particleFlags |= PARTICLE_MIST_CIRCLE;
+@@ -1103,7 +1103,7 @@ u32 common_air_knockback_step(struct MarioState *m, u32 landAction, u32 hardFall
+             break;
+ 
+         case AIR_STEP_LANDED:
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             if (m->action != ACT_SOFT_BONK) {
+                 queue_rumble_data(5, 40);
+             }
+@@ -1309,6 +1309,9 @@ s32 act_air_hit_wall(struct MarioState *m) {
+ 
+     if (++(m->actionTimer) <= 2) {
+         if (m->input & INPUT_A_PRESSED) {
++#if BUGFIX_AIR_HIT_WALL_VELOCITY
++            m->forwardVel == 0;
++#endif
+             m->vel[1] = 52.0f;
+             m->faceAngle[1] += 0x8000;
+             return set_mario_action(m, ACT_WALL_KICK_AIR, 0);
+@@ -1334,7 +1337,7 @@ s32 act_air_hit_wall(struct MarioState *m) {
+     }
+ 
+ #ifdef AVOID_UB
+-    return
++    return;
+ #endif
+     set_mario_animation(m, MARIO_ANIM_START_WALLKICK);
+ 
+@@ -1344,6 +1347,9 @@ s32 act_air_hit_wall(struct MarioState *m) {
+     // execute on two frames, but instead it executes twice on the same frame.
+     // This results in firsties only being possible for a single frame, instead
+     // of two.
++#if BUGFIX_AIR_HIT_WALL_ANIMATION
++    return;
++#endif
+ }
+ 
+ s32 act_forward_rollout(struct MarioState *m) {
+@@ -1505,7 +1511,7 @@ s32 act_hold_butt_slide_air(struct MarioState *m) {
+ }
+ 
+ s32 act_lava_boost(struct MarioState *m) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     if (!(m->flags & MARIO_MARIO_SOUND_PLAYED)) {
+         play_sound_if_no_flag(m, SOUND_MARIO_ON_FIRE, MARIO_MARIO_SOUND_PLAYED);
+         queue_rumble_data(5, 80);
+@@ -1529,7 +1535,7 @@ s32 act_lava_boost(struct MarioState *m) {
+                 }
+                 m->vel[1] = 84.0f;
+                 play_sound(SOUND_MARIO_ON_FIRE, m->marioObj->header.gfx.cameraToObject);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+             } else {
+@@ -1567,7 +1573,7 @@ s32 act_lava_boost(struct MarioState *m) {
+     }
+ 
+     m->marioBodyState->eyeState = MARIO_EYES_DEAD;
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     reset_rumble_timers();
+ #endif
+     return FALSE;
+@@ -1679,7 +1685,7 @@ s32 act_shot_from_cannon(struct MarioState *m) {
+             set_mario_action(m, ACT_DIVE_SLIDE, 0);
+             m->faceAngle[0] = 0;
+             set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             queue_rumble_data(5, 80);
+ #endif
+             break;
+@@ -1713,7 +1719,7 @@ s32 act_shot_from_cannon(struct MarioState *m) {
+     if (m->vel[1] > 0.0f) {
+         m->particleFlags |= PARTICLE_DUST;
+     }
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     reset_rumble_timers();
+ #endif
+     return FALSE;
+@@ -1778,7 +1784,7 @@ s32 act_flying(struct MarioState *m) {
+ 
+             m->faceAngle[0] = 0;
+             set_camera_mode(m->area->camera, m->area->camera->defMode, 1);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             queue_rumble_data(5, 60);
+ #endif
+             break;
+@@ -1833,7 +1839,7 @@ s32 act_flying(struct MarioState *m) {
+         play_sound(SOUND_MARIO_YAHOO_WAHA_YIPPEE + ((gAudioRandom % 5) << 16),
+                    m->marioObj->header.gfx.cameraToObject);
+ #endif
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(50, 40);
+ #endif
+     }
+@@ -1849,7 +1855,7 @@ s32 act_riding_hoot(struct MarioState *m) {
+         m->usedObj->oHootMarioReleaseTime = gGlobalTimer;
+ 
+         play_sound_if_no_flag(m, SOUND_MARIO_UH, MARIO_MARIO_SOUND_PLAYED);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(4, 40);
+ #endif
+         return set_mario_action(m, ACT_FREEFALL, 0);
+@@ -1907,7 +1913,7 @@ s32 act_flying_triple_jump(struct MarioState *m) {
+ 
+         if (is_anim_past_end(m)) {
+             set_mario_animation(m, MARIO_ANIM_FORWARD_SPINNING);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             queue_rumble_data(8, 80);
+ #endif
+             m->actionState = 1;
+@@ -1970,7 +1976,7 @@ s32 act_vertical_wind(struct MarioState *m) {
+         set_mario_animation(m, MARIO_ANIM_FORWARD_SPINNING_FLIP);
+         if (m->marioObj->header.gfx.animInfo.animFrame == 1) {
+             play_sound(SOUND_ACTION_SPIN, m->marioObj->header.gfx.cameraToObject);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             queue_rumble_data(8, 80);
+ #endif
+         }
+diff --git a/src/game/mario_actions_automatic.c b/src/game/mario_actions_automatic.c
+index 2269087..ddc918a 100644
+--- a/src/game/mario_actions_automatic.c
++++ b/src/game/mario_actions_automatic.c
+@@ -171,7 +171,7 @@ s32 act_holding_pole(struct MarioState *m) {
+             }
+         }
+         play_climbing_sounds(m, 2);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         reset_rumble_timers();
+ #endif
+         set_sound_moving_speed(SOUND_BANK_MOVING, marioObj->oMarioPoleYawVel / 0x100 * 2);
+@@ -385,7 +385,7 @@ void update_hang_stationary(struct MarioState *m) {
+ }
+ 
+ s32 act_start_hanging(struct MarioState *m) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     if (m->actionTimer++ == 0) {
+         queue_rumble_data(5, 80);
+     }
+@@ -470,7 +470,7 @@ s32 act_hang_moving(struct MarioState *m) {
+ 
+     if (m->marioObj->header.gfx.animInfo.animFrame == 12) {
+         play_sound(SOUND_ACTION_HANGING_STEP, m->marioObj->header.gfx.cameraToObject);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(1, 30);
+ #endif
+     }
+@@ -662,7 +662,7 @@ s32 act_grabbed(struct MarioState *m) {
+ 
+         m->faceAngle[1] = m->usedObj->oMoveAngleYaw;
+         vec3f_copy(m->pos, m->marioObj->header.gfx.pos);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 60);
+ #endif
+ 
+@@ -744,14 +744,14 @@ s32 act_in_cannon(struct MarioState *m) {
+                 m->marioObj->header.gfx.node.flags |= GRAPH_RENDER_ACTIVE;
+ 
+                 set_mario_action(m, ACT_SHOT_FROM_CANNON, 0);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(60, 70);
+ #endif
+                 m->usedObj->oAction = 2;
+                 return FALSE;
+             } else if (m->faceAngle[0] != startFacePitch || m->faceAngle[1] != startFaceYaw) {
+                 play_sound(SOUND_MOVING_AIM_CANNON, m->marioObj->header.gfx.cameraToObject);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 reset_rumble_timers_2(0);
+ #endif
+             }
+@@ -838,7 +838,7 @@ s32 act_tornado_twirling(struct MarioState *m) {
+ 
+     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
+     vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1] + m->twirlYaw, 0);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     reset_rumble_timers();
+ #endif
+ 
+diff --git a/src/game/mario_actions_cutscene.c b/src/game/mario_actions_cutscene.c
+index e2cbbb6..b083568 100644
+--- a/src/game/mario_actions_cutscene.c
++++ b/src/game/mario_actions_cutscene.c
+@@ -1163,7 +1163,7 @@ s32 act_death_exit(struct MarioState *m) {
+ #else
+         play_sound(SOUND_MARIO_OOOF2, m->marioObj->header.gfx.cameraToObject);
+ #endif
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+         m->numLives--;
+@@ -1198,7 +1198,7 @@ s32 act_falling_death_exit(struct MarioState *m) {
+ #else
+         play_sound(SOUND_MARIO_OOOF2, m->marioObj->header.gfx.cameraToObject);
+ #endif
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+         m->numLives--;
+@@ -1245,7 +1245,7 @@ s32 act_special_death_exit(struct MarioState *m) {
+     }
+ 
+     if (launch_mario_until_land(m, ACT_HARD_BACKWARD_GROUND_KB, MARIO_ANIM_BACKWARD_AIR_KB, -24.0f)) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+         m->numLives--;
+@@ -1331,7 +1331,7 @@ s32 act_bbh_enter_spin(struct MarioState *m) {
+             m->flags &= ~MARIO_UNKNOWN_08;
+             if (perform_air_step(m, 0) == AIR_STEP_LANDED) {
+                 level_trigger_warp(m, WARP_OP_UNKNOWN_02);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(15, 80);
+ #endif
+                 m->actionState = 4;
+@@ -1399,10 +1399,12 @@ s32 act_teleport_fade_out(struct MarioState *m) {
+     set_mario_animation(m, m->prevAction == ACT_CROUCHING ? MARIO_ANIM_CROUCHING
+                                                           : MARIO_ANIM_FIRST_PERSON);
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     if (m->actionTimer == 0) {
+         queue_rumble_data(30, 70);
++#ifdef VERSION_SH
+         func_sh_8024C89C(2);
++#endif
+     }
+ #endif
+ 
+@@ -1425,10 +1427,12 @@ s32 act_teleport_fade_in(struct MarioState *m) {
+     play_sound_if_no_flag(m, SOUND_ACTION_TELEPORT, MARIO_ACTION_SOUND_PLAYED);
+     set_mario_animation(m, MARIO_ANIM_FIRST_PERSON);
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     if (m->actionTimer == 0) {
+         queue_rumble_data(30, 70);
++#ifdef VERSION_SH
+         func_sh_8024C89C(2);
++#endif
+     }
+ #endif
+ 
+@@ -1518,7 +1522,7 @@ s32 act_squished(struct MarioState *m) {
+                 // Both of the 1.8's are really floats, but one of them has to
+                 // be written as a double for this to match on -O2.
+                 vec3f_set(m->marioObj->header.gfx.scale, 1.8, 0.05f, 1.8f);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(10, 80);
+ #endif
+                 m->actionState = 1;
+@@ -1622,7 +1626,7 @@ void stuck_in_ground_handler(struct MarioState *m, s32 animation, s32 unstuckFra
+     if (animFrame == -1) {
+         play_sound_and_spawn_particles(m, SOUND_ACTION_TERRAIN_STUCK_IN_GROUND, 1);
+     } else if (animFrame == unstuckFrame) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+         play_sound_and_spawn_particles(m, SOUND_ACTION_UNSTUCK_FROM_GROUND, 1);
+diff --git a/src/game/mario_actions_moving.c b/src/game/mario_actions_moving.c
+index 8b8e8e1..d0dc087 100644
+--- a/src/game/mario_actions_moving.c
++++ b/src/game/mario_actions_moving.c
+@@ -383,6 +383,11 @@ void update_shell_speed(struct MarioState *m) {
+     if (m->forwardVel > 64.0f) {
+         m->forwardVel = 64.0f;
+     }
++#if BUGFIX_SHELL_BACKWARDS_HYPERSPEED
++    if (m->forwardVel < -64.0f) {
++        m->forwardVel = -64.0f;
++    }
++#endif
+ 
+     m->faceAngle[1] =
+         m->intendedYaw - approach_s32((s16)(m->intendedYaw - m->faceAngle[1]), 0, 0x800, 0x800);
+@@ -1238,7 +1243,7 @@ s32 act_riding_shell_ground(struct MarioState *m) {
+     }
+ 
+     adjust_sound_for_speed(m);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     reset_rumble_timers();
+ #endif
+     return FALSE;
+@@ -1285,6 +1290,9 @@ s32 act_crawling(struct MarioState *m) {
+                 mario_set_forward_vel(m, 10.0f);
+             }
+             //! Possibly unintended missing break
++#if BUGFIX_MARIO_CRAWLING_FALLTHROUGH
++            break;
++#endif
+ 
+         case GROUND_STEP_NONE:
+             align_with_floor(m);
+@@ -1344,7 +1352,7 @@ s32 act_burning_ground(struct MarioState *m) {
+     }
+ 
+     m->marioBodyState->eyeState = MARIO_EYES_DEAD;
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     reset_rumble_timers();
+ #endif
+     return FALSE;
+@@ -1362,7 +1370,7 @@ void common_slide_action(struct MarioState *m, u32 endAction, u32 airAction, s32
+     vec3f_copy(pos, m->pos);
+     play_sound(SOUND_MOVING_TERRAIN_SLIDE + m->terrainSoundAddend, m->marioObj->header.gfx.cameraToObject);
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     reset_rumble_timers();
+ #endif
+ 
+@@ -1488,7 +1496,7 @@ s32 act_crouch_slide(struct MarioState *m) {
+ 
+ s32 act_slide_kick_slide(struct MarioState *m) {
+     if (m->input & INPUT_A_PRESSED) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+         return set_jumping_action(m, ACT_FORWARD_ROLLOUT, 0);
+@@ -1520,7 +1528,7 @@ s32 act_slide_kick_slide(struct MarioState *m) {
+ s32 stomach_slide_action(struct MarioState *m, u32 stopAction, u32 airAction, s32 animation) {
+     if (m->actionTimer == 5) {
+         if (!(m->input & INPUT_ABOVE_SLIDE) && (m->input & (INPUT_A_PRESSED | INPUT_B_PRESSED))) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             queue_rumble_data(5, 80);
+ #endif
+             return drop_and_set_mario_action(
+@@ -1556,7 +1564,7 @@ s32 act_hold_stomach_slide(struct MarioState *m) {
+ 
+ s32 act_dive_slide(struct MarioState *m) {
+     if (!(m->input & INPUT_ABOVE_SLIDE) && (m->input & (INPUT_A_PRESSED | INPUT_B_PRESSED))) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+         return set_mario_action(m, m->forwardVel > 0.0f ? ACT_FORWARD_ROLLOUT : ACT_BACKWARD_ROLLOUT,
+@@ -1845,7 +1853,7 @@ s32 act_hold_freefall_land(struct MarioState *m) {
+ }
+ 
+ s32 act_long_jump_land(struct MarioState *m) {
+-#ifdef VERSION_SH
++#if BUGFIX_BACKWARDS_LONGJUMP
+     // BLJ (Backwards Long Jump) speed build up fix, crushing SimpleFlips's dreams since July 1997
+     if (m->forwardVel < 0.0f) {
+         m->forwardVel = 0.0f;
+diff --git a/src/game/mario_actions_object.c b/src/game/mario_actions_object.c
+index fabc363..8b68e3a 100644
+--- a/src/game/mario_actions_object.c
++++ b/src/game/mario_actions_object.c
+@@ -264,7 +264,7 @@ s32 act_throwing(struct MarioState *m) {
+         mario_throw_held_object(m);
+         play_sound_if_no_flag(m, SOUND_MARIO_WAH2, MARIO_MARIO_SOUND_PLAYED);
+         play_sound_if_no_flag(m, SOUND_ACTION_THROW, MARIO_ACTION_SOUND_PLAYED);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(3, 50);
+ #endif
+     }
+@@ -286,7 +286,7 @@ s32 act_heavy_throw(struct MarioState *m) {
+         mario_drop_held_object(m);
+         play_sound_if_no_flag(m, SOUND_MARIO_WAH2, MARIO_MARIO_SOUND_PLAYED);
+         play_sound_if_no_flag(m, SOUND_ACTION_THROW, MARIO_ACTION_SOUND_PLAYED);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(3, 50);
+ #endif
+     }
+@@ -318,7 +318,7 @@ s32 act_picking_up_bowser(struct MarioState *m) {
+         m->angleVel[1] = 0;
+         m->marioBodyState->grabPos = GRAB_POS_BOWSER;
+         mario_grab_used_object(m);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+         play_sound(SOUND_MARIO_HRMM, m->marioObj->header.gfx.cameraToObject);
+@@ -396,13 +396,13 @@ s32 act_holding_bowser(struct MarioState *m) {
+ 
+     // play sound on overflow
+     if (m->angleVel[1] <= -0x100 && spin < m->faceAngle[1]) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(4, 20);
+ #endif
+         play_sound(SOUND_OBJ_BOWSER_SPINNING, m->marioObj->header.gfx.cameraToObject);
+     }
+     if (m->angleVel[1] >= 0x100 && spin > m->faceAngle[1]) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(4, 20);
+ #endif
+         play_sound(SOUND_OBJ_BOWSER_SPINNING, m->marioObj->header.gfx.cameraToObject);
+@@ -421,12 +421,12 @@ s32 act_holding_bowser(struct MarioState *m) {
+ s32 act_releasing_bowser(struct MarioState *m) {
+     if (++m->actionTimer == 1) {
+         if (m->actionArg == 0) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             queue_rumble_data(5, 50);
+ #endif
+             mario_throw_held_object(m);
+         } else {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             queue_rumble_data(4, 50);
+ #endif
+             mario_drop_held_object(m);
+diff --git a/src/game/mario_actions_stationary.c b/src/game/mario_actions_stationary.c
+index 580d254..ace42cf 100644
+--- a/src/game/mario_actions_stationary.c
++++ b/src/game/mario_actions_stationary.c
+@@ -792,14 +792,14 @@ s32 act_shockwave_bounce(struct MarioState *m) {
+     f32 sp18;
+ 
+     if (m->marioObj->oInteractStatus & INT_STATUS_HIT_BY_SHOCKWAVE) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(70, 40);
+ #endif
+         return hurt_and_set_mario_action(m, ACT_SHOCKED, 0, 4);
+     }
+ 
+     if (m->actionTimer == 0) {
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(70, 40);
+ #endif
+         if (m->marioObj->oInteractStatus & INT_STATUS_MARIO_UNK1) {
+diff --git a/src/game/mario_actions_submerged.c b/src/game/mario_actions_submerged.c
+index 2db0158..0cdea01 100644
+--- a/src/game/mario_actions_submerged.c
++++ b/src/game/mario_actions_submerged.c
+@@ -802,7 +802,7 @@ static s32 act_water_throw(struct MarioState *m) {
+ 
+     if (m->actionTimer++ == 5) {
+         mario_throw_held_object(m);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(3, 50);
+ #endif
+     }
+@@ -978,7 +978,7 @@ static s32 act_water_plunge(struct MarioState *m) {
+ 
+         m->particleFlags |= PARTICLE_WATER_SPLASH;
+         m->actionState = 1;
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         if (m->prevAction & ACT_FLAG_AIR) {
+             queue_rumble_data(5, 80);
+         }
+@@ -1087,7 +1087,7 @@ static s32 act_caught_in_whirlpool(struct MarioState *m) {
+     set_mario_animation(m, MARIO_ANIM_GENERAL_FALL);
+     vec3f_copy(m->marioObj->header.gfx.pos, m->pos);
+     vec3s_set(m->marioObj->header.gfx.angle, 0, m->faceAngle[1], 0);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     reset_rumble_timers();
+ #endif
+ 
+diff --git a/src/game/object_collision.c b/src/game/object_collision.c
+index c8d867a..3f689b0 100644
+--- a/src/game/object_collision.c
++++ b/src/game/object_collision.c
+@@ -57,6 +57,9 @@ s32 detect_object_hitbox_overlap(struct Object *a, struct Object *b) {
+     }
+ 
+     //! no return value
++#if BUGFIX_COLLISION_HITBOX_OVERLAP
++    return;
++#endif
+ }
+ 
+ s32 detect_object_hurtbox_overlap(struct Object *a, struct Object *b) {
+@@ -89,6 +92,9 @@ s32 detect_object_hurtbox_overlap(struct Object *a, struct Object *b) {
+     }
+ 
+     //! no return value
++#if BUGFIX_COLLISION_HURTBOX_OVERLAP
++    return;
++#endif
+ }
+ 
+ void clear_object_collision(struct Object *a) {
+diff --git a/src/game/rumble_init.c b/src/game/rumble_init.c
+index a708a5c..c612a76 100644
+--- a/src/game/rumble_init.c
++++ b/src/game/rumble_init.c
+@@ -5,7 +5,7 @@
+ #include "main.h"
+ #include "rumble_init.h"
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ 
+ OSThread gRumblePakThread;
+ 
+diff --git a/src/game/rumble_init.h b/src/game/rumble_init.h
+index 67aca82..2776173 100644
+--- a/src/game/rumble_init.h
++++ b/src/game/rumble_init.h
+@@ -1,7 +1,7 @@
+ #ifndef RUMBLE_INIT_H
+ #define RUMBLE_INIT_H
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ 
+ extern s32 gRumblePakTimer;
+ 
+diff --git a/src/game/shadow.c b/src/game/shadow.c
+index e860507..a4e8394 100644
+--- a/src/game/shadow.c
++++ b/src/game/shadow.c
+@@ -187,6 +187,9 @@ f32 get_water_level_below_shadow(struct Shadow *s) {
+     }
+     //! @bug Missing return statement. This compiles to return `waterLevel`
+     //! incidentally.
++#if BUGFIX_SHADOW_WATERLEVEL
++    return 0;
++#endif
+ }
+ 
+ /**
+diff --git a/src/game/sound_init.c b/src/game/sound_init.c
+index 4912292..91a0393 100644
+--- a/src/game/sound_init.c
++++ b/src/game/sound_init.c
+@@ -169,7 +169,7 @@ void play_menu_sounds(s16 soundMenuFlags) {
+     if (soundMenuFlags & 0x100) {
+         play_menu_sounds_extra(20, NULL);
+     }
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+     if (soundMenuFlags & SOUND_MENU_FLAG_LETGOMARIOFACE) {
+         queue_rumble_data(10, 60);
+     }
+diff --git a/src/game/spawn_sound.c b/src/game/spawn_sound.c
+index a59767d..e2b8d94 100644
+--- a/src/game/spawn_sound.c
++++ b/src/game/spawn_sound.c
+@@ -68,7 +68,7 @@ void cur_obj_play_sound_1(s32 soundMagic) {
+ void cur_obj_play_sound_2(s32 soundMagic) {
+     if (gCurrentObject->header.gfx.node.flags & GRAPH_RENDER_ACTIVE) {
+         play_sound(soundMagic, gCurrentObject->header.gfx.cameraToObject);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         if (soundMagic == SOUND_OBJ_BOWSER_WALK) {
+             queue_rumble_data(3, 60);
+         }
+diff --git a/src/menu/file_select.c b/src/menu/file_select.c
+index c894797..3d44cfb 100644
+--- a/src/menu/file_select.c
++++ b/src/menu/file_select.c
+@@ -548,7 +548,7 @@ void exit_score_file_to_score_menu(struct Object *scoreFileButton, s8 scoreButto
+     if (scoreFileButton->oMenuButtonState == MENU_BUTTON_STATE_FULLSCREEN
+         && sCursorClickingTimer == 2) {
+         play_sound(SOUND_MENU_CAMERA_ZOOM_OUT, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(5, 80);
+ #endif
+         scoreFileButton->oMenuButtonState = MENU_BUTTON_STATE_SHRINKING;
+@@ -643,7 +643,7 @@ void check_score_menu_clicked_buttons(struct Object *scoreButton) {
+                 if (buttonID == MENU_BUTTON_SCORE_RETURN || buttonID == MENU_BUTTON_SCORE_COPY_FILE
+                     || buttonID == MENU_BUTTON_SCORE_ERASE_FILE) {
+                     play_sound(SOUND_MENU_CLICK_FILE_SELECT, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                     queue_rumble_data(5, 80);
+ #endif
+                     sMainMenuButtons[buttonID]->oMenuButtonState = MENU_BUTTON_STATE_ZOOM_IN_OUT;
+@@ -654,7 +654,7 @@ void check_score_menu_clicked_buttons(struct Object *scoreButton) {
+                         // If clicked in a existing save file, select it too see it's score
+                         if (save_file_exists(buttonID - MENU_BUTTON_SCORE_MIN) == TRUE) {
+                             play_sound(SOUND_MENU_CAMERA_ZOOM_IN, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                             queue_rumble_data(5, 80);
+ #endif
+                             sMainMenuButtons[buttonID]->oMenuButtonState = MENU_BUTTON_STATE_GROWING;
+@@ -663,7 +663,7 @@ void check_score_menu_clicked_buttons(struct Object *scoreButton) {
+                         else {
+                             // If clicked in a non-existing save file, play buzz sound
+                             play_sound(SOUND_MENU_CAMERA_BUZZ, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                             queue_rumble_data(5, 80);
+ #endif
+                             sMainMenuButtons[buttonID]->oMenuButtonState =
+@@ -759,7 +759,7 @@ void copy_action_file_button(struct Object *copyButton, s32 copyFileButtonID) {
+             if (save_file_exists(copyFileButtonID - MENU_BUTTON_COPY_MIN) == TRUE) {
+                 // If clicked in a existing save file, ask where it wants to copy
+                 play_sound(SOUND_MENU_CLICK_FILE_SELECT, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+                 sMainMenuButtons[copyFileButtonID]->oMenuButtonState = MENU_BUTTON_STATE_ZOOM_IN;
+@@ -770,7 +770,7 @@ void copy_action_file_button(struct Object *copyButton, s32 copyFileButtonID) {
+             } else {
+                 // If clicked in a non-existing save file, play buzz sound
+                 play_sound(SOUND_MENU_CAMERA_BUZZ, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+                 sMainMenuButtons[copyFileButtonID]->oMenuButtonState = MENU_BUTTON_STATE_ZOOM_IN_OUT;
+@@ -785,7 +785,7 @@ void copy_action_file_button(struct Object *copyButton, s32 copyFileButtonID) {
+             if (save_file_exists(copyFileButtonID - MENU_BUTTON_COPY_MIN) == FALSE) {
+                 // If clicked in a non-existing save file, copy the file
+                 play_sound(SOUND_MENU_STAR_SOUND, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+                 copyButton->oMenuButtonActionPhase = COPY_PHASE_COPY_COMPLETE;
+@@ -800,7 +800,7 @@ void copy_action_file_button(struct Object *copyButton, s32 copyFileButtonID) {
+                 // If clicked in a existing save file, play buzz sound
+                 if (MENU_BUTTON_COPY_FILE_A + sSelectedFileIndex == copyFileButtonID) {
+                     play_sound(SOUND_MENU_CAMERA_BUZZ, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                     queue_rumble_data(5, 80);
+ #endif
+                     sMainMenuButtons[MENU_BUTTON_COPY_FILE_A + sSelectedFileIndex]->oMenuButtonState =
+@@ -843,7 +843,7 @@ void check_copy_menu_clicked_buttons(struct Object *copyButton) {
+                     || buttonID == MENU_BUTTON_COPY_ERASE_FILE) {
+                     if (copyButton->oMenuButtonActionPhase == COPY_PHASE_MAIN) {
+                         play_sound(SOUND_MENU_CLICK_FILE_SELECT, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                         queue_rumble_data(5, 80);
+ #endif
+                         sMainMenuButtons[buttonID]->oMenuButtonState = MENU_BUTTON_STATE_ZOOM_IN_OUT;
+@@ -941,7 +941,7 @@ void erase_action_file_button(struct Object *eraseButton, s32 eraseFileButtonID)
+             if (save_file_exists(eraseFileButtonID - MENU_BUTTON_ERASE_MIN) == TRUE) {
+                 // If clicked in a existing save file, ask if it wants to delete it
+                 play_sound(SOUND_MENU_CLICK_FILE_SELECT, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+                 sMainMenuButtons[eraseFileButtonID]->oMenuButtonState = MENU_BUTTON_STATE_ZOOM_IN;
+@@ -952,7 +952,7 @@ void erase_action_file_button(struct Object *eraseButton, s32 eraseFileButtonID)
+             } else {
+                 // If clicked in a non-existing save file, play buzz sound
+                 play_sound(SOUND_MENU_CAMERA_BUZZ, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+                 sMainMenuButtons[eraseFileButtonID]->oMenuButtonState = MENU_BUTTON_STATE_ZOOM_IN_OUT;
+@@ -969,7 +969,7 @@ void erase_action_file_button(struct Object *eraseButton, s32 eraseFileButtonID)
+                 // Note: The prompt functions are actually called when the ERASE_MSG_PROMPT
+                 // message is displayed with print_erase_menu_prompt
+                 play_sound(SOUND_MENU_CLICK_FILE_SELECT, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+                 sMainMenuButtons[MENU_BUTTON_ERASE_MIN + sSelectedFileIndex]->oMenuButtonState =
+@@ -999,7 +999,7 @@ void check_erase_menu_clicked_buttons(struct Object *eraseButton) {
+                     || buttonID == MENU_BUTTON_ERASE_COPY_FILE) {
+                     if (eraseButton->oMenuButtonActionPhase == ERASE_PHASE_MAIN) {
+                         play_sound(SOUND_MENU_CLICK_FILE_SELECT, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                         queue_rumble_data(5, 80);
+ #endif
+                         sMainMenuButtons[buttonID]->oMenuButtonState = MENU_BUTTON_STATE_ZOOM_IN_OUT;
+@@ -1094,7 +1094,7 @@ void check_sound_mode_menu_clicked_buttons(struct Object *soundModeButton) {
+                     || buttonID == MENU_BUTTON_HEADSET) {
+                     if (soundModeButton->oMenuButtonActionPhase == SOUND_MODE_PHASE_MAIN) {
+                         play_sound(SOUND_MENU_CLICK_FILE_SELECT, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                         queue_rumble_data(5, 80);
+ #endif
+                         sMainMenuButtons[buttonID]->oMenuButtonState = MENU_BUTTON_STATE_ZOOM_IN_OUT;
+@@ -1425,57 +1425,65 @@ void check_main_menu_clicked_buttons(void) {
+         switch (sSelectedButtonID) {
+             case MENU_BUTTON_PLAY_FILE_A:
+                 play_sound(SAVE_FILE_SOUND, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(60, 70);
++#endif
++#ifdef VERSION_SH
+                 func_sh_8024C89C(1);
+ #endif
+                 break;
+             case MENU_BUTTON_PLAY_FILE_B:
+                 play_sound(SAVE_FILE_SOUND, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(60, 70);
++#endif
++#ifdef VERSION_SH
+                 func_sh_8024C89C(1);
+ #endif
+                 break;
+             case MENU_BUTTON_PLAY_FILE_C:
+                 play_sound(SAVE_FILE_SOUND, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(60, 70);
++#endif
++#ifdef VERSION_SH
+                 func_sh_8024C89C(1);
+ #endif
+                 break;
+             case MENU_BUTTON_PLAY_FILE_D:
+                 play_sound(SAVE_FILE_SOUND, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(60, 70);
++#endif
++#ifdef VERSION_SH
+                 func_sh_8024C89C(1);
+ #endif
+                 break;
+             // Play sound of the button clicked and render buttons of that menu.
+             case MENU_BUTTON_SCORE:
+                 play_sound(SOUND_MENU_CAMERA_ZOOM_IN, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+                 render_score_menu_buttons(sMainMenuButtons[MENU_BUTTON_SCORE]);
+                 break;
+             case MENU_BUTTON_COPY:
+                 play_sound(SOUND_MENU_CAMERA_ZOOM_IN, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+                 render_copy_menu_buttons(sMainMenuButtons[MENU_BUTTON_COPY]);
+                 break;
+             case MENU_BUTTON_ERASE:
+                 play_sound(SOUND_MENU_CAMERA_ZOOM_IN, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+                 render_erase_menu_buttons(sMainMenuButtons[MENU_BUTTON_ERASE]);
+                 break;
+             case MENU_BUTTON_SOUND_MODE:
+                 play_sound(SOUND_MENU_CAMERA_ZOOM_IN, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+                 queue_rumble_data(5, 80);
+ #endif
+                 render_sound_mode_menu_buttons(sMainMenuButtons[MENU_BUTTON_SOUND_MODE]);
+@@ -2248,7 +2256,7 @@ void print_erase_menu_prompt(s16 x, s16 y) {
+         // ..and is hovering "YES", delete file
+         if (sEraseYesNoHoverState == MENU_ERASE_HOVER_YES) {
+             play_sound(SOUND_MARIO_WAAAOOOW, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             queue_rumble_data(5, 80);
+ #endif
+             sMainMenuButtons[MENU_BUTTON_ERASE]->oMenuButtonActionPhase = ERASE_PHASE_MARIO_ERASED;
+@@ -2263,7 +2271,7 @@ void print_erase_menu_prompt(s16 x, s16 y) {
+             // ..and is hovering "NO", return back to main phase
+         } else if (sEraseYesNoHoverState == MENU_ERASE_HOVER_NO) {
+             play_sound(SOUND_MENU_CLICK_FILE_SELECT, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             queue_rumble_data(5, 80);
+ #endif
+             sMainMenuButtons[MENU_BUTTON_ERASE_MIN + sSelectedFileIndex]->oMenuButtonState =
+diff --git a/src/menu/intro_geo.c b/src/menu/intro_geo.c
+index e2e5bb9..e390ec3 100644
+--- a/src/menu/intro_geo.c
++++ b/src/menu/intro_geo.c
+@@ -28,7 +28,7 @@ struct GraphNodeMore {
+ };
+ 
+ // intro geo bss
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ static u16 *sFrameBuffers[3];
+ #endif
+ static s32 sGameOverFrameCounter;
+@@ -271,7 +271,7 @@ Gfx *geo_intro_gameover_backdrop(s32 state, struct GraphNode *node, UNUSED void
+     return dl;
+ }
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ extern Gfx title_screen_bg_dl_0A0065E8[];
+ extern Gfx title_screen_bg_dl_0A006618[];
+ extern Gfx title_screen_bg_dl_0A007548[];
+diff --git a/src/menu/intro_geo.h b/src/menu/intro_geo.h
+index bedafb6..2c82d74 100644
+--- a/src/menu/intro_geo.h
++++ b/src/menu/intro_geo.h
+@@ -12,7 +12,7 @@ Gfx *geo_intro_tm_copyright(s32 sp40, struct GraphNode *sp44, UNUSED void *conte
+ Gfx *geo_intro_regular_backdrop(s32 sp48, struct GraphNode *sp4c, UNUSED void *context);
+ Gfx *geo_intro_gameover_backdrop(s32 sp40, struct GraphNode *sp44, UNUSED void *context);
+ 
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+ Gfx *geo_intro_face_easter_egg(s32 state, struct GraphNode *node, UNUSED void *context);
+ Gfx *geo_intro_rumble_pak_graphic(s32 state, struct GraphNode *node, UNUSED void *context);
+ #endif
+diff --git a/src/menu/level_select_menu.c b/src/menu/level_select_menu.c
+index 2b1010b..fa709d8 100644
+--- a/src/menu/level_select_menu.c
++++ b/src/menu/level_select_menu.c
+@@ -152,7 +152,7 @@ s32 intro_default(void) {
+ 
+     if (gPlayer1Controller->buttonPressed & START_BUTTON) {
+         play_sound(SOUND_MENU_STAR_SOUND, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(60, 70);
+         func_sh_8024C89C(1);
+ #endif
+@@ -178,7 +178,7 @@ s32 intro_game_over(void) {
+ 
+     if (gPlayer1Controller->buttonPressed & START_BUTTON) {
+         play_sound(SOUND_MENU_STAR_SOUND, gGlobalSoundSource);
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+         queue_rumble_data(60, 70);
+         func_sh_8024C89C(1);
+ #endif
+diff --git a/src/menu/star_select.c b/src/menu/star_select.c
+index 025dbf2..8ecde50 100644
+--- a/src/menu/star_select.c
++++ b/src/menu/star_select.c
+@@ -421,7 +421,7 @@ s32 lvl_update_obj_and_load_act_button_actions(UNUSED s32 arg, UNUSED s32 unused
+ #else
+             play_sound(SOUND_MENU_STAR_SOUND_LETS_A_GO, gGlobalSoundSource);
+ #endif
+-#ifdef VERSION_SH
++#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
+             queue_rumble_data(60, 70);
+             func_sh_8024C89C(1);
+ #endif

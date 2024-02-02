@@ -373,7 +373,7 @@ CPP_FILES         := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cpp))
 LIBZ_C_FILES      := $(foreach dir,$(LIBZ_SRC_DIRS),$(wildcard $(dir)/*.c))
 GODDARD_C_FILES   := $(foreach dir,$(GODDARD_SRC_DIRS),$(wildcard $(dir)/*.c))
 S_FILES           := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.s))
-GENERATED_C_FILES := $(BUILD_DIR)/assets/mario_anim_data.c $(BUILD_DIR)/assets/demo_data.c
+GENERATED_C_FILES := $(BUILD_DIR)/assets/mario_anim_data.c  $(BUILD_DIR)/assets/luigi_anim_data.c  $(BUILD_DIR)/assets/wario_anim_data.c $(BUILD_DIR)/assets/demo_data.c
 
 # Sound files
 SOUND_BANK_FILES    := $(wildcard sound/sound_banks/*.json)
@@ -793,6 +793,15 @@ $(BUILD_DIR)/%.inc.c: $(BUILD_DIR)/%
 $(BUILD_DIR)/assets/mario_anim_data.c: $(wildcard assets/anims/*.inc.c)
 	@$(PRINT) "$(GREEN)Generating animation data $(NO_COL)\n"
 	$(V)$(PYTHON) $(TOOLS_DIR)/mario_anims_converter.py > $@
+
+$(BUILD_DIR)/assets/luigi_anim_data.c: $(wildcard assets/luigi_anims/*.inc.c)
+	@$(PRINT) "$(GREEN)Generating animation data $(NO_COL)\n"
+	$(V)$(PYTHON) $(TOOLS_DIR)/luigi_anims_converter.py > $@
+
+$(BUILD_DIR)/assets/wario_anim_data.c: $(wildcard assets/wario_anims/*.inc.c)
+	@$(PRINT) "$(GREEN)Generating animation data $(NO_COL)\n"
+	$(V)$(PYTHON) $(TOOLS_DIR)/wario_anims_converter.py > $@
+
 
 # Generate demo input data
 $(BUILD_DIR)/assets/demo_data.c: assets/demo_data.json $(wildcard assets/demos/*.bin)

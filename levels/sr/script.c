@@ -32,7 +32,8 @@ const LevelScript level_sr_entry[] = {
     JUMP_LINK(script_func_global_1),
     JUMP_LINK(script_func_global_12),
     JUMP_LINK(script_func_global_15),
-	MARIO(MODEL_MARIO, 0x00000001, bhvMario), 
+	MARIO(MODEL_MARIO, 0x00000000, bhvMario),
+	CMD23(MODEL_LUIGI, 0x00000001, bhvLuigi), 
     LOAD_MODEL_FROM_GEO(MODEL_THI_WARP_PIPE,       warp_pipe_geo),
 
 	/* Fast64 begin persistent block [level commands] */

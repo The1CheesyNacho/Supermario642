@@ -6,6 +6,7 @@
 #include "gfx_dimensions.h"
 #include "behavior_data.h"
 #include "game_init.h"
+#include "audio/load.h"
 #include "object_list_processor.h"
 #include "engine/surface_load.h"
 #include "ingame_menu.h"
@@ -30,7 +31,7 @@
 #include "s2d_engine/init.h"
 #endif
 
-struct SpawnInfo gPlayerSpawnInfos[1];
+struct SpawnInfo gPlayerSpawnInfos[2];
 struct GraphNode *gGraphNodePointers[MODEL_ID_COUNT];
 struct Area gAreaData[AREA_COUNT];
 
@@ -279,6 +280,38 @@ void load_mario_area(void) {
 
     if (gAreaSkyboxStart[gCurrAreaIndex - 1]) {
         load_segment_decompress(SEGMENT_SKYBOX, gAreaSkyboxStart[gCurrAreaIndex - 1], gAreaSkyboxEnd[gCurrAreaIndex - 1]);
+    }
+}
+
+void load_player_area(u8 playerIndex) {
+    
+if (gSoundMode == SOUND_MODE_MONO) {
+    stop_sounds_in_continuous_banks();
+    load_area(gMarioSpawnInfo->areaIndex);
+
+    if (gCurrentArea->index == gMarioSpawnInfo->areaIndex) {
+        gCurrentArea->flags |= 0x01;
+        spawn_objects_from_info(0, &gPlayerSpawnInfos[0]);
+    }
+}else{
+    stop_sounds_in_continuous_banks();
+    load_area(gMarioSpawnInfo->areaIndex);
+
+    if (gCurrentArea->index == gMarioSpawnInfo->areaIndex) {
+        gCurrentArea->flags |= 0x01;
+        spawn_objects_from_info(0, &gPlayerSpawnInfos[0]);
+        spawn_objects_from_info(0, &gPlayerSpawnInfos[1]);
+    } 
+}
+}
+
+void load_luigi_area(void) {
+    stop_sounds_in_continuous_banks();
+    load_area(gLuigiSpawnInfo->areaIndex);
+
+    if (gCurrentArea->index == gLuigiSpawnInfo->areaIndex) {
+        gCurrentArea->flags |= 0x01;
+        spawn_objects_from_info(0, gLuigiSpawnInfo);
     }
 }
 

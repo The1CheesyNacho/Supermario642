@@ -6,6 +6,7 @@
 #include "sm64.h"
 #include "audio/external.h"
 #include "audio/synthesis.h"
+#include "audio/load.h"
 #include "buffers/framebuffers.h"
 #include "buffers/zbuffer.h"
 #include "game/area.h"
@@ -451,17 +452,18 @@ static void level_cmd_load_model_from_geo(void) {
 }
 
 static void level_cmd_23(void) {
-    ModelID16 model = (CMD_GET(ModelID16, 2) & 0x0FFF);
-    s16 layer = (((u16)CMD_GET(s16, 2)) >> 12);
-    void *dl  = CMD_GET(void *, 4);
-    s32 scale = CMD_GET(s32, 8);
+    vec3s_set(gPlayerSpawnInfos[1].startPos, 0, 0, 0);
+    vec3s_set(gPlayerSpawnInfos[1].startAngle, 0, 0, 0);
 
-    if (model < MODEL_ID_COUNT) {
-        // GraphNodeScale has a GraphNode at the top. This
-        // is being stored to the array, so cast the pointer.
-        gLoadedGraphNodes[model] =
-            (struct GraphNode *) init_graph_node_scale(sLevelPool, 0, layer, dl, scale);
-    }
+    gPlayerSpawnInfos[1].activeAreaIndex = -1;
+    gPlayerSpawnInfos[1].areaIndex = 0;
+    gPlayerSpawnInfos[1].behaviorArg = CMD_GET(u32, 4);
+    if (gSoundMode == SOUND_MODE_STEREO){
+    gPlayerSpawnInfos[1].behaviorScript = CMD_GET(void *, 8);
+}
+    gPlayerSpawnInfos[1].model = gLoadedGraphNodes[CMD_GET(u16, 0x2) & 0x0FFF];
+    gPlayerSpawnInfos[1].next = NULL;
+
 
     sCurrentCmd = CMD_NEXT;
 }
@@ -476,20 +478,6 @@ static void level_cmd_init_mario(void) {
     gMarioSpawnInfo->behaviorScript = CMD_GET(void *, 8);
     gMarioSpawnInfo->model = gLoadedGraphNodes[CMD_GET(ModelID16, 0x2)]; // u8, 3?
     gMarioSpawnInfo->next = NULL;
-
-    sCurrentCmd = CMD_NEXT;
-}
-
-static void level_cmd_init_luigi(void) {
-    vec3_zero(gLuigiSpawnInfo->startPos);
-    vec3_zero(gLuigiSpawnInfo->startAngle);
-
-    gLuigiSpawnInfo->activeAreaIndex = -1;
-    gLuigiSpawnInfo->areaIndex = 0;
-    gLuigiSpawnInfo->behaviorArg = CMD_GET(u32, 4);
-    gLuigiSpawnInfo->behaviorScript = CMD_GET(void *, 8);
-    gLuigiSpawnInfo->model = gLoadedGraphNodes[CMD_GET(ModelID16, 0x2)]; // u8, 3?
-    gLuigiSpawnInfo->next = NULL;
 
     sCurrentCmd = CMD_NEXT;
 }
@@ -710,13 +698,17 @@ static void level_cmd_unload_area(void) {
 
 static void level_cmd_set_mario_start_pos(void) {
     gMarioSpawnInfo->areaIndex = CMD_GET(u8, 2);
+    gLuigiSpawnInfo->areaIndex = CMD_GET(u8, 2);
 
 #if IS_64_BIT
     vec3s_set(gMarioSpawnInfo->startPos, CMD_GET(s16, 6), CMD_GET(s16, 8), CMD_GET(s16, 10));
+    vec3s_set(gLuigiSpawnInfo->startPos, CMD_GET(s16, 6), CMD_GET(s16, 8), CMD_GET(s16, 10));
 #else
     vec3s_copy(gMarioSpawnInfo->startPos, CMD_GET(Vec3s, 6));
+    vec3s_copy(gLuigiSpawnInfo->startPos, CMD_GET(Vec3s, 6));
 #endif
     vec3s_set(gMarioSpawnInfo->startAngle, 0, CMD_GET(s16, 4) * 0x8000 / 180, 0);
+    vec3s_set(gLuigiSpawnInfo->startAngle, 0, CMD_GET(s16, 4) * 0x8000 / 180, 0);
 
     sCurrentCmd = CMD_NEXT;
 }
@@ -1012,7 +1004,6 @@ static void (*LevelScriptJumpTable[])(void) = {
     /*LEVEL_CMD_PUPPYLIGHT_NODE             */ level_cmd_puppylight_node,
     /*LEVEL_CMD_SET_ECHO                    */ level_cmd_set_echo,
     /*LEVEL_CMD_SET_LUIGI_START_POS         */ level_cmd_set_luigi_start_pos,
-    /*LEVEL_CMD_INIT_MARIO                  */ level_cmd_init_luigi,
 };
 
 struct LevelCommand *level_script_execute(struct LevelCommand *cmd) {

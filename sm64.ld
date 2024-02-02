@@ -507,6 +507,10 @@ SECTIONS
    {
       KEEP(BUILD_DIR/assets/mario_anim_data.o(.data*));
       KEEP(BUILD_DIR/assets/mario_anim_data.o(.rodata*));
+      KEEP(BUILD_DIR/assets/luigi_anim_data.o(.data*));
+      KEEP(BUILD_DIR/assets/luigi_anim_data.o(.rodata*));
+      KEEP(BUILD_DIR/assets/wario_anim_data.o(.data*));
+      KEEP(BUILD_DIR/assets/wario_anim_data.o(.rodata*));
       KEEP(BUILD_DIR/assets/demo_data.o(.data*));
       KEEP(BUILD_DIR/sound/sound_data.o(.data*));
    }

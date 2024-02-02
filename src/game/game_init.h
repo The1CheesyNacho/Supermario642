@@ -41,6 +41,8 @@ extern struct VblankHandler gGameVblankHandler;
 extern uintptr_t gPhysicalFramebuffers[3];
 extern uintptr_t gPhysicalZBuffer;
 extern void *gMarioAnimsMemAlloc;
+extern void *gLuigiAnimsMemAlloc;
+extern void *gWarioAnimsMemAlloc;
 extern void *gDemoInputsMemAlloc;
 extern struct SPTask *gGfxSPTask;
 extern Gfx *gDisplayListHead;
@@ -72,9 +74,13 @@ extern struct DemoInput gRecordedDemoInput;
 // this area is the demo input + the header. when the demo is loaded in, there is a header the size
 // of a single word next to the input list. this word is the current ID count.
 extern struct DmaHandlerList gMarioAnimsBuf;
+extern struct DmaHandlerList gLuigiAnimsBuf;
+extern struct DmaHandlerList gWarioAnimsBuf;
 extern struct DmaHandlerList gDemoInputsBuf;
 
 extern u8 gMarioAnims[];
+extern u8 gLuigiAnims[];
+extern u8 gWarioAnims[];
 extern u8 gDemoInputs[];
 
 extern u16 sRenderingFramebuffer;
