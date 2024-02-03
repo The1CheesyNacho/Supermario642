@@ -263,6 +263,11 @@ void bhv_bobomb_loop(void) {
                 dustPeriodMinus1 = 7;
             }
 
+            if (o->oBobombFuseTimer >= 100) {
+                if (o->oBobombFuseTimer % 4 < 2) cur_obj_set_model(MODEL_BOBOMB_BUDDY);
+                else cur_obj_set_model(MODEL_BLACK_BOBOMB);
+            }
+
             // oBobombFuseTimer % 2 or oBobombFuseTimer % 8
             if (!(dustPeriodMinus1 & o->oBobombFuseTimer)) {
                 spawn_object(o, MODEL_SMOKE, bhvBobombFuseSmoke);
