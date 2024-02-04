@@ -335,10 +335,12 @@ void change_area(s32 index) {
 
         gCurrentArea->flags = areaFlags;
         gMarioObject->oActiveParticleFlags = ACTIVE_PARTICLE_NONE;
+        gLuigiObject->oActiveParticleFlags = ACTIVE_PARTICLE_NONE;
     }
 
     if (areaFlags & AREA_FLAG_LOAD) {
         gMarioObject->header.gfx.areaIndex = index, gMarioSpawnInfo->areaIndex = index;
+        gLuigiObject->header.gfx.areaIndex = index, gLuigiSpawnInfo->areaIndex = index;
     }
 }
 

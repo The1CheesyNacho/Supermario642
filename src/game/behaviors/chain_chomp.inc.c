@@ -421,7 +421,7 @@ void bhv_chain_chomp_update(void) {
             chain_chomp_act_uninitialized();
             break;
         case CHAIN_CHOMP_ACT_MOVE:
-            chain_chomp_act_move();
+            chain_chomp_released_lunge_around();
             break;
         case CHAIN_CHOMP_ACT_UNLOAD_CHAIN:
             chain_chomp_act_unload_chain();

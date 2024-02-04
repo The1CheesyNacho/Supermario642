@@ -31,7 +31,7 @@
 #define SEGMENT_COMMON0_GEO          0x0F // | Segment 15 | /actors/common0_geo
 #define SEGMENT_LEVEL_ENTRY          0x10 // | Segment 16 | Level Script Entry
 #define SEGMENT_MARIO_ANIMS          0x11 // | Segment 17 | Mario Animations
-#define SEGMENT_UNKNOWN_18           0x12 // | Segment 18 | Unknown/Unused?
+#define SEGMENT_LEVEL_ENTRY_P2       0x12 // | Segment 18 | Unknown/Unused?
 #define SEGMENT_BEHAVIOR_DATA        0x13 // | Segment 19 | Behavior Data
 #define SEGMENT_MENU_INTRO           0x14 // | Segment 20 | /src/menu/, /levels/menu/, /levels/intro/
 #define SEGMENT_GLOBAL_LEVEL_SCRIPT  0x15 // | Segment 21 | Global level scripts: /levels/scripts

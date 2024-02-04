@@ -390,21 +390,11 @@ void render_hud_breath_meter(void) {
  * Renders the amount of lives Mario has.
  */
 void render_hud_mario_lives(void) {
-    if (Character == 0){
     print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71), HUD_TOP_Y, ","); // 'Mario Head' glyph
-    }
-    if (Character == 1){
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71), HUD_TOP_Y, "/"); // 'Mario Head' glyph
-    }
-    if (Character == 2){
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71), HUD_TOP_Y, "&"); // 'Mario Head' glyph
-    }
-    if (Character == 3){
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71), HUD_TOP_Y, "!"); // 'Mario Head' glyph
-    }
     print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56), HUD_TOP_Y, "*"); // 'X' glyph
     print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44), HUD_TOP_Y, "%d", gHudDisplay.lives);
 }
+
 
 #ifdef VANILLA_STYLE_CUSTOM_DEBUG
 void render_debug_mode(void) {

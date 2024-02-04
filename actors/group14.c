@@ -18,6 +18,9 @@ UNUSED static const u64 binid_1 = 1;
 #include "koopa/model.inc.c"
 #include "koopa/anims/data.inc.c"
 #include "koopa/anims/table.inc.c"
+#include "red_koopa/model.inc.c"
+#include "blue_koopa/model.inc.c"
+#include "yellow_koopa/model.inc.c"
 UNUSED static const u64 binid_2 = 2;
 
 #include "piranha_plant/model.inc.c"
@@ -38,8 +41,3 @@ UNUSED static const u64 binid_5 = 5;
 #include "chain_chomp/anims/data.inc.c"
 #include "chain_chomp/anims/table.inc.c"
 UNUSED static const u64 binid_6 = 6;
-
-
-
-#include "koopa_red/model.inc.c"
-UNUSED static const u64 binid_7 = 7;

@@ -221,6 +221,8 @@ struct ParticleProperties sParticleTypes[] = {
  */
 void copy_mario_state_to_object(void) {
     s32 i = 0;
+
+
     // L is real
     if (gCurrentObject != gMarioObject) {
         i++;
@@ -466,7 +468,7 @@ void unload_objects_from_area(UNUSED s32 unused, s32 areaIndex) {
 /**
  * Spawn objects given a list of SpawnInfos. Called when loading an area.
  */
-void spawn_objects_from_info(UNUSED s32 unused, struct SpawnInfo *spawnInfo) {
+void spawn_objects_from_info(s32 isLuigi, struct SpawnInfo *spawnInfo) {
     gObjectLists = gObjectListArray;
     gTimeStopState = 0;
 
@@ -513,6 +515,7 @@ void spawn_objects_from_info(UNUSED s32 unused, struct SpawnInfo *spawnInfo) {
 
             if (object->behavior == segmented_to_virtual(bhvLuigi)) {
                 gLuigiObject = object;
+                isLuigi = TRUE;
                 geo_make_first_child(&object->header.gfx.node);
             }
 

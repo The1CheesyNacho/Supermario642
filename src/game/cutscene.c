@@ -5,6 +5,7 @@
 #include "include/seq_ids.h"
 #include "audio/external.h"
 #include "game/camera.h"
+#include "game/level_update.h"
 
 u8 cutscene_active = 0;
 CutsceneActor cutscene_actors[32];
@@ -14,8 +15,10 @@ u32 current_frame = 0;
 u32 cutscene_num_keyframes = 0;
 u32 cutscene_num_events = 0;
 
-Cutscene* cutscenes[] = {
+Cutscene* cutscenes[0] = {
     { // cutscene_test
+        CUTSCENE_ACTOR(1, MODEL_MARIO, 0, 0, 0),
+        CUTSCENE_KEYFRAME(1 ,-2800, 851, 7655, CUTIP_SMOOTH),
         CUTSCENE_SCRIPT_END()
     }
 };
@@ -117,7 +120,7 @@ void cutscene_step() {
             case (u8)CUTIP_FAST: interpolation = 1 - (1 - interpolation) * (1 - interpolation); break;
             case (u8)CUTIP_SLOW: interpolation = interpolation * interpolation; break;
             case (u8)CUTIP_SMOOTH: interpolation = interpolation < 0.5 ? 2 * interpolation * interpolation : 1 - ((-2 * interpolation + 2) * (-2 * interpolation + 2)) / 2; break;
-            case (u8)CUTIP_WAIT: interpolation = floor(interpolation); break;
+            case (u8)CUTIP_WAIT: interpolation = interpolation < 0.5 ? 2 * interpolation * interpolation : 1 - ((-2 * interpolation + 2) * (-2 * interpolation + 2)) / 2; break;
         }
         cutscene_actors[i]->oPosX = (f32)((next_keyframes[i]->x - prev_keyframes[i]->x) * interpolation + prev_keyframes[i]->x);
         cutscene_actors[i]->oPosY = (f32)((next_keyframes[i]->y - prev_keyframes[i]->y) * interpolation + prev_keyframes[i]->y);

@@ -59,7 +59,7 @@ YAY0_OBJ_FILES := $(YAY0_FILES:.szp=.szp.o)
 # --------------------------------------
 
 # Actor Directories
-KOOPA_DIRS       := koopa_flag poundable_pole koopa piranha_plant whomp chain_ball chain_chomp koopa_red
+KOOPA_DIRS       := koopa_flag poundable_pole koopa red_koopa blue_koopa yellow_koopa piranha_plant whomp chain_ball chain_chomp koopa_red
 CAPSWITCH_DIRS   := capswitch springboard
 CHILLYCHIEF_DIRS := chillychief moneybag
 BULLY_DIRS       := bully blargg 

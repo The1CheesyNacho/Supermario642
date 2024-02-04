@@ -1316,18 +1316,14 @@ s32 init_level(void) {
         }
     } else {
 if (gSoundMode == SOUND_MODE_MONO) {
-        if (gPlayerSpawnInfos[0].areaIndex >= 0) {
             load_mario_area();
             init_mario();
-        }
 }
 else {
-        if (gPlayerSpawnInfos[0].areaIndex >= 0) {
             load_mario_area();
             load_luigi_area();
             init_mario();
             init_luigi();
-        }
 }
         if (gCurrentArea != NULL) {
             reset_camera(gCurrentArea->camera);

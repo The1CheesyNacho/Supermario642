@@ -92,6 +92,10 @@ u8 gLevelSelectHoldKeyTimer = 0;
  * or the level select to be exited if start or the quit combo is pressed.
  */
 s32 intro_level_select(void) {
+gMarioStates[0].playerModel = 0; // mario
+gMarioStates[1].playerModel = 1; // luigi
+gMarioStates[0].animList = &gMarioAnimsBuf;
+gMarioStates[1].animList = &gLuigiAnimsBuf;
     u32 index = 0;
     if (gPlayer1Controller->rawStickY < -60
         || gPlayer1Controller->rawStickX < -60

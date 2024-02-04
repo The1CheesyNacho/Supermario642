@@ -472,13 +472,12 @@
 #define MODEL_BURN_SMOKE                  0x94        // burn_smoke_geo
 #define MODEL_SPARKLES                    0x95        // sparkles_geo
 #define MODEL_SMOKE                       0x96        // smoke_geo
-// find me
-// find me
-// find me
-// find me
-// find me
-#define MODEL_BURN_SMOKE_UNUSED           0x9C        // burn_smoke_geo - unused & duplicated
-// find me
+#define MODEL_BLUE_KOOPA_WITH_SHELL       0x98        // koopa_shell_geo
+#define MODEL_BLUE_KOOPA_WITHOUT_SHELL    0x99        // koopa_without_shell_geo
+#define MODEL_YELLOW_KOOPA_WITH_SHELL     0X9A        // koopa_without_shell_geo
+#define MODEL_YELLOW_KOOPA_WITHOUT_SHELL  0X9B        // koopa_without_shell_geo
+#define MODEL_KOOPA_WITHOUT_SHELL         0x9C        // burn_smoke_geo - unused & duplicated
+#define MODEL_KOOPA_SHELL                 0x9D        // koopa_without_shell_geo
 #define MODEL_WHITE_PARTICLE_DL           0x9E        // white_particle_dl
 #define MODEL_SAND_DUST                   0x9F        // sand_seg3_dl_particle
 #define MODEL_WHITE_PARTICLE              0xA0        // white_particle_dl
@@ -512,8 +511,8 @@
 #define MODEL_BUTTERFLY                   0xBB        // butterfly_geo
 #define MODEL_BLACK_BOBOMB                0xBC        // black_bobomb_geo
 // find me
-#define MODEL_KOOPA_SHELL                 0xBE        // koopa_shell_geo
-#define MODEL_KOOPA_WITHOUT_SHELL         0xBF        // koopa_without_shell_geo
+// find me
+#define MODEL_RED_KOOPA_WITHOUT_SHELL     0xBF        // koopa_without_shell_geo
 #define MODEL_GOOMBA                      0xC0        // goomba_geo
 #define MODEL_SEAWEED                     0xC1        // seaweed_geo
 #define MODEL_AMP                         0xC2        // dAmpGeo
@@ -521,8 +520,6 @@
 #define MODEL_MIPSY                       0xC4        // silver_coin_geo
 #define MODEL_TOADSWORTH                  0xC5        // silver_coin_no_shadow_geo
 #define MODEL_MICRO_GOOMBA                0xC6        // micro_goomba_geo
-// find me
-// find me
 #define MODEL_SSL_TOX_BOX                 0xC7        // ssl_geo_000630
 #define MODEL_BOWSER_KEY_CUTSCENE         0xC8        // bowser_key_cutscene_geo
 #define MODEL_DL_CANNON_LID               0xC9        // cannon_closed_seg8_dl_080048E0
@@ -535,7 +532,7 @@
 #define MODEL_CASTLE_STAR_DOOR_30_STARS   0xD0        // castle_geo_000F00
 #define MODEL_CASTLE_STAR_DOOR_50_STARS   0xD1        // castle_geo_000F00
 #define MODEL_CCM_SNOWMAN_BASE            0xD2        // ccm_geo_0003F0
-// find me
+#define MODEL_GUMMY                       0xD3
 #define MODEL_1UP                         0xD4        // mushroom_1up_geo
 #define MODEL_CASTLE_STAR_DOOR_8_STARS    0xD5        // castle_geo_000F00
 #define MODEL_CASTLE_STAR_DOOR_70_STARS   0xD6        // castle_geo_000F00
@@ -551,7 +548,6 @@
 #define MODEL_WHITE_PUFF                  0xE0        // white_puff_geo
 #define MODEL_TRAJECTORY_MARKER_BALL      0xE1        // bowling_ball_track_geo - duplicate used in SSL Pyramid small sized and as a track ball
 
-#define MODEL_GUMMY                       0xE2
 
 // Menu Models (overwrites Level Geometry IDs)
 #define MODEL_MAIN_MENU_MARIO_SAVE_BUTTON         MODEL_LEVEL_GEOMETRY_03   // main_menu_geo_0001D0

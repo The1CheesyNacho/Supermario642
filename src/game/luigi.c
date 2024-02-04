@@ -33,7 +33,6 @@
 #include "save_file.h"
 #include "sound_init.h"
 #include "rumble_init.h"
-
 void init_luigi(void) {
     gMarioStates[1].actionTimer = 0;
     gMarioStates[1].framesSinceA = 0xFF;
@@ -88,40 +87,33 @@ void init_luigi(void) {
     gMarioStates[1].marioObj->oMoveAnglePitch = gMarioStates[1].faceAngle[0];
     gMarioStates[1].marioObj->oMoveAngleYaw = gMarioStates[1].faceAngle[1];
     gMarioStates[1].marioObj->oMoveAngleRoll = gMarioStates[1].faceAngle[2];
+
+
+
     vec3f_copy(gMarioStates[1].marioObj->header.gfx.pos, gMarioStates[1].pos);
     vec3s_set(gMarioStates[1].marioObj->header.gfx.angle, 0, gMarioStates[1].faceAngle[1], 0);
 }
 
-void init_luigi_from_save_file(void) {
-    if (gSoundMode == SOUND_MODE_MONO) {
-        gPlayerSpawnInfos[1].model = gLoadedGraphNodes[MODEL_NONE];
-        gCurrentObject->behavior = bhvStaticObject;
-    }
-    else {
-        gCurrentObject->behavior = bhvLuigi;
-    }
-    gMarioStates[1].playerID = 1;
-    gMarioStates[1].flags = MARIO_NONE;
-    gMarioStates[1].action = ACT_UNINITIALIZED;
-    gMarioStates[1].spawnInfo = &gPlayerSpawnInfos[1];
-    gMarioStates[1].statusForCamera = &gPlayerCameraState[1];
-    gMarioStates[1].marioBodyState = &gBodyStates[1];
-    gMarioStates[1].controller = &gControllers[1];
 
-    gMarioStates[1].numCoins = 0;
-    gMarioStates[1].numStars = save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
-    gMarioStates[1].numKeys = 0;
-#ifdef ENABLE_LIVES
-    gMarioStates[1].numLives = ENABLE_LIVES;
-#else
-    gMarioStates[1].numLives = 0;
-#endif
-    gMarioStates[1].health = 0x880;
-#ifdef BREATH_METER
-    gMarioStates[1].breath = 0x880;
-    gHudDisplay.breath = 8;
-#endif
-    gMarioStates[1].prevNumStarsForDialog = gMarioStates[1].numStars;
-    gMarioStates[1].animYTrans = 0xBD;
+void init_luigi_from_save_file(void) {
+    gLuigiState->playerID = 1;
+    gLuigiState->flags = 0;
+    gLuigiState->action = 0;
+    gLuigiState->spawnInfo = &gPlayerSpawnInfos[1];
+    gLuigiState->statusForCamera = &gPlayerCameraState[1];
+    gLuigiState->marioBodyState = &gBodyStates[1];
+    gLuigiState->controller = &gControllers[1];
+    gLuigiState->numCoins = 0;
+    gLuigiState->numStars =
+        save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1);
+    gLuigiState->numKeys = 0;
+
+    gLuigiState->numLives = 4;
+    gLuigiState->health = 0x880;
+
+    gLuigiState->prevNumStarsForDialog = gLuigiState->numStars;
+    gLuigiState->animYTrans = 0xBD;
+
+    gHudDisplay.coins = 0;
     gHudDisplay.wedges = 8;
 }

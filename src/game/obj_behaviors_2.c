@@ -598,13 +598,13 @@ static s32 obj_handle_attacks(struct ObjectHitbox *hitbox, s32 attackedMarioActi
                     break;
                 
                 case ATTACK_HANDLER_SPECIAL_GUMMY:
-                    gMarioState->vel[1] = 100.f;
-                    cur_obj_play_sound_2(SOUND_OBJ_STOMPED);
+                    gMarioStates[0].vel[1] = 100.f;
+                    cur_obj_play_sound_2(SOUND_GENERAL_BOWSER_PLATFORM_UNUSED);
                     break;
                 
                 case ATTACK_HANDLER_SPECIAL_GUMMY_PUNCH:
-                    gMarioState->forwardVel = -100.f;
-                    cur_obj_play_sound_2(SOUND_OBJ_STOMPED);
+                    gMarioStates[0].forwardVel = -100.f;
+                    cur_obj_play_sound_2(SOUND_GENERAL_BOWSER_PLATFORM_UNUSED);
                     break;
             }
 

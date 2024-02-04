@@ -59,6 +59,110 @@ extern const Gfx koopa_seg6_dl_0600C240[];
 extern const Gfx koopa_seg6_dl_0600C498[];
 extern const struct Animation *const koopa_seg6_anims_06011364[];
 
+extern const GeoLayout red_koopa_without_shell_geo[];
+extern const GeoLayout red_koopa_with_shell_geo[];
+extern const Gfx red_koopa_seg6_dl_06007658[];
+extern const Gfx red_koopa_seg6_dl_060076B0[];
+extern const Gfx red_koopa_seg6_dl_06007850[];
+extern const Gfx red_koopa_seg6_dl_06007970[];
+extern const Gfx red_koopa_seg6_dl_06007A60[];
+extern const Gfx red_koopa_seg6_dl_06007AA0[];
+extern const Gfx red_koopa_seg6_dl_06007AF8[];
+extern const Gfx red_koopa_seg6_dl_06007B20[];
+extern const Gfx red_koopa_seg6_dl_06007FB8[];
+extern const Gfx red_koopa_seg6_dl_06008050[];
+extern const Gfx red_koopa_seg6_dl_060080F8[];
+extern const Gfx red_koopa_seg6_dl_06008250[];
+extern const Gfx red_koopa_seg6_dl_06008530[];
+extern const Gfx red_koopa_seg6_dl_060085E8[];
+extern const Gfx red_koopa_seg6_dl_06008640[];
+extern const Gfx red_koopa_seg6_dl_060086D0[];
+extern const Gfx red_koopa_seg6_dl_060089B0[];
+extern const Gfx red_koopa_seg6_dl_06008A68[];
+extern const Gfx red_koopa_seg6_dl_06008AC0[];
+extern const Gfx red_koopa_seg6_dl_06008B50[];
+extern const Gfx red_koopa_seg6_dl_0600B6E0[];
+extern const Gfx red_koopa_seg6_dl_0600B838[];
+extern const Gfx red_koopa_seg6_dl_0600B8B8[];
+extern const Gfx red_koopa_seg6_dl_0600BA10[];
+extern const Gfx red_koopa_seg6_dl_0600BA90[];
+extern const Gfx red_koopa_seg6_dl_0600BC18[];
+extern const Gfx red_koopa_seg6_dl_0600BC88[];
+extern const Gfx red_koopa_seg6_dl_0600BE10[];
+extern const Gfx red_koopa_seg6_dl_0600BE80[];
+extern const Gfx red_koopa_seg6_dl_0600C240[];
+extern const Gfx red_koopa_seg6_dl_0600C498[];
+
+
+extern const GeoLayout blue_koopa_without_shell_geo[];
+extern const GeoLayout blue_koopa_with_shell_geo[];
+extern const Gfx blue_koopa_seg6_dl_06007658[];
+extern const Gfx blue_koopa_seg6_dl_060076B0[];
+extern const Gfx blue_koopa_seg6_dl_06007850[];
+extern const Gfx blue_koopa_seg6_dl_06007970[];
+extern const Gfx blue_koopa_seg6_dl_06007A60[];
+extern const Gfx blue_koopa_seg6_dl_06007AA0[];
+extern const Gfx blue_koopa_seg6_dl_06007AF8[];
+extern const Gfx blue_koopa_seg6_dl_06007B20[];
+extern const Gfx blue_koopa_seg6_dl_06007FB8[];
+extern const Gfx blue_koopa_seg6_dl_06008050[];
+extern const Gfx blue_koopa_seg6_dl_060080F8[];
+extern const Gfx blue_koopa_seg6_dl_06008250[];
+extern const Gfx blue_koopa_seg6_dl_06008530[];
+extern const Gfx blue_koopa_seg6_dl_060085E8[];
+extern const Gfx blue_koopa_seg6_dl_06008640[];
+extern const Gfx blue_koopa_seg6_dl_060086D0[];
+extern const Gfx blue_koopa_seg6_dl_060089B0[];
+extern const Gfx blue_koopa_seg6_dl_06008A68[];
+extern const Gfx blue_koopa_seg6_dl_06008AC0[];
+extern const Gfx blue_koopa_seg6_dl_06008B50[];
+extern const Gfx blue_koopa_seg6_dl_0600B6E0[];
+extern const Gfx blue_koopa_seg6_dl_0600B838[];
+extern const Gfx blue_koopa_seg6_dl_0600B8B8[];
+extern const Gfx blue_koopa_seg6_dl_0600BA10[];
+extern const Gfx blue_koopa_seg6_dl_0600BA90[];
+extern const Gfx blue_koopa_seg6_dl_0600BC18[];
+extern const Gfx blue_koopa_seg6_dl_0600BC88[];
+extern const Gfx blue_koopa_seg6_dl_0600BE10[];
+extern const Gfx blue_koopa_seg6_dl_0600BE80[];
+extern const Gfx blue_koopa_seg6_dl_0600C240[];
+extern const Gfx blue_koopa_seg6_dl_0600C498[];
+
+
+extern const GeoLayout yellow_koopa_without_shell_geo[];
+extern const GeoLayout yellow_koopa_with_shell_geo[];
+extern const Gfx yellow_koopa_seg6_dl_06007658[];
+extern const Gfx yellow_koopa_seg6_dl_060076B0[];
+extern const Gfx yellow_koopa_seg6_dl_06007850[];
+extern const Gfx yellow_koopa_seg6_dl_06007970[];
+extern const Gfx yellow_koopa_seg6_dl_06007A60[];
+extern const Gfx yellow_koopa_seg6_dl_06007AA0[];
+extern const Gfx yellow_koopa_seg6_dl_06007AF8[];
+extern const Gfx yellow_koopa_seg6_dl_06007B20[];
+extern const Gfx yellow_koopa_seg6_dl_06007FB8[];
+extern const Gfx yellow_koopa_seg6_dl_06008050[];
+extern const Gfx yellow_koopa_seg6_dl_060080F8[];
+extern const Gfx yellow_koopa_seg6_dl_06008250[];
+extern const Gfx yellow_koopa_seg6_dl_06008530[];
+extern const Gfx yellow_koopa_seg6_dl_060085E8[];
+extern const Gfx yellow_koopa_seg6_dl_06008640[];
+extern const Gfx yellow_koopa_seg6_dl_060086D0[];
+extern const Gfx yellow_koopa_seg6_dl_060089B0[];
+extern const Gfx yellow_koopa_seg6_dl_06008A68[];
+extern const Gfx yellow_koopa_seg6_dl_06008AC0[];
+extern const Gfx yellow_koopa_seg6_dl_06008B50[];
+extern const Gfx yellow_koopa_seg6_dl_0600B6E0[];
+extern const Gfx yellow_koopa_seg6_dl_0600B838[];
+extern const Gfx yellow_koopa_seg6_dl_0600B8B8[];
+extern const Gfx yellow_koopa_seg6_dl_0600BA10[];
+extern const Gfx yellow_koopa_seg6_dl_0600BA90[];
+extern const Gfx yellow_koopa_seg6_dl_0600BC18[];
+extern const Gfx yellow_koopa_seg6_dl_0600BC88[];
+extern const Gfx yellow_koopa_seg6_dl_0600BE10[];
+extern const Gfx yellow_koopa_seg6_dl_0600BE80[];
+extern const Gfx yellow_koopa_seg6_dl_0600C240[];
+extern const Gfx yellow_koopa_seg6_dl_0600C498[];
+
 // koopa_flag
 extern const GeoLayout koopa_flag_geo[];
 extern const Gfx koopa_flag_seg6_dl_06000968[];
@@ -167,8 +271,5 @@ extern const Gfx koopa_red_seg6_dl_0600BE10[];
 extern const Gfx koopa_red_seg6_dl_0600BE80[];
 extern const Gfx koopa_red_seg6_dl_0600C240[];
 extern const Gfx koopa_red_seg6_dl_0600C498[];
-
-
-#include "koopa_red/geo_header.h"
 
 #endif

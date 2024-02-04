@@ -323,15 +323,20 @@ const LevelScript script_func_global_14[] = {
 };
 
 const LevelScript script_func_global_15[] = {
-    LOAD_MODEL_FROM_GEO(MODEL_PIRANHA_PLANT,           piranha_plant_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_WHOMP,                   whomp_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_KOOPA_WITH_SHELL,        koopa_with_shell_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_RED_KOOPA_WITH_SHELL,    koopa_red_with_shell_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_KOOPA_WITHOUT_SHELL,     koopa_without_shell_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_METALLIC_BALL,           metallic_ball_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_CHAIN_CHOMP,             chain_chomp_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_KOOPA_FLAG,              koopa_flag_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_WOODEN_POST,             wooden_post_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_PIRANHA_PLANT,              piranha_plant_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_WHOMP,                      whomp_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_KOOPA_WITH_SHELL,           koopa_with_shell_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_RED_KOOPA_WITH_SHELL,       red_koopa_with_shell_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_RED_KOOPA_WITHOUT_SHELL,    red_koopa_without_shell_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_KOOPA_WITHOUT_SHELL,        koopa_without_shell_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_METALLIC_BALL,              metallic_ball_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_CHAIN_CHOMP,                chain_chomp_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_KOOPA_FLAG,                 koopa_flag_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_WOODEN_POST,                wooden_post_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_BLUE_KOOPA_WITH_SHELL,      blue_koopa_with_shell_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_BLUE_KOOPA_WITHOUT_SHELL,   blue_koopa_without_shell_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_YELLOW_KOOPA_WITH_SHELL,    yellow_koopa_with_shell_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_YELLOW_KOOPA_WITHOUT_SHELL, yellow_koopa_without_shell_geo),
     RETURN(),
 };
 
