@@ -1457,15 +1457,15 @@ void bhv_menu_button_manager_loop(void) {
             sSelectedButtonID = MENU_BUTTON_NONE;
             break;
         case MENU_BUTTON_WARIO:
-            gMarioStates[0].playerModel = 2; // luigi
-            gMarioStates[1].playerModel = 3; // mario
-            gMarioStates[0].animList = &gWarioAnimsBuf;
-            gMarioStates[1].animList = &gLuigiAnimsBuf;
+            gMarioStates[0].playerModel = 3; // luigi
+            gMarioStates[1].playerModel = 2; // mario
+            gMarioStates[0].animList = &gLuigiAnimsBuf;
+            gMarioStates[1].animList = &gWarioAnimsBuf;
             sSelectedButtonID = MENU_BUTTON_NONE;
             break;
             case MENU_BUTTON_WALUIGI:
-            gMarioStates[0].playerModel = 3; // luigi
-            gMarioStates[1].playerModel = 2; // mario
+            gMarioStates[0].playerModel = 2; // luigi
+            gMarioStates[1].playerModel = 3; // mario
             gMarioStates[0].animList = &gLuigiAnimsBuf;
             gMarioStates[1].animList = &gWarioAnimsBuf;
             sSelectedButtonID = MENU_BUTTON_NONE;

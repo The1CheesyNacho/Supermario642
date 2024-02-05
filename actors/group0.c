@@ -32,6 +32,13 @@
 #endif
 
 #include "luigi/model.inc.c"
+#include "peach/model.inc.c"
+#include "peach/anims/data.inc.c"
+#include "peach/anims/table.inc.c"
+#include "bowser/model.inc.c"
+#include "bowser/anims/data.inc.c"
+#include "bowser/anims/table.inc.c"
+#include "bowser/flames_data.inc.c"
 #include "boat/model.inc.c"
 #include "wario/model.inc.c"
 #include "waluigi/model.inc.c"

@@ -68,6 +68,8 @@ const LevelScript level_main_scripts_entry[] = {
     ALLOC_LEVEL_POOL(),
     LOAD_MODEL_FROM_GEO(MODEL_MARIO,                   mario_geo),
     LOAD_MODEL_FROM_GEO(MODEL_LUIGI,                   luigi_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_PEACH,                   peach_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_BOWSER,                  bowser_geo),
     LOAD_MODEL_FROM_GEO(MODEL_WARIO,                   wario_geo),
     LOAD_MODEL_FROM_GEO(MODEL_WALUIGI,                 waluigi_geo),
     LOAD_MODEL_FROM_GEO(MODEL_SMOKE,                   smoke_geo),
@@ -285,7 +287,6 @@ const LevelScript script_func_global_10[] = {
 const LevelScript script_func_global_11[] = {
     LOAD_MODEL_FROM_GEO(MODEL_YOSHI,                   yoshi_geo),
     LOAD_MODEL_FROM_GEO(MODEL_BIRDS,                   birds_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_PEACH,                   peach_geo),
     RETURN(),
 };
 
@@ -300,7 +301,6 @@ const LevelScript script_func_global_12[] = {
 };
 
 const LevelScript script_func_global_13[] = {
-    LOAD_MODEL_FROM_GEO(MODEL_BOWSER,                  bowser_geo),
     LOAD_MODEL_FROM_GEO(MODEL_BOWSER_BOMB_CHILD_OBJ,   bowser_bomb_geo),
     LOAD_MODEL_FROM_GEO(MODEL_BOWSER_BOMB,             bowser_bomb_geo),
     LOAD_MODEL_FROM_GEO(MODEL_BOWSER_SMOKE,            bowser_impact_smoke_geo),
