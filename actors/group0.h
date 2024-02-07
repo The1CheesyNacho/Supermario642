@@ -482,4 +482,8 @@ extern const s16 dBowserFlamesOrientationValues[];
 
 
 
+#include "bowser/geo_header.h"
+
+#include "peach/geo_header.h"
+
 #endif

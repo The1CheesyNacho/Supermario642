@@ -1,4 +1,4 @@
-void scroll_sr_dl_Plane_mesh_layer_1_vtx_4() {
+void scroll_sr_dl_sr_dl_Plane_mesh_layer_1_mesh_001_mesh_layer_1_vtx_4() {
 	int i = 0;
 	int count = 4;
 	int width = 32 * 0x20;
@@ -8,7 +8,7 @@ void scroll_sr_dl_Plane_mesh_layer_1_vtx_4() {
 	int deltaX;
 	static int currentY = 0;
 	int deltaY;
-	Vtx *vertices = segmented_to_virtual(sr_dl_Plane_mesh_layer_1_vtx_4);
+	Vtx *vertices = segmented_to_virtual(sr_dl_sr_dl_Plane_mesh_layer_1_mesh_001_mesh_layer_1_vtx_4);
 
 	deltaX = (int)(1.0 * 0x20) % width;
 	deltaY = (int)(1.0 * 0x20) % height;
@@ -28,5 +28,5 @@ void scroll_sr_dl_Plane_mesh_layer_1_vtx_4() {
 }
 
 void scroll_sr() {
-	scroll_sr_dl_Plane_mesh_layer_1_vtx_4();
+	scroll_sr_dl_sr_dl_Plane_mesh_layer_1_mesh_001_mesh_layer_1_vtx_4();
 };

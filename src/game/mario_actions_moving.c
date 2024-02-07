@@ -218,7 +218,7 @@ s32 update_sliding(struct MarioState *m, f32 stopSpeed) {
         forward *= 0.5f + 0.5f * m->forwardVel / 100.0f;
     }
 
-if (Character == 0){
+if (cur_obj_has_model(MODEL_MARIO)){
     switch (mario_get_floor_class(m)) {
         case SURFACE_CLASS_VERY_SLIPPERY:
             accel = 10.0f;
@@ -242,7 +242,7 @@ if (Character == 0){
     }
 }
 
-if (Character == 1){
+if (cur_obj_has_model(MODEL_LUIGI)){
     switch (mario_get_floor_class(m)) {
         case SURFACE_CLASS_VERY_SLIPPERY:
             accel = 12.0f;
@@ -266,7 +266,7 @@ if (Character == 1){
     }
 }
 
-if (Character == 2){
+if (cur_obj_has_model(MODEL_BOWSER)){
     switch (mario_get_floor_class(m)) {
         case SURFACE_CLASS_VERY_SLIPPERY:
             accel = 7.0f;
@@ -290,7 +290,7 @@ if (Character == 2){
     }
 }
 
-if (Character == 3){
+if (cur_obj_has_model(MODEL_PEACH)){
     switch (mario_get_floor_class(m)) {
         case SURFACE_CLASS_VERY_SLIPPERY:
             accel = 14.0f;
@@ -563,7 +563,7 @@ s32 should_begin_sliding(struct MarioState *m) {
 s32 check_ground_dive_or_punch(struct MarioState *m) {
     if (m->input & INPUT_B_PRESSED) {
         //! Speed kick (shoutouts to SimpleFlips)
-    if (Character == 2){
+    if (cur_obj_has_model(MODEL_BOWSER)){
         if (m->forwardVel >= 29.0f && m->controller->stickMag > 48.0f) {
         mario_set_forward_vel(m, 90.0f);
         return set_mario_action(m, ACT_CHARGE, 1);
@@ -673,7 +673,7 @@ void anim_and_audio_for_walk(struct MarioState *m) {
                     } else {
                         //! (Speed Crash) If Mario's speed is more than 2^17.
                         animSpeed = (s32)(intendedSpeed / 4.0f * 0x10000);
-                        if (Character == 0){
+                        if (cur_obj_has_model(MODEL_MARIO)){
                         set_mario_anim_with_accel(m, MARIO_ANIM_RUNNING, animSpeed);
                         }
                         else{
@@ -1944,7 +1944,7 @@ s32 act_double_jump_land(struct MarioState *m) {
 }
 
 s32 act_triple_jump_land(struct MarioState *m) {
-      if (Character == 1){
+      if (cur_obj_has_model(MODEL_LUIGI)){
     if (m->input & INPUT_A_PRESSED){
         play_sound(SOUND_CHARACTER_HERE_WE_GO, m->marioObj->header.gfx.cameraToObject);
         m->vel[1] = 76.0f;

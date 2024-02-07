@@ -26,6 +26,223 @@
 #include "game/emutest.h"
 
 
+// New system to verify mario's moves. Inspired by UE5's MoveUpdatedComponent function.
+// Advantage:
+// 1. Can no longer clip ceilings and steep floors
+// 2. No more high speed clips
+// 3. Consistently lands on steep floors
+// 4. SM64 has an error up to 25% for moving mario. This has an error up to 1.56%.
+// 5. Runs 4 collision calls per tick instead of 16 (95% of the time)
+// 6. Consistent between swimming, aerial and ground step
+// 7. Gets rid of quarterstep oddities
+ 
+// Movedata lets us pass by struct to reduce arg passing overhead
+struct MoveData {
+    struct Surface *HitSurface; // Raycast hit result
+    struct Surface *Wall;
+    struct Surface *Floor;
+    struct Surface *Ceil;
+    f32 IntendedPos[3]; // Position we believe to be a good enough approximation for where mario can go
+    f32 GoalPos[3];     // Position we originally wanted to move towards
+    f32 FloorHeight;
+    f32 CeilHeight;
+    f32 MarioHeight;
+    s32 StepArgs;
+    f32 BiggestValidMove; // How much we managed to move
+};
+// Snap to the first collision in direction
+ALWAYS_INLINE void CheckMoveEndPosition(struct MarioState *m, struct MoveData *MoveResult) {
+    MoveResult->HitSurface = 0;
+    Vec3f MoveVector;
+    MoveVector[0] = MoveResult->IntendedPos[0] - m->pos[0];
+    MoveVector[1] = MoveResult->IntendedPos[1] - m->pos[1];
+    MoveVector[2] = MoveResult->IntendedPos[2] - m->pos[2];
+    f32 MoveSize = vec3f_length(MoveVector);
+    if (MoveSize > 0.0f) {
+        // Scale up move size to account for mario's size
+        f32 ScaledMoveSize = ((MoveSize + MARIOWIDENESS) / MoveSize);
+        // Seperate clipvector saves us some multiplications down the line!
+        Vec3f ClipVector;
+        ClipVector[0] = MoveVector[0] * ScaledMoveSize;
+        ClipVector[1] = MoveVector[1] * ScaledMoveSize;
+        ClipVector[2] = MoveVector[2] * ScaledMoveSize;
+ 
+        // Use the middle of Mario's to most represent his hitbox (idealls this would be a capsule cast)
+        m->pos[1] += MARIOHEIGHT / 2;
+        Vec3f HitPos;
+        find_surface_on_ray(m->pos, ClipVector, &MoveResult->HitSurface, HitPos, 7);
+        m->pos[1] -= MARIOHEIGHT / 2;
+ 
+        // Clip if collision was found
+        if (MoveResult->HitSurface != NULL) {
+            const f32 DistanceMoved = sqrtf(sqr(HitPos[0] - MoveResult->IntendedPos[0])
+                                            + sqr(HitPos[1] - MoveResult->IntendedPos[1])
+                                            + sqr(HitPos[2] - MoveResult->IntendedPos[2]));
+            // move back either by as wide as mario is or the whole distance, whatever is less.
+            const f32 MoveBackScale = (MIN(DistanceMoved, MARIOWIDENESS) / MoveSize);
+            if (absf((MoveResult->HitSurface)->normal.y) <= 23) {
+                MoveResult->IntendedPos[0] = HitPos[0] - MoveVector[0] * MoveBackScale;
+                MoveResult->IntendedPos[1] =
+                    HitPos[1] - MoveVector[1] * MoveBackScale - MARIOHEIGHT / 2;
+                MoveResult->IntendedPos[2] = HitPos[2] - MoveVector[2] * MoveBackScale;
+            } else if ((MoveResult->HitSurface)->normal.y < 0.f) {
+                // let the binary search find a good position towards mario's direction
+                MoveResult->IntendedPos[0] = HitPos[0] + MoveResult->HitSurface->normal.x;
+                MoveResult->IntendedPos[1] =
+                    HitPos[1] + MoveResult->HitSurface->normal.y - MARIOHEIGHT / 2;
+                MoveResult->IntendedPos[2] = HitPos[2] + MoveResult->HitSurface->normal.z;
+            } else {
+                MoveResult->IntendedPos[0] = HitPos[0];
+                // Snap far enough down to guarantee find_floor will find a bigger value.
+                MoveResult->IntendedPos[1] = HitPos[1] - ((f32) FLOOR_SNAP_OFFSET) / 2.f;
+                MoveResult->IntendedPos[2] = HitPos[2];
+            }
+        }
+    }
+}
+ 
+// Checks if the new position is valid.
+s32 CheckMoveValid(struct MarioState *m, struct MoveData *MoveResult) {
+    // Wall collisino happens first since walls will never prevent a move.
+    MoveResult->Wall =
+        resolve_and_return_wall_collisions(MoveResult->IntendedPos, (60.0f), MARIOWIDENESS);
+    MoveResult->FloorHeight =
+        find_floor_marioair(MoveResult->IntendedPos[0], MoveResult->IntendedPos[1],
+                            MoveResult->IntendedPos[2], &MoveResult->Floor, m->vel[1]);
+    // oob is invalid
+    if (!MoveResult->Floor)
+        return 0;
+    // snap up early to make sure ceiling test happens from the right spot
+    if ((MoveResult->StepArgs & STEP_SNAP_TO_FLOOR)
+        && MoveResult->IntendedPos[1] < MoveResult->FloorHeight + FLOOR_SNAP_OFFSET) {
+        MoveResult->IntendedPos[1] = MoveResult->FloorHeight;
+    } else if (MoveResult->IntendedPos[1] < MoveResult->FloorHeight) {
+        MoveResult->IntendedPos[1] = MoveResult->FloorHeight;
+    }
+    MoveResult->CeilHeight = vec3f_find_ceil(MoveResult->IntendedPos, &MoveResult->Ceil);
+    // Mario does not fit here!
+    if (MoveResult->FloorHeight + MoveResult->MarioHeight >= MoveResult->CeilHeight)
+        return 0;
+ 
+    return 1;
+}
+ 
+// Set Mario's data and determine the StepResult from the MoveResult.
+s32 FinishMove(struct MarioState *m, struct MoveData *MoveResult) {
+    m->floor = MoveResult->Floor;
+    m->ceil = MoveResult->Ceil;
+    m->wall = MoveResult->Wall;
+    m->floorHeight = MoveResult->FloorHeight;
+    m->ceilHeight = MoveResult->CeilHeight;
+    vec3f_copy(m->pos, MoveResult->IntendedPos);
+ 
+    if (m->ceilHeight < m->pos[1] + MoveResult->MarioHeight) {
+        m->pos[1] = m->ceilHeight - MoveResult->MarioHeight;
+        if ((MoveResult->StepArgs & STEP_CHECK_HANG) && m->ceil != NULL
+            && ((m->ceil->type & (SURFACE_HANGABLE << 8)))) {
+            m->vel[1] = 0.0f;
+            return STEP_GRAB_CEILING;
+        }
+    }
+    // if we are not set to snap to the floor but landed despite that, on ground takes priority!
+    if (!(MoveResult->StepArgs & STEP_SNAP_TO_FLOOR) && (m->pos[1] <= m->floorHeight))
+        return STEP_ON_GROUND;
+ 
+    if (m->wall) {
+        if (m->wall->type & (SURFACE_BURNING << 8)) {
+            return STEP_HIT_LAVA;
+        }
+        if (MoveResult->StepArgs & STEP_CHECK_LEDGE_GRAB) {
+            if (check_ledge_grab(m, m->wall, MoveResult->GoalPos, MoveResult->IntendedPos)) {
+                return STEP_GRAB_LEDGE;
+            }
+        }
+        u16 WallAngleMaxDiff = MoveResult->StepArgs & STEP_SNAP_TO_FLOOR
+                                   ? 0x8000 - 23
+                                   : 0x8000 - 23;
+        if (absi((s16) (atan2s(m->wall->normal.z, m->wall->normal.x) - m->faceAngle[1]))
+            >= WallAngleMaxDiff) {
+            return STEP_HIT_WALL;
+        }
+    }
+ 
+    // If we haven't moved, we hit either oob or a ceiling.
+#define ZERO_POINT_FIVE_TO_THE_POWER_OF_MINUS_NUM_SEARCHES 0.015625f
+    if (MoveResult->BiggestValidMove < ZERO_POINT_FIVE_TO_THE_POWER_OF_MINUS_NUM_SEARCHES) {
+        return STEP_HIT_WALL;
+    }
+ 
+    return m->pos[1] <= m->floorHeight ? STEP_ON_GROUND : STEP_IN_AIR;
+}
+// Scales the move. The Y is assumed to always be valid (if not, we are ceiling bonking anyway)
+s32 ScaleMove(struct MarioState *m, struct MoveData *MoveResult, f32 Scale) {
+    MoveResult->IntendedPos[0] = (MoveResult->GoalPos[0] - m->pos[0]) * Scale + m->pos[0];
+    MoveResult->IntendedPos[1] = MoveResult->GoalPos[1];
+    MoveResult->IntendedPos[2] = (MoveResult->GoalPos[2] - m->pos[2]) * Scale + m->pos[2];
+}
+// Performs a generic step and returns the step result
+// [StepArgs] checks for special interactions like ceilings, ledges and floor snapping
+s32 PerformStep(struct MarioState *m, Vec3f GoalPos, const s32 StepArgs) {
+    struct MoveData MoveResult;
+    MoveResult.MarioHeight = (m->action & ACT_FLAG_SHORT_HITBOX) ? MARIOHEIGHT / 2.f : MARIOHEIGHT;
+    MoveResult.StepArgs = StepArgs;
+    vec3f_copy(MoveResult.IntendedPos, GoalPos);
+    s32 IterationsRemaining = 2;
+DoItAgain:
+    CheckMoveEndPosition(m, &MoveResult);
+    vec3f_copy(MoveResult.GoalPos, MoveResult.IntendedPos);
+ 
+    // If the move is outright valid (VAST MAJORITY OF MOVES), just exit instantly.
+    if (CheckMoveValid(m, &MoveResult)) {
+        if (MoveResult.HitSurface) {
+            struct Surface *HitSurface;
+            Vec3f HitPos;
+            Vec3f ClipVector;
+            ClipVector[0] = MoveResult.GoalPos[0] - m->pos[0];
+            // move back up because floors in HitSurface move mario down (ensures snapping)
+            ClipVector[1] =
+                MoveResult.GoalPos[1] - m->pos[1]
+                + (MoveResult.HitSurface->normal.y > 23 ? FLOOR_SNAP_OFFSET / 2.f + 4.f
+                                                                   : 0.f);
+            ClipVector[2] = MoveResult.GoalPos[2] - m->pos[2];
+            find_surface_on_ray(m->pos, ClipVector, &HitSurface, HitPos, 7);
+            // Ensure nothing moved mario's feet through a surface.
+            // (Ledgegrabs may teleport mario, but they happen in FinishMove)
+            if (HitSurface) {
+                // Give it another try, we do want to move as much as possible.
+                vec3f_copy(MoveResult.GoalPos, HitPos);
+                IterationsRemaining--;
+                if (IterationsRemaining)
+                    goto DoItAgain;
+                // No valid moves managed to be made. Emergency exit!
+                return STEP_HIT_WALL;
+            }
+        }
+        // Full move happened
+        MoveResult.BiggestValidMove = 1.f;
+        return FinishMove(m, &MoveResult);
+    }
+    // Move was unsuccessful. Scale it down to a precision of 2^-NUM_SEARCHES
+    f32 CurrentMoveSize = 0.5f;
+    MoveResult.BiggestValidMove = 0.f;
+#define NUM_SEARCHES 6
+    for (s32 BinarySplitsReamining = NUM_SEARCHES; BinarySplitsReamining > 0; BinarySplitsReamining--) {
+        ScaleMove(m, &MoveResult, MoveResult.BiggestValidMove + CurrentMoveSize);
+        if (CheckMoveValid(m, &MoveResult)) {
+            MoveResult.BiggestValidMove += CurrentMoveSize;
+        }
+        CurrentMoveSize *= 0.5f;
+    }
+    ScaleMove(m, &MoveResult, MoveResult.BiggestValidMove);
+    // No valid move can be made. We are stuck OOB.
+    // This should only happen if a platform OOB teleported away.
+    // Mario should die here.
+    if (!CheckMoveValid(m, &MoveResult)) {
+        return STEP_HIT_WALL;
+    }
+    // We've moved, but not the full distance.
+    return FinishMove(m, &MoveResult);
+}
 
 // Message IDs
 enum MessageIDs {

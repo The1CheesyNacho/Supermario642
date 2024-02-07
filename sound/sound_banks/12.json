@@ -66,7 +66,7 @@
         "inst1": {
             "release_rate": 208,
             "envelope": "envelope1",
-            "sound": "31_rarefaction-convolution"
+            "sound": "34_alto_flute"
         },
         "inst2": {
             "release_rate": 208,
@@ -94,9 +94,9 @@
             "normal_range_lo": 28,
             "normal_range_hi": 28,
             "envelope": "envelope5",
-            "sound_lo": "10_cymbal_bell",
-            "sound": "11_splash_cymbal",
-            "sound_hi": "10_cymbal_bell"
+            "sound_lo": "3A_music_box",
+            "sound": "3A_music_box",
+            "sound_hi": "3A_music_box"
         },
         "inst6": {
             "release_rate": 208,
@@ -106,7 +106,7 @@
         "inst7": {
             "release_rate": 114,
             "envelope": "envelope7",
-            "sound": "34_alto_flute"
+            "sound": "3C_acoustic_guitar"
         },
         "inst8": {
             "release_rate": 15,

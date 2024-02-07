@@ -501,6 +501,11 @@ s32 act_backflip(struct MarioState *m) {
         return set_mario_action(m, ACT_GROUND_POUND, 0);
     }
 
+    if (cur_obj_has_model(MODEL_LUIGI)){
+        m->vel[1] = 90.0f; 
+        return set_mario_action(m, ACT_TWIRLING, 0);;
+    }
+
     play_mario_sound(m, SOUND_ACTION_TERRAIN_JUMP, SOUND_CHARACTER_YAH_WAH_HOO);
     common_air_action_step(m, ACT_BACKFLIP_LAND, MARIO_ANIM_BACKFLIP, 0);
 #if ENABLE_RUMBLE

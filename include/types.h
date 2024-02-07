@@ -487,4 +487,6 @@ struct MarioState {
     u8 playerModel;
 };
 
+
+
 #endif // TYPES_H

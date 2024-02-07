@@ -645,14 +645,8 @@ void general_star_dance_handler(struct MarioState *m, s32 isInWater) {
 
 s32 act_star_dance(struct MarioState *m) {
     m->faceAngle[1] = m->area->camera->yaw;
-    if(Character == 1){
-    set_mario_animation(m, m->actionState == ACT_STATE_STAR_DANCE_RETURN ? MARIO_ANIM_RETURN_FROM_STAR_DANCE
-                                                                         : LUIGI_ANIM_STAR_DANCE);
-    }
-    else{
     set_mario_animation(m, m->actionState == ACT_STATE_STAR_DANCE_RETURN ? MARIO_ANIM_RETURN_FROM_STAR_DANCE
                                                                          : MARIO_ANIM_STAR_DANCE);
-    }
     general_star_dance_handler(m, FALSE);
     if (m->actionState != ACT_STATE_STAR_DANCE_RETURN && m->actionTimer >= 40) {
         m->marioBodyState->handState = MARIO_HAND_PEACE_SIGN;
