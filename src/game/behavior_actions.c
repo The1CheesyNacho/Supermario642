@@ -23,10 +23,7 @@
 #include "level_misc_macros.h"
 #include "level_table.h"
 #include "level_update.h"
-#include "levels/bob/header.h"
-#include "levels/bowser_3/header.h"
 #include "levels/castle_inside/header.h"
-#include "levels/hmc/header.h"
 #include "main.h"
 #include "mario.h"
 #include "mario_actions_cutscene.h"
@@ -52,7 +49,6 @@
 #include "behaviors/pole.inc.c"
 #include "behaviors/thi_top.inc.c"
 #include "behaviors/capswitch.inc.c"
-#include "behaviors/king_bobomb.inc.c"
 #include "behaviors/beta_chest.inc.c"
 #include "behaviors/water_objs.inc.c"
 #include "behaviors/cannon.inc.c"
@@ -142,7 +138,6 @@ Gfx *geo_move_mario_part_from_parent(s32 callContext, UNUSED struct GraphNode *n
     return NULL;
 }
 
-#include "behaviors/heave_ho.inc.c"
 #include "behaviors/spawn_star_exit.inc.c"
 #include "behaviors/unused_poundable_platform.inc.c"
 #include "behaviors/beta_trampoline.inc.c"
@@ -179,7 +174,6 @@ void spawn_sparkle_particles(s32 n, s32 radius, s32 height, s32 r) {
 #include "behaviors/bowser_key_cutscene.inc.c"
 #include "behaviors/moat_grill.inc.c"
 #include "behaviors/clock_arm.inc.c"
-#include "behaviors/ukiki.inc.c"
 #include "behaviors/lll_octagonal_rotating_mesh.inc.c"
 #include "behaviors/lll_sinking_rock_block.inc.c"
 #include "behaviors/lll_rotating_hex_flame.inc.c"

@@ -2725,21 +2725,6 @@ void print_save_file_scores(s8 fileIndex) {
     print_score_file_course_coin_score(fileIndex, courseIndex - 1, 213, 23 + 12 * courseIndex);
 
     // Course values are indexed, from Bob-omb Battlefield to Rainbow Ride
-    PRINT_COURSE_SCORES(COURSE_BOB, 1)
-    PRINT_COURSE_SCORES(COURSE_WF,  1)
-    PRINT_COURSE_SCORES(COURSE_JRB, 1)
-    PRINT_COURSE_SCORES(COURSE_CCM, 1)
-    PRINT_COURSE_SCORES(COURSE_BBH, 1)
-    PRINT_COURSE_SCORES(COURSE_HMC, 1)
-    PRINT_COURSE_SCORES(COURSE_LLL, 1)
-    PRINT_COURSE_SCORES(COURSE_SSL, 1)
-    PRINT_COURSE_SCORES(COURSE_DDD, 1)
-    PRINT_COURSE_SCORES(COURSE_SL,  0)
-    PRINT_COURSE_SCORES(COURSE_WDW, 0)
-    PRINT_COURSE_SCORES(COURSE_TTM, 0)
-    PRINT_COURSE_SCORES(COURSE_THI, 0)
-    PRINT_COURSE_SCORES(COURSE_TTC, 0)
-    PRINT_COURSE_SCORES(COURSE_RR,  0)
 #undef PRINT_COURSE_SCORES
 
     // Print castle secret stars text

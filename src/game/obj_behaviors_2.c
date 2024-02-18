@@ -19,19 +19,6 @@
 #include "interaction.h"
 #include "level_table.h"
 #include "level_update.h"
-#include "levels/bitdw/header.h"
-#include "levels/bitfs/header.h"
-#include "levels/bits/header.h"
-#include "levels/bob/header.h"
-#include "levels/ccm/header.h"
-#include "levels/hmc/header.h"
-#include "levels/jrb/header.h"
-#include "levels/lll/header.h"
-#include "levels/rr/header.h"
-#include "levels/ssl/header.h"
-#include "levels/thi/header.h"
-#include "levels/ttc/header.h"
-#include "levels/vcutm/header.h"
 #include "mario.h"
 #include "mario_actions_cutscene.h"
 #include "memory.h"
@@ -158,6 +145,27 @@ static void cur_obj_spin_all_dimensions(f32 pitchSpeed, f32 rollSpeed) {
         o->oGraphYOffset = yaw - ny;
         o->oPosZ = o->oHomeZ + pz - nz;
     }
+}
+
+// Copy of geo_update_projectile_pos_from_parent
+Gfx *geo_update_held_mario_pos(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx) {
+    if (callContext == GEO_CONTEXT_RENDER) {
+        struct Object *obj = (struct Object *) gCurGraphNodeObject;
+        if (obj->prevObj != NULL) {
+            obj_update_pos_from_parent_transformation(mtx, obj->prevObj);
+            obj_set_gfx_pos_from_pos(obj->prevObj);
+        }
+    }
+
+    return NULL;
+}
+
+s32 mario_is_far_below_object(f32 min) {
+    return min < o->oPosY - gMarioObject->oPosY;
+}
+
+void obj_set_speed_to_zero(void) {
+    o->oForwardVel = o->oVelY = 0.0f;
 }
 
 static void obj_rotate_yaw_and_bounce_off_walls(s16 targetYaw, s16 turnAmount) {
@@ -770,15 +778,6 @@ static void treat_far_home_as_mario(f32 threshold) {
 #include "behaviors/seesaw_platform.inc.c"
 #include "behaviors/ferris_wheel.inc.c"
 #include "behaviors/water_bomb.inc.c" // TODO: Shadow position
-#include "behaviors/ttc_rotating_solid.inc.c"
-#include "behaviors/ttc_pendulum.inc.c"
-#include "behaviors/ttc_treadmill.inc.c" // TODO
-#include "behaviors/ttc_moving_bar.inc.c"
-#include "behaviors/ttc_cog.inc.c"
-#include "behaviors/ttc_pit_block.inc.c"
-#include "behaviors/ttc_elevator.inc.c"
-#include "behaviors/ttc_2d_rotator.inc.c"
-#include "behaviors/ttc_spinner.inc.c"
 #include "behaviors/mr_blizzard.inc.c"
 #include "behaviors/sliding_platform_2.inc.c"
 #include "behaviors/rotating_octagonal_plat.inc.c"
@@ -813,8 +812,6 @@ void obj_spit_fire(s16 relativePosX, s16 relativePosY, s16 relativePosZ, f32 sca
 #include "behaviors/flame.inc.c"
 #include "behaviors/snufit.inc.c"
 #include "behaviors/horizontal_grindel.inc.c"
-#include "behaviors/eyerok.inc.c"
-#include "behaviors/klepto.inc.c"
 #include "behaviors/bird.inc.c"
 #include "behaviors/racing_penguin.inc.c"
 #include "behaviors/coffin.inc.c"

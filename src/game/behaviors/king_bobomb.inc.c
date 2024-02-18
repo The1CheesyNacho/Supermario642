@@ -1,18 +1,5 @@
 // king_bobomb.inc.c
 
-// Copy of geo_update_projectile_pos_from_parent
-Gfx *geo_update_held_mario_pos(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx) {
-    if (callContext == GEO_CONTEXT_RENDER) {
-        struct Object *obj = (struct Object *) gCurGraphNodeObject;
-        if (obj->prevObj != NULL) {
-            obj_update_pos_from_parent_transformation(mtx, obj->prevObj);
-            obj_set_gfx_pos_from_pos(obj->prevObj);
-        }
-    }
-
-    return NULL;
-}
-
 void bhv_bobomb_anchor_mario_loop(void) {
     common_anchor_mario_behavior(50.0f, 50.0f, INT_STATUS_MARIO_DROPPED_BY_OBJ);
 }
@@ -37,10 +24,6 @@ void king_bobomb_act_inactive(void) { // act 0
         o->oAction = KING_BOBOMB_ACT_ACTIVE;
         o->oFlags |= OBJ_FLAG_HOLDABLE;
     }
-}
-
-s32 mario_is_far_below_object(f32 min) {
-    return min < o->oPosY - gMarioObject->oPosY;
 }
 
 void king_bobomb_act_active(void) { // act 2

@@ -1696,13 +1696,6 @@ void bhv_bowser_init(void) {
     o->oOpacity = 255;
     o->oBowserTargetOpacity = 255;
     // Set Bowser B-param depending of the stage
-    if (gCurrLevelNum == LEVEL_BOWSER_2) {
-        level = BOWSER_BP_BITFS;
-    } else if (gCurrLevelNum == LEVEL_BOWSER_3) {
-        level = BOWSER_BP_BITS;
-    } else { // LEVEL_BOWSER_1
-        level = BOWSER_BP_BITDW;
-    }
     o->oBehParams2ndByte = level;
     // Set health and rainbow light depending of the level
     o->oBowserRainbowLight = sBowserRainbowLight[level];

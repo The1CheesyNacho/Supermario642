@@ -3,22 +3,6 @@
 
 #include "types.h"
 
-// bub
-extern const GeoLayout bub_geo[];
-extern const Gfx bub_seg6_dl_06011848[];
-extern const Gfx bub_seg6_dl_060118C0[];
-extern const Gfx bub_seg6_dl_06011918[];
-extern const Gfx bub_seg6_dl_06011968[];
-extern const Gfx bub_seg6_dl_06011A50[];
-extern const Gfx bub_seg6_dl_06011B28[];
-extern const Gfx bub_seg6_dl_06011C58[];
-extern const Gfx bub_seg6_dl_06011CF0[];
-extern const Gfx bub_seg6_dl_06011DC0[];
-extern const Gfx bub_seg6_dl_06011E48[];
-extern const Gfx bub_seg6_dl_06011F18[];
-extern const Gfx bub_seg6_dl_06011FA0[];
-extern const struct Animation *const bub_seg6_anims_06012354[];
-
 // cyan_fish
 extern const GeoLayout cyan_fish_geo[];
 extern const Gfx cyan_fish_seg6_dl_0600DD20[];
@@ -94,10 +78,5 @@ extern const Gfx water_mine_seg6_dl_0600D230[];
 extern const Gfx water_mine_seg6_dl_0600D268[];
 extern const Gfx water_mine_seg6_dl_0600D2E0[];
 extern const Gfx water_mine_seg6_dl_0600D3F8[];
-
-// water_ring
-extern const GeoLayout water_ring_geo[];
-extern const Gfx water_ring_seg6_dl_06013AC0[];
-extern const struct Animation *const water_ring_seg6_anims_06013F7C[];
 
 #endif

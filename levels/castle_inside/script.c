@@ -53,9 +53,6 @@ const LevelScript level_castle_inside_entry[] = {
 	/* Fast64 end persistent block [level commands] */
 
 	AREA(1, castle_inside_area_1),
-		WARP_NODE(0x0A, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
-		WARP_NODE(0xF0, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
-		WARP_NODE(0xF1, LEVEL_BOB, 0x01, 0x0A, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_TOAD, 2800, -55, 1800, 0, 0, 0, 0x00000000, bhvToadMessage),
 		OBJECT(MODEL_TOAD, 367, -55, -1839, 0, 0, 0, 0x00000000, bhvToadMessage),
 		OBJECT(MODEL_TOAD, 2403, -55, -1270, 0, 0, 0, 0x00000000, bhvToadMessage),

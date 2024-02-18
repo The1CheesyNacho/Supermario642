@@ -14,14 +14,12 @@ struct ObjectHitbox sUnagiHitbox = {
 
 void bhv_unagi_init(void) {
     if (o->oBehParams2ndByte != UNAGI_BP_IN_CAVE) {
-        o->oPathedStartWaypoint = segmented_to_virtual(jrb_seg7_trajectory_unagi_1);
         if (o->oBehParams2ndByte == UNAGI_BP_IN_SHIP) {
             o->oFaceAnglePitch = -0x1DB0;
         } else {
             o->oAction = UNAGI_ACT_SHIP_PATH;
         }
     } else {
-        o->oPathedStartWaypoint = segmented_to_virtual(jrb_seg7_trajectory_unagi_2);
         o->oAction = UNAGI_ACT_IN_CAVE;
 #ifdef ENABLE_VANILLA_LEVEL_SPECIFIC_CHECKS 
         // !HackerSM64: Show transparent star if collected

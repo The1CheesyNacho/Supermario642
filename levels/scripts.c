@@ -140,7 +140,7 @@ static const LevelScript goto_intro_splash_screen[] = {
 };
 
 static const LevelScript goto_ending[] = {
-    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_LEVEL_SCRIPT, _endingSegmentRomStart, _endingSegmentRomEnd, level_ending_entry, _endingSegmentBssStart, _endingSegmentBssEnd),
+    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_splash_screen, _introSegmentBssStart, _introSegmentBssEnd),
 };
 
 static const LevelScript goto_mario_head_regular[] = {
@@ -200,7 +200,6 @@ const LevelScript script_func_global_1[] = {
     LOAD_MODEL_FROM_GEO(MODEL_CANNON_BARREL,           cannon_barrel_geo),
     LOAD_MODEL_FROM_GEO(MODEL_CANNON_BASE,             cannon_base_geo),
     LOAD_MODEL_FROM_GEO(MODEL_HEART,                   heart_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_FLYGUY,                  flyguy_geo),
     LOAD_MODEL_FROM_GEO(MODEL_CHUCKYA,                 chuckya_geo),
     LOAD_MODEL_FROM_GEO(MODEL_TRAJECTORY_MARKER_BALL,  bowling_ball_track_geo),
     LOAD_MODEL_FROM_GEO(MODEL_GUMMY,                   gummy_geo),
@@ -210,11 +209,9 @@ const LevelScript script_func_global_1[] = {
 const LevelScript script_func_global_2[] = {
     LOAD_MODEL_FROM_GEO(MODEL_BULLET_BILL,             bullet_bill_geo),
     LOAD_MODEL_FROM_GEO(MODEL_YELLOW_SPHERE,           yellow_sphere_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_HOOT,                    hoot_geo),
     LOAD_MODEL_FROM_GEO(MODEL_YOSHI_EGG,               yoshi_egg_geo),
     LOAD_MODEL_FROM_GEO(MODEL_THWOMP,                  thwomp_geo),
     LOAD_MODEL_FROM_GEO(MODEL_THWIMP,                  thwimp_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_HEAVE_HO,                heave_ho_geo),
     RETURN(),
 };
 
@@ -228,7 +225,6 @@ const LevelScript script_func_global_3[] = {
 const LevelScript script_func_global_4[] = {
     LOAD_MODEL_FROM_GEO(MODEL_WATER_BOMB,              water_bomb_geo),
     LOAD_MODEL_FROM_GEO(MODEL_WATER_BOMB_SHADOW,       water_bomb_shadow_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_KING_BOBOMB,             king_bobomb_geo),
     RETURN(),
 };
 
@@ -245,16 +241,12 @@ const LevelScript script_func_global_6[] = {
     LOAD_MODEL_FROM_GEO(MODEL_POKEY_HEAD,              pokey_head_geo),
     LOAD_MODEL_FROM_GEO(MODEL_POKEY_BODY_PART,         pokey_body_part_geo),
     LOAD_MODEL_FROM_GEO(MODEL_TWEESTER,                tweester_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_KLEPTO,                  klepto_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_EYEROK_LEFT_HAND,        eyerok_left_hand_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_EYEROK_RIGHT_HAND,       eyerok_right_hand_geo),
     RETURN(),
 };
 
 const LevelScript script_func_global_7[] = {
     LOAD_MODEL_FROM_DL( MODEL_DL_MONTY_MOLE_HOLE,      monty_mole_hole_seg5_dl_05000840, LAYER_TRANSPARENT_DECAL),
     LOAD_MODEL_FROM_GEO(MODEL_MONTY_MOLE,              monty_mole_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_UKIKI,                   ukiki_geo),
     LOAD_MODEL_FROM_GEO(MODEL_FWOOSH,                  fwoosh_geo),
     RETURN(),
 };
@@ -277,11 +269,8 @@ const LevelScript script_func_global_9[] = {
 const LevelScript script_func_global_10[] = {
     LOAD_MODEL_FROM_GEO(MODEL_BOO,                     boo_geo),
     LOAD_MODEL_FROM_GEO(MODEL_BETA_BOO_KEY,               small_key_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_HAUNTED_CHAIR,           haunted_chair_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_MAD_PIANO,               mad_piano_geo),
     LOAD_MODEL_FROM_GEO(MODEL_BOOKEND_PART,            bookend_part_geo),
     LOAD_MODEL_FROM_GEO(MODEL_BOOKEND,                 bookend_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_HAUNTED_CAGE,            haunted_cage_geo),
     RETURN(),
 };
 
@@ -309,11 +298,9 @@ const LevelScript script_func_global_13[] = {
 };
 
 const LevelScript script_func_global_14[] = {
-    LOAD_MODEL_FROM_GEO(MODEL_BUB,                     bub_geo),
     LOAD_MODEL_FROM_GEO(MODEL_TREASURE_CHEST_BASE,     treasure_chest_base_geo),
     LOAD_MODEL_FROM_GEO(MODEL_TREASURE_CHEST_LID,      treasure_chest_lid_geo),
     LOAD_MODEL_FROM_GEO(MODEL_CYAN_FISH,               cyan_fish_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_WATER_RING,              water_ring_geo),
     LOAD_MODEL_FROM_GEO(MODEL_WATER_MINE,              water_mine_geo),
     LOAD_MODEL_FROM_GEO(MODEL_SEAWEED,                 seaweed_geo),
     LOAD_MODEL_FROM_GEO(MODEL_SKEETER,                 skeeter_geo),

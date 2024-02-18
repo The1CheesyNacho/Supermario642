@@ -2,7 +2,7 @@
 #define COURSE_TABLE_H
 
 // Start of the 3 cap courses in a row.
-#define COURSE_CAP_COURSES COURSE_COTMC
+#define COURSE_CAP_COURSES COURSE_NONE
 
 #define DEFINE_COURSE(courseenum, _1) courseenum,
 #define DEFINE_COURSES_END() \

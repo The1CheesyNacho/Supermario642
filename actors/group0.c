@@ -53,4 +53,3 @@ UNUSED static const u64 binid_0 = 0;
 #include "boat/model.inc.c"
 #include "wario/model.inc.c"
 #include "waluigi/model.inc.c"
-#include "motos/model.inc.c"

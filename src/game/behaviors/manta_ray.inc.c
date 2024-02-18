@@ -80,7 +80,7 @@ static void manta_ray_act_spawn_ring(void) {
     }
 
     if (o->oTimer == 0 || o->oTimer == 50 || o->oTimer == 150 || o->oTimer == 200 || o->oTimer == 250) {
-        struct Object *ring = spawn_object(o, MODEL_WATER_RING, bhvMantaRayWaterRing);
+        struct Object *ring = spawn_object(o, MODEL_WATER_RING, NULL);
 
         ring->oFaceAngleYaw = o->oMoveAngleYaw;
         ring->oFaceAnglePitch = o->oMoveAnglePitch + 0x4000;

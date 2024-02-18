@@ -22,4 +22,3 @@
 #include "luigi/geo.inc.c"
 #include "wario/geo.inc.c"
 #include "waluigi/geo.inc.c"
-#include "motos/geo.inc.c"

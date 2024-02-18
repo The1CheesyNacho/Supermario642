@@ -9,7 +9,7 @@ extern const Gfx bullet_bill_seg5_dl_0500E5E8[];
 extern const Gfx bullet_bill_seg5_dl_0500E678[];
 extern const Gfx bullet_bill_seg5_dl_0500E730[];
 extern const Gfx bullet_bill_seg5_dl_0500E8A8[];
-
+/*
 // heave_ho
 extern const GeoLayout heave_ho_geo[];
 extern const Gfx heave_ho_seg5_dl_05011D98[];
@@ -64,6 +64,7 @@ extern const Gfx hoot_seg5_dl_05004B38[];
 extern const Gfx hoot_seg5_dl_05004CA8[];
 extern const Gfx hoot_seg5_dl_05004D48[];
 extern const struct Animation *const hoot_seg5_anims_05005768[];
+*/
 
 // thwomp
 extern Lights1 mimir_f3dlite_material_002_lights;

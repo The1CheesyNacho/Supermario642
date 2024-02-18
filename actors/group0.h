@@ -627,8 +627,6 @@ extern Gfx mat_luigi_head_f3dlite_material_015[];
 
 #include "mario/geo_header.h"
 
-#include "motos/geo_header.h"
-
 // peach
 extern const GeoLayout peach_geo_000098[];
 extern const GeoLayout peach_geo_000254[];

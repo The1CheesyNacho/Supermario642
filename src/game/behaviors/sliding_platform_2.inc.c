@@ -1,14 +1,6 @@
 // sliding_platform_2.inc.c
 
 static Collision const *sSlidingPlatformsCollisionData[] = {
-    bits_seg7_collision_0701A9A0,
-    bits_seg7_collision_0701AA0C,
-    bitfs_seg7_collision_07015714,
-    bitfs_seg7_collision_07015768,
-    rr_seg7_collision_070295F8,
-    rr_seg7_collision_0702967C,
-    NULL,
-    bitdw_seg7_collision_0700F688,
 };
 
 void bhv_sliding_platform_init(void) {

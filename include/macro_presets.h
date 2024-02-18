@@ -51,8 +51,8 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvChuckya,                        MODEL_CHUCKYA,                      0}, // macro_chuckya
     {bhvCannon,                         MODEL_CANNON_BASE,                  0}, // macro_cannon_open
     {bhvGoomba,                         MODEL_GOOMBA,                       0}, // macro_goomba
-    {bhvHomingAmp,                      MODEL_AMP,                          0}, // macro_homing_amp
-    {bhvCirclingAmp,                    MODEL_AMP,                          0}, // macro_circling_amp
+    {NULL,                      MODEL_AMP,                          0}, // macro_homing_amp
+    {NULL,                    MODEL_AMP,                          0}, // macro_circling_amp
     {bhvYellowCoin,                     MODEL_UNKNOWN_7D,                   0}, // macro_unknown_40 - unused (was bhvCarrySomething1)
     {bhvBetaTrampolineTop,              MODEL_TRAMPOLINE,                   0}, // macro_beta_trampoline_top - unused
     {bhvFreeBowlingBall,                MODEL_BOWLING_BALL,                 0}, // macro_free_bowling_ball - unused
@@ -95,11 +95,11 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvExclamationBox,                 MODEL_EXCLAMATION_BOX,              EXCLAMATION_BOX_BP_1UP_RUNNING_AWAY}, // macro_box_1up_running_away
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_80
     {bhvBulletBill,                     MODEL_BULLET_BILL,                  0}, // macro_bullet_bill_cannon - unused
-    {bhvHeaveHo,                        MODEL_HEAVE_HO,                     0}, // macro_heave_ho
+    {NULL,                        MODEL_HEAVE_HO,                     0}, // macro_heave_ho
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_83
     {bhvThwomp2,                        MODEL_THWOMP,                       0}, // macro_thwomp - unused (was thwomp2)
     {bhvFireSpitter,                    MODEL_BOWLING_BALL,                 0}, // macro_fire_spitter
-    {bhvFlyGuy,                         MODEL_FLYGUY,                       FLY_GUY_BP_SHOOTS_FIRE}, // macro_fire_fly_guy
+    {NULL,                         MODEL_FLYGUY,                       FLY_GUY_BP_SHOOTS_FIRE}, // macro_fire_fly_guy
     {bhvJumpingBox,                     MODEL_BREAKABLE_BOX,                0}, // macro_jumping_box
     {bhvTripletButterfly,               MODEL_BUTTERFLY,                    TRIPLET_BUTTERFLY_BP_0       }, // macro_butterfly_triplet
     {bhvTripletButterfly,               MODEL_BUTTERFLY,                    TRIPLET_BUTTERFLY_BP_NO_BOMBS}, // macro_butterfly_triplet_2
@@ -167,7 +167,7 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvMontyMole,                      MODEL_MONTY_MOLE,                   MONTY_MOLE_BP_NO_ROCK}, // macro_monty_mole_2 - unused
     {bhvMontyMole,                      MODEL_MONTY_MOLE,                   MONTY_MOLE_BP_ROCK}, // macro_monty_mole
     {bhvMontyMoleHole,                  MODEL_DL_MONTY_MOLE_HOLE,           0}, // macro_monty_mole_hole
-    {bhvFlyGuy,                         MODEL_FLYGUY,                       0}, // macro_fly_guy
+    {NULL,                         MODEL_FLYGUY,                       0}, // macro_fly_guy
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_155
     {bhvWigglerHead,                    MODEL_WIGGLER_HEAD,                 0}, // macro_wiggler - unused
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_157
@@ -202,9 +202,9 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_186
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_187
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_188
-    {bhvHauntedChair,                   MODEL_HAUNTED_CHAIR,                0}, // macro_haunted_chair_copy - unused
-    {bhvHauntedChair,                   MODEL_HAUNTED_CHAIR,                0}, // macro_haunted_chair
-    {bhvHauntedChair,                   MODEL_HAUNTED_CHAIR,                0}, // macro_haunted_chair_copy2 - unused
+    {NULL,                   MODEL_HAUNTED_CHAIR,                0}, // macro_haunted_chair_copy - unused
+    {NULL,                   MODEL_HAUNTED_CHAIR,                0}, // macro_haunted_chair
+    {NULL,                   MODEL_HAUNTED_CHAIR,                0}, // macro_haunted_chair_copy2 - unused
     {bhvGhostHuntBoo,                   MODEL_BOO,                          0}, // macro_boo - unused
     {bhvGhostHuntBoo,                   MODEL_BOO,                          0}, // macro_boo_copy - unused
     {bhvCourtyardBooTriplet,            MODEL_BOO,                          0}, // macro_boo_group - unused
@@ -253,8 +253,8 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvBowserBomb,                     MODEL_WATER_MINE,                   0}, // macro_water_mine - unused
     {bhvFishSpawner,                    MODEL_NONE,                         FISH_SPAWNER_BP_MANY_CYAN}, // macro_fish_group_4 - unused
     {bhvFishSpawner,                    MODEL_NONE,                         FISH_SPAWNER_BP_FEW_CYAN }, // macro_fish_group_2
-    {bhvJetStreamRingSpawner,           MODEL_WATER_RING,                   0}, // macro_jet_stream_ring_spawner - unused
-    {bhvJetStreamRingSpawner,           MODEL_WATER_RING,                   0}, // macro_jet_stream_ring_spawner_copy - unused
+    {NULL,           MODEL_WATER_RING,                   0}, // macro_jet_stream_ring_spawner - unused
+    {NULL,           MODEL_WATER_RING,                   0}, // macro_jet_stream_ring_spawner_copy - unused
     {bhvSkeeter,                        MODEL_SKEETER,                      0}, // macro_skeeter
     {bhvClamShell,                      MODEL_CLAM_SHELL,                   0}, // macro_clam_shell
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_244
@@ -264,8 +264,8 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_248
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_249
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_250
-    {bhvMacroUkiki,                     MODEL_UKIKI,                        UKIKI_BP_CAGE}, // macro_ukiki - unused
-    {bhvMacroUkiki,                     MODEL_UKIKI,                        UKIKI_BP_CAP}, // macro_ukiki_2 - unused
+    {NULL,                     MODEL_UKIKI,                        UKIKI_BP_CAGE}, // macro_ukiki - unused
+    {NULL,                     MODEL_UKIKI,                        UKIKI_BP_CAP}, // macro_ukiki_2 - unused
     {bhvPiranhaPlant,                   MODEL_PIRANHA_PLANT,                0}, // macro_piranha_plant - unused
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_254
     {bhvSmallWhomp,                     MODEL_WHOMP,                        0}, // macro_whomp
@@ -326,23 +326,23 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_310
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_311
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_312
-    {bhvTTCRotatingSolid,               MODEL_NONE,            TTC_ROTATING_SOLID_BP_CUBE            }, // macro_ttc_rotating_cube
-    {bhvTTCRotatingSolid,               MODEL_NONE,           TTC_ROTATING_SOLID_BP_TRIANGULAR_PRISM}, // macro_ttc_rotating_prism
-    {bhvTTCPendulum,                    MODEL_NONE,                 0}, // macro_ttc_pendulum
-    {bhvTTCTreadmill,                   MODEL_NONE,          TREADMILL_BP_LARGE}, // macro_ttc_large_treadmill
-    {bhvTTCTreadmill,                   MODEL_NONE,          TREADMILL_BP_SMALL}, // macro_ttc_small_treadmill
-    {bhvTTCMovingBar,                   MODEL_NONE,               0}, // macro_ttc_push_block
-    {bhvTTCCog,                         MODEL_NONE,         TTC_COG_BP_SHAPE_HEXAGON }, // macro_ttc_rotating_hexagon
-    {bhvTTCCog,                         MODEL_NONE,        TTC_COG_BP_SHAPE_TRIANGLE}, // macro_ttc_rotating_triangle
-    {bhvTTCPitBlock,                    MODEL_NONE,                TTC_PIT_BLOCK_BP_0}, // macro_ttc_pit_block
-    {bhvTTCPitBlock,                    MODEL_NONE,         TTC_PIT_BLOCK_BP_1}, // macro_ttc_pit_block_2 - unused
-    {bhvTTCElevator,                    MODEL_NONE,        0}, // macro_ttc_elevator_platform
-    {bhvTTC2DRotator,                   MODEL_NONE,               TTC_2D_ROTATOR_BP_HAND}, // macro_ttc_clock_hand
-    {bhvTTCSpinner,                     MODEL_NONE,                  0}, // macro_ttc_spinner
-    {bhvTTC2DRotator,                   MODEL_NONE,               TTC_2D_ROTATOR_BP_2D_COG}, // macro_ttc_small_gear
-    {bhvTTC2DRotator,                   MODEL_NONE,               TTC_2D_ROTATOR_BP_2D_COG}, // macro_ttc_large_gear
-    {bhvTTCTreadmill,                   MODEL_NONE,          TREADMILL_BP_UNKNOWN | TREADMILL_BP_LARGE}, // macro_ttc_large_treadmill_2
-    {bhvTTCTreadmill,                   MODEL_NONE,          TREADMILL_BP_UNKNOWN | TREADMILL_BP_SMALL}, // macro_ttc_small_treadmill_2
+    {NULL,               MODEL_NONE,            TTC_ROTATING_SOLID_BP_CUBE            }, // macro_ttc_rotating_cube
+    {NULL,               MODEL_NONE,           TTC_ROTATING_SOLID_BP_TRIANGULAR_PRISM}, // macro_ttc_rotating_prism
+    {NULL,                    MODEL_NONE,                 0}, // macro_ttc_pendulum
+    {NULL,                   MODEL_NONE,          TREADMILL_BP_LARGE}, // macro_ttc_large_treadmill
+    {NULL,                   MODEL_NONE,          TREADMILL_BP_SMALL}, // macro_ttc_small_treadmill
+    {NULL,                   MODEL_NONE,               0}, // macro_ttc_push_block
+    {NULL,                         MODEL_NONE,         TTC_COG_BP_SHAPE_HEXAGON }, // macro_ttc_rotating_hexagon
+    {NULL,                         MODEL_NONE,        TTC_COG_BP_SHAPE_TRIANGLE}, // macro_ttc_rotating_triangle
+    {NULL,                    MODEL_NONE,                TTC_PIT_BLOCK_BP_0}, // macro_ttc_pit_block
+    {NULL,                    MODEL_NONE,         TTC_PIT_BLOCK_BP_1}, // macro_ttc_pit_block_2 - unused
+    {NULL,                    MODEL_NONE,        0}, // macro_ttc_elevator_platform
+    {NULL,                   MODEL_NONE,               TTC_2D_ROTATOR_BP_HAND}, // macro_ttc_clock_hand
+    {NULL,                     MODEL_NONE,                  0}, // macro_ttc_spinner
+    {NULL,                   MODEL_NONE,               TTC_2D_ROTATOR_BP_2D_COG}, // macro_ttc_small_gear
+    {NULL,                   MODEL_NONE,               TTC_2D_ROTATOR_BP_2D_COG}, // macro_ttc_large_gear
+    {NULL,                   MODEL_NONE,          TREADMILL_BP_UNKNOWN | TREADMILL_BP_LARGE}, // macro_ttc_large_treadmill_2
+    {NULL,                   MODEL_NONE,          TREADMILL_BP_UNKNOWN | TREADMILL_BP_SMALL}, // macro_ttc_small_treadmill_2
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_330
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_331
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_332

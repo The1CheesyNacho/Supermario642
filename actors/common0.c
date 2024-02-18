@@ -40,12 +40,12 @@ UNUSED static const u64 binid_7 = 7;
 
 #include "heart/model.inc.c"
 UNUSED static const u64 binid_8 = 8;
-
+/*
 #include "flyguy/model.inc.c"
 #include "flyguy/anims/data.inc.c"
 #include "flyguy/anims/table.inc.c"
 UNUSED static const u64 binid_9 = 9;
-
+*/
 #include "breakable_box/model.inc.c"
 #include "breakable_box/collision.inc.c"
 UNUSED static const u64 binid_10 = 10;
@@ -72,10 +72,11 @@ UNUSED static const u64 binid_15 = 15;
 #include "exclamation_box_outline/model.inc.c"
 #include "exclamation_box_outline/collision.inc.c"
 UNUSED static const u64 binid_16 = 16;
-
+/*
 #include "test_platform/model.inc.c"
 #include "test_platform/collision.inc.c"
 UNUSED static const u64 binid_17 = 17;
+*/
 
 #include "koopa_shell/model.inc.c"
 UNUSED static const u64 binid_18 = 18;

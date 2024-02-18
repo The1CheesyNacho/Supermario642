@@ -18,7 +18,6 @@
 #include "purple_switch/geo.inc.c"
 #include "checkerboard_platform/geo.inc.c"
 #include "heart/geo.inc.c"
-#include "flyguy/geo.inc.c"
 #include "breakable_box/geo.inc.c"
 #include "bowling_ball/geo.inc.c"
 #include "exclamation_box/geo.inc.c"

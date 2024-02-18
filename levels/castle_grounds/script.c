@@ -55,7 +55,6 @@ const LevelScript level_castle_grounds_entry[] = {
 		WARP_NODE(0x01, LEVEL_CASTLE, 0x01, 0x01, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x02, LEVEL_CASTLE, 0x01, 0x02, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, -3764, 851, 11447, 0, 0, 0, 0x000A0000, bhvSpinAirborneWarp),
-		MARIO_POS(0x01, 180, -2800, 851, 7655),
 		TERRAIN(castle_grounds_area_1_collision),
 		MACRO_OBJECTS(castle_grounds_area_1_macro_objs),
 		SET_BACKGROUND_MUSIC(0x00, SEQ_MOLD),

@@ -7,8 +7,6 @@
 #include "engine/math_util.h"
 #include "level_update.h"
 #include "levels/castle_inside/header.h"
-#include "levels/ending/header.h"
-#include "levels/rr/header.h"
 #include "mario.h"
 #include "mario_actions_cutscene.h"
 #include "memory.h"
@@ -126,18 +124,6 @@ Gfx *geo_exec_flying_carpet_create(s32 callContext, struct GraphNode *node, UNUS
             make_vertex(verts, n, x, y, z, tx, ty, 0, 127, 0, 255);
         }
 
-        gSPDisplayList(displayListHead++, dl_flying_carpet_begin);
-
-        // The forward half.
-        gSPVertex(displayListHead++, verts, 12, 0);
-        gSPDisplayList(displayListHead++, dl_flying_carpet_model_half);
-
-        // The back half.
-        gSPVertex(displayListHead++, verts + 9, 12, 0);
-        gSPDisplayList(displayListHead++, dl_flying_carpet_model_half);
-
-        gSPDisplayList(displayListHead++, dl_flying_carpet_end);
-        gSPEndDisplayList(displayListHead);
 
         curGraphNodeObject = (struct Object *) gCurGraphNodeObject;
         if (gMarioObject->platform == curGraphNodeObject) {
@@ -165,31 +151,6 @@ Gfx *geo_exec_cake_end_screen(s32 callContext, struct GraphNode *node, UNUSED Ma
         displayListHead = displayList;
 
         SET_GRAPH_NODE_LAYER(generatedNode->fnNode.node.flags, LAYER_OPAQUE);
-#if MULTILANG
-        gSPDisplayList(displayListHead++, dl_cake_end_screen);
-#else
-        gSPDisplayList(displayListHead++, dl_proj_mtx_fullscreen);
-#endif
-#if MULTILANG
-#ifdef EU_CUSTOM_CAKE_FIX
-    gSPDisplayList(displayListHead++, dl_cake_end_screen_eu_fix);
-#else
-    switch (eu_get_language()) {
-            case LANGUAGE_ENGLISH:
-                gSPDisplayList(displayListHead++, dl_cake_end_screen_eu_english);
-                break;
-            case LANGUAGE_FRENCH:
-                gSPDisplayList(displayListHead++, dl_cake_end_screen_eu_french );
-                break;
-            case LANGUAGE_GERMAN:
-                gSPDisplayList(displayListHead++, dl_cake_end_screen_eu_german );
-                break;
-        }
-#endif
-#else
-        gSPDisplayList(displayListHead++, dl_cake_end_screen);
-#endif
-        gSPEndDisplayList(displayListHead);
     }
 
     return displayList;

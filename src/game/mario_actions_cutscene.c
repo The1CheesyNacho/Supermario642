@@ -1101,24 +1101,6 @@ s32 act_exit_land_save_dialog(struct MarioState *m) {
         case ACT_STATE_EXIT_LAND_SAVE_DIALOG_DETERMINE_TYPE:
             set_mario_animation(m, m->actionArg == 0 ? MARIO_ANIM_GENERAL_LAND
                                                      : MARIO_ANIM_LAND_FROM_SINGLE_JUMP);
-            if (is_anim_past_end(m)) {
-                if (gLastCompletedCourseNum != COURSE_BITDW
-                    && gLastCompletedCourseNum != COURSE_BITFS) {
-                    enable_time_stop();
-                }
-
-                set_menu_mode(MENU_MODE_RENDER_COURSE_COMPLETE_SCREEN);
-                gSaveOptSelectIndex = MENU_OPT_NONE;
-
-                m->actionState = ACT_STATE_EXIT_LAND_SAVE_DIALOG_WITH_CAP; // star exit with cap
-                if (!(m->flags & MARIO_CAP_ON_HEAD)) {
-                    m->actionState = ACT_STATE_EXIT_LAND_SAVE_DIALOG_NO_CAP; // star exit without cap
-                }
-                if (gLastCompletedCourseNum == COURSE_BITDW
-                 || gLastCompletedCourseNum == COURSE_BITFS) {
-                    m->actionState = ACT_STATE_EXIT_LAND_SAVE_DIALOG_KEY; // key exit
-                }
-            }
             break;
         case ACT_STATE_EXIT_LAND_SAVE_DIALOG_KEY:
             animFrame = set_mario_animation(m, MARIO_ANIM_THROW_CATCH_KEY);

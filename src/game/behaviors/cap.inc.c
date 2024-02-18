@@ -205,18 +205,6 @@ void normal_cap_set_save_flags(void) {
     save_file_clear_flags(SAVE_FLAG_CAP_ON_GROUND);
 
     switch (gCurrCourseNum) {
-        case COURSE_SSL:
-            save_file_set_flags(SAVE_FLAG_CAP_ON_KLEPTO);
-            break;
-
-        case COURSE_SL:
-            save_file_set_flags(SAVE_FLAG_CAP_ON_MR_BLIZZARD);
-            break;
-
-        case COURSE_TTM:
-            save_file_set_flags(SAVE_FLAG_CAP_ON_UKIKI);
-            break;
-
         default:
             save_file_set_flags(SAVE_FLAG_CAP_ON_KLEPTO);
             break;

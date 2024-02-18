@@ -50,7 +50,6 @@ void adjust_rolling_face_pitch(f32 f12) {
 }
 
 void snowmans_bottom_act_follow_path(void) { // axt 1
-    o->oPathedStartWaypoint = segmented_to_virtual(&ccm_seg7_trajectory_snowman);
     object_step_without_floor_orient();
     s32 followStatus = cur_obj_follow_path();
     o->oSnowmansBottomTargetYaw = o->oPathedTargetYaw;

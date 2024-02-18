@@ -6,27 +6,6 @@ struct FloorSwitchTriggeredAnimationFrame {
 };
 
 struct FloorSwitchTriggeredAnimationFrame sFloorSwitchTriggeredAnimationFrames[][5] = {
-    {
-        { bits_seg7_collision_0701B734, MODEL_NONE },
-        { bits_seg7_collision_0701B59C, MODEL_NONE },
-        { bits_seg7_collision_0701B404, MODEL_NONE },
-        { bits_seg7_collision_0701B26C, MODEL_NONE },
-        { bits_seg7_collision_0701B0D4, MODEL_NONE },
-    },
-    {
-        { bitdw_seg7_collision_0700FD9C, MODEL_NONE },
-        { bitdw_seg7_collision_0700FC7C, MODEL_NONE },
-        { bitdw_seg7_collision_0700FB5C, MODEL_NONE },
-        { bitdw_seg7_collision_0700FA3C, MODEL_NONE },
-        { bitdw_seg7_collision_0700F91C, MODEL_NONE },
-    },
-    {
-        { rr_seg7_collision_0702A6B4, MODEL_NONE },
-        { rr_seg7_collision_0702A32C, MODEL_NONE },
-        { rr_seg7_collision_07029FA4, MODEL_NONE },
-        { rr_seg7_collision_07029C1C, MODEL_NONE },
-        { rr_seg7_collision_07029924, MODEL_NONE },
-    },
 };
 
 s16 sAnimatesOnFloorSwitchPressTimers[] = { 250, 200, 200 };

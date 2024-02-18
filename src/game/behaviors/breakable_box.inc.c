@@ -69,7 +69,6 @@ void hidden_breakable_box_actions(void) {
 
 void hidden_unbreakable_box_actions(void) {
     struct Object *switchObj;
-    obj_set_collision_data(o, wdw_seg7_collision_hidden_platform);
     switch (o->oAction) {
         case BREAKABLE_BOX_ACT_HIDDEN:
             cur_obj_disable_rendering();

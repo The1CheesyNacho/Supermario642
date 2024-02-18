@@ -463,10 +463,7 @@ u32 mario_get_terrain_sound_addend(struct MarioState *m) {
     if (m->floor != NULL) {
         floorType = m->floor->type;
 
-        if ((gCurrLevelNum != LEVEL_LLL) && (m->floorHeight < (m->waterLevel - 10))) {
-            // Water terrain sound, excluding LLL since it uses water in the volcano.
-            ret = SOUND_TERRAIN_WATER << 16;
-        } else if (SURFACE_IS_QUICKSAND(floorType)) {
+        if (SURFACE_IS_QUICKSAND(floorType)) {
             ret = SOUND_TERRAIN_SAND << 16;
         } else {
             switch (floorType) {
