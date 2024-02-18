@@ -390,6 +390,8 @@ extern Gfx luigi_head_skinned_001_mesh[];
 extern Gfx luigi_head_skinned_002_mesh[];
 extern Gfx luigi_head_skinned_003_mesh[];
 extern Gfx luigi_head_skinned_004_mesh[];
+extern Gfx luigi_head_skinned_005_mesh[];
+extern Gfx luigi_head_skinned_006_mesh[];
 extern const Gfx luigi_butt_dl[];
 extern const Gfx luigi_butt[];
 extern const Gfx luigi_metal_butt[];

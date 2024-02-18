@@ -133,7 +133,7 @@ void cutscene_step() {
                     cutscene_stop();
                     break;
                 case (u8)CUTEV_BGM:
-                    play_music(SEQ_PLAYER_LEVEL, SEQUENCE_ARGS(4, cutscene_events[i].arg1), 0);
+                    //play_music(SEQ_PLAYER_LEVEL, SEQUENCE_ARGS(4, cutscene_events[i].arg1), 0);
                     break;
                 case (u8)CUTEV_SFX:
                     play_sound(cutscene_events[i].arg1, gLakituState.pos);

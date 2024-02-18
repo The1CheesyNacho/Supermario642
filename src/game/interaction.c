@@ -120,18 +120,6 @@ static u8 sPssSlideStarted = FALSE;
 u32 get_mario_cap_flag(struct Object *capObject) {
     const BehaviorScript *script = virtual_to_segmented(SEGMENT_BEHAVIOR_DATA, capObject->behavior);
 
-    if (script == bhvNormalCap) {
-        return MARIO_NORMAL_CAP;
-    } else if (script == bhvMetalCap) {
-        return MARIO_METAL_CAP;
-    } else if (script == bhvWingCap) {
-        return MARIO_WING_CAP;
-    } else if (script == bhvVanishCap) {
-        return MARIO_VANISH_CAP;
-    } else if (script == bhvGoldCap) {
-        return MARIO_GOLD_CAP;
-    }
-
     return 0;
 }
 
@@ -685,10 +673,6 @@ u32 take_damage_from_interact_object(struct MarioState *m) {
         damage += (damage + 1) / 2;
     }
 
-    if (m->flags & MARIO_METAL_CAP) {
-        damage = 0;
-    }
-
     m->hurtCounter += 4 * damage;
 
 #if ENABLE_RUMBLE
@@ -1224,11 +1208,7 @@ u32 interact_clam_or_bubba(struct MarioState *m, UNUSED u32 interactType, struct
 
 u32 interact_bully(struct MarioState *m, UNUSED u32 interactType, struct Object *obj) {
     u32 interaction;
-    if (m->flags & MARIO_METAL_CAP) {
-        interaction = INT_FAST_ATTACK_OR_SHELL;
-    } else {
         interaction = determine_interaction(m, obj);
-    }
 
     m->interactObj = obj;
 
@@ -1315,11 +1295,7 @@ u32 interact_mr_blizzard(struct MarioState *m, UNUSED u32 interactType, struct O
 
 u32 interact_hit_from_below(struct MarioState *m, UNUSED u32 interactType, struct Object *obj) {
     u32 interaction;
-    if (m->flags & MARIO_METAL_CAP) {
-        interaction = INT_FAST_ATTACK_OR_SHELL;
-    } else {
         interaction = determine_interaction(m, obj);
-    }
 
     if (interaction & INT_ANY_ATTACK) {
 #if ENABLE_RUMBLE
@@ -1355,11 +1331,8 @@ u32 interact_hit_from_below(struct MarioState *m, UNUSED u32 interactType, struc
 
 u32 interact_bounce_top(struct MarioState *m, UNUSED u32 interactType, struct Object *obj) {
     u32 interaction;
-    if (m->flags & MARIO_METAL_CAP) {
-        interaction = INT_FAST_ATTACK_OR_SHELL;
-    } else {
+
         interaction = determine_interaction(m, obj);
-    }
 
     if (interaction & INT_ATTACK_NOT_FROM_BELOW) {
 #if ENABLE_RUMBLE
@@ -1579,13 +1552,6 @@ u32 interact_cap(struct MarioState *m, UNUSED u32 interactType, struct Object *o
         m->flags &= ~MARIO_CAP_ON_HEAD & ~MARIO_CAP_IN_HAND;
         m->flags |= capFlag;
 
-        switch (capFlag) {
-            case MARIO_VANISH_CAP: capTime =  600; capMusic = SEQUENCE_ARGS(4, SEQ_EVENT_POWERUP  ); break;
-            case MARIO_GOLD_CAP: capTime =  600; capMusic = SEQUENCE_ARGS(4, SEQ_STARMAN  ); break;
-            case MARIO_METAL_CAP:  capTime =  600; capMusic = SEQUENCE_ARGS(4, SEQ_EVENT_METAL_CAP); break;
-            case MARIO_WING_CAP:   capTime = 1800; capMusic = SEQUENCE_ARGS(4, SEQ_EVENT_POWERUP  ); break;
-        }
-
         if (capTime > m->capTimer) {
             m->capTimer = capTime;
         }
@@ -1599,10 +1565,6 @@ u32 interact_cap(struct MarioState *m, UNUSED u32 interactType, struct Object *o
 
         play_sound(SOUND_MENU_STAR_SOUND, m->marioObj->header.gfx.cameraToObject);
         play_sound(SOUND_CHARACTER_HERE_WE_GO, m->marioObj->header.gfx.cameraToObject);
-
-        if (capMusic != 0) {
-            play_cap_music(capMusic);
-        }
 
         return TRUE;
     }
@@ -1871,9 +1833,6 @@ void check_death_barrier(struct MarioState *m) {
 
 void check_lava_boost(struct MarioState *m) {
     if (!(m->action & ACT_FLAG_RIDING_SHELL) && m->pos[1] < m->floorHeight + 10.0f) {
-        if (!(m->flags & MARIO_METAL_CAP)) {
-            m->hurtCounter += (m->flags & MARIO_CAP_ON_HEAD) ? 12 : 18;
-        }
 
         update_mario_sound_and_camera(m);
         drop_and_set_mario_action(m, ACT_LAVA_BOOST, 0);

@@ -1689,7 +1689,6 @@ UNUSED static void debug_update_mario_cap(u16 button, s32 flags, u16 capTimer, u
             gMarioState->capTimer = capTimer;
         }
 
-        play_cap_music(capMusic);
     }
 }
 

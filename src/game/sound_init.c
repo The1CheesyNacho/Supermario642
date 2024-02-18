@@ -218,7 +218,7 @@ void play_infinite_stairs_music(void) {
     if (sPlayingInfiniteStairs ^ shouldPlay) {
         sPlayingInfiniteStairs = shouldPlay;
         if (shouldPlay) {
-            play_secondary_music(SEQ_EVENT_ENDLESS_STAIRS, 0, 255, 1000);
+            play_secondary_music(NULL, 0, 255, 1000);
         } else {
             func_80321080(500);
         }
@@ -279,8 +279,8 @@ void play_cutscene_music(u16 seqArgs) {
  * Called from threads: thread5_game_loop
  */
 void play_shell_music(void) {
-    play_music(SEQ_PLAYER_LEVEL, SEQUENCE_ARGS(4, SEQ_EVENT_POWERUP | SEQ_VARIATION), 0);
-    sCurrentShellMusic = SEQUENCE_ARGS(4, SEQ_EVENT_POWERUP | SEQ_VARIATION);
+    play_music(SEQ_PLAYER_LEVEL, SEQUENCE_ARGS(4, SEQ_SOUND_PLAYER | SEQ_VARIATION), 0);
+    sCurrentShellMusic = SEQUENCE_ARGS(4, SEQ_SOUND_PLAYER | SEQ_VARIATION);
 }
 
 /**

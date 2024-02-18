@@ -19,126 +19,19 @@
         "30_custom_waluigi",
         "31_custom_waluigi_peach"
     ],
-    "01_cutscene_collect_star": [
-        "22"
+    "01_wario": [
+        "1B"
     ],
-    "02_menu_title_screen": [
-        "11"
+    "02_mold": [
+        "1B"
+    ],
+    "03_starman": [
+        "1B"
     ],
     "04_level_inside_castle": [
         "0E"
     ],
-    "05_level_water": [
-        "25"
-    ],
-    "06_level_hot": [
-        "0F"
-    ],
-    "07_level_boss_koopa": [
-        "12"
-    ],
-    "08_level_snow": [
-        "25"
-    ],
-    "09_level_slide": [
-        "25"
-    ],
-    "0A_level_spooky": [
-        "10",
-        "21"
-    ],
-    "0B_event_piranha_plant": [
-        "14_piranha_music_box"
-    ],
-    "0C_level_underground": [
-        "25"
-    ],
-    "0D_menu_star_select": [
-        "16_course_start"
-    ],
-    "0E_event_powerup": [
-        "17"
-    ],
-    "10_event_koopa_message": [
-        "12"
-    ],
-    "11_level_koopa_road": [
-        "19"
-    ],
-    "12_event_high_score": [
-        "1F"
-    ],
-    "13_event_merry_go_round": [
-        "21"
-    ],
-    "14_event_race": [
-        "1A"
-    ],
-    "15_cutscene_star_spawn": [
-        "0E"
-    ],
-    "16_event_boss": [
+    "05_basement": [
         "1B"
-    ],
-    "17_cutscene_collect_key": [
-        "1A"
-    ],
-    "18_event_endless_stairs": [
-        "1C_endless_stairs"
-    ],
-    "19_level_boss_koopa_final": [
-        "1D_bowser_organ"
-    ],
-    "1B_event_solve_puzzle": [
-        "14_piranha_music_box"
-    ],
-    "1C_event_toad_message": [
-        "20"
-    ],
-    "1D_event_peach_message": [
-        "1E"
-    ],
-    "1E_cutscene_intro": [
-        "1B"
-    ],
-    "1F_cutscene_victory": [
-        "1A"
-    ],
-    "20_cutscene_ending": [
-        "23"
-    ],
-    "21_menu_file_select": [
-        "24"
-    ],
-    "22_cutscene_lakitu": {
-        "ifdef": [
-            "VERSION_US",
-            "VERSION_EU",
-            "VERSION_SH"
-        ],
-        "banks": [
-            "1B"
-        ]
-    },
-    "23_basement": [
-        "1B"
-    ],
-    "26_starman": [
-        "1B"
-    ],
-    "24_wario": [
-        "1B"
-    ],
-    "0F_event_metal_cap": [
-        "1B"
-    ],
-    "25_mold": [
-        "1B"
-    ],
-    "1A_cutscene_credits": [
-        "1B"
-    ],
-    "03_level_grass": [
-        "12"
     ]
 }

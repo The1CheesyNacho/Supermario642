@@ -455,7 +455,6 @@ s32 act_reading_automatic_dialog(struct MarioState *m) {
             disable_time_stop();
             if (gNeverEnteredCastle) {
                 gNeverEnteredCastle = FALSE;
-                play_cutscene_music(SEQUENCE_ARGS(0, SEQ_LEVEL_INSIDE_CASTLE));
             }
             if (m->prevAction == ACT_STAR_DANCE_WATER) {
                 set_mario_action(m, ACT_WATER_IDLE, 0); // 100c star?
@@ -604,9 +603,9 @@ void general_star_dance_handler(struct MarioState *m, s32 isInWater) {
                 } else {
                     // Exit
                     if (obj_has_model(celebStar, MODEL_BOWSER_KEY)) {
-                        play_music(SEQ_PLAYER_ENV, SEQUENCE_ARGS(15, SEQ_EVENT_CUTSCENE_COLLECT_KEY), 0);
+                        //play_music(SEQ_PLAYER_ENV, SEQUENCE_ARGS(15, NULL), 0);
                     } else {
-                        play_music(SEQ_PLAYER_ENV, SEQUENCE_ARGS(15, SEQ_EVENT_CUTSCENE_COLLECT_STAR), 0);
+                        //play_music(SEQ_PLAYER_ENV, SEQUENCE_ARGS(15, NULL), 0);
                     }
                 }
                 break;
@@ -1811,11 +1810,6 @@ static void jumbo_star_cutscene_falling(struct MarioState *m) {
         mario_set_forward_vel(m, 0.0f);
         set_mario_animation(m, MARIO_ANIM_GENERAL_FALL);
 
-        if (perform_air_step(m, AIR_STEP_CHECK_LEDGE_GRAB) == AIR_STEP_LANDED) {
-            play_cutscene_music(SEQUENCE_ARGS(15, SEQ_EVENT_CUTSCENE_VICTORY));
-            play_mario_landing_sound(m, SOUND_ACTION_TERRAIN_LANDING);
-            m->actionState = ACT_STATE_JUMBO_STAR_CUTSCENE_FALLING_LAND;
-        }
     } else {
         set_mario_animation(m, MARIO_ANIM_GENERAL_LAND);
         if (is_anim_at_end(m)) {
@@ -2014,9 +2008,6 @@ static void end_peach_cutscene_summon_jumbo_star(struct MarioState *m) {
 
     if (m->actionState == ACT_STATE_END_PEACH_CUTSCENE_SUMMON_JUMBO_STAR_RAISE_HAND && is_anim_past_end(m)) {
         m->actionState  = ACT_STATE_END_PEACH_CUTSCENE_SUMMON_JUMBO_STAR_LOWER_HAND;
-    }
-    if (m->actionTimer == 90) {
-        play_cutscene_music(SEQUENCE_ARGS(0, SEQ_EVENT_CUTSCENE_ENDING));
     }
     if (m->actionTimer == 255) {
         advance_cutscene_step(m);
@@ -2366,7 +2357,6 @@ static void end_peach_cutscene_star_dance(struct MarioState *m) {
 #ifndef VERSION_JP
             seq_player_unlower_volume(SEQ_PLAYER_LEVEL, 60);
 #endif
-            play_cutscene_music(SEQUENCE_ARGS(15, SEQ_EVENT_CUTSCENE_CREDITS));
             break;
 
         case 142:

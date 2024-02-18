@@ -65,7 +65,7 @@ void king_bobomb_act_active(void) { // act 2
 
     if (mario_is_far_below_object(1200.0f)) {
         o->oAction = KING_BOBOMB_ACT_INACTIVE;
-        stop_background_music(SEQUENCE_ARGS(4, SEQ_EVENT_BOSS));
+        stop_background_music(SEQUENCE_ARGS(4, SEQ_SOUND_PLAYER));
     }
 }
 
@@ -131,7 +131,7 @@ void king_bobomb_act_activate(void) { // act 1
 
     if (mario_is_far_below_object(1200.0f)) {
         o->oAction = KING_BOBOMB_ACT_INACTIVE;
-        stop_background_music(SEQUENCE_ARGS(4, SEQ_EVENT_BOSS));
+        stop_background_music(SEQUENCE_ARGS(4, SEQ_SOUND_PLAYER));
     }
 }
 
@@ -194,7 +194,7 @@ void king_bobomb_act_death(void) { // act 7
 
 void king_bobomb_act_stop_music(void) { // act 8
     if (o->oTimer == 60) {
-        stop_background_music(SEQUENCE_ARGS(4, SEQ_EVENT_BOSS));
+        stop_background_music(SEQUENCE_ARGS(4, SEQ_SOUND_PLAYER));
     }
 }
 
@@ -276,7 +276,7 @@ void king_bobomb_act_return_home(void) { // act 5
         case KING_BOBOMB_SUB_ACT_RETURN_HOME_WAIT_FOR_DIALOG:
             if (mario_is_far_below_object(1200.0f)) {
                 o->oAction = KING_BOBOMB_ACT_INACTIVE;
-                stop_background_music(SEQUENCE_ARGS(4, SEQ_EVENT_BOSS));
+                stop_background_music(SEQUENCE_ARGS(4, SEQ_SOUND_PLAYER));
             }
 
             if (cur_obj_can_mario_activate_textbox_2(500.0f, 100.0f)) {

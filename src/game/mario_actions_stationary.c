@@ -282,10 +282,6 @@ s32 act_sleeping(struct MarioState *m) {
         case ACT_SLEEPING_STATE_IDLE:
             animFrame = set_mario_animation(m, MARIO_ANIM_SLEEP_IDLE);
 
-            if (animFrame == -1 && !m->actionTimer) {
-                lower_background_noise(2);
-            }
-
             if (animFrame == 2) {
                 play_sound(SOUND_CHARACTER_SNORING1, m->marioObj->header.gfx.cameraToObject);
             }

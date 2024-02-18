@@ -782,7 +782,7 @@ void thread5_game_loop(UNUSED void *arg) {
     // Point address to the entry point into the level script data.
     struct LevelCommand *addr = segmented_to_virtual(level_script_entry);
 
-    play_music(SEQ_PLAYER_SFX, SEQUENCE_ARGS(0, SEQ_SOUND_PLAYER), 0);
+    //play_music(SEQ_PLAYER_SFX, SEQUENCE_ARGS(0, SEQ_SOUND_PLAYER), 0);
     set_sound_mode(save_file_get_sound_mode());
 #ifdef WIDE
     gConfig.widescreen = save_file_get_widescreen_mode();

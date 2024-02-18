@@ -205,25 +205,20 @@ enum MusicDynConditionTypes {
     (s16)(1 << (15 - cond1) | 1 << (15 - cond2) | 1 << (15 - cond3) | res), val1, val2, val3
 
 s16 sDynBbh[] = {
-    SEQ_LEVEL_SPOOKY, DYN1(MARIO_IS_IN_ROOM, BBH_OUTSIDE_ROOM, 6),
     DYN1(MARIO_IS_IN_ROOM, BBH_NEAR_MERRY_GO_ROUND_ROOM, 6), 5,
 };
 s16 sDynDdd[] = {
-    SEQ_LEVEL_WATER,
     1,
 };
 s16 sDynJrb[] = {
-    SEQ_LEVEL_WATER,
     1,
     5, // bogus entry, ignored (was JRB originally intended to have spooky music?)
 };
 s16 sDynWdw[] = {
 };
 s16 sDynHmc[] = {
-    SEQ_LEVEL_UNDERGROUND, DYN2(MARIO_X_GE, 0, MARIO_Y_LT, -203, 4),
 };
 s16 sDynUnk38[] = {
-    SEQ_LEVEL_UNDERGROUND,
     DYN1(MARIO_IS_IN_AREA, 1, 3),
     DYN1(MARIO_IS_IN_AREA, 2, 4),
     DYN1(MARIO_IS_IN_AREA, 3, 7),
@@ -256,13 +251,13 @@ struct MusicDynamic {
 }; // size = 0xC
 
 struct MusicDynamic sMusicDynamics[8] = {
-    { 0x0000, 127, 100, 0x0e43, 0, 100 }, // SEQ_LEVEL_WATER
-    { 0x0003, 127, 100, 0x0e40, 0, 100 }, // SEQ_LEVEL_WATER
-    { 0x0e43, 127, 200, 0x0000, 0, 200 }, // SEQ_LEVEL_WATER
-    { 0x02ff, 127, 100, 0x0100, 0, 100 }, // SEQ_LEVEL_UNDERGROUND
-    { 0x03f7, 127, 100, 0x0008, 0, 100 }, // SEQ_LEVEL_UNDERGROUND
-    { 0x0070, 127, 10, 0x0000, 0, 100 },  // SEQ_LEVEL_SPOOKY
-    { 0x0000, 127, 100, 0x0070, 0, 10 },  // SEQ_LEVEL_SPOOKY
+    { 0x0000, 127, 100, 0x0e43, 0, 100 }, // //NULL
+    { 0x0003, 127, 100, 0x0e40, 0, 100 }, // //NULL
+    { 0x0e43, 127, 200, 0x0000, 0, 200 }, // //NULL
+    { 0x02ff, 127, 100, 0x0100, 0, 100 }, // //SEQ_LEVEL_UNDERGROUND
+    { 0x03f7, 127, 100, 0x0008, 0, 100 }, // //SEQ_LEVEL_UNDERGROUND
+    { 0x0070, 127, 10, 0x0000, 0, 100 },  // //SEQ_LEVEL_SPOOKY
+    { 0x0000, 127, 100, 0x0070, 0, 10 },  // //SEQ_LEVEL_SPOOKY
     { 0xffff, 127, 100, 0x0000, 0, 100 }, // any (unused)
 };
 
@@ -307,40 +302,40 @@ u16 sLevelAcousticReaches[LEVEL_COUNT] = {
 
 u8 sBackgroundMusicDefaultVolume[] = {
     127, // SEQ_SOUND_PLAYER
-    80,  // SEQ_EVENT_CUTSCENE_COLLECT_STAR
-    80,  // SEQ_MENU_TITLE_SCREEN
-    75,  // SEQ_LEVEL_GRASS
-    70,  // SEQ_LEVEL_INSIDE_CASTLE
-    75,  // SEQ_LEVEL_WATER
-    75,  // SEQ_LEVEL_HOT
-    75,  // SEQ_LEVEL_BOSS_KOOPA
-    70,  // SEQ_LEVEL_SNOW
-    65,  // SEQ_LEVEL_SLIDE
-    80,  // SEQ_LEVEL_SPOOKY
-    65,  // SEQ_EVENT_PIRANHA_PLANT
-    85,  // SEQ_LEVEL_UNDERGROUND
+    80,  // NULL
+    80,  // NULL
+    75,  // //NULL
+    70,  // //SEQ_LEVEL_INSIDE_CASTLE
+    75,  // //NULL
+    75,  // //SEQ_LEVEL_HOT
+    75,  // //SEQ_LEVEL_BOSS_KOOPA
+    70,  // //SEQ_LEVEL_SNOW
+    65,  // //NULL
+    80,  // //SEQ_LEVEL_SPOOKY
+    65,  // //SEQ_SOUND_PLAYER
+    85,  // //SEQ_LEVEL_UNDERGROUND
     75,  // SEQ_MENU_STAR_SELECT
-    65,  // SEQ_EVENT_POWERUP
-    70,  // SEQ_EVENT_METAL_CAP
-    65,  // SEQ_EVENT_KOOPA_MESSAGE
-    70,  // SEQ_LEVEL_KOOPA_ROAD
-    70,  // SEQ_EVENT_HIGH_SCORE
-    65,  // SEQ_EVENT_MERRY_GO_ROUND
-    80,  // SEQ_EVENT_RACE
-    70,  // SEQ_EVENT_CUTSCENE_STAR_SPAWN
-    85,  // SEQ_EVENT_BOSS
-    75,  // SEQ_EVENT_CUTSCENE_COLLECT_KEY
-    75,  // SEQ_EVENT_ENDLESS_STAIRS
-    85,  // SEQ_LEVEL_BOSS_KOOPA_FINAL
-    70,  // SEQ_EVENT_CUTSCENE_CREDITS
-    80,  // SEQ_EVENT_SOLVE_PUZZLE
-    80,  // SEQ_EVENT_TOAD_MESSAGE
-    70,  // SEQ_EVENT_PEACH_MESSAGE
-    75,  // SEQ_EVENT_CUTSCENE_INTRO
-    80,  // SEQ_EVENT_CUTSCENE_VICTORY
-    70,  // SEQ_EVENT_CUTSCENE_ENDING
+    65,  // SEQ_SOUND_PLAYER
+    70,  // //NULL
+    65,  // NULL
+    70,  // //SEQ_LEVEL_KOOPA_ROAD
+    70,  // NULL
+    65,  // SEQ_SOUND_PLAYER
+    80,  // NULL
+    70,  // NULL
+    85,  // //SEQ_SOUND_PLAYER
+    75,  // NULL
+    75,  // NULL
+    85,  // //SEQ_LEVEL_BOSS_KOOPA_FINAL
+    70,  // NULL
+    80,  // NULL
+    80,  // NULL
+    70,  // NULL
+    75,  // NULL
+    80,  // NULL
+    70,  // NULL
     65,  // SEQ_MENU_FILE_SELECT
-    0,   // SEQ_EVENT_CUTSCENE_LAKITU (not in JP)
+    0,   // NULL (not in JP)
 };
 
 STATIC_ASSERT(ARRAY_COUNT(sBackgroundMusicDefaultVolume) == SEQ_COUNT,
@@ -1940,7 +1935,7 @@ static u8 begin_background_music_fade(u16 fadeDuration) {
     u8 targetVolume = 0xff;
 
     if (sCurrentBackgroundMusicSeqId == SEQUENCE_NONE
-        || sCurrentBackgroundMusicSeqId == SEQ_EVENT_CUTSCENE_CREDITS) {
+        || sCurrentBackgroundMusicSeqId == NULL) {
         return 0xff;
     }
 
@@ -2224,7 +2219,7 @@ void play_dialog_sound(u8 dialogID) {
         // Play music during bowser message that appears when first entering the
         // castle or when trying to enter a door without enough stars
         if (speaker == BOWS1) {
-            seq_player_play_sequence(SEQ_PLAYER_ENV, SEQ_EVENT_KOOPA_MESSAGE, 0);
+            seq_player_play_sequence(SEQ_PLAYER_ENV, NULL, 0);
         }
     }
 
@@ -2374,38 +2369,14 @@ u32 get_current_background_music(void) {
  * Called from threads: thread4_sound, thread5_game_loop (EU only)
  */
 void func_80320ED8(void) {
-#if defined(VERSION_EU) || defined(VERSION_SH)
-    if (D_EU_80300558 != 0) {
-        D_EU_80300558--;
-    }
-
-    if (gSequencePlayers[SEQ_PLAYER_ENV].enabled
-        || sBackgroundMusicMaxTargetVolume == TARGET_VOLUME_UNSET || D_EU_80300558 != 0) {
-#else
-    if (gSequencePlayers[SEQ_PLAYER_ENV].enabled
-        || sBackgroundMusicMaxTargetVolume == TARGET_VOLUME_UNSET) {
-#endif
-        return;
-    }
-
-    sBackgroundMusicMaxTargetVolume = TARGET_VOLUME_UNSET;
-    begin_background_music_fade(50);
-
-    if (sBackgroundMusicTargetVolume != TARGET_VOLUME_UNSET
-        && (D_80332120 == SEQ_EVENT_MERRY_GO_ROUND || D_80332120 == SEQ_EVENT_PIRANHA_PLANT)) {
-        seq_player_play_sequence(SEQ_PLAYER_ENV, D_80332120, 1);
-        if (D_80332124 != 0xff) {
-            seq_player_fade_to_target_volume(SEQ_PLAYER_ENV, 1, D_80332124);
-        }
-    }
-}
+};
 
 /**
  * Called from threads: thread5_game_loop
  */
 void play_secondary_music(u8 seqId, u8 bgMusicVolume, u8 volume, u16 fadeTimer) {
     if ((sCurrentBackgroundMusicSeqId == SEQUENCE_NONE)
-     || (sCurrentBackgroundMusicSeqId == SEQ_MENU_TITLE_SCREEN)) {
+     || (sCurrentBackgroundMusicSeqId == NULL)) {
         return;
     }
 
@@ -2480,9 +2451,9 @@ void func_803210D4(u16 fadeDuration) {
  */
 void play_course_clear(s32 isKey) {
     if (isKey) {
-        seq_player_play_sequence(SEQ_PLAYER_ENV, SEQ_EVENT_CUTSCENE_COLLECT_KEY, 0);
+        seq_player_play_sequence(SEQ_PLAYER_ENV, NULL, 0);
     } else {
-        seq_player_play_sequence(SEQ_PLAYER_ENV, SEQ_EVENT_CUTSCENE_COLLECT_STAR, 0);
+        seq_player_play_sequence(SEQ_PLAYER_ENV, NULL, 0);
     }
     sBackgroundMusicMaxTargetVolume = TARGET_VOLUME_IS_PRESENT_FLAG | 0;
 #if defined(VERSION_EU) || defined(VERSION_SH)
@@ -2495,7 +2466,7 @@ void play_course_clear(s32 isKey) {
  * Called from threads: thread5_game_loop
  */
 void play_peachs_jingle(void) {
-    seq_player_play_sequence(SEQ_PLAYER_ENV, SEQ_EVENT_PEACH_MESSAGE, 0);
+    seq_player_play_sequence(SEQ_PLAYER_ENV, NULL, 0);
     sBackgroundMusicMaxTargetVolume = TARGET_VOLUME_IS_PRESENT_FLAG | 0;
 #if defined(VERSION_EU) || defined(VERSION_SH)
     D_EU_80300558 = 2;
@@ -2511,7 +2482,7 @@ void play_peachs_jingle(void) {
  * Called from threads: thread5_game_loop
  */
 void play_puzzle_jingle(void) {
-    seq_player_play_sequence(SEQ_PLAYER_ENV, SEQ_EVENT_SOLVE_PUZZLE, 0);
+    seq_player_play_sequence(SEQ_PLAYER_ENV, NULL, 0);
     sBackgroundMusicMaxTargetVolume = TARGET_VOLUME_IS_PRESENT_FLAG | 20;
 #if defined(VERSION_EU) || defined(VERSION_SH)
     D_EU_80300558 = 2;
@@ -2523,7 +2494,7 @@ void play_puzzle_jingle(void) {
  * Called from threads: thread5_game_loop
  */
 void play_star_fanfare(void) {
-    seq_player_play_sequence(SEQ_PLAYER_ENV, SEQ_EVENT_HIGH_SCORE, 0);
+    seq_player_play_sequence(SEQ_PLAYER_ENV, NULL, 0);
     sBackgroundMusicMaxTargetVolume = TARGET_VOLUME_IS_PRESENT_FLAG | 20;
 #if defined(VERSION_EU) || defined(VERSION_SH)
     D_EU_80300558 = 2;
@@ -2535,7 +2506,7 @@ void play_star_fanfare(void) {
  * Called from threads: thread5_game_loop
  */
 void play_power_star_jingle(void) {
-    seq_player_play_sequence(SEQ_PLAYER_ENV, SEQ_EVENT_CUTSCENE_STAR_SPAWN, 0);
+    seq_player_play_sequence(SEQ_PLAYER_ENV, NULL, 0);
     sBackgroundMusicMaxTargetVolume = TARGET_VOLUME_IS_PRESENT_FLAG | 20;
 #if defined(VERSION_EU) || defined(VERSION_SH)
     D_EU_80300558 = 2;
@@ -2547,7 +2518,7 @@ void play_power_star_jingle(void) {
  * Called from threads: thread5_game_loop
  */
 void play_race_fanfare(void) {
-    seq_player_play_sequence(SEQ_PLAYER_ENV, SEQ_EVENT_RACE, 0);
+    seq_player_play_sequence(SEQ_PLAYER_ENV, NULL, 0);
     sBackgroundMusicMaxTargetVolume = TARGET_VOLUME_IS_PRESENT_FLAG | 20;
 #if defined(VERSION_EU) || defined(VERSION_SH)
     D_EU_80300558 = 2;
@@ -2559,7 +2530,7 @@ void play_race_fanfare(void) {
  * Called from threads: thread5_game_loop
  */
 void play_toads_jingle(void) {
-    seq_player_play_sequence(SEQ_PLAYER_ENV, SEQ_EVENT_TOAD_MESSAGE, 0);
+    seq_player_play_sequence(SEQ_PLAYER_ENV, NULL, 0);
     sBackgroundMusicMaxTargetVolume = TARGET_VOLUME_IS_PRESENT_FLAG | 20;
 #if defined(VERSION_EU) || defined(VERSION_SH)
     D_EU_80300558 = 2;
@@ -2587,9 +2558,9 @@ void sound_reset(u8 reverbPresetId) {
 #endif
     osWritebackDCacheAll();
     if (reverbPresetId != 7) {
-        preload_sequence(SEQ_EVENT_SOLVE_PUZZLE, PRELOAD_BANKS | PRELOAD_SEQUENCE);
-        preload_sequence(SEQ_EVENT_PEACH_MESSAGE, PRELOAD_BANKS | PRELOAD_SEQUENCE);
-        preload_sequence(SEQ_EVENT_CUTSCENE_STAR_SPAWN, PRELOAD_BANKS | PRELOAD_SEQUENCE);
+        preload_sequence(NULL, PRELOAD_BANKS | PRELOAD_SEQUENCE);
+        preload_sequence(NULL, PRELOAD_BANKS | PRELOAD_SEQUENCE);
+        preload_sequence(NULL, PRELOAD_BANKS | PRELOAD_SEQUENCE);
     }
     seq_player_play_sequence(SEQ_PLAYER_SFX, SEQ_SOUND_PLAYER, 0);
     sHasStartedFadeOut = FALSE;

@@ -164,6 +164,10 @@ struct Painting *gRipplingPainting;
  */
 s8 gDddPaintingStatus;
 
+struct Painting *sHmcPaintings[] = {
+    NULL,
+    NULL,
+};
 
 struct Painting *sInsideCastlePaintings[] = {
     &bob_painting, &ccm_painting, &wf_painting,  &jrb_painting,      &lll_painting,
@@ -171,9 +175,15 @@ struct Painting *sInsideCastlePaintings[] = {
     &ttm_painting, &ttc_painting, &sl_painting,  &thi_huge_painting, NULL,
 };
 
+struct Painting *sTtmPaintings[] = {
+    NULL,
+    NULL,
+};
 
 struct Painting **sPaintingGroups[] = {
+    sHmcPaintings,
     sInsideCastlePaintings,
+    sTtmPaintings,
 };
 
 s16 gPaintingUpdateCounter = 1;
