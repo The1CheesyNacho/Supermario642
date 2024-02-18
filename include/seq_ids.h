@@ -16,6 +16,7 @@ enum SeqId {
     SEQ_STARMAN,  // 0x26
     SEQ_LEVEL_INSIDE_CASTLE,  // 0x04
     SEQ_BASEMENT,  // 0x23
+    SEQ_GRASS,  // 0x23
     SEQ_COUNT,
 };
 
