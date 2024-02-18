@@ -371,6 +371,26 @@ const Gfx scuttlebug_seg6_dl_06014270[] = {
 
 // 0x060142E0
 
+static Vtx vtx_walker_F_walk14[]={
+	{68,0,212,0,0,0,31,0,123,0},
+	{3,0,216,0,0,0,31,0,123,0},
+	{112,-169,107,0,0,0,27,-59,108,0},
+	{159,-134,102,0,0,0,27,-59,108,0},
+	{159,135,102,0,0,0,27,59,108,0},
+	{112,170,107,0,0,0,27,59,108,0},
+};
+
+const Gfx RCP_walker_F_walk14[]={
+    gsSPLightColor(LIGHT_1, 0x000000ff),
+    gsSPLightColor(LIGHT_2, 0x000000ff),
+	gsSPVertex(&vtx_walker_F_walk14[0],6,0),
+	gsSP1Triangle(0,1,2,0),
+	gsSP1Triangle(0,2,3,0),
+	gsSP1Triangle(4,5,1,0),
+	gsSP1Triangle(4,1,0,0),
+	gsSPEndDisplayList()
+};
+
 // 0x060142F8
 static const Vtx scuttlebug_seg6_vertex_060142F8[] = {
     {{{     0,     -1,      0}, 0, {     0,      0}, {0x82, 0x02, 0x00, 0xff}}},

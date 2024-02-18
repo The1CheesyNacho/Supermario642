@@ -50,6 +50,7 @@ extern const Gfx mr_i_iris_seg6_dl_06004220[];
 // scuttlebug
 extern const GeoLayout scuttlebug_geo[];
 extern const Gfx scuttlebug_seg6_dl_06013988[];
+extern const Gfx RCP_walker_F_walk14[];
 extern const Gfx scuttlebug_seg6_dl_060139C0[];
 extern const Gfx scuttlebug_seg6_dl_060139F8[];
 extern const Gfx scuttlebug_seg6_dl_06013AB0[];

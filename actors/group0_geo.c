@@ -7,6 +7,8 @@
 #include "common1.h"
 #include "group0.h"
 
+#include "bird/geo.inc.c"
+#include "yoshi/geo.inc.c"
 #include "bubble/geo.inc.c"
 #include "walk_smoke/geo.inc.c"
 #include "burn_smoke/geo.inc.c"
@@ -16,7 +18,6 @@
 #include "water_splash/geo.inc.c"
 #include "sparkle_animation/geo.inc.c"
 #include "mario/geo.inc.c"
-#include "peach/geo.inc.c"
 #include "bowser/geo.inc.c"
 #include "luigi/geo.inc.c"
 #include "wario/geo.inc.c"

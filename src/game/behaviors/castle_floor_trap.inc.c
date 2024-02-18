@@ -9,8 +9,8 @@ void bhv_floor_trap_in_castle_loop(void) {
 
 void bhv_castle_floor_trap_init(void) {
     struct Object *floorTrapObj;
-    floorTrapObj = spawn_object_relative(0, -358, 0, 0, o, MODEL_CASTLE_BOWSER_TRAP, bhvFloorTrapInCastle);
-    floorTrapObj = spawn_object_relative(0, 358, 0, 0, o, MODEL_CASTLE_BOWSER_TRAP, bhvFloorTrapInCastle);
+    floorTrapObj = spawn_object_relative(0, -358, 0, 0, o, MODEL_NONE, bhvFloorTrapInCastle);
+    floorTrapObj = spawn_object_relative(0, 358, 0, 0, o, MODEL_NONE, bhvFloorTrapInCastle);
     floorTrapObj->oMoveAngleYaw += 0x8000;
 }
 

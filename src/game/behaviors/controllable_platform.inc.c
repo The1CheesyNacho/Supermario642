@@ -57,16 +57,16 @@ void bhv_controllable_platform_sub_loop(void) {
 void bhv_controllable_platform_init(void) {
     struct Object *sp34;
 
-    sp34 = spawn_object_rel_with_rot(o, MODEL_HMC_METAL_ARROW_PLATFORM, bhvControllablePlatformSub, 0,
+    sp34 = spawn_object_rel_with_rot(o, MODEL_NONE, bhvControllablePlatformSub, 0,
                                      51, 204, 0, 0, 0);
     sp34->oBehParams2ndByte = 1;
-    sp34 = spawn_object_rel_with_rot(o, MODEL_HMC_METAL_ARROW_PLATFORM, bhvControllablePlatformSub, 0,
+    sp34 = spawn_object_rel_with_rot(o, MODEL_NONE, bhvControllablePlatformSub, 0,
                                      51, -204, 0, -0x8000, 0);
     sp34->oBehParams2ndByte = 2;
-    sp34 = spawn_object_rel_with_rot(o, MODEL_HMC_METAL_ARROW_PLATFORM, bhvControllablePlatformSub, 204,
+    sp34 = spawn_object_rel_with_rot(o, MODEL_NONE, bhvControllablePlatformSub, 204,
                                      51, 0, 0, 0x4000, 0);
     sp34->oBehParams2ndByte = 3;
-    sp34 = spawn_object_rel_with_rot(o, MODEL_HMC_METAL_ARROW_PLATFORM, bhvControllablePlatformSub,
+    sp34 = spawn_object_rel_with_rot(o, MODEL_NONE, bhvControllablePlatformSub,
                                      -204, 51, 0, 0, -0x4000, 0);
     sp34->oBehParams2ndByte = 4;
 
@@ -209,7 +209,7 @@ void bhv_controllable_platform_loop(void) {
 
         case 6:
             if (obj_flicker_and_disappear(o, 150)) {
-                spawn_object_abs_with_rot(o, 0, MODEL_HMC_METAL_PLATFORM, bhvControllablePlatform,
+                spawn_object_abs_with_rot(o, 0, MODEL_NONE, bhvControllablePlatform,
                                           o->oHomeX, o->oHomeY, o->oHomeZ, 0, 0, 0);
             }
             break;

@@ -53,7 +53,7 @@
 /**
  * Number of possible unique model ID's (keep it higher than 256).
  */
-#define MODEL_ID_COUNT 256
+#define MODEL_ID_COUNT 65535
 
 /**
  * Number of supported areas per level.
@@ -97,5 +97,5 @@
  * The level that the game starts with immediately after file select.
  * The levelscript needs to have a MARIO_POS command for this to work.
  */
-#define START_LEVEL LEVEL_BOB
+#define START_LEVEL LEVEL_CASTLE_GROUNDS
 #define START_LEVEL_P2 START_LEVEL

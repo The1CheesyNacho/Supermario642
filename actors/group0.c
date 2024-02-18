@@ -8,6 +8,17 @@
 // Note: This bin does not use bin IDs, unlike the other segmented bins.
 #include "mario/model.inc.c"
 
+
+#include "bird/model.inc.c"
+#include "bird/anims/data.inc.c"
+#include "bird/anims/table.inc.c"
+UNUSED static const u64 binid_0 = 0;
+
+
+#include "yoshi/model.inc.c"
+#include "yoshi/anims/data.inc.c"
+#include "yoshi/anims/table.inc.c"
+
 #include "bubble/model.inc.c"
 
 #include "walk_smoke/model.inc.c"

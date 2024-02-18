@@ -1,4 +1,5 @@
 #include <PR/ultratypes.h>
+#include <ultra64.h>
 
 #include "sm64.h"
 #include "actors/common1.h"
@@ -8,6 +9,7 @@
 #include "camera.h"
 #include "print.h"
 #include "ingame_menu.h"
+#include "main.h"
 #include "hud.h"
 #include "segment2.h"
 #include "area.h"
@@ -393,6 +395,7 @@ void render_hud_mario_lives(void) {
     print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71), HUD_TOP_Y, ","); // 'Mario Head' glyph
     print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56), HUD_TOP_Y, "*"); // 'X' glyph
     print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44), HUD_TOP_Y, "%d", gHudDisplay.lives);
+
 }
 
 
@@ -439,6 +442,7 @@ void render_hud_keys(void) {
         print_text((i * 16) + 220, 142, "|"); // unused glyph - beta key
     }
 }
+
 
 /**
  * Renders the timer when Mario start sliding in PSS.
@@ -679,3 +683,4 @@ void render_hud(void) {
 #endif
     }
 }
+

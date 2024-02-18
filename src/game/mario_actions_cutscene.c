@@ -2067,7 +2067,7 @@ static void end_peach_cutscene_spawn_peach(struct MarioState *m) {
     if (m->actionTimer == 40) {
         obj_mark_for_deletion(sEndJumboStarObj);
 
-        sEndPeachObj = spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_PEACH, bhvEndPeach, 0, 2428,
+        sEndPeachObj = spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_WALUIGI, bhvEndPeach, 0, 2428,
                                                  -1300, 0, 0, 0);
         gCutsceneFocus = sEndPeachObj;
 

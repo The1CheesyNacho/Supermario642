@@ -63,6 +63,13 @@ extern Gfx papapapap_intro_seg7_dl_main_logo_mesh_010_mesh[];
 extern const Gfx intro_seg7_dl_copyright_trademark[];
 extern const f32 intro_seg7_table_scale_1[];
 extern const f32 intro_seg7_table_scale_2[];
+extern u64 chees_Sm64_early_3d_star_texture_rgba16[];
+extern Vtx chees_DrawCall_1_mesh_vtx_0[1956];
+extern Gfx chees_DrawCall_1_mesh_tri_0[];
+extern Gfx mat_chees_gold_f3d_001[];
+extern Gfx mat_revert_chees_gold_f3d_001[];
+extern Gfx chees_DrawCall_1_mesh[];
+
 
 // script
 extern const LevelScript level_intro_splash_screen[];

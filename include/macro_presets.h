@@ -326,23 +326,23 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_310
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_311
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_312
-    {bhvTTCRotatingSolid,               MODEL_TTC_ROTATING_CUBE,            TTC_ROTATING_SOLID_BP_CUBE            }, // macro_ttc_rotating_cube
-    {bhvTTCRotatingSolid,               MODEL_TTC_ROTATING_PRISM,           TTC_ROTATING_SOLID_BP_TRIANGULAR_PRISM}, // macro_ttc_rotating_prism
-    {bhvTTCPendulum,                    MODEL_TTC_PENDULUM,                 0}, // macro_ttc_pendulum
-    {bhvTTCTreadmill,                   MODEL_TTC_LARGE_TREADMILL,          TREADMILL_BP_LARGE}, // macro_ttc_large_treadmill
-    {bhvTTCTreadmill,                   MODEL_TTC_SMALL_TREADMILL,          TREADMILL_BP_SMALL}, // macro_ttc_small_treadmill
-    {bhvTTCMovingBar,                   MODEL_TTC_PUSH_BLOCK,               0}, // macro_ttc_push_block
-    {bhvTTCCog,                         MODEL_TTC_ROTATING_HEXAGON,         TTC_COG_BP_SHAPE_HEXAGON }, // macro_ttc_rotating_hexagon
-    {bhvTTCCog,                         MODEL_TTC_ROTATING_TRIANGLE,        TTC_COG_BP_SHAPE_TRIANGLE}, // macro_ttc_rotating_triangle
-    {bhvTTCPitBlock,                    MODEL_TTC_PIT_BLOCK,                TTC_PIT_BLOCK_BP_0}, // macro_ttc_pit_block
-    {bhvTTCPitBlock,                    MODEL_TTC_PIT_BLOCK_UNUSED,         TTC_PIT_BLOCK_BP_1}, // macro_ttc_pit_block_2 - unused
-    {bhvTTCElevator,                    MODEL_TTC_ELEVATOR_PLATFORM,        0}, // macro_ttc_elevator_platform
-    {bhvTTC2DRotator,                   MODEL_TTC_CLOCK_HAND,               TTC_2D_ROTATOR_BP_HAND}, // macro_ttc_clock_hand
-    {bhvTTCSpinner,                     MODEL_TTC_SPINNER,                  0}, // macro_ttc_spinner
-    {bhvTTC2DRotator,                   MODEL_TTC_SMALL_GEAR,               TTC_2D_ROTATOR_BP_2D_COG}, // macro_ttc_small_gear
-    {bhvTTC2DRotator,                   MODEL_TTC_LARGE_GEAR,               TTC_2D_ROTATOR_BP_2D_COG}, // macro_ttc_large_gear
-    {bhvTTCTreadmill,                   MODEL_TTC_LARGE_TREADMILL,          TREADMILL_BP_UNKNOWN | TREADMILL_BP_LARGE}, // macro_ttc_large_treadmill_2
-    {bhvTTCTreadmill,                   MODEL_TTC_SMALL_TREADMILL,          TREADMILL_BP_UNKNOWN | TREADMILL_BP_SMALL}, // macro_ttc_small_treadmill_2
+    {bhvTTCRotatingSolid,               MODEL_NONE,            TTC_ROTATING_SOLID_BP_CUBE            }, // macro_ttc_rotating_cube
+    {bhvTTCRotatingSolid,               MODEL_NONE,           TTC_ROTATING_SOLID_BP_TRIANGULAR_PRISM}, // macro_ttc_rotating_prism
+    {bhvTTCPendulum,                    MODEL_NONE,                 0}, // macro_ttc_pendulum
+    {bhvTTCTreadmill,                   MODEL_NONE,          TREADMILL_BP_LARGE}, // macro_ttc_large_treadmill
+    {bhvTTCTreadmill,                   MODEL_NONE,          TREADMILL_BP_SMALL}, // macro_ttc_small_treadmill
+    {bhvTTCMovingBar,                   MODEL_NONE,               0}, // macro_ttc_push_block
+    {bhvTTCCog,                         MODEL_NONE,         TTC_COG_BP_SHAPE_HEXAGON }, // macro_ttc_rotating_hexagon
+    {bhvTTCCog,                         MODEL_NONE,        TTC_COG_BP_SHAPE_TRIANGLE}, // macro_ttc_rotating_triangle
+    {bhvTTCPitBlock,                    MODEL_NONE,                TTC_PIT_BLOCK_BP_0}, // macro_ttc_pit_block
+    {bhvTTCPitBlock,                    MODEL_NONE,         TTC_PIT_BLOCK_BP_1}, // macro_ttc_pit_block_2 - unused
+    {bhvTTCElevator,                    MODEL_NONE,        0}, // macro_ttc_elevator_platform
+    {bhvTTC2DRotator,                   MODEL_NONE,               TTC_2D_ROTATOR_BP_HAND}, // macro_ttc_clock_hand
+    {bhvTTCSpinner,                     MODEL_NONE,                  0}, // macro_ttc_spinner
+    {bhvTTC2DRotator,                   MODEL_NONE,               TTC_2D_ROTATOR_BP_2D_COG}, // macro_ttc_small_gear
+    {bhvTTC2DRotator,                   MODEL_NONE,               TTC_2D_ROTATOR_BP_2D_COG}, // macro_ttc_large_gear
+    {bhvTTCTreadmill,                   MODEL_NONE,          TREADMILL_BP_UNKNOWN | TREADMILL_BP_LARGE}, // macro_ttc_large_treadmill_2
+    {bhvTTCTreadmill,                   MODEL_NONE,          TREADMILL_BP_UNKNOWN | TREADMILL_BP_SMALL}, // macro_ttc_small_treadmill_2
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_330
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_331
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_332
@@ -363,17 +363,17 @@ struct MacroPreset MacroObjectPresets[] = {
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_347
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_348
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_349
-    {bhvSlidingPlatform2,               MODEL_BITS_SLIDING_PLATFORM,        0}, // macro_bits_sliding_platform - unused
-    {bhvSlidingPlatform2,               MODEL_BITS_TWIN_SLIDING_PLATFORMS,  0}, // macro_bits_twin_sliding_platforms - unused
-    {bhvAnotherTiltingPlatform,         MODEL_BITDW_SLIDING_PLATFORM,       0}, // macro_bits_tilting_platform - unused
-    {bhvOctagonalPlatformRotating,      MODEL_BITS_OCTAGONAL_PLATFORM,      0}, // macro_bits_octagonal_platform - unused
-    {bhvAnimatesOnFloorSwitchPress,     MODEL_BITS_STAIRCASE,               0}, // macro_bits_staircase - unused
+    {bhvSlidingPlatform2,               MODEL_NONE,        0}, // macro_bits_sliding_platform - unused
+    {bhvSlidingPlatform2,               MODEL_NONE,  0}, // macro_bits_twin_sliding_platforms - unused
+    {bhvAnotherTiltingPlatform,         MODEL_NONE,       0}, // macro_bits_tilting_platform - unused
+    {bhvOctagonalPlatformRotating,      MODEL_NONE,      0}, // macro_bits_octagonal_platform - unused
+    {bhvAnimatesOnFloorSwitchPress,     MODEL_NONE,               0}, // macro_bits_staircase - unused
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_355
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_356
-    {bhvFerrisWheelAxle,                MODEL_BITS_FERRIS_WHEEL_AXLE,       0}, // macro_bits_ferris_wheel_axle - unused
-    {bhvActivatedBackAndForthPlatform,  MODEL_BITS_ARROW_PLATFORM,          0}, // macro_bits_arrow_platform - unused
-    {bhvSeesawPlatform,                 MODEL_BITS_SEESAW_PLATFORM,         0}, // macro_bits_seesaw_platform - unused
-    {bhvSeesawPlatform,                 MODEL_BITS_TILTING_W_PLATFORM,      0}, // macro_bits_tilting_w_platform - unused
+    {bhvFerrisWheelAxle,                MODEL_NONE,       0}, // macro_bits_ferris_wheel_axle - unused
+    {bhvActivatedBackAndForthPlatform,  MODEL_NONE,          0}, // macro_bits_arrow_platform - unused
+    {bhvSeesawPlatform,                 MODEL_NONE,         0}, // macro_bits_seesaw_platform - unused
+    {bhvSeesawPlatform,                 MODEL_NONE,      0}, // macro_bits_tilting_w_platform - unused
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_361
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_362
     {bhvYellowCoin,                     MODEL_YELLOW_COIN,                  0}, // macro_empty_363

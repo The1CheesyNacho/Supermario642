@@ -775,6 +775,8 @@ void thread5_game_loop(UNUSED void *arg) {
     puppycam_boot();
 #endif
 
+    osRTCInit(&gSIEventMesgQueue);
+
     set_vblank_handler(2, &gGameVblankHandler, &gGameVblankQueue, (OSMesg) 1);
 
     // Point address to the entry point into the level script data.

@@ -279,9 +279,9 @@ void bhv_mario_update(void) {
          break;
         case 1: cur_obj_set_model(MODEL_LUIGI); 
         break;
-        case 2: cur_obj_set_model(MODEL_PEACH); 
+        case 2: cur_obj_set_model(MODEL_WALUIGI); 
         break;
-        case 3: cur_obj_set_model(MODEL_BOWSER); 
+        case 3: cur_obj_set_model(MODEL_WARIO); 
         break;
     }
 

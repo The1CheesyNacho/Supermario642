@@ -626,10 +626,6 @@ static void big_boo_act_4(void) {
         if (o->oTimer > 60 && o->oDistanceToMario < 600.0f) {
             obj_set_pos(o,  973, 0, 717);
 
-            spawn_object_relative(0, 0, 0,    0, o, MODEL_BBH_STAIRCASE_STEP, bhvBooStaircase);
-            spawn_object_relative(1, 0, 0, -200, o, MODEL_BBH_STAIRCASE_STEP, bhvBooStaircase);
-            spawn_object_relative(2, 0, 0,  200, o, MODEL_BBH_STAIRCASE_STEP, bhvBooStaircase);
-
             obj_mark_for_deletion(o);
         }
     } else {

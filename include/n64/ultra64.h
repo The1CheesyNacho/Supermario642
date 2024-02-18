@@ -35,6 +35,7 @@
 #include <PR/sp.h>
 #include <PR/ucode.h>
 #include <PR/ultraerror.h>
+#include <n64/rtc.h>
 #include <PR/ultralog.h>
 
 #endif

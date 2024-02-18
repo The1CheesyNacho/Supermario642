@@ -1433,7 +1433,7 @@ const BehaviorScript bhvBitfsSinkingCagePlatform[] = {
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
     LOAD_COLLISION_DATA(bitfs_seg7_collision_sinking_cage_platform),
     SET_HOME(),
-    SPAWN_CHILD(/*Model*/ MODEL_BITFS_BLUE_POLE, /*Behavior*/ bhvDddMovingPole),
+    SPAWN_CHILD(/*Model*/ MODEL_NONE, /*Behavior*/ bhvDddMovingPole),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_bitfs_sinking_cage_platform_loop),
         CALL_NATIVE(load_object_collision_model),
@@ -4998,19 +4998,21 @@ const BehaviorScript bhvMips[] = {
 
 const BehaviorScript bhvYoshi[] = {
     BEGIN(OBJ_LIST_GENACTOR),
-    OR_INT(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
-    LOAD_ANIMATIONS(oAnimations, toad_seg6_anims_0600FB58),
+    OR_INT(oFlags, (OBJ_FLAG_PERSISTENT_RESPAWN | OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
+    LOAD_ANIMATIONS(oAnimations, yoshi_seg5_anims_05024100),
+    ANIMATE(0),
     SET_INTERACT_TYPE(INTERACT_TEXT),
     DROP_TO_FLOOR(),
-    SET_HITBOX(/*Radius*/ 160, /*Height*/ 150),
-    ANIMATE(TOAD_ANIM_WEST_STANDING),
-    SET_HOME(),
-    CALL_NATIVE(bhv_yoshi_init),
+    SET_HITBOX(/*Radius*/ 80, /*Height*/ 100),
+    SET_INT(oIntangibleTimer, 0),
+    CALL_NATIVE(bhv_init_room),
+    CALL_NATIVE(bhv_toad_message_init),
     BEGIN_LOOP(),
-        SET_INT(oIntangibleTimer, 0),
-        CALL_NATIVE(bhv_yoshi_loop),
+        CALL_NATIVE(bhv_toad_message_loop),
     END_LOOP(),
 };
+
+
 
 const BehaviorScript bhvKoopa[] = {
     BEGIN(OBJ_LIST_PUSHABLE),

@@ -24,7 +24,7 @@ extern const Gfx eu_course_strings_de_table[];
 #endif
 
 // from intro_segment7
-extern Gfx *papapapap_intro_seg7_dl_main_logo_mesh_010_mesh;
+extern Gfx *chees_DrawCall_1_mesh;
 extern Gfx *intro_seg7_dl_copyright_trademark;
 extern f32 intro_seg7_table_scale_1[];
 extern f32 intro_seg7_table_scale_2[];

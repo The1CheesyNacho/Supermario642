@@ -109,6 +109,7 @@ const GeoLayout scuttlebug_geo[] = {
                      GEO_ANIMATED_PART(LAYER_ALPHA, 0, 0, 0, scuttlebug_seg6_dl_06014188),
                   GEO_CLOSE_NODE(),
                GEO_CLOSE_NODE(),
+               GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, RCP_walker_F_walk14),
                GEO_ANIMATED_PART(LAYER_OPAQUE, 0, 0, 0, scuttlebug_seg6_dl_060140F0),
             GEO_CLOSE_NODE(),
          GEO_CLOSE_NODE(),

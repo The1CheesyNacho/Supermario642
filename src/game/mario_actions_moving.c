@@ -266,7 +266,7 @@ if (cur_obj_has_model(MODEL_LUIGI)){
     }
 }
 
-if (cur_obj_has_model(MODEL_BOWSER)){
+if (cur_obj_has_model(MODEL_WARIO)){
     switch (mario_get_floor_class(m)) {
         case SURFACE_CLASS_VERY_SLIPPERY:
             accel = 7.0f;
@@ -290,7 +290,7 @@ if (cur_obj_has_model(MODEL_BOWSER)){
     }
 }
 
-if (cur_obj_has_model(MODEL_PEACH)){
+if (cur_obj_has_model(MODEL_WALUIGI)){
     switch (mario_get_floor_class(m)) {
         case SURFACE_CLASS_VERY_SLIPPERY:
             accel = 14.0f;
@@ -563,7 +563,7 @@ s32 should_begin_sliding(struct MarioState *m) {
 s32 check_ground_dive_or_punch(struct MarioState *m) {
     if (m->input & INPUT_B_PRESSED) {
         //! Speed kick (shoutouts to SimpleFlips)
-    if (cur_obj_has_model(MODEL_BOWSER)){
+    if (cur_obj_has_model(MODEL_WARIO)){
         if (m->forwardVel >= 29.0f && m->controller->stickMag > 48.0f) {
         mario_set_forward_vel(m, 90.0f);
         return set_mario_action(m, ACT_CHARGE, 1);

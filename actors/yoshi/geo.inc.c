@@ -1,6 +1,6 @@
 #include "src/game/envfx_snow.h"
 
-const GeoLayout yoshi_geo[] = {
+const GeoLayout RCP_HmsEnemyyoshi_base_data[] = {
 	GEO_NODE_START(),
 	GEO_OPEN_NODE(),
 		GEO_SHADOW(1, 180, 100),

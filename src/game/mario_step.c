@@ -630,13 +630,13 @@ void apply_gravity(struct MarioState *m) {
             m->vel[1] = -75.0f;
         }
     }
-    if (cur_obj_has_model(MODEL_BOWSER)){
+    if (cur_obj_has_model(MODEL_WARIO)){
         m->vel[1] -= 3.0f;
         if (m->vel[1] < -75.0f) {
             m->vel[1] = -75.0f;
         }
     }   
-    if (cur_obj_has_model(MODEL_PEACH)) {
+    if (cur_obj_has_model(MODEL_WALUIGI)) {
         m->vel[1] -= 1.2f;
         if (m->vel[1] < -75.0f) {
             m->vel[1] = -75.0f;
@@ -682,13 +682,13 @@ void apply_gravity(struct MarioState *m) {
             m->vel[1] = -75.0f;
         }
     }
-    if (cur_obj_has_model(MODEL_BOWSER)){
+    if (cur_obj_has_model(MODEL_WARIO)){
         m->vel[1] -= 6.0f;
         if (m->vel[1] < -75.0f) {
             m->vel[1] = -75.0f;
         }
     }  
-    if (cur_obj_has_model(MODEL_PEACH)) {
+    if (cur_obj_has_model(MODEL_WALUIGI)) {
         m->vel[1] -= 2.7f;
         if (m->vel[1] < -75.0f) {
             m->vel[1] = -75.0f;

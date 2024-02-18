@@ -6,3 +6,5 @@
 #include "anim_0600CE78.inc.c"
 #include "anim_0600E414.inc.c"
 #include "anim_0600FB40.inc.c"
+#include "ArmatureAction.inc.c"
+

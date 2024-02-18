@@ -1,4 +1,4 @@
-extern const GeoLayout yoshi_geo[];
+extern const GeoLayout RCP_HmsEnemyyoshi_base_data[];
 extern Lights1 yoshi_yoshi_white_lights;
 extern Lights1 yoshi_yoshi_skin_lights;
 extern Lights1 yoshi_yoshi_shell_lights;

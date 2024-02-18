@@ -70,7 +70,7 @@ void bhv_kickable_board_loop(void) {
 
         case KICKABLE_BOARD_ACT_FALLING:
             cur_obj_become_intangible();
-            cur_obj_set_model(MODEL_WF_KICKABLE_BOARD_FELLED);
+            cur_obj_set_model(MODEL_NONE);
 
             o->oAngleVelPitch -= 0x80;
             o->oFaceAnglePitch += o->oAngleVelPitch;
