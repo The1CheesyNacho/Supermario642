@@ -45,7 +45,6 @@
 #define LIGHT_Y 40
 #define LIGHT_Z 40
 
-#define SCALE 0.25
 #define C_SCALE 4
 
 // Commonly used functions.

@@ -29,20 +29,18 @@ extern const Gfx bully_seg5_dl_05003FC8[];
 extern const struct Animation *const bully_seg5_anims_0500470C[];
 
 // motos
-extern const GeoLayout motos_geo[];
-extern Gfx motos_pelvis_mesh_layer_4[];
-extern Gfx motos_leg_L_mesh_layer_4[];
-extern Gfx motos_foot_L_mesh_layer_1[];
-extern Gfx motos_leg_R_mesh_layer_4[];
-extern Gfx motos_foot_R_mesh_layer_1[];
-extern Gfx motos_arm_L_mesh_layer_4[];
-extern Gfx motos_hand_bottom_L_mesh_layer_1[];
-extern Gfx motos_hand_top_L_mesh_layer_1[];
-extern Gfx motos_arm_R_mesh_layer_4[];
-extern Gfx motos_hand_bottom_R_mesh_layer_1[];
-extern Gfx motos_hand_top_R_mesh_layer_1[];
-extern Gfx motos_head_mesh_layer_1[];
-extern Gfx motos_material_revert_render_settings[];
+extern const GeoLayout RCP_HmsEnemymotos_basedata_A[];
+extern const Gfx RCP_motos_LhandB[];
+extern const Gfx RCP_motos_LhandA[];
+extern const Gfx RCP_motos_RhandA[];
+extern const Gfx RCP_motos_RhandB[];
+extern const Gfx RCP_motos_Lfoot[];
+extern const Gfx RCP_motos_Rfoot[];
+extern const Gfx RCP_motos_Rfoot[];
+extern const Gfx RCP_motos_head[];
+extern const Gfx RCP_motos_body[];
+extern const Gfx RCP_motos_leg[];
+extern const Gfx RCP_motos_arm[];
 extern const struct Animation *const motos_seg8_anims_0801DA4C[];
 
 #endif

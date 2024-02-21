@@ -642,11 +642,18 @@ void apply_gravity(struct MarioState *m) {
             m->vel[1] = -75.0f;
         }
     }
+
     } else if (m->action == ACT_LAVA_BOOST || m->action == ACT_FALL_AFTER_STAR_GRAB) {
         m->vel[1] -= 3.2f;
         if (m->vel[1] < -65.0f) {
             m->vel[1] = -65.0f;
         }
+    }  else if (m->flags & MARIO_GOLD_CAP){ {
+        m->vel[1] -= 6.0f;
+        if (m->vel[1] < -75.0f) {
+            m->vel[1] = -75.0f;
+        }
+    }
     } else if (m->action == ACT_GETTING_BLOWN) {
         m->vel[1] -= m->windGravity;
         if (m->vel[1] < -75.0f) {
@@ -654,7 +661,7 @@ void apply_gravity(struct MarioState *m) {
         }
     } else if (should_strengthen_gravity_for_jump_ascent(m)) {
         m->vel[1] /= 4.0f;
-    } else if (m->action & ACT_FLAG_METAL_WATER) {
+    } else if (m->action & ACT_FLAG_METAL_WATER || m->flags & MARIO_GOLD_CAP) {
         m->vel[1] -= 1.6f;
         if (m->vel[1] < -16.0f) {
             m->vel[1] = -16.0f;

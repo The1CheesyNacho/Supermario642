@@ -51,20 +51,21 @@ const LevelScript level_castle_grounds_entry[] = {
 	/* Fast64 end persistent block [level commands] */
 
 	AREA(1, castle_grounds_area_1),
+    OBJECT(/*model*/ MODEL_NONE,                        /*pos*/ -1328,  260,  4664, /*angle*/ 0, 180, 0, /*behParam*/ 0x00280000, /*beh*/ bhvIntroScene),
 		WARP_NODE(0x00, LEVEL_CASTLE, 0x01, 0x00, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x01, LEVEL_CASTLE, 0x01, 0x01, WARP_NO_CHECKPOINT),
 		WARP_NODE(0x02, LEVEL_CASTLE, 0x01, 0x02, WARP_NO_CHECKPOINT),
 		OBJECT(MODEL_NONE, -3764, 851, 11447, 0, 0, 0, 0x000A0000, bhvSpinAirborneWarp),
 		TERRAIN(castle_grounds_area_1_collision),
 		MACRO_OBJECTS(castle_grounds_area_1_macro_objs),
-		SET_BACKGROUND_MUSIC(0x00, SEQ_MOLD),
 		TERRAIN_TYPE(TERRAIN_GRASS),
 		/* Fast64 begin persistent block [area commands] */
 		/* Fast64 end persistent block [area commands] */
 	END_AREA(),
 
 	FREE_LEVEL_POOL(),
-	MARIO_POS(0x01, 180, -2800, 851, 7655),
+	MARIO_POS(0x01, 180, -2337, 750, 7744),
+	LUIGI_POS(0x01, 180, -2337, 750, 7744),
 	CALL(0, lvl_init_or_update),
 	CALL_LOOP(1, lvl_init_or_update),
 	CLEAR_LEVEL(),

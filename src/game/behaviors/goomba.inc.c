@@ -324,8 +324,6 @@ void bhv_goomba_update(void) {
 
     f32 animSpeed;
 
-    cur_obj_set_model(MODEL_GUMMY);
-
     if (obj_update_standard_actions(o->oGoombaScale)) {
         // If this goomba has a spawner and mario moved away from the spawner, unload
         if (o->parentObj != o) {

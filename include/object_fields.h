@@ -1147,6 +1147,11 @@
 /* Ukiki Cage*/
 #define /*0x088*/ oUkikiCageNextAction OBJECT_FIELD_S32(0x00)
 
+ /* Motos */
+#define /*0x088*/ oMotosUnk88  OBJECT_FIELD_S32(0x00)
+#define /*0x100*/ oMotosUnk9F OBJECT_FIELD_F32(0x1D)
+#define /*0x100*/ oMotosUnk100 OBJECT_FIELD_S32(0x1E)
+
 /* Unagi */
 #define /*0x0F4*/ oUnagiDistFromHome         OBJECT_FIELD_F32(0x1B)
 #define /*0x0F8*/ oUnagiNextForwardVel       OBJECT_FIELD_F32(0x1C)

@@ -11,7 +11,8 @@ enum TextureTransitionID {
     TEX_TRANS_STAR,
     TEX_TRANS_CIRCLE,
     TEX_TRANS_MARIO,
-    TEX_TRANS_BOWSER
+    TEX_TRANS_BOWSER,
+    TEX_TRANS_SKULL
 };
 
 enum TextureTransitionType {

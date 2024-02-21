@@ -441,7 +441,7 @@ const BehaviorScript bhvGiantPole[] = {
     BEGIN(OBJ_LIST_POLELIKE),
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
     SET_INT(oInteractType, INTERACT_POLE),
-    SET_HITBOX(/*Radius*/ 80, /*Height*/ 2100),
+    SET_HITBOX(/*Radius*/ 80, /*Height*/ 1500),
     SET_HOME(),
     SET_INT(oIntangibleTimer, 0),
     BEGIN_LOOP(),
@@ -4279,6 +4279,7 @@ const BehaviorScript bhvBigBoulderGenerator[] = {
 
 const BehaviorScript bhvWingCap[] = {
     BEGIN(OBJ_LIST_LEVEL),
+    SET_INTERACT_TYPE(INTERACT_CAP),
     OR_LONG(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_SILHOUETTE)),
     CALL_NATIVE(bhv_wing_cap_init),
     BEGIN_LOOP(),
@@ -4288,15 +4289,17 @@ const BehaviorScript bhvWingCap[] = {
 
 const BehaviorScript bhvMetalCap[] = {
     BEGIN(OBJ_LIST_LEVEL),
+    SET_INTERACT_TYPE(INTERACT_CAP),
     OR_LONG(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_SILHOUETTE)),
-    CALL_NATIVE(bhv_metal_cap_init),
+    CALL_NATIVE(bhv_gold_cap_init),
     BEGIN_LOOP(),
-        CALL_NATIVE(bhv_metal_cap_loop),
+        CALL_NATIVE(bhv_gold_cap_loop),
     END_LOOP(),
 };
 
 const BehaviorScript bhvNormalCap[] = {
     BEGIN(OBJ_LIST_LEVEL),
+    SET_INTERACT_TYPE(INTERACT_CAP),
     OR_LONG(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_SILHOUETTE)),
     CALL_NATIVE(bhv_normal_cap_init),
     BEGIN_LOOP(),
@@ -4307,10 +4310,21 @@ const BehaviorScript bhvNormalCap[] = {
 
 const BehaviorScript bhvVanishCap[] = {
     BEGIN(OBJ_LIST_LEVEL),
+    SET_INTERACT_TYPE(INTERACT_CAP),
     OR_LONG(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_SILHOUETTE)),
     CALL_NATIVE(bhv_vanish_cap_init),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_wing_vanish_cap_loop),
+    END_LOOP(),
+};
+
+const BehaviorScript bhvGoldCap[] = {
+    BEGIN(OBJ_LIST_LEVEL),
+    SET_INTERACT_TYPE(INTERACT_CAP),
+    OR_LONG(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_SILHOUETTE)),
+    CALL_NATIVE(bhv_metal_cap_init),
+    BEGIN_LOOP(),
+        CALL_NATIVE(bhv_metal_cap_loop),
     END_LOOP(),
 };
 
@@ -4895,6 +4909,38 @@ const BehaviorScript bhvFloombaTripletSpawner[] = {
     GOTO(bhvGoombaTripletSpawner + 1),
 };
 #endif
+
+const BehaviorScript bhvStub1D0C[] = { // Motos original ID
+    BEGIN(OBJ_LIST_GENACTOR),
+	OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW  | OBJ_FLAG_1000 | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_HOLDABLE | OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO)),
+	LOAD_ANIMATIONS(oAnimations, motos_seg8_anims_0801DA4C),
+    SET_INT(oInteractType, INTERACT_GRABBABLE),
+    SET_HITBOX(/*Radius*/ 100, /*Height*/ 100),
+    SET_OBJ_PHYSICS(/*Wall hitbox radius*/ 30, /*Gravity*/ -400, /*Bounciness*/ -50, /*Drag strength*/ 1000, /*Friction*/ 1000, /*Buoyancy*/ 200, /*Unused*/ 0, 0),
+	SPAWN_OBJ(/*Model*/ MODEL_NONE, /*Behavior*/ bhvStub1D0D),
+	SET_INT(oHealth, 2),
+	ANIMATE(0),
+	    SET_INT(oIntangibleTimer, 0),
+    SET_HOME(),
+//	CALL_NATIVE(motos_main),
+//	DROP_TO_FLOOR(),
+		    BEGIN_LOOP(),
+        CALL_NATIVE(s_motos),
+		END_LOOP(),
+};
+
+const BehaviorScript bhvStub1D0D[] = {
+    BEGIN(OBJ_LIST_GENACTOR),
+    OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW)),
+    BILLBOARD(),
+//    SET_FLOAT(oParentRelativePosX, 100),
+//   SET_FLOAT(oParentRelativePosZ, 150),
+    BEGIN_LOOP(),
+        CALL_NATIVE(s_motos_hand),
+		END_LOOP(),
+};
+
+
 
 const BehaviorScript bhvChainChomp[] = {
     BEGIN(OBJ_LIST_GENACTOR),
@@ -5650,15 +5696,6 @@ const BehaviorScript bhvThwimp[] = {
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_thwimp_loop),
         CALL_NATIVE(load_object_collision_model),
-    END_LOOP(),
-};
-
-const BehaviorScript bhvGoldCap[] = {
-    BEGIN(OBJ_LIST_LEVEL),
-    OR_LONG(oFlags, (OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE | OBJ_FLAG_SILHOUETTE)),
-    CALL_NATIVE(bhv_metal_cap_init),
-    BEGIN_LOOP(),
-        CALL_NATIVE(bhv_metal_cap_loop),
     END_LOOP(),
 };
 

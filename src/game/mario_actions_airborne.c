@@ -476,6 +476,10 @@ s32 act_triple_jump(struct MarioState *m) {
         return set_mario_action(m, ACT_SPECIAL_TRIPLE_JUMP, 0);
     }
 
+    if(m->flags & MARIO_GOLD_CAP) {
+        m->particleFlags |= PARTICLE_SPARKLES;
+    }
+
     if (m->input & INPUT_B_PRESSED) {
         return set_mario_action(m, ACT_DIVE, 0);
     }

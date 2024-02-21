@@ -7,7 +7,6 @@
 #include "common1.h"
 #include "group14.h"
 
-#include "koopa_flag/geo.inc.c"
 #include "poundable_pole/geo.inc.c"
 #include "koopa/geo.inc.c"
 #include "red_koopa/geo.inc.c"

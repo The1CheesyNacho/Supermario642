@@ -6,6 +6,7 @@
 
 #include "common1.h"
 
+#include "koopa_flag/geo.inc.c"
 #include "mist/geo.inc.c"
 #include "explosion/geo.inc.c"
 #include "butterfly/geo.inc.c"

@@ -11,7 +11,8 @@
  *      4: Default, used for 100 coin stars, 8 red coin stars in bowser levels, and secret stars
  */
 DEFINE_COURSE(COURSE_NONE, 0x44444440) // (0)  Course Hub (Castle Grounds)
-DEFINE_COURSE(COURSE_SR, 0x44444440) 
-DEFINE_COURSE(COURSE_TSNS, 0x44444440) 
+DEFINE_COURSE(COURSE_GM, 0x44444440) // (0)  Course Hub (Castle Grounds)
+DEFINE_COURSE(COURSE_COURSE0, 0x44444440) 
+DEFINE_COURSE(COURSE_BOB, 0x44444440) // (0)  Course Hub (Castle Grounds)
 DEFINE_COURSES_END()
 DEFINE_BONUS_COURSE(COURSE_BITDW, 0x34444440) // (16) Bowser in the Dark World

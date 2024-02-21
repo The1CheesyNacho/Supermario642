@@ -6,11 +6,6 @@
 #include "types.h"
 #include "make_const_nonconst.h"
 
-#include "koopa_flag/model.inc.c"
-#include "koopa_flag/anims/data.inc.c"
-#include "koopa_flag/anims/table.inc.c"
-UNUSED static const u64 binid_0 = 0;
-
 #include "poundable_pole/model.inc.c"
 #include "poundable_pole/collision.inc.c"
 UNUSED static const u64 binid_1 = 1;

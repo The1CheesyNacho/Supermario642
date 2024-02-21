@@ -13,13 +13,14 @@
 
 
 //sm642 models include 
-#define MODEL_KOOPA_X                          0x05        // blue_coin_switch_geo
+#define MODEL_MIPS_X                           0x05        // blue_coin_switch_geo
 
 
+#define MODEL_WARP_PIPE                        0x06        // referenced in special presets, undefined
 #define MODEL_YOSHI                            0x55        // yoshi_geo
-#define MODEL_BUBBLY_TREE                  0x17        // bubbly_tree_geo
+#define MODEL_BUBBLY_TREE                      0x17        // bubbly_tree_geo
 #define MODEL_COURTYARD_SPIKY_TREE             0x18        // spiky_tree_geo
-#define MODEL_SNOW_TREE                    0x19        // snow_tree_geo
+#define MODEL_SNOW_TREE                        0x19        // snow_tree_geo
 #define MODEL_SSL_PALM_TREE                    0x1B        // palm_tree_geo
 #define MODEL_CASTLE_CASTLE_DOOR               0x1C        // castle_door_geo - unused, original id
 #define MODEL_CASTLE_WOODEN_DOOR_UNUSED        0x1D        // wooden_door_geo - unused, original id

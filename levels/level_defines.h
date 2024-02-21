@@ -13,5 +13,8 @@
 // TODO: Figure something out for sZoomOutAreaMasks?
 
 DEFINE_LEVEL("GROUNDS & BACKYARD", LEVEL_CASTLE_GROUNDS, COURSE_NONE, castle_grounds, outside, 20000, 0x00, 0x00, 0x00, _, sCamCastleGrounds) 
+DEFINE_LEVEL("BOB OMB", LEVEL_BOB, COURSE_BOB, bob, generic, 20000, 0x00, 0x00, 0x00, _, _) 
 DEFINE_LEVEL("INSIDE CASTLE", LEVEL_CASTLE, COURSE_NONE, castle_inside, inside, 20000, 0x00, 0x00, 0x00, _, sCamCastle) 
-DEFINE_LEVEL("STAR ROAD", LEVEL_SR, COURSE_SR, sr, generic, 20000, 0x00, 0x00, 0x00, _, sCamSr) 
+DEFINE_LEVEL("ATHLETIC", LEVEL_COURSE1, COURSE_GM, course1, generic, 20000, 0x23, 0x00, 0x00, _, sCamCourse1) 
+DEFINE_LEVEL("STAR ROAD", LEVEL_SR, COURSE_NONE, sr, generic, 20000, 0x00, 0x00, 0x00, _, sCamSr) 
+DEFINE_LEVEL("C&MTEST", LEVEL_COURSE0, COURSE_COURSE0, course0, generic, 20000, 0x00, 0x00, 0x00, _, sCamCourse0) 

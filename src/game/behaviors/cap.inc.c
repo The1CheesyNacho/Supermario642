@@ -262,3 +262,40 @@ void bhv_vanish_cap_init(void) {
     o->oBuoyancy = 0.9f;
     o->oOpacity = 150;
 }
+
+void bhv_gold_cap_init(void) {
+    o->oGravity = 2.4f;
+    o->oFriction = 0.999f;
+    o->oBuoyancy = 1.5f;
+    o->oOpacity = 255;
+}
+
+void gold_cap_act_0(void) {
+    o->oFaceAngleYaw += (o->oForwardVel * 128.0f);
+
+    s16 collisionFlags = object_step();
+
+    if (collisionFlags & OBJ_COL_FLAG_GROUNDED) {
+        cap_check_quicksand();
+    }
+}
+
+void bhv_gold_cap_loop(void) {
+    switch (o->oAction) {
+        case CAP_ACT_MOVE:
+            gold_cap_act_0();
+            break;
+
+        default:
+            object_step();
+            cap_sink_quicksand();
+            break;
+    }
+
+    if (o->oTimer > 20) {
+        cur_obj_become_tangible();
+    }
+
+    cap_set_hitbox();
+    cap_despawn();
+}

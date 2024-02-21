@@ -70,6 +70,7 @@ extern const GeoLayout mario_geo[];
 extern const Gfx mario_butt_dl[];
 extern const Gfx mario_butt[];
 extern const Gfx mario_metal_butt[];
+extern const Gfx mario_gold_butt[];
 extern const Gfx mario_left_arm_shared_dl[];
 extern const Gfx mario_left_arm[];
 extern const Gfx mario_left_forearm_shared_dl[];
@@ -84,6 +85,7 @@ extern const Gfx mario_metal_right_hand_closed[];
 extern const Gfx mario_left_thigh_dl[];
 extern const Gfx mario_left_thigh[];
 extern const Gfx mario_metal_left_thigh[];
+extern const Gfx mario_gold_left_thigh[];
 extern const Gfx mario_left_leg_shared_dl[];
 extern const Gfx mario_left_foot_shared_dl[];
 extern const Gfx mario_left_foot[];
@@ -260,7 +262,7 @@ extern const Gfx mario_metal_cap_wings_unused[];
 extern const Gfx mario_wings_half_1_dl[];
 extern const Gfx mario_wings_half_2_dl[];
 extern const Gfx mario_cap_wings[];
-extern const Gfx mario_cap_wings_transparent[];
+extern const Gfx luigi_cap_wings_transparent[];
 extern const Gfx mario_metal_cap_wings[];
 extern const Gfx mario_metal_cap_wings_transparent[];
 
@@ -627,8 +629,6 @@ extern Gfx mat_luigi_head_f3dlite_material_015[];
 
 #include "waluigi/geo_header.h"
 
-#include "mario/geo_header.h"
-
 // peach
 extern const GeoLayout peach_geo_000098[];
 extern const GeoLayout peach_geo_000254[];
@@ -803,5 +803,11 @@ extern const struct Animation *const yoshi_seg5_anims_05024100[];
 
 extern const GeoLayout metal_mario_geo[];
 
+
+#include "mario/geo_header.h"
+
+#include "metal_mario/geo_header.h"
+
+#include "luigi/geo_header.h"
 
 #endif

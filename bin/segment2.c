@@ -2682,7 +2682,11 @@ const Texture texture_transition_mario[] = {
 };
 
 const Texture texture_transition_bowser_half[] = {
-#include "textures/segment2/segment2.11458.ia8.inc.c"
+#include "textures/segment2/custom_segment2.11458.ia8.inc.c"
+};
+
+const Texture texture_transition_skull_half[] = {
+#include "textures/segment2/custom_segment2.11469.ia8.inc.c"
 };
 
 const Texture texture_waterbox_water[] = {

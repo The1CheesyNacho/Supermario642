@@ -93,7 +93,6 @@ void bhv_thwimp_loop(void) {
             break;
         case 2: // jumping
             o->oVelY -= o->oGravity;
-            cur_obj_move_using_vel();
             cur_obj_move_xz_using_fvel_and_yaw();
             cur_obj_if_hit_wall_bounce_away();
             cur_obj_update_floor_and_walls();
@@ -103,6 +102,8 @@ void bhv_thwimp_loop(void) {
                 o->oThwimpTimer = 30;
                 o->oForwardVel = 0;
                 o->oVelY = 0;
+                cur_obj_shake_screen(SHAKE_POS_SMALL);
+                cur_obj_play_sound_2(SOUND_OBJ_JUMP_WALK_WATER);
             }
             break;
     }

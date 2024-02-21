@@ -7,6 +7,10 @@
 #include "make_const_nonconst.h"
 #include "common1.h"
 
+#include "koopa_flag/model.inc.c"
+#include "koopa_flag/anims/data.inc.c"
+#include "koopa_flag/anims/table.inc.c"
+
 #include "mist/model.inc.c"
 UNUSED static const u64 binid_0 = 0;
 

@@ -22,3 +22,4 @@
 #include "luigi/geo.inc.c"
 #include "wario/geo.inc.c"
 #include "waluigi/geo.inc.c"
+#include "metal_mario/geo.inc.c"

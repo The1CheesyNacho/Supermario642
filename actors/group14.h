@@ -163,23 +163,6 @@ extern const Gfx yellow_koopa_seg6_dl_0600BE80[];
 extern const Gfx yellow_koopa_seg6_dl_0600C240[];
 extern const Gfx yellow_koopa_seg6_dl_0600C498[];
 
-// koopa_flag
-extern const GeoLayout koopa_flag_geo[];
-extern const Gfx koopa_flag_seg6_dl_06000968[];
-extern const Gfx koopa_flag_seg6_dl_06000A08[];
-extern const Gfx koopa_flag_seg6_dl_06000AB8[];
-extern const Gfx koopa_flag_seg6_dl_06000AE8[];
-extern const Gfx koopa_flag_seg6_dl_06000B08[];
-extern const Gfx koopa_flag_seg6_dl_06000BC0[];
-extern const Gfx koopa_flag_seg6_dl_06000BF8[];
-extern const Gfx koopa_flag_seg6_dl_06000CA8[];
-extern const Gfx koopa_flag_seg6_dl_06000CE0[];
-extern const Gfx koopa_flag_seg6_dl_06000D90[];
-extern const Gfx koopa_flag_seg6_dl_06000DB0[];
-extern const Gfx koopa_flag_seg6_dl_06000E20[];
-extern const Gfx koopa_flag_seg6_dl_06000E38[];
-extern const struct Animation *const koopa_flag_seg6_anims_06001028[];
-
 // piranha_plant
 extern const GeoLayout piranha_plant_geo[];
 extern const Gfx piranha_plant_seg6_dl_06015438[];

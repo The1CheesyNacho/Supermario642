@@ -984,7 +984,7 @@ s32 act_warp_door_spawn(struct MarioState *m) {
 }
 
 s32 act_emerge_from_pipe(struct MarioState *m) {
-    struct Object *marioObj = m->marioObj;
+    struct Object *marioObj = gMarioStates[0].marioObj;
 
     if (m->actionTimer++ < 11) {
         marioObj->header.gfx.node.flags &= ~GRAPH_RENDER_ACTIVE;
@@ -1663,7 +1663,6 @@ static void advance_cutscene_step(struct MarioState *m) {
 
 static void intro_cutscene_hide_hud_and_mario(struct MarioState *m) {
     gHudDisplay.flags = HUD_DISPLAY_NONE;
-    m->statusForCamera->cameraEvent = CAM_EVENT_START_INTRO;
     m->marioObj->header.gfx.node.flags &= ~GRAPH_RENDER_ACTIVE;
     advance_cutscene_step(m);
 }
@@ -1674,8 +1673,8 @@ static void intro_cutscene_peach_lakitu_scene(struct MarioState *m) {
     if ((s16) m->statusForCamera->cameraEvent != CAM_EVENT_START_INTRO) {
         if (m->actionTimer++ == TIMER_SPAWN_PIPE) {
             sIntroWarpPipeObj =
-                spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_CASTLE_GROUNDS_WARP_PIPE,
-                                          bhvStaticObject, -3764, 618, 11447, 0, 180, 0);
+                spawn_object_abs_with_rot(gMarioObject, 0, MODEL_WARP_PIPE,
+                                          bhvStaticObject, gMarioState->marioObj->oPosX, gMarioState->marioObj->oPosY, gMarioState->marioObj->oPosZ, 0, 180, 0);
             advance_cutscene_step(m);
         }
     }

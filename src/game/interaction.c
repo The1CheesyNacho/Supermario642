@@ -118,7 +118,19 @@ static u8 sPssSlideStarted = FALSE;
  * Returns the type of cap Mario is wearing.
  */
 u32 get_mario_cap_flag(struct Object *capObject) {
-    const BehaviorScript *script = virtual_to_segmented(SEGMENT_BEHAVIOR_DATA, capObject->behavior);
+    const BehaviorScript *script = virtual_to_segmented(0x13, capObject->behavior);
+
+    if (script == bhvNormalCap) {
+        return MARIO_NORMAL_CAP;
+    } else if (script == bhvMetalCap) {
+        return MARIO_METAL_CAP;
+    } else if (script == bhvWingCap) {
+        return MARIO_WING_CAP;
+    } else if (script == bhvVanishCap) {
+        return MARIO_VANISH_CAP;
+    } else if (script == bhvGoldCap) {
+        return MARIO_GOLD_CAP;
+    }
 
     return 0;
 }
@@ -878,7 +890,6 @@ u32 interact_warp(struct MarioState *m, UNUSED u32 interactType, struct Object *
             }
         }
     } else {
-        if (m->action != ACT_EMERGE_FROM_PIPE) {
             obj->oInteractStatus = INT_STATUS_INTERACTED;
             m->interactObj       = obj;
             m->usedObj           = obj;
@@ -900,7 +911,6 @@ u32 interact_warp(struct MarioState *m, UNUSED u32 interactType, struct Object *
 
             mario_stop_riding_object(m);
             return set_mario_action(m, ACT_DISAPPEARED, (WARP_OP_WARP_OBJECT << 16) + 2);
-        }
     }
 
     return FALSE;
@@ -1138,6 +1148,10 @@ u32 interact_strong_wind(struct MarioState *m, UNUSED u32 interactType, struct O
 u32 interact_flame(struct MarioState *m, UNUSED u32 interactType, struct Object *obj) {
     u32 burningAction = ACT_BURNING_JUMP;
 
+if (m->flags & MARIO_GOLD_CAP){
+    return FALSE;
+}
+
     if (!sInvulnerable && !(m->flags & MARIO_METAL_CAP) && !(m->flags & MARIO_VANISH_CAP)
         && !(obj->oInteractionSubtype & INT_SUBTYPE_DELAY_INVINCIBILITY)) {
 #if ENABLE_RUMBLE
@@ -1163,6 +1177,7 @@ u32 interact_flame(struct MarioState *m, UNUSED u32 interactType, struct Object 
     }
 
     return FALSE;
+
 }
 
 u32 interact_snufit_bullet(struct MarioState *m, UNUSED u32 interactType, struct Object *obj) {
@@ -1540,17 +1555,34 @@ u32 interact_hoot(struct MarioState *m, UNUSED u32 interactType, struct Object *
     return FALSE;
 }
 
-u32 interact_cap(struct MarioState *m, UNUSED u32 interactType, struct Object *obj) {
-    u32 capFlag = get_mario_cap_flag(obj);
-    u16 capMusic = 0;
+u32 interact_cap(struct MarioState *m, UNUSED u32 interactType, struct Object *o) {
+    u32 capFlag = get_mario_cap_flag(o);
     u16 capTime = 0;
 
     if (m->action != ACT_GETTING_BLOWN && capFlag != 0) {
-        m->interactObj = obj;
-        obj->oInteractStatus = INT_STATUS_INTERACTED;
+        m->interactObj = o;
+        o->oInteractStatus = INT_STATUS_INTERACTED;
 
         m->flags &= ~MARIO_CAP_ON_HEAD & ~MARIO_CAP_IN_HAND;
         m->flags |= capFlag;
+
+        switch (capFlag) {
+            case MARIO_VANISH_CAP:
+                capTime = 600;
+                break;
+
+            case MARIO_METAL_CAP:
+                capTime = 600;
+                break;
+
+            case MARIO_WING_CAP:
+                capTime = 1800;
+                break;
+
+            case MARIO_GOLD_CAP:
+                capTime = 600;
+                break;
+        }
 
         if (capTime > m->capTimer) {
             m->capTimer = capTime;
@@ -1564,8 +1596,7 @@ u32 interact_cap(struct MarioState *m, UNUSED u32 interactType, struct Object *o
         }
 
         play_sound(SOUND_MENU_STAR_SOUND, m->marioObj->header.gfx.cameraToObject);
-        play_sound(SOUND_CHARACTER_HERE_WE_GO, m->marioObj->header.gfx.cameraToObject);
-
+        play_sound(SOUND_MARIO_HERE_WE_GO, m->marioObj->header.gfx.cameraToObject);
         return TRUE;
     }
 
@@ -1886,9 +1917,15 @@ void mario_handle_special_floors(struct MarioState *m) {
                 break;
         }
 
-        if (!(m->action & (ACT_FLAG_AIR | ACT_FLAG_SWIMMING))) {
+        if (!(m->action & (ACT_FLAG_AIR | ACT_FLAG_SWIMMING)) && !(m->flags & MARIO_GOLD_CAP)) {
             if (floorType == SURFACE_BURNING) {
                 check_lava_boost(m);
+            }
+        }
+
+        if(m->flags & MARIO_GOLD_CAP) {
+            if (floorType == SURFACE_BURNING) {
+                set_mario_action(m, ACT_QUICKSAND_DEATH, 0);
             }
         }
     }

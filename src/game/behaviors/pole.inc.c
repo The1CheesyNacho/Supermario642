@@ -27,9 +27,8 @@ void bhv_pole_init(void) {
  * first frame.
  */
 void bhv_giant_pole_loop(void) {
-    if (o->oTimer == 0) {
-        struct Object *topBall = spawn_object(o, MODEL_YELLOW_SPHERE, bhvYellowBall);
-        topBall->oPosY += o->hitboxHeight + 50.0f;
+    if (o->oDistanceToMario < 3000.0f) {
+        cur_obj_spawn_star_at_y_offset(o->oPosX + 23, o->oPosY + 23, o->oPosZ, 0.0f);
     }
     bhv_pole_base_loop();
 }

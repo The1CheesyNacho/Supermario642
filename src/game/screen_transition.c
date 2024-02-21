@@ -21,6 +21,7 @@ void *sTextureTransitionID[] = {
     texture_transition_circle_half,
     texture_transition_mario,
     texture_transition_bowser_half,
+    texture_transition_skull_half,
 };
 
 
@@ -279,6 +280,7 @@ s32 render_screen_transition(s8 transType, u8 transTime, struct WarpTransitionDa
         case WARP_TRANSITION_FADE_INTO_BOWSER:
             return render_textured_transition(transTime, transData, TEX_TRANS_BOWSER, TRANS_TYPE_MIRROR);
             break;
+
     }
 
     return FALSE;

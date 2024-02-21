@@ -5096,6 +5096,7 @@ sound_ref .sound_obj_bowser_roar
 sound_ref .sound_obj_bowser_tail_pickup
 sound_ref .sound_obj_bowser_defeated
 sound_ref .sound_obj_bowser_spinning
+sound_ref .sound_obj_thwimp
 
 .sound_general_swish_water:
 chan_setbank 6
@@ -5268,6 +5269,18 @@ chan_setinstr 1
 chan_setlayer 1, .layer_204E
 chan_end
 
+.sound_obj_thwimp:
+chan_setbank 7
+chan_setinstr 12
+chan_call .set_reverb
+chan_setlayer 0, .layer_2055
+chan_setval 1
+chan_call .delay
+chan_setbank 6
+chan_setinstr 1
+chan_setlayer 1, .layer_204E
+chan_end
+
 .layer_204E:
 layer_note1 37, 0xc, 127
 layer_note1 31, 0x1e, 127
@@ -5333,13 +5346,21 @@ layer_note1 39, 0x48, 110
 layer_end
 
 .sound_obj_jump_walk_water:
-chan_setbank 4
-chan_setinstr 5
-chan_setlayer 0, .layer_20AE
+chan_setbank 7
+chan_setinstr 12
+chan_setval 55
+chan_call .set_reverb
+chan_setlayer 0, .layer_2055
+chan_setval 1
+chan_call .delay
+chan_setbank 6
+chan_setinstr 1
+chan_setlayer 1, .layer_20AE
 chan_end
 
 .layer_20AE:
-layer_note1 59, 0x24, 105
+layer_note1 47, 0xc, 127
+layer_note1 41, 0x1e, 127
 layer_end
 
 .chan_20B2:

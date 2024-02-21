@@ -181,9 +181,9 @@ struct Painting *sTtmPaintings[] = {
 };
 
 struct Painting **sPaintingGroups[] = {
-    sHmcPaintings,
     sInsideCastlePaintings,
-    sTtmPaintings,
+    sInsideCastlePaintings,
+    sInsideCastlePaintings,
 };
 
 s16 gPaintingUpdateCounter = 1;

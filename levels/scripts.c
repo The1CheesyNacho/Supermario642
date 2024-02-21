@@ -32,6 +32,9 @@
 #include "levels/menu/header.h"
 #include "levels/intro/header.h"
 #include "levels/sr/header.h"
+#include "levels/course1/header.h"
+#include "levels/course0/header.h"
+#include "levels/bob/header.h"
 
 #include "level_headers.h"
 
@@ -91,6 +94,7 @@ const LevelScript level_main_scripts_entry[] = {
     LOAD_MODEL_FROM_GEO(MODEL_LEAVES,                  leaves_geo),
     LOAD_MODEL_FROM_GEO(MODEL_PURPLE_MARBLE,           purple_marble_geo),
     LOAD_MODEL_FROM_GEO(MODEL_FISH,                    fish_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_WARP_PIPE,               warp_pipe_geo),
     LOAD_MODEL_FROM_GEO(MODEL_SPARKLES_ANIMATION,      sparkles_animation_geo),
     LOAD_MODEL_FROM_DL( MODEL_SAND_DUST,               sand_seg3_dl_particle,       LAYER_OCCLUDE_SILHOUETTE_ALPHA),
     LOAD_MODEL_FROM_GEO(MODEL_BUTTERFLY,               butterfly_geo),
@@ -116,6 +120,7 @@ const LevelScript level_main_scripts_entry[] = {
     LOAD_MODEL_FROM_GEO(MODEL_EXPLOSION,               explosion_geo),
     LOAD_MODEL_FROM_GEO(MODEL_DIRT_ANIMATION,          dirt_animation_geo),
     LOAD_MODEL_FROM_GEO(MODEL_CARTOON_STAR,            cartoon_star_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_KOOPA_FLAG,              koopa_flag_geo),
 #ifdef IA8_30FPS_COINS
     LOAD_MODEL_FROM_GEO(MODEL_SILVER_COIN,             silver_coin_geo),
     LOAD_MODEL_FROM_GEO(MODEL_SILVER_COIN_NO_SHADOW,   silver_coin_no_shadow_geo),
@@ -316,12 +321,12 @@ const LevelScript script_func_global_15[] = {
     LOAD_MODEL_FROM_GEO(MODEL_KOOPA_WITHOUT_SHELL,        koopa_without_shell_geo),
     LOAD_MODEL_FROM_GEO(MODEL_METALLIC_BALL,              metallic_ball_geo),
     LOAD_MODEL_FROM_GEO(MODEL_CHAIN_CHOMP,                chain_chomp_geo),
-    LOAD_MODEL_FROM_GEO(MODEL_KOOPA_FLAG,                 koopa_flag_geo),
     LOAD_MODEL_FROM_GEO(MODEL_WOODEN_POST,                wooden_post_geo),
     LOAD_MODEL_FROM_GEO(MODEL_BLUE_KOOPA_WITH_SHELL,      blue_koopa_with_shell_geo),
     LOAD_MODEL_FROM_GEO(MODEL_BLUE_KOOPA_WITHOUT_SHELL,   blue_koopa_without_shell_geo),
     LOAD_MODEL_FROM_GEO(MODEL_YELLOW_KOOPA_WITH_SHELL,    yellow_koopa_with_shell_geo),
     LOAD_MODEL_FROM_GEO(MODEL_YELLOW_KOOPA_WITHOUT_SHELL, yellow_koopa_without_shell_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_MIPS_X,                     mips_x_geo),
     RETURN(),
 };
 

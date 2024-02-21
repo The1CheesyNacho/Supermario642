@@ -2684,6 +2684,11 @@ enum oAnimStatesTinyDirtParticle {
     TINY_DIRT_PARTICLE_ANIM_STATE_BILLBOARD
 };
 
+
+/* Blargg */
+    #define UNBABA_ANIM_SWIM                                0x0
+    #define UNBABA_ANIM_ATTACK                              0x1
+
 /* Cartoon Star Particle */
 enum oAnimStatesCartoonStarParticle {
     CARTOON_STAR_PARTICLE_ANIM_STATE_RED,

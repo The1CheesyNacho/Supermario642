@@ -2,6 +2,7 @@
 
 #include "sm64.h"
 #include "area.h"
+#include "seq_ids.h"
 #include "audio/external.h"
 #include "audio/load.h"
 #include "behavior_actions.h"
@@ -287,7 +288,7 @@ void play_sound_and_spawn_particles(struct MarioState *m, u32 soundBits, u32 wav
         }
     }
 
-    if ((m->flags & MARIO_METAL_CAP) || soundBits == SOUND_ACTION_UNSTUCK_FROM_GROUND
+    if ((m->flags & MARIO_METAL_CAP || m->flags & MARIO_GOLD_CAP) || soundBits == SOUND_ACTION_UNSTUCK_FROM_GROUND
         || soundBits == SOUND_CHARACTER_PUNCH_HOO) {
         play_sound(soundBits, m->marioObj->header.gfx.cameraToObject);
     } else {
@@ -310,7 +311,7 @@ void play_mario_action_sound(struct MarioState *m, u32 soundBits, u32 wavePartic
  */
 void play_mario_landing_sound(struct MarioState *m, u32 soundBits) {
     play_sound_and_spawn_particles(
-        m, (m->flags & MARIO_METAL_CAP) ? SOUND_ACTION_METAL_LANDING : soundBits, 1);
+        m, (m->flags & MARIO_METAL_CAP || m->flags & MARIO_GOLD_CAP) ? SOUND_ACTION_METAL_LANDING : soundBits, 1);
 }
 
 /**
@@ -320,7 +321,7 @@ void play_mario_landing_sound(struct MarioState *m, u32 soundBits) {
  */
 void play_mario_landing_sound_once(struct MarioState *m, u32 soundBits) {
     play_mario_action_sound(
-        m, (m->flags & MARIO_METAL_CAP) ? SOUND_ACTION_METAL_LANDING : soundBits, 1);
+        m, (m->flags & MARIO_METAL_CAP || m->flags & MARIO_GOLD_CAP) ? SOUND_ACTION_METAL_LANDING : soundBits, 1);
 }
 
 /**
@@ -328,7 +329,7 @@ void play_mario_landing_sound_once(struct MarioState *m, u32 soundBits) {
  */
 void play_mario_heavy_landing_sound(struct MarioState *m, u32 soundBits) {
     play_sound_and_spawn_particles(
-        m, (m->flags & MARIO_METAL_CAP) ? SOUND_ACTION_METAL_HEAVY_LANDING : soundBits, 1);
+        m, (m->flags & MARIO_METAL_CAP || m->flags & MARIO_GOLD_CAP) ? SOUND_ACTION_METAL_HEAVY_LANDING : soundBits, 1);
 }
 
 /**
@@ -338,7 +339,7 @@ void play_mario_heavy_landing_sound(struct MarioState *m, u32 soundBits) {
  */
 void play_mario_heavy_landing_sound_once(struct MarioState *m, u32 soundBits) {
     play_mario_action_sound(
-        m, (m->flags & MARIO_METAL_CAP) ? SOUND_ACTION_METAL_HEAVY_LANDING : soundBits, 1);
+        m, (m->flags & MARIO_METAL_CAP || m->flags & MARIO_GOLD_CAP) ? SOUND_ACTION_METAL_HEAVY_LANDING : soundBits, 1);
 }
 
 /**
@@ -346,7 +347,7 @@ void play_mario_heavy_landing_sound_once(struct MarioState *m, u32 soundBits) {
  */
 void play_mario_sound(struct MarioState *m, s32 actionSound, s32 marioSound) {
     if (actionSound == SOUND_ACTION_TERRAIN_JUMP) {
-        play_mario_action_sound(m, (m->flags & MARIO_METAL_CAP) ? (s32) SOUND_ACTION_METAL_JUMP
+        play_mario_action_sound(m, (m->flags & MARIO_METAL_CAP || m->flags & MARIO_GOLD_CAP) ? (s32) SOUND_ACTION_METAL_JUMP
                                                                 : (s32) SOUND_ACTION_TERRAIN_JUMP, 1);
     } else {
         play_sound_if_no_flag(m, actionSound, MARIO_ACTION_SOUND_PLAYED);
@@ -1432,7 +1433,7 @@ void update_mario_health(struct MarioState *m) {
         // When already healing or hurting Mario, Mario's HP is not changed any more here.
         if (((u32) m->healCounter | (u32) m->hurtCounter) == 0) {
             if ((m->input & INPUT_IN_POISON_GAS) && !(m->action & ACT_FLAG_INTANGIBLE)) {
-                if (!(m->flags & MARIO_METAL_CAP) && !gDebugLevelSelect) {
+                if (!(m->flags & MARIO_METAL_CAP || m->flags & MARIO_GOLD_CAP) && !gDebugLevelSelect) {
                     m->health -= 4;
                 }
             } else {
@@ -1491,7 +1492,7 @@ void update_mario_health(struct MarioState *m) {
 #ifdef BREATH_METER
 void update_mario_breath(struct MarioState *m) {
     if (m->breath >= 0x100 && m->health >= 0x100) {
-        if (m->pos[1] < (m->waterLevel - 140) && !(m->flags & MARIO_METAL_CAP) && !(m->action & ACT_FLAG_INTANGIBLE)) {
+        if (m->pos[1] < (m->waterLevel - 140) && !(m->flags & MARIO_METAL_CAP || m->flags & MARIO_GOLD_CAP) && !(m->action & ACT_FLAG_INTANGIBLE)) {
             m->breath--;
             if (m->breath < 0x300) {
                 // Play a noise to alert the player when Mario is close to drowning.
@@ -1677,7 +1678,7 @@ void mario_update_hitbox_and_cap_model(struct MarioState *m) {
  * An unused and possibly a debug function. Z + another button input
  * sets Mario with a different cap.
  */
-UNUSED static void debug_update_mario_cap(u16 button, s32 flags, u16 capTimer, u16 capMusic) {
+void debug_update_mario_cap(u16 button, s32 flags, u16 capTimer, u16 capMusic) {
     // This checks for Z_TRIG instead of Z_DOWN flag
     // (which is also what other debug functions do),
     // so likely debug behavior rather than unused behavior.
@@ -1712,6 +1713,11 @@ void queue_rumble_particles(struct MarioState *m) {
  */
 s32 execute_mario_action(UNUSED struct Object *obj) {
     s32 inLoop = TRUE;
+
+    debug_update_mario_cap(L_JPAD, MARIO_WING_CAP, 1800, SEQUENCE_ARGS(4, SEQ_STARMAN));
+    debug_update_mario_cap(U_JPAD, MARIO_METAL_CAP, 600, SEQUENCE_ARGS(4, SEQ_STARMAN));
+    debug_update_mario_cap(R_JPAD, MARIO_VANISH_CAP, 600, SEQUENCE_ARGS(4, SEQ_STARMAN));
+    debug_update_mario_cap(D_JPAD, MARIO_GOLD_CAP, 600, SEQUENCE_ARGS(4, SEQ_STARMAN));
 
     // Updates once per frame:
     vec3f_get_dist_and_lateral_dist_and_angle(gMarioState->prevPos, gMarioState->pos, &gMarioState->moveSpeed, &gMarioState->lateralSpeed, &gMarioState->movePitch, &gMarioState->moveYaw);
@@ -1815,7 +1821,14 @@ void init_mario(void) {
 
     gMarioState->invincTimer = 0;
 
-    gMarioState->flags = (MARIO_NORMAL_CAP | MARIO_CAP_ON_HEAD);
+    if (save_file_get_flags()
+        & (SAVE_FLAG_CAP_ON_GROUND | SAVE_FLAG_CAP_ON_KLEPTO | SAVE_FLAG_CAP_ON_UKIKI
+           | SAVE_FLAG_CAP_ON_MR_BLIZZARD)) {
+        gMarioState->flags = 0;
+    } else {
+        gMarioState->flags = (MARIO_NORMAL_CAP | MARIO_CAP_ON_HEAD);
+    }
+
     
     gMarioState->forwardVel = 0.0f;
     gMarioState->squishTimer = 0;

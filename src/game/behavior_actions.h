@@ -372,6 +372,8 @@ void bhv_metal_cap_loop(void);
 void bhv_normal_cap_init(void);
 void bhv_normal_cap_loop(void);
 void bhv_vanish_cap_init(void);
+void bhv_gold_cap_init(void);
+void bhv_gold_cap_loop(void);
 void bhv_collect_star_init(void);
 void bhv_collect_star_loop(void);
 void bhv_star_spawn_init(void);
@@ -554,6 +556,8 @@ void bhv_volcano_trap_loop(void);
 void bhv_thwimp_loop(void);
 void bhv_thwimp_init(void);
 void bhv_gum_update(void);
+void s_motos_hand(void);
+void s_motos(void);
 
 Gfx *geo_move_mario_part_from_parent(s32 callContext, UNUSED struct GraphNode *node, Mat4 mtx);
 
