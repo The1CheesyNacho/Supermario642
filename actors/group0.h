@@ -810,4 +810,6 @@ extern const GeoLayout metal_mario_geo[];
 
 #include "luigi/geo_header.h"
 
+#include "toad_player/geo_header.h"
+
 #endif
