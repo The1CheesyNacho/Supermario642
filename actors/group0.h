@@ -632,6 +632,4 @@ extern Gfx mat_luigi_head_f3dlite_material_015[];
 #include "mario/geo_header.h"
 #include "luigi/geo_header.h"
 
-#include "toad_player/geo_header.h"
-
 #endif

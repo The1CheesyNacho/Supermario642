@@ -33,10 +33,4 @@
 
 #include "luigi/model.inc.c"
 #include "wario/model.inc.c"
-<<<<<<< HEAD
 #include "waluigi/model.inc.c"
-=======
-#include "waluigi/model.inc.c"
-#include "metal_mario/model.inc.c"
-#include "toad_player/model.inc.c"
->>>>>>> 84eac60a11a495b05f5bbc6f08a29db4f270dc0d
