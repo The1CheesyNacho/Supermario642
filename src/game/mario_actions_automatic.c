@@ -21,7 +21,28 @@
 
 #define HANG_DISTANCE 144.0f
 
+void add_tree_leaf_particles(struct MarioState *m) {
+    if (m->usedObj->behavior == segmented_to_virtual(bhvTree)) {
+        // make leaf effect spawn higher on the Shifting Sand Land palm tree
+        f32 leafHeight = (obj_has_model(m->usedObj, MODEL_NONE) ? 250.0f : 100.0f);
+        if (m->pos[1] - m->floorHeight > leafHeight) {
+            m->particleFlags |= PARTICLE_LEAF;
+        }
+    }
+}
+
 void play_climbing_sounds(struct MarioState *m, s32 b) {
+    s32 isOnTree = (m->usedObj->behavior == segmented_to_virtual(bhvTree));
+
+    if (b == 1) {
+        if (is_anim_past_frame(m, 1)) {
+            play_sound(isOnTree ? SOUND_ACTION_CLIMB_UP_TREE : SOUND_ACTION_CLIMB_UP_POLE,
+                       m->marioObj->header.gfx.cameraToObject);
+        }
+    } else {
+        play_sound(isOnTree ? SOUND_MOVING_SLIDE_DOWN_TREE : SOUND_MOVING_SLIDE_DOWN_POLE,
+                   m->marioObj->header.gfx.cameraToObject);
+    }
 }
 
 s32 set_pole_position(struct MarioState *m, f32 offsetY) {
@@ -77,13 +98,13 @@ s32 act_holding_pole(struct MarioState *m) {
     struct Object *marioObj = m->marioObj;
 
     if ((m->input & INPUT_Z_PRESSED) || m->health < 0x100) {
-
+        add_tree_leaf_particles(m);
         m->forwardVel = -2.0f;
         return set_mario_action(m, ACT_SOFT_BONK, 0);
     }
 
     if (m->input & INPUT_A_PRESSED) {
-
+        add_tree_leaf_particles(m);
         m->faceAngle[1] += 0x8000;
         return set_mario_action(m, ACT_WALL_KICK_AIR, 0);
     }
@@ -96,6 +117,9 @@ s32 act_holding_pole(struct MarioState *m) {
             return set_mario_action(m, ACT_CLIMBING_POLE, 0);
         }
 
+        if (poleBehavior != bhvGiantPole && m->controller->stickY > 50.0f) {
+            return set_mario_action(m, ACT_TOP_OF_POLE_TRANSITION, 0);
+        }
     }
 
     if (m->controller->stickY < -16.0f) {
@@ -107,6 +131,7 @@ s32 act_holding_pole(struct MarioState *m) {
         m->faceAngle[1] += m->angleVel[1];
         marioObj->oMarioPolePos -= m->angleVel[1] / 0x100;
 
+        add_tree_leaf_particles(m);
         play_climbing_sounds(m, 2);
 #if ENABLE_RUMBLE
         reset_rumble_timers_slip();
@@ -129,13 +154,13 @@ s32 act_climbing_pole(struct MarioState *m) {
     s16 cameraAngle = m->area->camera->yaw;
 
     if (m->health < 0x100) {
-
+        add_tree_leaf_particles(m);
         m->forwardVel = -2.0f;
         return set_mario_action(m, ACT_SOFT_BONK, 0);
     }
 
     if (m->input & INPUT_A_PRESSED) {
-
+        add_tree_leaf_particles(m);
         m->faceAngle[1] += 0x8000;
         return set_mario_action(m, ACT_WALL_KICK_AIR, 0);
     }
@@ -151,7 +176,7 @@ s32 act_climbing_pole(struct MarioState *m) {
     if (set_pole_position(m, 0.0f) == POLE_NONE) {
         s32 animSpeed = m->controller->stickY / 4.0f * 0x10000;
         set_mario_anim_with_accel(m, MARIO_ANIM_CLIMB_UP_POLE, animSpeed);
-
+        add_tree_leaf_particles(m);
         play_climbing_sounds(m, 1);
     }
 
@@ -166,7 +191,7 @@ s32 act_grab_pole_slow(struct MarioState *m) {
         if (is_anim_at_end(m)) {
             set_mario_action(m, ACT_HOLDING_POLE, 0);
         }
-
+        add_tree_leaf_particles(m);
     }
 
     return FALSE;
@@ -187,7 +212,7 @@ s32 act_grab_pole_fast(struct MarioState *m) {
                 set_mario_action(m, ACT_HOLDING_POLE, 0);
             }
         }
-
+        add_tree_leaf_particles(m);
     }
 
     return FALSE;

@@ -944,6 +944,10 @@ s32 act_move_punching(struct MarioState *m) {
 }
 
 s32 act_hold_walking(struct MarioState *m) {
+    if (m->heldObj->behavior == segmented_to_virtual(bhvJumpingBox)) {
+        return set_mario_action(m, ACT_CRAZY_BOX_BOUNCE, 0);
+    }
+
     if (m->marioObj->oInteractStatus & INT_STATUS_MARIO_DROP_OBJECT) {
         return drop_and_set_mario_action(m, ACT_WALKING, 0);
     }

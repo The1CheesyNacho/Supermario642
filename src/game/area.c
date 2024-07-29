@@ -70,6 +70,11 @@ s16 gCurrLevelNum = LEVEL_MIN;
 */
 
 const BehaviorScript *sWarpBhvSpawnTable[] = {
+    bhvDoorWarp,                bhvStar,                   bhvExitPodiumWarp,          bhvWarp,
+    bhvWarpPipe,                bhvFadingWarp,             bhvInstantActiveWarp,       bhvAirborneWarp,
+    bhvHardAirKnockBackWarp,    bhvSpinAirborneCircleWarp, bhvDeathWarp,               bhvSpinAirborneWarp,
+    bhvFlyingWarp,              bhvSwimmingWarp,           bhvPaintingStarCollectWarp, bhvPaintingDeathWarp,
+    bhvAirborneStarCollectWarp, bhvAirborneDeathWarp,      bhvLaunchStarCollectWarp,   bhvLaunchDeathWarp,
 };
 
 u8 sSpawnTypeFromWarpBhv[] = {
@@ -135,6 +140,12 @@ void print_intro_text(void) {
 u32 get_mario_spawn_type(struct Object *obj) {
     s32 i;
     const BehaviorScript *behavior = virtual_to_segmented(SEGMENT_BEHAVIOR_DATA, obj->behavior);
+
+    for (i = 0; i < 20; i++) {
+        if (sWarpBhvSpawnTable[i] == behavior) {
+            return sSpawnTypeFromWarpBhv[i];
+        }
+    }
     return MARIO_SPAWN_NONE;
 }
 

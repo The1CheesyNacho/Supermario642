@@ -8,6 +8,17 @@
 // Note: This bin does not use bin IDs, unlike the other segmented bins.
 #include "mario/model.inc.c"
 
+
+#include "bird/model.inc.c"
+#include "bird/anims/data.inc.c"
+#include "bird/anims/table.inc.c"
+UNUSED static const u64 binid_0 = 0;
+
+
+#include "yoshi/model.inc.c"
+#include "yoshi/anims/data.inc.c"
+#include "yoshi/anims/table.inc.c"
+
 #include "bubble/model.inc.c"
 
 #include "walk_smoke/model.inc.c"
@@ -32,11 +43,14 @@
 #endif
 
 #include "luigi/model.inc.c"
+#include "peach/model.inc.c"
+#include "peach/anims/data.inc.c"
+#include "peach/anims/table.inc.c"
+#include "bowser/model.inc.c"
+#include "bowser/anims/data.inc.c"
+#include "bowser/anims/table.inc.c"
+#include "bowser/flames_data.inc.c"
+#include "boat/model.inc.c"
 #include "wario/model.inc.c"
-<<<<<<< HEAD
-#include "waluigi/model.inc.c"
-=======
 #include "waluigi/model.inc.c"
 #include "metal_mario/model.inc.c"
-#include "toad_player/model.inc.c"
->>>>>>> 84eac60a11a495b05f5bbc6f08a29db4f270dc0d

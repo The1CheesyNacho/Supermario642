@@ -289,6 +289,104 @@ void render_hud_power_meter(void) {
     sPowerMeterVisibleTimer++;
 }
 
+#ifdef BREATH_METER
+/**
+ * Renders breath meter health segment texture using a table list.
+ */
+void render_breath_meter_segment(s16 numBreathWedges) {
+    Texture *(*breathLUT)[];
+    breathLUT = segmented_to_virtual(&breath_meter_segments_lut);
+    gDPPipeSync(gDisplayListHead++);
+    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, (*breathLUT)[numBreathWedges - 1]);
+    gDPLoadSync(gDisplayListHead++);
+    gDPLoadBlock(gDisplayListHead++, G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES));
+    gSP1Triangle(gDisplayListHead++, 0, 1, 2, 0);
+    gSP1Triangle(gDisplayListHead++, 0, 2, 3, 0);
+}
+
+/**
+ * Renders breath meter display lists.
+ * That includes the base and the colored segment textures.
+ */
+void render_dl_breath_meter(s16 numBreathWedges) {
+    Mtx *mtx = alloc_display_list(sizeof(Mtx));
+
+    if (mtx == NULL) {
+        return;
+    }
+
+    guTranslate(mtx, (f32) sBreathMeterHUD.x, (f32) sBreathMeterHUD.y, 0);
+    gSPMatrix(      gDisplayListHead++, VIRTUAL_TO_PHYSICAL(mtx++),
+                    G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
+    gSPDisplayList( gDisplayListHead++, &dl_breath_meter_base);
+    if (numBreathWedges != 0) {
+        gSPDisplayList(gDisplayListHead++, &dl_breath_meter_health_segments_begin);
+        render_breath_meter_segment(numBreathWedges);
+        gSPDisplayList(gDisplayListHead++, &dl_breath_meter_health_segments_end);
+    }
+    gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
+}
+
+/**
+ * Breath meter animation called after emphasized mode.
+ * Moves breath meter y pos speed until it's visible.
+ */
+static void animate_breath_meter_sliding_in(void) {
+    approach_s16_symmetric_bool(&sBreathMeterHUD.y, HUD_BREATH_METER_Y, 5);
+    if (sBreathMeterHUD.y         == HUD_BREATH_METER_Y) {
+        sBreathMeterHUD.animation = BREATH_METER_VISIBLE;
+    }
+}
+
+/**
+ * Breath meter animation called when there's 8 health segments.
+ * Moves breath meter y pos quickly until it's hidden.
+ */
+static void animate_breath_meter_sliding_out(void) {
+    approach_s16_symmetric_bool(&sBreathMeterHUD.y, HUD_BREATH_METER_HIDDEN_Y, 20);
+    if (sBreathMeterHUD.y         == HUD_BREATH_METER_HIDDEN_Y) {
+        sBreathMeterHUD.animation = BREATH_METER_HIDDEN;
+    }
+}
+
+/**
+ * Handles breath meter actions depending of the health segments values.
+ */
+void handle_breath_meter_actions(s16 numBreathWedges) {
+    // Show breath meter if health is not full, less than 8
+    if ((numBreathWedges < 8) && (sBreathMeterStoredValue == 8) && sBreathMeterHUD.animation == BREATH_METER_HIDDEN) {
+        sBreathMeterHUD.animation = BREATH_METER_SHOWING;
+        // sBreathMeterHUD.y         = HUD_BREATH_METER_Y;
+    }
+    // Show breath meter if breath is full, has 8
+    if ((numBreathWedges == 8) && (sBreathMeterStoredValue  == 7)) sBreathMeterVisibleTimer  = 0;
+    // After breath is full, hide breath meter
+    if ((numBreathWedges == 8) && (sBreathMeterVisibleTimer > 45)) sBreathMeterHUD.animation = BREATH_METER_HIDING;
+    // Update to match breath value
+    sBreathMeterStoredValue = numBreathWedges;
+    // If Mario is swimming, keep breath meter visible
+    if (gPlayerCameraState->action & ACT_FLAG_SWIMMING) {
+        if (sBreathMeterHUD.animation == BREATH_METER_HIDDEN) {
+            sBreathMeterHUD.animation = BREATH_METER_SHOWING;
+        }
+        sBreathMeterVisibleTimer = 0;
+    }
+}
+
+void render_hud_breath_meter(void) {
+    s16 shownBreathAmount = gHudDisplay.breath;
+    if (sBreathMeterHUD.animation != BREATH_METER_HIDING) handle_breath_meter_actions(shownBreathAmount);
+    if (sBreathMeterHUD.animation == BREATH_METER_HIDDEN) return;
+    switch (sBreathMeterHUD.animation) {
+        case BREATH_METER_SHOWING:       animate_breath_meter_sliding_in();  break;
+        case BREATH_METER_HIDING:        animate_breath_meter_sliding_out(); break;
+        default:                                                             break;
+    }
+    render_dl_breath_meter(shownBreathAmount);
+    sBreathMeterVisibleTimer++;
+}
+#endif
+
 
 /**
  * Renders the amount of lives Mario has.
@@ -558,6 +656,10 @@ void render_hud(void) {
         if (hudDisplayFlags & HUD_DISPLAY_FLAG_KEYS) {
             render_hud_keys();
         }
+
+#ifdef BREATH_METER
+        if (hudDisplayFlags & HUD_DISPLAY_FLAG_BREATH_METER) render_hud_breath_meter();
+#endif
 
         if (hudDisplayFlags & HUD_DISPLAY_FLAG_CAMERA_AND_POWER) {
             render_hud_power_meter();

@@ -68,6 +68,10 @@ void spawn_macro_abs_special(ModelID32 model, const BehaviorScript *behavior, s1
 
 UNUSED static void spawn_macro_coin_unknown(const BehaviorScript *behavior, s16 a1[]) {
     struct Object *obj;
+    ModelID16 model = bhvYellowCoin == behavior ? MODEL_YELLOW_COIN : MODEL_NONE;
+
+    obj = spawn_object_abs_with_rot(&gMacroObjectDefaultParent, 0, model, behavior,
+                                    a1[1], a1[2], a1[3], 0, convert_rotation(a1[0]), 0);
 
     obj->oUnusedCoinParams = a1[4];
     obj->oBehParams = (a1[4] & 0xFF) >> 16;
@@ -167,6 +171,13 @@ void spawn_macro_objects_hardcoded(s32 areaIndex, MacroObject *macroObjList) {
         // Spawn objects based on hardcoded presets, and most seem to be for Big Boo's Haunt.
         // However, BBH doesn't use this function so this might just be an early test?
         switch (macroObjPreset) {
+            case  0: spawn_macro_abs_yrot_2params(MODEL_NONE,                       bhvBooStaircase,           pos[0], pos[1], pos[2], yaw, 0); break;
+            case 1: spawn_macro_abs_yrot_2params(MODEL_YELLOW_COIN,                bhvYellowCoin,             pos[0], pos[1], pos[2], yaw, 0); break;
+            case 2: spawn_macro_abs_yrot_2params(MODEL_YELLOW_COIN,                bhvYellowCoin,             pos[0], pos[1], pos[2], yaw, 0); break;
+            case 3: spawn_macro_abs_yrot_2params(MODEL_YELLOW_COIN,                bhvYellowCoin,             pos[0], pos[1], pos[2], yaw, 0); break;
+            case 4: spawn_macro_abs_yrot_2params(MODEL_YELLOW_COIN,                bhvYellowCoin,             pos[0], pos[1], pos[2], yaw, 0); break;
+            case 5: spawn_macro_abs_yrot_2params(MODEL_YELLOW_COIN,                bhvYellowCoin,             pos[0], pos[1], pos[2], yaw, 0); break;
+            case 21: spawn_macro_abs_yrot_2params(MODEL_YELLOW_COIN,                bhvYellowCoin,             pos[0], pos[1], pos[2], yaw, 0); break;
             default: break;
         }
     }

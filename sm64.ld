@@ -308,7 +308,27 @@ SECTIONS
    /* mario actor group */
    STANDARD_OBJECTS(group0,  0x04000000, 0x17000000)
 
+   /* load the other actor groups */
+   STANDARD_OBJECTS(group1,  0x05000000, 0x0C000000)
+   STANDARD_OBJECTS(group2,  0x05000000, 0x0C000000)
+   STANDARD_OBJECTS(group3,  0x05000000, 0x0C000000)
+   STANDARD_OBJECTS(group4,  0x05000000, 0x0C000000)
+   STANDARD_OBJECTS(group5,  0x05000000, 0x0C000000)
+   STANDARD_OBJECTS(group6,  0x05000000, 0x0C000000)
+   STANDARD_OBJECTS(group7,  0x05000000, 0x0C000000)
+   STANDARD_OBJECTS(group8,  0x05000000, 0x0C000000)
+   STANDARD_OBJECTS(group9,  0x05000000, 0x0C000000)
+   STANDARD_OBJECTS(group10, 0x05000000, 0x0C000000)
+   STANDARD_OBJECTS(group11, 0x05000000, 0x0C000000)
+   STANDARD_OBJECTS(group12, 0x06000000, 0x0D000000)
+   STANDARD_OBJECTS(group13, 0x06000000, 0x0D000000)
+   STANDARD_OBJECTS(group14, 0x06000000, 0x0D000000)
+   STANDARD_OBJECTS(group15, 0x06000000, 0x0D000000)
+   STANDARD_OBJECTS(group16, 0x06000000, 0x0D000000)
+   STANDARD_OBJECTS(group17, 0x06000000, 0x0D000000)
+
    /* load the common actor groups */
+   STANDARD_OBJECTS(common0, 0x08000000, 0x0F000000)
    STANDARD_OBJECTS(common1, 0x03000000, 0x16000000)
 
    /* use segmented addressing for behaviors */
@@ -378,6 +398,30 @@ SECTIONS
       ASSERT((. <= (SEG_POOL_START + POOL_SIZE)), "Error: extended past pool end.")
 #endif
 
+   /* 0x268020 0x268020-0 [0] */
+   BEGIN_SEG(intro, 0x14000000)
+   {
+      KEEP(BUILD_DIR/levels/intro/script.o(.*data));
+      KEEP(BUILD_DIR/levels/intro/script.o(.rodata*));
+      KEEP(BUILD_DIR/levels/intro/script.o(.text*));
+      KEEP(BUILD_DIR/levels/intro/geo.o(.data*));
+   }
+   END_SEG(intro)
+   BEGIN_NOLOAD(intro)
+   {
+      KEEP(BUILD_DIR/levels/intro/script.o(.bss*));
+   }
+   END_NOLOAD(intro)
+   BEGIN_SEG(intro_segment_7, 0x07000000)
+   {
+      KEEP(BUILD_DIR/levels/intro/leveldata.szp.o(.data*));
+      . = ALIGN(0x10);
+   }
+   END_SEG(intro_segment_7)
+
+   YAY0_SEG(debug_level_select, 0x07000000)
+   YAY0_SEG(title_screen_bg,    0x0A000000)
+
 #ifdef KEEP_MARIO_HEAD
    BEGIN_SEG(gd_dynlists, 0x04000000)
    {
@@ -403,6 +447,19 @@ SECTIONS
 #endif
 
    gMainLevels = __romPos;
+
+   BEGIN_SEG(menu, 0x14000000)
+   {
+      KEEP(BUILD_DIR/levels/menu/script.o(.data*));
+      KEEP(BUILD_DIR/levels/menu/geo.o(.data*));
+   }
+   END_SEG(menu)
+   BEGIN_SEG(menu_segment_7, 0x07000000)
+   {
+      KEEP(BUILD_DIR/levels/menu/leveldata.szp.o(.data*));
+      . = ALIGN(0x10);
+   }
+   END_SEG(menu_segment_7)
 
    BEGIN_SEG(scripts, 0x15000000)
    {

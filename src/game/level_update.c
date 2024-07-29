@@ -107,6 +107,8 @@ const char *credits20[] = { "1EXECUTIVE PRODUCER", "HIROSHI YAMAUCHI" };
 
 
 struct CreditsEntry sCreditsSequence[] = {
+    { LEVEL_CASTLE_GROUNDS, 1, 1, -128, { 0, 8000, 0 }, NULL },
+    { LEVEL_CASTLE_GROUNDS, 1, 1, -128, { 0, 906, -1200 }, NULL },
     { LEVEL_NONE, 0, 1, 0, { 0, 0, 0 }, NULL },
 };
 
@@ -415,6 +417,17 @@ else{
             && get_current_background_music() != SEQUENCE_ARGS(4, NULL) && sTimerRunning) {
         }
 
+        if (sWarpDest.levelNum == LEVEL_CASTLE && sWarpDest.areaIdx == 1
+            && (sWarpDest.nodeId == 32)
+        ) {
+            play_sound(SOUND_MENU_MARIO_CASTLE_WARP, gGlobalSoundSource);
+        }
+
+        if (sWarpDest.levelNum == LEVEL_CASTLE_GROUNDS && sWarpDest.areaIdx == 1
+            && (sWarpDest.nodeId == 7 || sWarpDest.nodeId == 10 || sWarpDest.nodeId == 20
+                || sWarpDest.nodeId == 30)) {
+            play_sound(SOUND_MENU_MARIO_CASTLE_WARP, gGlobalSoundSource);
+        }
 #endif
 #ifndef DISABLE_EXIT_COURSE
        if (sWarpDest.arg == WARP_FLAG_EXIT_COURSE) {
@@ -518,6 +531,17 @@ else {
 void check_instant_warp(void) {
     s16 cameraAngle;
     struct Surface *floor;
+
+#ifdef ENABLE_VANILLA_LEVEL_SPECIFIC_CHECKS
+ #ifdef UNLOCK_ALL
+    if (gCurrLevelNum == LEVEL_CASTLE) {
+ #else // !UNLOCK_ALL
+    if (gCurrLevelNum == LEVEL_CASTLE
+        && save_file_get_total_star_count(gCurrSaveFileNum - 1, COURSE_MIN - 1, COURSE_MAX - 1) >= 70) {
+ #endif // !UNLOCK_ALL
+        return;
+    }
+#endif // ENABLE_VANILLA_LEVEL_SPECIFIC_CHECKS
 
     if ((floor = gMarioState->floor) != NULL) {
         s32 index = floor->type - SURFACE_INSTANT_WARP_1B;
@@ -986,6 +1010,8 @@ s32 play_mode_normal(void) {
     if (gCurrDemoInput != NULL) {
         print_intro_text();
         if (gPlayer1Controller->buttonPressed & END_DEMO) {
+            level_trigger_warp(gMarioState,
+                               gCurrLevelNum == LEVEL_COURSE1 ? WARP_OP_DEMO_END : WARP_OP_DEMO_NEXT);
         } else if (!gWarpTransition.isActive && sDelayedWarpOp == WARP_OP_NONE
                    && (gPlayer1Controller->buttonPressed & START_BUTTON)) {
             level_trigger_warp(gMarioState, WARP_OP_DEMO_NEXT);

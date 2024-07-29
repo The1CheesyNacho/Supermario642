@@ -346,7 +346,27 @@ void obj_update_pos_vel_xz(void) {
     o->oPosZ += o->oForwardVel * coss(o->oMoveAngleYaw);
 }
 
+/**
+ * Generates splashes if at surface of water, entering water, or bubbles
+ * if underwater.
+ */
+void obj_splash(s32 waterY, s32 objY) {
+    u32 globalTimer = gGlobalTimer;
 
+    // Spawns waves if near surface of water and plays a noise if entering.
+    if ((f32)(waterY + 30) > o->oPosY && o->oPosY > (f32)(waterY - 30)) {
+        spawn_object(o, MODEL_IDLE_WATER_WAVE, bhvObjectWaterWave);
+
+        if (o->oVelY < -20.0f) {
+            cur_obj_play_sound_2(SOUND_OBJ_DIVING_INTO_WATER);
+        }
+    }
+
+    // Spawns bubbles if underwater.
+    if ((objY + 50) < waterY && !(globalTimer & 31)) {
+        spawn_object(o, MODEL_WHITE_PARTICLE_SMALL, bhvObjectBubble);
+    }
+}
 
 /**
  * Generic object move function. Handles walls, water, floors, and gravity.
@@ -531,6 +551,22 @@ s32 obj_find_wall_displacement(Vec3f dist, f32 x, f32 y, f32 z, f32 radius) {
 }
 
 /**
+ * Spawns a number of coins at the location of an object
+ * with a random forward velocity, y velocity, and direction.
+ */
+void obj_spawn_yellow_coins(struct Object *obj, s8 nCoins) {
+    struct Object *coin;
+    s8 count;
+
+    for (count = 0; count < nCoins; count++) {
+        coin = spawn_object(obj, MODEL_YELLOW_COIN, bhvMovingYellowCoin);
+        coin->oForwardVel = random_float() * 20;
+        coin->oVelY = random_float() * 40 + 20;
+        coin->oMoveAngleYaw = random_u16();
+    }
+}
+
+/**
  * Controls whether certain objects should flicker/when to despawn.
  */
 s32 obj_flicker_and_disappear(struct Object *obj, s16 lifeSpan) {
@@ -629,6 +665,15 @@ s32 obj_lava_death(void) {
         o->oPosY -= 10.0f;
     }
 
+    if ((o->oTimer % 8) == 0) {
+        cur_obj_play_sound_2(SOUND_OBJ_BULLY_EXPLODE_LAVA);
+        deathSmoke = spawn_object(o, MODEL_SMOKE, bhvBobombBullyDeathSmoke);
+        deathSmoke->oPosX += random_float() * 20.0f;
+        deathSmoke->oPosY += random_float() * 20.0f;
+        deathSmoke->oPosZ += random_float() * 20.0f;
+        deathSmoke->oForwardVel = random_float() * 10.0f;
+    }
+
     return FALSE;
 }
 
@@ -641,6 +686,12 @@ void spawn_orange_number(s8 behParam, s16 relX, s16 relY, s16 relZ) {
 #else
     if (behParam > ORANGE_NUMBER_9) return;
 #endif
+
+    struct Object *orangeNumber = spawn_object_relative(behParam, relX, relY, relZ, o, MODEL_NUMBER, bhvOrangeNumber);
+    orangeNumber->oPosY += 25.0f;
+    orangeNumber->oOrangeNumberOffset = relX;
+    orangeNumber->oHomeX = o->oPosX;
+    orangeNumber->oHomeZ = o->oPosZ;
 }
 
 /**
@@ -673,3 +724,55 @@ UNUSED s32 debug_sequence_tracker(s16 debugInputSequence[]) {
 
     return FALSE;
 }
+
+#include "behaviors/moving_coin.inc.c"
+#include "behaviors/seaweed.inc.c"
+#include "behaviors/bobomb.inc.c"
+#include "behaviors/cannon_door.inc.c"
+#include "behaviors/whirlpool.inc.c"
+#include "behaviors/butterfly.inc.c"
+#include "behaviors/hoot.inc.c"
+#include "behaviors/bubble.inc.c"
+#include "behaviors/water_wave.inc.c"
+#include "behaviors/explosion.inc.c"
+#include "behaviors/respawner.inc.c"
+#include "behaviors/bully.inc.c"
+#include "behaviors/bowser_bomb.inc.c"
+#include "behaviors/celebration_star.inc.c"
+#include "behaviors/drawbridge.inc.c"
+#include "behaviors/bomp.inc.c"
+#include "behaviors/sliding_platform.inc.c"
+#include "behaviors/moneybag.inc.c"
+#include "behaviors/bowling_ball.inc.c"
+#include "behaviors/cruiser.inc.c"
+#include "behaviors/spindel.inc.c"
+#include "behaviors/pyramid_wall.inc.c"
+#include "behaviors/pyramid_elevator.inc.c"
+#include "behaviors/pyramid_top.inc.c"
+#include "behaviors/sound_waterfall.inc.c"
+#include "behaviors/sound_volcano.inc.c"
+#include "behaviors/castle_flag.inc.c"
+#include "behaviors/sound_birds.inc.c"
+#include "behaviors/sound_ambient.inc.c"
+#include "behaviors/sound_sand.inc.c"
+#include "behaviors/castle_cannon_grate.inc.c"
+#include "behaviors/snowman.inc.c"
+#include "behaviors/boulder.inc.c"
+#include "behaviors/cap.inc.c"
+#include "behaviors/koopa_shell.inc.c"
+#include "behaviors/spawn_star.inc.c"
+#include "behaviors/red_coin.inc.c"
+#include "behaviors/hidden_star.inc.c"
+#include "behaviors/rolling_log.inc.c"
+#include "behaviors/mushroom_1up.inc.c"
+#include "behaviors/controllable_platform.inc.c"
+#include "behaviors/breakable_box_small.inc.c"
+#include "behaviors/snow_mound.inc.c"
+#include "behaviors/floating_platform.inc.c"
+#include "behaviors/orange_number.inc.c"
+#include "behaviors/falling_pillar.inc.c"
+#include "behaviors/floating_box.inc.c"
+#include "behaviors/decorative_pendulum.inc.c"
+#include "behaviors/treasure_chest.inc.c"
+#include "behaviors/mips.inc.c"
+#include "behaviors/yoshi.inc.c"

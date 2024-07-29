@@ -152,7 +152,7 @@
  */
 
 #ifndef START_LEVEL
-    #define START_LEVEL LEVEL_BOB
+    #define START_LEVEL LEVEL_CASTLE_GROUNDS
 #endif // !START_LEVEL
 
 

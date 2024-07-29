@@ -1120,6 +1120,13 @@ void visualise_object_hitbox(struct Object *node) {
     if (node->oIntangibleTimer != -1) {
         vec3f_set(bnds1, node->oPosX, (node->oPosY - node->hitboxDownOffset), node->oPosZ);
         vec3f_set(bnds2, node->hitboxRadius, node->hitboxHeight-node->hitboxDownOffset, node->hitboxRadius);
+        if (node->behavior == segmented_to_virtual(bhvWarp)
+            || node->behavior == segmented_to_virtual(bhvDoorWarp)
+            || node->behavior == segmented_to_virtual(bhvFadingWarp)) {
+            debug_box_color(COLOR_RGBA32_DEBUG_WARP);
+        } else {
+            debug_box_color(COLOR_RGBA32_DEBUG_HITBOX);
+        }
 
         debug_box(bnds1, bnds2, (DEBUG_SHAPE_CYLINDER | DEBUG_UCODE_REJ));
         vec3f_set(bnds1, node->oPosX, (node->oPosY - node->hitboxDownOffset), node->oPosZ);

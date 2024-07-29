@@ -27,6 +27,8 @@
 #include "level_table.h"
 #include "config.h"
 #include "puppyprint.h"
+#include "profiling.h"
+#include "cutscene.h"
 
 #define CBUTTON_MASK (U_CBUTTONS | D_CBUTTONS | L_CBUTTONS | R_CBUTTONS)
 
@@ -1485,6 +1487,14 @@ s32 update_fixed_camera(struct Camera *c, Vec3f focus, UNUSED Vec3f pos) {
     Vec3f basePos;
 
     play_camera_buzz_if_c_sideways();
+
+    // Don't move closer to Mario in these areas
+    switch (gCurrLevelArea) {
+        case AREA_CASTLE_LOBBY:
+            scaleToMario = 0.3f;
+            heightOffset = 0.f;
+            break;
+    }
 
     handle_c_button_movement(c);
     play_camera_buzz_if_cdown();
@@ -2954,6 +2964,13 @@ void update_camera(struct Camera *c) {
     PROFILER_GET_SNAPSHOT_TYPE(PROFILER_DELTA_COLLISION);
     gCamera = c;
     update_camera_hud_status(c);
+    if (cutscene_active) {
+        cutscene_step();
+        c->yaw = calculate_yaw(c->pos, c->focus);
+        vec3f_copy(gLakituState.pos, c->pos);
+        vec3f_copy(gLakituState.focus, c->focus);
+        return;
+    }
     if (c->cutscene == CUTSCENE_NONE
 #ifdef PUPPYCAM
         && !gPuppyCam.enabled
@@ -3322,6 +3339,35 @@ void init_camera(struct Camera *c) {
         // Calls the initial cutscene when you enter Bowser battle levels
         // Note: This replaced an "old" way to call these cutscenes usin
 #ifdef ENABLE_VANILLA_CAM_PROCESSING
+        //! Hardcoded position checks determine which cutscene to play when Mario enters castle grounds.
+        case LEVEL_CASTLE_GROUNDS:
+            if (is_within_100_units_of_mario(-1328.f, 260.f, 4664.f) != 1) {
+                marioOffset[0] = -400.f;
+                marioOffset[2] = -800.f;
+            }
+            if (is_within_100_units_of_mario(-6901.f, 2376.f, -6509.f) == 1) {
+                start_cutscene(c, CUTSCENE_EXIT_WATERFALL);
+            }
+            if (is_within_100_units_of_mario(5408.f, 4500.f, 3637.f) == 1) {
+                start_cutscene(c, CUTSCENE_EXIT_FALL_WMOTR);
+            }
+            gLakituState.mode = CAMERA_MODE_FREE_ROAM;
+            break;
+        case LEVEL_SA:
+            marioOffset[2] = 200.f;
+            break;
+        case LEVEL_CASTLE_COURTYARD:
+            marioOffset[2] = -300.f;
+            break;
+        case LEVEL_LLL:
+            gCameraMovementFlags |= CAM_MOVE_ZOOMED_OUT;
+            break;
+        case LEVEL_CASTLE:
+            marioOffset[2] = 150.f;
+            break;
+        case LEVEL_RR:
+            vec3f_set(sFixedModeBasePosition, -2985.f, 478.f, -5568.f);
+            break;
 #endif
     }
     if (c->mode == CAMERA_MODE_8_DIRECTIONS) {
@@ -3368,6 +3414,9 @@ void init_camera(struct Camera *c) {
     vec3f_copy(gLakituState.goalFocus, c->focus);
     vec3f_copy(gLakituState.pos, c->pos);
     vec3f_copy(gLakituState.focus, c->focus);
+    if (c->mode == CAMERA_MODE_FIXED) {
+        set_fixed_cam_axis_sa_lobby(c->mode);
+    }
     store_lakitu_cam_info_for_c_up(c);
     gLakituState.yaw = calculate_yaw(c->focus, c->pos);
     gLakituState.nextYaw = gLakituState.yaw;
@@ -3785,6 +3834,10 @@ s32 find_c_buttons_pressed(u16 currentState, u16 buttonsPressed, u16 buttonsDown
  * Determine which icon to show on the HUD
  */
 s32 update_camera_hud_status(struct Camera *c) {
+    if (cutscene_active) {
+        set_hud_camera_status(CAM_STATUS_NONE);
+        return CAM_STATUS_NONE;
+    }
     s16 status = CAM_STATUS_NONE;
 
     if (c->cutscene != CUTSCENE_NONE
@@ -4859,6 +4912,16 @@ u8 get_cutscene_from_mario_status(struct Camera *c) {
         sObjectCutscene = CUTSCENE_NONE;
         if (sMarioCamState->cameraEvent == CAM_EVENT_DOOR) {
             switch (gCurrLevelArea) {
+                case AREA_CASTLE_LOBBY:
+                    //! doorStatus is never DOOR_ENTER_LOBBY when cameraEvent == 6, because
+                    //! doorStatus is only used for the star door in the lobby, which uses
+                    //! ACT_ENTERING_STAR_DOOR
+                    if (c->mode == CAMERA_MODE_SPIRAL_STAIRS || c->mode == CAMERA_MODE_CLOSE || c->doorStatus == DOOR_ENTER_LOBBY) {
+                        cutscene = open_door_cutscene(CUTSCENE_DOOR_PULL_MODE, CUTSCENE_DOOR_PUSH_MODE);
+                    } else {
+                        cutscene = open_door_cutscene(CUTSCENE_DOOR_PULL, CUTSCENE_DOOR_PUSH);
+                    }
+                    break;
                 default:
                     cutscene = open_door_cutscene(CUTSCENE_DOOR_PULL, CUTSCENE_DOOR_PUSH);
                     break;
@@ -5290,6 +5353,17 @@ void parallel_tracking_init(struct Camera *c, struct ParallelTrackingPoint *path
 }
 
 /**
+ * Set the fixed camera base pos depending on the current level area
+ */
+void set_fixed_cam_axis_sa_lobby(UNUSED s16 preset) {
+    switch (gCurrLevelArea) {
+        case AREA_CASTLE_LOBBY:
+            vec3f_set(sFixedModeBasePosition, -577.f, 143.f, 1443.f);
+            break;
+    }
+}
+
+/**
  * Block area-specific CameraTrigger and special surface modes.
  * Generally, block area mode changes if:
  *      Mario is wearing the metal cap, or at the water's surface, or the camera is in Mario mode
@@ -5544,6 +5618,7 @@ void cam_castle_basement_look_downstairs(struct Camera *c) {
 void cam_castle_enter_lobby(struct Camera *c) {
     if (c->mode != CAMERA_MODE_FIXED) {
         sStatusFlags &= ~CAM_FLAG_SMOOTH_MOVEMENT;
+        set_fixed_cam_axis_sa_lobby(c->mode);
         c->mode = CAMERA_MODE_FIXED;
     }
 }
@@ -10220,6 +10295,9 @@ u8 sDanceCutsceneIndexTable[][4] = {
  */
 u8 sZoomOutAreaMasks[] = {
 	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), // BBH            | CCM
+	ZOOMOUT_AREA_MASK(1, 0, 0, 0, 0, 0, 0, 0), 
+	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), 
+	ZOOMOUT_AREA_MASK(0, 0, 0, 0, 1, 0, 0, 0), 
 };
 
 STATIC_ASSERT(ARRAY_COUNT(sZoomOutAreaMasks) - 1 == LEVEL_MAX / 2, "Make sure you edit sZoomOutAreaMasks when adding / removing courses.");
@@ -10922,3 +11000,8 @@ void obj_rotate_towards_point(struct Object *obj, Vec3f point, s16 pitchOff, s16
     obj->oMoveAngleYaw = approach_s16_asymptotic(obj->oMoveAngleYaw, yaw + yawOff, yawDiv);
 }
 
+#include "behaviors/intro_peach.inc.c"
+#include "behaviors/intro_lakitu.inc.c"
+#include "behaviors/end_birds_1.inc.c"
+#include "behaviors/end_birds_2.inc.c"
+#include "behaviors/intro_scene.inc.c"

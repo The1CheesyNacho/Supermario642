@@ -120,6 +120,18 @@ static u8 sPssSlideStarted = FALSE;
 u32 get_mario_cap_flag(struct Object *capObject) {
     const BehaviorScript *script = virtual_to_segmented(0x13, capObject->behavior);
 
+    if (script == bhvNormalCap) {
+        return MARIO_NORMAL_CAP;
+    } else if (script == bhvMetalCap) {
+        return MARIO_METAL_CAP;
+    } else if (script == bhvWingCap) {
+        return MARIO_WING_CAP;
+    } else if (script == bhvVanishCap) {
+        return MARIO_VANISH_CAP;
+    } else if (script == bhvGoldCap) {
+        return MARIO_GOLD_CAP;
+    }
+
     return 0;
 }
 
@@ -261,11 +273,18 @@ void mario_stop_riding_object(struct MarioState *m) {
 void mario_grab_used_object(struct MarioState *m) {
     if (m->heldObj == NULL) {
         m->heldObj = m->usedObj;
+        obj_set_held_state(m->heldObj, bhvCarrySomethingHeld);
     }
 }
 
 void mario_drop_held_object(struct MarioState *m) {
     if (m->heldObj != NULL) {
+        if (m->heldObj->behavior == segmented_to_virtual(bhvKoopaShellUnderwater)) {
+            stop_shell_music();
+        }
+
+        obj_set_held_state(m->heldObj, bhvCarrySomethingDropped);
+
         // ! When dropping an object instead of throwing it, it will be put at Mario's
         // y-positon instead of the HOLP's y-position. This fact is often exploited when
         // cloning objects.
@@ -282,6 +301,11 @@ void mario_drop_held_object(struct MarioState *m) {
 
 void mario_throw_held_object(struct MarioState *m) {
     if (m->heldObj != NULL) {
+        if (m->heldObj->behavior == segmented_to_virtual(bhvKoopaShellUnderwater)) {
+            stop_shell_music();
+        }
+
+        obj_set_held_state(m->heldObj, bhvCarrySomethingThrown);
 
         m->heldObj->oPosX = m->marioBodyState->heldObjLastPosition[0] + 32.0f * sins(m->faceAngle[1]);
         m->heldObj->oPosY = m->marioBodyState->heldObjLastPosition[1];
@@ -323,6 +347,7 @@ void mario_blow_off_cap(struct MarioState *m, f32 capSpeed) {
 
         m->flags &= ~(MARIO_NORMAL_CAP | MARIO_CAP_ON_HEAD);
 
+        capObject = spawn_object(m->marioObj, MODEL_MARIOS_CAP, bhvNormalCap);
 
         capObject->oPosY += (m->action & ACT_FLAG_SHORT_HITBOX) ? 120.0f : 180.0f;
         capObject->oForwardVel = capSpeed;
@@ -389,6 +414,29 @@ u32 mario_check_object_grab(struct MarioState *m) {
 
     if (m->input & INPUT_INTERACT_OBJ_GRABBABLE) {
         script = virtual_to_segmented(SEGMENT_BEHAVIOR_DATA, m->interactObj->behavior);
+
+        if (script == bhvBowser) {
+            s16 facingDYaw = m->faceAngle[1] - m->interactObj->oMoveAngleYaw;
+            if (facingDYaw >= -0x5555 && facingDYaw <= 0x5555) {
+                m->faceAngle[1] = m->interactObj->oMoveAngleYaw;
+                m->usedObj = m->interactObj;
+                m->pos[1] = m->floorHeight;
+                m->vel[1] = 0.0f;
+                result = set_mario_action(m, ACT_PICKING_UP_BOWSER, 0);
+            }
+        } else {
+            s16 facingDYaw = mario_obj_angle_to_object(m, m->interactObj) - m->faceAngle[1];
+            if (facingDYaw >= -0x2AAA && facingDYaw <= 0x2AAA) {
+                m->usedObj = m->interactObj;
+
+                if (!(m->action & ACT_FLAG_AIR)) {
+                    set_mario_action(
+                        m, (m->action & ACT_FLAG_DIVING) ? ACT_DIVE_PICKING_UP : ACT_PICKING_UP, 0);
+                }
+
+                result = TRUE;
+            }
+        }
     }
 
     return result;
@@ -690,6 +738,7 @@ u32 interact_coin(struct MarioState *m, UNUSED u32 interactType, struct Object *
 #ifdef X_COIN_STAR
     if (COURSE_IS_MAIN_COURSE(gCurrCourseNum) && m->numCoins - obj->oDamageOrCoinValue < X_COIN_STAR
         && m->numCoins >= X_COIN_STAR && !g100CoinStarSpawned) {
+        bhv_spawn_star_no_level_exit(STAR_BP_ACT_100_COINS);
         g100CoinStarSpawned = TRUE;
     }
 #endif
@@ -768,6 +817,7 @@ u32 interact_star_or_key(struct MarioState *m, UNUSED u32 interactType, struct O
             starGrabAction = ACT_FALL_AFTER_STAR_GRAB;
         }
 
+        spawn_object(obj, MODEL_NONE, bhvStarKeyCollectionPuffSpawner);
 
         obj->oInteractStatus = INT_STATUS_INTERACTED;
         m->interactObj       = obj;
@@ -1579,6 +1629,10 @@ u32 interact_grabbable(struct MarioState *m, u32 interactType, struct Object *ob
         }
     }
 
+    if (script != bhvBowser) {
+        push_mario_out_of_object(m, obj, -5.0f);
+    }
+
     return FALSE;
 }
 
@@ -1642,12 +1696,64 @@ u32 mario_can_talk(struct MarioState *m, u32 arg) {
 #define SIGN_RANGE DEGREES(45)
 #endif
 
+u32 check_read_sign(struct MarioState *m, struct Object *obj) {
+#ifdef EASIER_DIALOG_TRIGGER
+    s16 facingDYaw = (s16)(obj->oMoveAngleYaw + 0x8000) - m->faceAngle[1];
+    if (
+        mario_can_talk(m, TRUE)
+        && object_facing_mario(m, obj, SIGN_RANGE)
+        && (facingDYaw >= -SIGN_RANGE)
+        && (facingDYaw <=  SIGN_RANGE)
+        && abs_angle_diff(mario_obj_angle_to_object(m, obj), m->faceAngle[1]) <= SIGN_RANGE
+    ) {
+#ifdef DIALOG_INDICATOR
+        struct Object *orangeNumber;
+        if (obj->behavior == segmented_to_virtual(bhvSignOnWall)) {
+            orangeNumber = spawn_object_relative(ORANGE_NUMBER_A, 0, 180, 32, obj, MODEL_NUMBER, bhvOrangeNumber);
+        } else {
+            orangeNumber = spawn_object_relative(ORANGE_NUMBER_A, 0, 160,  8, obj, MODEL_NUMBER, bhvOrangeNumber);
+        }
+        orangeNumber->oHomeX = orangeNumber->oPosX;
+        orangeNumber->oHomeZ = orangeNumber->oPosZ;
+#endif
+        if (m->input & READ_MASK) {
+#else
+    if ((m->input & READ_MASK) && mario_can_talk(m, 0) && object_facing_mario(m, obj, SIGN_RANGE)) {
+        s16 facingDYaw = (s16)(obj->oMoveAngleYaw + 0x8000) - m->faceAngle[1];
+        if (facingDYaw >= -SIGN_RANGE && facingDYaw <= SIGN_RANGE) {
+#endif
+            f32 targetX = obj->oPosX + 105.0f * sins(obj->oMoveAngleYaw);
+            f32 targetZ = obj->oPosZ + 105.0f * coss(obj->oMoveAngleYaw);
+
+            m->marioObj->oMarioReadingSignDYaw = facingDYaw;
+            m->marioObj->oMarioReadingSignDPosX = targetX - m->pos[0];
+            m->marioObj->oMarioReadingSignDPosZ = targetZ - m->pos[2];
+
+            m->interactObj = obj;
+            m->usedObj     = obj;
+            return set_mario_action(m, ACT_READING_SIGN, 0);
+        }
+    }
+
+    return FALSE;
+}
+
 u32 check_npc_talk(struct MarioState *m, struct Object *obj) {
 #ifdef EASIER_DIALOG_TRIGGER
     if (
         mario_can_talk(m, TRUE)
         && abs_angle_diff(mario_obj_angle_to_object(m, obj), m->faceAngle[1]) <= SIGN_RANGE
     ) {
+#ifdef DIALOG_INDICATOR
+        struct Object *orangeNumber;
+        if (obj->behavior == segmented_to_virtual(bhvYoshi)) {
+            orangeNumber = spawn_object_relative(ORANGE_NUMBER_A, 0, 256, 64, obj, MODEL_NUMBER, bhvOrangeNumber);
+        } else {
+            orangeNumber = spawn_object_relative(ORANGE_NUMBER_A, 0, 160,  0, obj, MODEL_NUMBER, bhvOrangeNumber);
+        }
+        orangeNumber->oHomeX = orangeNumber->oPosX;
+        orangeNumber->oHomeZ = orangeNumber->oPosZ;
+#endif
         if (m->input & READ_MASK) {
 #else
     if ((m->input & READ_MASK) && mario_can_talk(m, 1)) {
@@ -1671,7 +1777,9 @@ u32 check_npc_talk(struct MarioState *m, struct Object *obj) {
 u32 interact_text(struct MarioState *m, UNUSED u32 interactType, struct Object *obj) {
     u32 interact = FALSE;
 
-    if (obj->oInteractionSubtype & INT_SUBTYPE_NPC) {
+    if (obj->oInteractionSubtype & INT_SUBTYPE_SIGN) {
+        interact = check_read_sign(m, obj);
+    } else if (obj->oInteractionSubtype & INT_SUBTYPE_NPC) {
         interact = check_npc_talk(m, obj);
     } else {
         push_mario_out_of_object(m, obj, 2.0f);
@@ -1776,6 +1884,7 @@ void pss_end_slide(struct MarioState *m) {
         u16 slideTime = level_control_timer(TIMER_CONTROL_STOP);
         if (slideTime < 630) {
             m->marioObj->oBehParams = (1 << 24);
+            spawn_default_star(-6358.0f, -4300.0f, 4700.0f);
         }
         sPssSlideStarted = FALSE;
     }
