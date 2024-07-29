@@ -38,6 +38,12 @@ const LevelScript level_bob_entry[] = {
     ALLOC_LEVEL_POOL(),
     MARIO(/*model*/ MODEL_MARIO, /*behParam*/ 0x00000000, /*beh*/ bhvMario),
     LUIGI(/*model*/ MODEL_LUIGI, /*behParam*/ 0x00000001, /*beh*/ bhvLuigi),
+<<<<<<< HEAD
+=======
+    JUMP_LINK(script_func_global_1),
+    JUMP_LINK(script_func_global_4),
+    JUMP_LINK(script_func_global_15),
+>>>>>>> 84eac60a11a495b05f5bbc6f08a29db4f270dc0d
 
     AREA(/*index*/ 1, bob_geo_000488),
         TERRAIN(/*terrainData*/ bob_seg7_collision_level),
