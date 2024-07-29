@@ -582,64 +582,6 @@ s32 act_debug_free_move(struct MarioState *m) {
 }
 
 void general_star_dance_handler(struct MarioState *m, s32 isInWater) {
-    struct Object *celebStar = NULL;
-
-    if (m->actionState == ACT_STATE_STAR_DANCE_CUTSCENE) {
-        switch (++m->actionTimer) {
-            case 1:
-                celebStar = spawn_object(m->marioObj, MODEL_STAR, bhvCelebrationStar);
-#ifdef STAR_DANCE_USES_STARS_MODEL
-                obj_set_model(celebStar, gStarModelLastCollected);
-#else
-                if (gStarModelLastCollected == MODEL_BOWSER_KEY) {
-                    obj_set_model(celebStar, gStarModelLastCollected);
-                }
-#endif
-                disable_background_sound();
-                //! TODO: Is this check necessary? Both seem to do the exact same thing.
-                if (m->actionArg & 1) {
-                    // No exit
-                    play_course_clear(obj_has_model(celebStar, MODEL_BOWSER_KEY));
-                } else {
-                    // Exit
-                    if (obj_has_model(celebStar, MODEL_BOWSER_KEY)) {
-                        //play_music(SEQ_PLAYER_ENV, SEQUENCE_ARGS(15, NULL), 0);
-                    } else {
-                        //play_music(SEQ_PLAYER_ENV, SEQUENCE_ARGS(15, NULL), 0);
-                    }
-                }
-                break;
-
-            case 42:
-                play_sound(SOUND_CHARACTER_HERE_WE_GO, m->marioObj->header.gfx.cameraToObject);
-                break;
-
-            case 80:
-                if (!(m->actionArg & 1)) {
-                    level_trigger_warp(m, WARP_OP_STAR_EXIT);
-                } else {
-                    enable_time_stop();
-                    create_dialog_box_with_response(gLastCompletedStarNum == 7 ? DIALOG_013 : DIALOG_014);
-                    m->actionState = ACT_STATE_STAR_DANCE_DO_SAVE;
-                }
-                break;
-        }
-    } else if (m->actionState == ACT_STATE_STAR_DANCE_DO_SAVE && gDialogResponse != DIALOG_RESPONSE_NONE) {
-        if (gDialogResponse == DIALOG_RESPONSE_YES) {
-            save_file_do_save(gCurrSaveFileNum - 1);
-        }
-        m->actionState = ACT_STATE_STAR_DANCE_RETURN;
-    } else if (m->actionState == ACT_STATE_STAR_DANCE_RETURN && is_anim_at_end(m)) {
-        disable_time_stop();
-        enable_background_sound();
-        s32 dialogID = get_star_collection_dialog(m);
-        if (dialogID) {
-            // look up for dialog
-            set_mario_action(m, ACT_READING_AUTOMATIC_DIALOG, dialogID);
-        } else {
-            set_mario_action(m, isInWater ? ACT_WATER_IDLE : ACT_IDLE, 0);
-        }
-    }
 }
 
 s32 act_star_dance(struct MarioState *m) {
@@ -793,11 +735,6 @@ s32 act_unlocking_key_door(struct MarioState *m) {
         m->faceAngle[1] += 0x8000;
     }
 
-    if (m->actionTimer == 0) {
-        spawn_obj_at_mario_rel_yaw(m, MODEL_BOWSER_KEY_CUTSCENE, bhvBowserKeyUnlockDoor, 0);
-        set_mario_animation(m, MARIO_ANIM_UNLOCK_DOOR);
-    }
-
     switch (m->marioObj->header.gfx.animInfo.animFrame) {
         case 79:
             play_sound(SOUND_GENERAL_DOOR_INSERT_KEY, m->marioObj->header.gfx.cameraToObject);
@@ -826,36 +763,6 @@ s32 act_unlocking_key_door(struct MarioState *m) {
 }
 
 s32 act_unlocking_star_door(struct MarioState *m) {
-    switch (m->actionState) {
-        case ACT_STATE_UNLOCKING_STAR_DOOR_MOVE_POS:
-            m->faceAngle[1] = m->usedObj->oMoveAngleYaw;
-            if (m->actionArg & WARP_FLAG_DOOR_FLIP_MARIO) {
-                m->faceAngle[1] += 0x8000;
-            }
-            m->marioObj->oMarioReadingSignDPosX = m->pos[0];
-            m->marioObj->oMarioReadingSignDPosZ = m->pos[2];
-            set_mario_animation(m, MARIO_ANIM_SUMMON_STAR);
-            m->actionState = ACT_STATE_UNLOCKING_STAR_DOOR_SUMMON_STAR;
-            break;
-        case ACT_STATE_UNLOCKING_STAR_DOOR_SUMMON_STAR:
-            if (is_anim_at_end(m)) {
-                spawn_object(m->marioObj, MODEL_STAR, bhvUnlockDoorStar);
-                m->actionState = ACT_STATE_UNLOCKING_STAR_DOOR_APPROACH_DOOR;
-            }
-            break;
-        case ACT_STATE_UNLOCKING_STAR_DOOR_APPROACH_DOOR:
-            if (m->actionTimer++ == 70) {
-                set_mario_animation(m, MARIO_ANIM_RETURN_STAR_APPROACH_DOOR);
-                m->actionState = ACT_STATE_UNLOCKING_STAR_DOOR_IN_DIALOG;
-            }
-            break;
-        case ACT_STATE_UNLOCKING_STAR_DOOR_IN_DIALOG:
-            if (is_anim_at_end(m)) {
-                save_file_set_flags(get_door_save_file_flag(m->usedObj));
-                set_mario_action(m, ACT_READING_AUTOMATIC_DIALOG, DIALOG_038);
-            }
-            break;
-    }
 
     m->pos[0] = m->marioObj->oMarioReadingSignDPosX;
     m->pos[2] = m->marioObj->oMarioReadingSignDPosZ;
@@ -1104,9 +1011,6 @@ s32 act_exit_land_save_dialog(struct MarioState *m) {
         case ACT_STATE_EXIT_LAND_SAVE_DIALOG_KEY:
             animFrame = set_mario_animation(m, MARIO_ANIM_THROW_CATCH_KEY);
             switch (animFrame) {
-                case -1:
-                    spawn_obj_at_mario_rel_yaw(m, MODEL_BOWSER_KEY_CUTSCENE, bhvBowserKeyCourseExit, -0x8000);
-                    //! fallthrough
                 case 67:
                     play_sound(SOUND_ACTION_KEY_SWISH, m->marioObj->header.gfx.cameraToObject);
                     //! fallthrough
@@ -1670,14 +1574,6 @@ static void intro_cutscene_hide_hud_and_mario(struct MarioState *m) {
 #define TIMER_SPAWN_PIPE 37
 
 static void intro_cutscene_peach_lakitu_scene(struct MarioState *m) {
-    if ((s16) m->statusForCamera->cameraEvent != CAM_EVENT_START_INTRO) {
-        if (m->actionTimer++ == TIMER_SPAWN_PIPE) {
-            sIntroWarpPipeObj =
-                spawn_object_abs_with_rot(gMarioObject, 0, MODEL_WARP_PIPE,
-                                          bhvStaticObject, gMarioState->marioObj->oPosX, gMarioState->marioObj->oPosY, gMarioState->marioObj->oPosZ, 0, 180, 0);
-            advance_cutscene_step(m);
-        }
-    }
 }
 #undef TIMER_SPAWN_PIPE
 
@@ -1933,10 +1829,6 @@ void generate_yellow_sparkles(s16 x, s16 y, s16 z, f32 radius) {
     s16 offsetX = radius * coss(sSparkleGenTheta) * sins(sSparkleGenPhi);
     s16 offsetY = radius * sins(sSparkleGenTheta);
     s16 offsetZ = radius * coss(sSparkleGenTheta) * coss(sSparkleGenPhi);
-
-    spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_NONE, bhvSparkleSpawn, x + offsetX, y + offsetY,
-                              z + offsetZ, 0, 0, 0);
-
     //! copy paste error
     offsetX = offsetX * 4 / 3;
     offsetX = offsetY * 4 / 3;
@@ -1944,9 +1836,6 @@ void generate_yellow_sparkles(s16 x, s16 y, s16 z, f32 radius) {
     // Fix below:
     // offsetY = offsetY * 4 / 3;
     // offsetZ = offsetZ * 4 / 3;
-
-    spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_NONE, bhvSparkleSpawn, x - offsetX, y - offsetY,
-                              z - offsetZ, 0, 0, 0);
 
     sSparkleGenTheta += 0x3800;
     sSparkleGenPhi += 0x6000;
@@ -1986,18 +1875,6 @@ static void end_peach_cutscene_mario_falling(struct MarioState *m) {
 
 // set Mario on the ground, wait and spawn the jumbo star outside the castle.
 static void end_peach_cutscene_mario_landing(struct MarioState *m) {
-    set_mario_animation(m, MARIO_ANIM_GENERAL_LAND);
-    stop_and_set_height_to_floor(m);
-
-    if (is_anim_at_end(m)) {
-        // make wing cap run out
-        m->capTimer = 60;
-
-        sEndJumboStarObj = spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_STAR, bhvStaticObject, 0,
-                                                     2528, -1800, 0, 0, 0);
-        obj_scale(sEndJumboStarObj, 3.0f);
-        advance_cutscene_step(m);
-    }
 }
 
 // raise hand animation, lower hand animation, do some special effects
@@ -2038,17 +1915,6 @@ static void end_peach_cutscene_spawn_peach(struct MarioState *m) {
     }
     if (m->actionTimer == 40) {
         obj_mark_for_deletion(sEndJumboStarObj);
-
-        sEndPeachObj = spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_WALUIGI, bhvEndPeach, 0, 2428,
-                                                 -1300, 0, 0, 0);
-        gCutsceneFocus = sEndPeachObj;
-
-        sEndRightToadObj = spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_TOAD, bhvEndToad, 200,
-                                                     906, -1290, 0, 0, 0);
-
-        sEndLeftToadObj = spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_TOAD, bhvEndToad, -200,
-                                                    906, -1290, 0, 0, 0);
-
         sEndPeachObj->oOpacity = 127;
         sEndRightToadObj->oOpacity = 255;
         sEndLeftToadObj->oOpacity = 255;
@@ -2565,15 +2431,6 @@ static s32 act_credits_cutscene(struct MarioState *m) {
 static s32 act_end_waving_cutscene(struct MarioState *m) {
     if (m->actionState == ACT_STATE_END_WAVING_CUTSCENE_INIT) {
         m->statusForCamera->cameraEvent = CAM_EVENT_START_END_WAVING;
-
-        sEndPeachObj = spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_PEACH, bhvEndPeach, 60, 906,
-                                                 -1180, 0, 0, 0);
-
-        sEndRightToadObj = spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_TOAD, bhvEndToad, 180,
-                                                     906, -1170, 0, 0, 0);
-
-        sEndLeftToadObj = spawn_object_abs_with_rot(gCurrentObject, 0, MODEL_TOAD, bhvEndToad, -180,
-                                                    906, -1170, 0, 0, 0);
 
         sEndPeachObj->oOpacity = 255;
         sEndRightToadObj->oOpacity = 255;

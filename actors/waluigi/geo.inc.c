@@ -7,7 +7,6 @@ const GeoLayout waluigi_geo[] = {
 		GEO_OPEN_NODE(),
 			GEO_SCALE(LAYER_FORCE, 16384),
 			GEO_OPEN_NODE(),
-                GEO_ASM(0, geo_set_player_waluigi),
 				GEO_ASM(0, geo_mirror_mario_backface_culling),
 				GEO_ASM(0, geo_mirror_mario_set_alpha),
 				GEO_SWITCH_CASE(0, geo_switch_mario_stand_run),
@@ -189,7 +188,6 @@ const GeoLayout waluigi_geo[] = {
 				GEO_ASM(1, geo_mirror_mario_backface_culling),
 			GEO_CLOSE_NODE(),
 		GEO_CLOSE_NODE(),
-		GEO_DISPLAY_LIST(LAYER_OPAQUE, waluigi_material_revert_render_settings),
 	GEO_CLOSE_NODE(),
 	GEO_END(),
 };

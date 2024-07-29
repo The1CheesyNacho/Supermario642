@@ -17,24 +17,6 @@ TEXTURE_DIRS := \
 
 ACTOR_GROUPS := \
     group0  \
-    group1  \
-    group2  \
-    group3  \
-    group4  \
-    group5  \
-    group6  \
-    group7  \
-    group8  \
-    group9  \
-    group10 \
-    group11 \
-    group12 \
-    group13 \
-    group14 \
-    group15 \
-    group16 \
-    group17 \
-    common0 \
     common1
 
 LEVEL_FILES := $(addsuffix leveldata,$(LEVEL_DIRS))
@@ -59,7 +41,7 @@ YAY0_OBJ_FILES := $(YAY0_FILES:.szp=.szp.o)
 # --------------------------------------
 
 # Actor Directories
-KOOPA_DIRS       := koopa_flag poundable_pole koopa red_koopa blue_koopa yellow_koopa piranha_plant whomp chain_ball chain_chomp koopa_red
+KOOPA_DIRS       := poundable_pole koopa red_koopa blue_koopa yellow_koopa piranha_plant whomp chain_ball chain_chomp koopa_red
 CAPSWITCH_DIRS   := capswitch springboard
 CHILLYCHIEF_DIRS := chillychief moneybag
 BULLY_DIRS       := bully blargg 
@@ -68,7 +50,7 @@ KING_BOBOMB_DIRS := king_bobomb water_bubble
 BOO_DIRS         := bookend book chair small_key mad_piano boo haunted_cage
 MR_I_DIRS        := mr_i_eyeball mr_i_iris swoop snufit dorrie scuttlebug
 HOOT_DIRS        := yellow_sphere_small hoot yoshi_egg thwomp bullet_bill heave_ho
-COINS_DIRS       := mist explosion butterfly coin warp_pipe door bowser_key flame blue_fish pebble leaves mario_cap fireflower iceflower breath_meter power_meter mushroom_1up star sand dirt transparent_star white_particle wooden_signpost tree 
+COINS_DIRS       := 
 BUBBA_DIRS       := bubba wiggler wiggler_body_part lakitu_enemy spiny_egg spiny
 SKEETER_DIRS     := skeeter seaweed water_mine cyan_fish bub water_ring treasure_chest
 KLEPTO_DIRS      := klepto eyerok pokey tornado
@@ -78,7 +60,7 @@ MOLE_DIRS        := monty_mole_hole monty_mole smoke ukiki fwoosh
 LAKITU_DIRS      := lakitu_cameraman toad mips boo_castle toadsworth mipsy
 PEACH_DIRS       := bird 
 BOWSER_DIRS      := bowser_flame impact_ring yellow_sphere bomb impact_smoke
-MARIO_DIRS       := mario metal_mario luigi peach bowser yoshi wario waluigi bubble walk_smoke burn_smoke small_water_splash water_wave sparkle water_splash white_particle_small sparkle_animation motos
+MARIO_DIRS       := mario toad_player metal_mario luigi peach bowser yoshi wario waluigi bubble walk_smoke burn_smoke small_water_splash water_wave sparkle water_splash white_particle_small sparkle_animation motos mist explosion butterfly koopa_flag coin warp_pipe door bowser_key flame blue_fish pebble leaves mario_cap fireflower iceflower breath_meter power_meter mushroom_1up star sand dirt transparent_star white_particle wooden_signpost tree 
 
 # Actor Textures
 AMP_CHUCKYA_TEXTURES            := $(foreach dir,$(AMP_DIRS),        $(wildcard actors/$(dir)/*.png))
@@ -104,46 +86,10 @@ SPINDRIFT_PENGUIN_TEXTURES      := $(foreach dir,$(SPINDRIFT_DIRS),  $(wildcard 
 
 # Actor dependencies
 $(BUILD_DIR)/actors/group0.o:  $(MARIO_WATER_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group1.o:  $(HOOT_THWOMP_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group2.o:  $(BULLY_BLARGG_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group3.o:  $(BOBOMBS_BUBBLE_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group4.o:  $(SEA_CREATURES_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group5.o:  $(KLEPTO_EYEROK_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group6.o:  $(MOLE_UKIKI_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group7.o:  $(SPINDRIFT_PENGUIN_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group8.o:  $(CAPSWITCH_SPRINGBOARD_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group9.o:  $(BOO_BOOKEND_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group10.o: $(PEACH_TOADSTOOL_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group11.o: $(BUBBA_WIGGLER_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group12.o: $(BOWSER_FLAMES_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group13.o: $(SKEETER_FISH_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group14.o: $(KOOPA_LOG_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group15.o: $(LAKITU_TOAD_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group16.o: $(CHILLYCHIEF_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/group17.o: $(MR_I_SWOOP_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/common0.o: $(AMP_CHUCKYA_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
-$(BUILD_DIR)/actors/common1.o: $(COINS_PIPE_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
+$(BUILD_DIR)/actors/common1.o: $(AMP_CHUCKYA_TEXTURES:%.png=$(BUILD_DIR)/%.inc.c)
 
 # Actor Elf Files
 $(BUILD_DIR)/actors/group0.elf:  SEGMENT_ADDRESS := 0x04000000
-$(BUILD_DIR)/actors/group1.elf:  SEGMENT_ADDRESS := 0x05000000
-$(BUILD_DIR)/actors/group2.elf:  SEGMENT_ADDRESS := 0x05000000
-$(BUILD_DIR)/actors/group3.elf:  SEGMENT_ADDRESS := 0x05000000
-$(BUILD_DIR)/actors/group4.elf:  SEGMENT_ADDRESS := 0x05000000
-$(BUILD_DIR)/actors/group5.elf:  SEGMENT_ADDRESS := 0x05000000
-$(BUILD_DIR)/actors/group6.elf:  SEGMENT_ADDRESS := 0x05000000
-$(BUILD_DIR)/actors/group7.elf:  SEGMENT_ADDRESS := 0x05000000
-$(BUILD_DIR)/actors/group8.elf:  SEGMENT_ADDRESS := 0x05000000
-$(BUILD_DIR)/actors/group9.elf:  SEGMENT_ADDRESS := 0x05000000
-$(BUILD_DIR)/actors/group10.elf: SEGMENT_ADDRESS := 0x05000000
-$(BUILD_DIR)/actors/group11.elf: SEGMENT_ADDRESS := 0x05000000
-$(BUILD_DIR)/actors/group12.elf: SEGMENT_ADDRESS := 0x06000000
-$(BUILD_DIR)/actors/group13.elf: SEGMENT_ADDRESS := 0x06000000
-$(BUILD_DIR)/actors/group14.elf: SEGMENT_ADDRESS := 0x06000000
-$(BUILD_DIR)/actors/group15.elf: SEGMENT_ADDRESS := 0x06000000
-$(BUILD_DIR)/actors/group16.elf: SEGMENT_ADDRESS := 0x06000000
-$(BUILD_DIR)/actors/group17.elf: SEGMENT_ADDRESS := 0x06000000
-$(BUILD_DIR)/actors/common0.elf: SEGMENT_ADDRESS := 0x08000000
 $(BUILD_DIR)/actors/common1.elf: SEGMENT_ADDRESS := 0x03000000
 
 # --------------------------------------
@@ -172,8 +118,6 @@ endif
 # --------------------------------------
 # Extra Level Rules
 # --------------------------------------
-$(eval $(call level_rules,intro,generic)) # Intro (Super Mario 64 Logo)
-$(eval $(call level_rules,menu,generic)) # Menu (File Select)
 
 # --------------------------------------
 # Cake Texture Rules

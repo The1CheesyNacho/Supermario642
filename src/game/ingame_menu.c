@@ -13,7 +13,6 @@
 #include "gfx_dimensions.h"
 #include "ingame_menu.h"
 #include "level_update.h"
-#include "levels/castle_grounds/header.h"
 #include "memory.h"
 #include "print.h"
 #include "save_file.h"
@@ -465,8 +464,6 @@ void print_generic_string(s16 x, s16 y, const u8 *str) {
  */
 void print_hud_lut_string(s8 hudLUT, s16 x, s16 y, const u8 *str) {
     s32 strPos = 0;
-    void **hudLUT1 = segmented_to_virtual(menu_hud_lut); // Japanese Menu HUD Color font
-    void **hudLUT2 = segmented_to_virtual(main_hud_lut); // 0-9 A-Z HUD Color Font
     u32 curX = x;
     u32 curY = y;
 
@@ -485,14 +482,6 @@ void print_hud_lut_string(s8 hudLUT, s16 x, s16 y, const u8 *str) {
                 break;
             default:
                 gDPPipeSync(gDisplayListHead++);
-
-                if (hudLUT == HUD_LUT_JPMENU) {
-                    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT1[str[strPos]]);
-                }
-
-                if (hudLUT == HUD_LUT_GLOBAL) {
-                    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, hudLUT2[str[strPos]]);
-                }
 
                 gSPDisplayList(gDisplayListHead++, dl_rgba16_load_tex_block);
                 gSPTextureRectangle(gDisplayListHead++, curX << 2, curY << 2, (curX + 16) << 2,
@@ -1381,7 +1370,6 @@ void print_peach_letter_message(void) {
     create_dl_translation_matrix(MENU_MTX_PUSH, 97.0f, 118.0f, 0);
 
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, gCutsceneMsgFade);
-    gSPDisplayList(gDisplayListHead++, castle_grounds_seg7_dl_0700EA58);
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
     gSPDisplayList(gDisplayListHead++, dl_ia_text_begin);
     gDPSetEnvColor(gDisplayListHead++, 20, 20, 20, gCutsceneMsgFade);
@@ -1394,7 +1382,6 @@ void print_peach_letter_message(void) {
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
     gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
     gDPSetEnvColor(gDisplayListHead++, 200, 80, 120, gCutsceneMsgFade);
-    gSPDisplayList(gDisplayListHead++, castle_grounds_seg7_us_dl_0700F2E8);
 #endif
 
     // at the start/end of message, reset the fade.
