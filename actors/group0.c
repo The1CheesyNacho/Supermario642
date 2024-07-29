@@ -52,9 +52,5 @@ UNUSED static const u64 binid_0 = 0;
 #include "bowser/flames_data.inc.c"
 #include "boat/model.inc.c"
 #include "wario/model.inc.c"
-<<<<<<< HEAD
 #include "waluigi/model.inc.c"
 #include "metal_mario/model.inc.c"
-=======
-#include "waluigi/model.inc.c"
->>>>>>> parent of a81dabfe (fuvck shit b itch)

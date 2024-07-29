@@ -78,11 +78,7 @@ MOLE_DIRS        := monty_mole_hole monty_mole smoke ukiki fwoosh
 LAKITU_DIRS      := lakitu_cameraman toad mips boo_castle toadsworth mipsy
 PEACH_DIRS       := bird 
 BOWSER_DIRS      := bowser_flame impact_ring yellow_sphere bomb impact_smoke
-<<<<<<< HEAD
 MARIO_DIRS       := mario metal_mario luigi peach bowser yoshi wario waluigi bubble walk_smoke burn_smoke small_water_splash water_wave sparkle water_splash white_particle_small sparkle_animation motos
-=======
-MARIO_DIRS       := mario toad_player metal_mario luigi peach bowser yoshi wario waluigi bubble walk_smoke burn_smoke small_water_splash water_wave sparkle water_splash white_particle_small sparkle_animation motos mist explosion butterfly koopa_flag coin warp_pipe door bowser_key flame blue_fish pebble leaves mario_cap fireflower iceflower breath_meter power_meter mushroom_1up star sand dirt transparent_star white_particle wooden_signpost tree 
->>>>>>> parent of a81dabfe (fuvck shit b itch)
 
 # Actor Textures
 AMP_CHUCKYA_TEXTURES            := $(foreach dir,$(AMP_DIRS),        $(wildcard actors/$(dir)/*.png))
