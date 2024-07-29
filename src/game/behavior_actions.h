@@ -512,7 +512,6 @@ void bhv_mad_piano_update(void);
 void bhv_flying_bookend_loop(void);
 void bhv_bookend_spawn_loop(void);
 void bhv_haunted_bookshelf_manager_loop(void);
-void bhv_book_switch_loop(void);
 void bhv_fire_piranha_plant_init(void);
 void bhv_fire_piranha_plant_update(void);
 void bhv_moving_flame_loop(void);

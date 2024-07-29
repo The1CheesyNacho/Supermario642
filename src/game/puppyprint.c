@@ -1164,8 +1164,6 @@ void puppyprint_profiler_process(void) {
         } else {
             if (gCurrLevelNum > 3) {
                 sLevelSelectOption = gCurrLevelNum;
-            } else {
-                sLevelSelectOption = LEVEL_CASTLE_GROUNDS;
             }
         }
         // Collision toggles.

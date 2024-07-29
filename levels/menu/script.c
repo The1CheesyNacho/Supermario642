@@ -46,7 +46,7 @@ const LevelScript level_main_menu_entry_file_select[] = {
 
     FREE_LEVEL_POOL(),
     LOAD_AREA(/*area*/ 1),
-    SET_MENU_MUSIC(/*seq*/ SEQ_GRASS),
+    SET_MENU_MUSIC(/*seq*/ SEQ_MOLD),
     TRANSITION(/*transType*/ WARP_TRANSITION_FADE_FROM_COLOR, /*time*/ 16, /*color*/ 0xFF, 0xFF, 0xFF),
     CALL(     /*arg*/ 0, /*func*/ lvl_init_menu_values_and_cursor_pos),
     CALL_LOOP(/*arg*/ 0, /*func*/ lvl_update_obj_and_load_file_selected),
@@ -56,7 +56,7 @@ const LevelScript level_main_menu_entry_file_select[] = {
     SLEEP(/*frames*/ 16),
     CLEAR_LEVEL(),
     SLEEP_BEFORE_EXIT(/*frames*/ 1),
-    SET_REG(LEVEL_CASTLE),
+    SET_REG(LEVEL_BOB),
     EXIT_AND_EXECUTE(/*seg*/ SEGMENT_GLOBAL_LEVEL_SCRIPT, _scriptsSegmentRomStart, _scriptsSegmentRomEnd, level_main_scripts_entry),
 };
 
