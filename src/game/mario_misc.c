@@ -127,6 +127,38 @@ static void toad_message_walking(void) {
 }
 
 static void toad_message_idle(void) {
+    o->oForwardVel = 0;
+    if (o->oTimer >= 60) {
+        o->oTimer = 0;
+        f32 positions[32];
+        struct Object* objs[16];
+        cur_obj_init_animation_with_sound(TOAD_ANIM_EAST_STANDING);
+        struct ObjectNode* objList = &gObjectListArray[OBJ_LIST_LEVEL];
+        struct ObjectNode* firstObj = objList->next;
+        int ptr = 0;
+        uintptr_t bhv = segmented_to_virtual(bhvToadNpcNode);
+        while (objList != firstObj || ptr == 16) {
+            struct Object* obj = (struct Object*)firstObj;
+            if (obj->behavior == bhv && (o->oBehParams2ndByte & 0xFF) == (obj->oBehParams2ndByte & 0xFF)) {
+                if (obj->oToadNodeActive) {
+                    obj->oToadNodeActive = 0;
+                    firstObj = firstObj->next;
+                    continue;
+                }
+                positions[ptr * 2 + 0] = obj->oPosX;
+                positions[ptr * 2 + 1] = obj->oPosZ;
+                objs[ptr] = obj;
+                ptr++;
+            }
+            firstObj = firstObj->next;
+        }
+        if (ptr == 0) return;
+        ptr = random_u16() % ptr;
+        objs[ptr]->oToadNodeActive = 1;
+        o->oToadMessageState = TOAD_MESSAGE_WALKING;
+        o->oToadMessageTargetX = positions[ptr * 2 + 0];
+        o->oToadMessageTargetZ = positions[ptr * 2 + 1];
+    }
 }
 
 static void toad_message_talk(void) {
@@ -221,6 +253,12 @@ void bhv_toad_message_init(void) {
 }
 
 static void star_door_unlock_spawn_particles(s16 angleOffset) {
+    struct Object *sparkleParticle = spawn_object(o, MODEL_NONE, bhvSparkleSpawn);
+
+    sparkleParticle->oPosX += 100.0f * sins((o->oUnlockDoorStarTimer * 0x2800) + angleOffset);
+    sparkleParticle->oPosZ += 100.0f * coss((o->oUnlockDoorStarTimer * 0x2800) + angleOffset);
+    // Particles are spawned lower each frame
+    sparkleParticle->oPosY -= o->oUnlockDoorStarTimer * 10.0f;
 }
 
 void bhv_unlock_door_star_init(void) {

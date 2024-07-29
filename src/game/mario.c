@@ -1702,6 +1702,9 @@ void queue_rumble_particles(struct MarioState *m) {
     } else if (m->particleFlags & PARTICLE_TRIANGLE) {
         queue_rumble_data(5, 80);
     }
+    if (m->heldObj && m->heldObj->behavior == segmented_to_virtual(bhvBobomb)) {
+        reset_rumble_timers_slip();
+    }
 }
 #endif
 
@@ -1785,10 +1788,12 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
         // Both of the wind handling portions play wind audio only in
         // non-Japanese releases.
         if (gMarioState->floor->type == SURFACE_HORIZONTAL_WIND) {
+            spawn_wind_particles(0, (gMarioState->floor->force << 8));
             play_sound(SOUND_ENV_WIND2, gMarioState->marioObj->header.gfx.cameraToObject);
         }
 
         if (gMarioState->floor->type == SURFACE_VERTICAL_WIND) {
+            spawn_wind_particles(1, 0);
             play_sound(SOUND_ENV_WIND2, gMarioState->marioObj->header.gfx.cameraToObject);
         }
 

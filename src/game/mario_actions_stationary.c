@@ -428,6 +428,9 @@ s32 act_coughing(struct MarioState *m) {
 }
 
 s32 act_hold_idle(struct MarioState *m) {
+    if (segmented_to_virtual(&bhvJumpingBox) == m->heldObj->behavior) {
+        return set_mario_action(m, ACT_CRAZY_BOX_BOUNCE, 0);
+    }
 
     if (m->marioObj->oInteractStatus & INT_STATUS_MARIO_DROP_OBJECT) {
         return drop_and_set_mario_action(m, ACT_IDLE, 0);

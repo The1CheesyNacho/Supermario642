@@ -17,6 +17,10 @@ UNUSED static const u64 binid_0 = 0;
 #include "explosion/model.inc.c"
 UNUSED static const u64 binid_1 = 1;
 
+#include "butterfly/model.inc.c"
+#include "butterfly/anims/data.inc.c"
+#include "butterfly/anims/table.inc.c"
+UNUSED static const u64 binid_2 = 2;
 
 #include "coin/model.inc.c"
 UNUSED static const u64 binid_3 = 3;
@@ -30,6 +34,11 @@ UNUSED static const u64 binid_4 = 4;
 #include "door/anims/table.inc.c"
 #include "door/collision.inc.c"
 UNUSED static const u64 binid_5 = 5;
+
+#include "bowser_key/model.inc.c"
+#include "bowser_key/anims/data.inc.c"
+#include "bowser_key/anims/table.inc.c"
+UNUSED static const u64 binid_6 = 6;
 
 #include "flame/model.inc.c"
 UNUSED static const u64 binid_7 = 7;
@@ -51,6 +60,9 @@ UNUSED static const u64 binid_11 = 11;
 UNUSED static const u64 binid_12 = 12;
 
 #include "power_meter/model.inc.c"
+#ifdef BREATH_METER
+#include "breath_meter/model.inc.c"
+#endif
 UNUSED static const u64 binid_13 = 13;
 
 UNUSED static const u64 binid_14 = 14;

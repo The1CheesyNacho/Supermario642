@@ -77,6 +77,9 @@ Gfx *geo_update_layer_transparency(s32 callContext, struct GraphNode *node, UNUS
 
             objectGraphNode->oAnimState = TRANSPARENCY_ANIM_STATE_TRANSPARENT;
 
+            if (objectOpacity == 0x00 && segmented_to_virtual(bhvBowser) == objectGraphNode->behavior) {
+                objectGraphNode->oAnimState = BOWSER_ANIM_STATE_INVISIBLE;
+            }
 
             if (parameter != GEO_TRANSPARENCY_MODE_NO_DITHER
                 && (objectGraphNode->activeFlags & ACTIVE_FLAG_DITHERED_ALPHA)) {
@@ -181,6 +184,23 @@ void create_transformation_from_matrices(Mat4 a0, Mat4 a1, Mat4 a2) {
 
 void obj_set_held_state(struct Object *obj, const BehaviorScript *heldBehavior) {
     obj->parentObj = o;
+
+    if (obj->oFlags & OBJ_FLAG_HOLDABLE) {
+        if (heldBehavior == bhvCarrySomethingHeld   ) {
+            obj->oHeldState = HELD_HELD;
+        }
+
+        if (heldBehavior == bhvCarrySomethingThrown ) {
+            obj->oHeldState = HELD_THROWN;
+        }
+
+        if (heldBehavior == bhvCarrySomethingDropped) {
+            obj->oHeldState = HELD_DROPPED;
+        }
+    } else {
+        obj->curBhvCommand = segmented_to_virtual(heldBehavior);
+        obj->bhvStackIndex = 0;
+    }
 }
 
 f32 lateral_dist_between_objects(struct Object *obj1, struct Object *obj2) {
@@ -787,6 +807,11 @@ static void cur_obj_move_after_thrown_or_dropped(f32 forwardVel, f32 velY) {
 }
 
 void cur_obj_get_thrown_or_placed(f32 forwardVel, f32 velY, s32 thrownAction) {
+    if (o->behavior == segmented_to_virtual(bhvBowser)) {
+        // Interestingly, when bowser is thrown, he is offset slightly to
+        // Mario's right
+        cur_obj_set_pos_relative(o->parentObj, -41.684f, 85.859f, 321.577f);
+    }
 
     cur_obj_become_tangible();
     cur_obj_enable_rendering();
@@ -1253,12 +1278,25 @@ static void obj_spawn_loot_coins(struct Object *obj, s32 numCoins, f32 baseYVel,
     }
 }
 
+void obj_spawn_loot_blue_coins(struct Object *obj, s32 numCoins, f32 baseYVel, s16 posJitter) {
+    obj_spawn_loot_coins(obj, numCoins, baseYVel, bhvBlueCoinJumping, posJitter, MODEL_BLUE_COIN);
+}
+
+void obj_spawn_loot_yellow_coins(struct Object *obj, s32 numCoins, f32 baseYVel) {
+    obj_spawn_loot_coins(obj, numCoins, baseYVel, bhvSingleCoinGetsSpawned, 0, MODEL_YELLOW_COIN);
+}
 
 void cur_obj_spawn_loot_coin_at_mario_pos(void) {
     if (o->oNumLootCoins <= 0) {
         return;
     }
 
+    o->oNumLootCoins--;
+
+    struct Object *coin = spawn_object(o, MODEL_YELLOW_COIN, bhvSingleCoinGetsSpawned);
+    coin->oVelY = 30.0f;
+
+    obj_copy_pos(coin, gMarioObject);
 }
 
 UNUSED f32 cur_obj_abs_y_dist_to_home(void) {
@@ -1634,6 +1672,19 @@ void cur_obj_spawn_particles(struct SpawnParticlesInfo *info) {
 
     for (i = 0; i < numParticles; i++) {
         scale = random_float() * (info->sizeRange * 0.1f) + info->sizeBase * 0.1f;
+
+        particle = spawn_object(o, info->model, bhvWhitePuffExplosion);
+
+        particle->oBehParams2ndByte = info->behParam;
+        particle->oMoveAngleYaw = random_u16();
+        particle->oGravity = info->gravity;
+        particle->oDragStrength = info->dragStrength;
+
+        particle->oPosY += info->offsetY;
+        particle->oForwardVel = random_float() * info->forwardVelRange + info->forwardVelBase;
+        particle->oVelY = random_float() * info->velYRange + info->velYBase;
+
+        obj_scale(particle, scale);
     }
 }
 
@@ -2271,6 +2322,7 @@ s32 cur_obj_check_interacted(void) {
 
 void cur_obj_spawn_loot_blue_coin(void) {
     if (o->oNumLootCoins >= 5) {
+        spawn_object(o, MODEL_BLUE_COIN, bhvMrIBlueCoin);
         o->oNumLootCoins -= 5;
     }
 }
@@ -2278,5 +2330,6 @@ void cur_obj_spawn_loot_blue_coin(void) {
 void cur_obj_spawn_star_at_y_offset(f32 targetX, f32 targetY, f32 targetZ, f32 offsetY) {
     f32 objectPosY = o->oPosY;
     o->oPosY += offsetY + gDebugInfo[DEBUG_PAGE_ENEMYINFO][0];
+    spawn_default_star(targetX, targetY, targetZ);
     o->oPosY = objectPosY;
 }
