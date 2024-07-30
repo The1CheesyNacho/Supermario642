@@ -5734,8 +5734,11 @@ const BehaviorScript bhvGum[] = {
     SET_HITBOX(/*Radius*/ 37, /*Height*/ 37),
     LOAD_ANIMATIONS(oAnimations, goomba_seg8_anims_0801DA4C),
     SET_HOME(),
+    CALL_NATIVE(bhv_goomba_init),
+    SET_FLOAT(oDrawingDistance, 30000),
+    SET_INT(oIntangibleTimer, -1),
     SET_OBJ_PHYSICS(/*Wall hitbox radius*/ 40, /*Gravity*/ -400, /*Bounciness*/ -50, /*Drag strength*/ 1000, /*Friction*/ 1000, /*Buoyancy*/ 0, /*Unused*/ 0, 0),
     BEGIN_LOOP(),
-        CALL_NATIVE(bhv_gum_update),
+        CALL_NATIVE(bhv_goomba_update),
     END_LOOP(),
 };

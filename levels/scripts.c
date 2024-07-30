@@ -28,8 +28,8 @@
 #include "actors/group15.h"
 #include "actors/group16.h"
 #include "actors/group17.h"
-
 #include "levels/course0/header.h"
+
 
 #include "level_headers.h"
 

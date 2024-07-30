@@ -785,6 +785,7 @@ const Collision course0_area_1_collision[] = {
 	COL_TRI(281, 279, 265),
 	COL_TRI(281, 265, 264),
 	COL_TRI(282, 284, 259),
+	COL_TRI_INIT(SURFACE_DEFAULT, 18),
 	COL_TRI(285, 88, 91),
 	COL_TRI(285, 118, 88),
 	COL_TRI(123, 90, 93),
