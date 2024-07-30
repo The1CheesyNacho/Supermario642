@@ -107,11 +107,6 @@ void king_whomp_chase(void) {
     }
 
     whomp_play_sfx_from_pound_animation();
-
-    if (mario_is_far_below_object(1000.0f)) {
-        o->oAction = 0;
-        stop_background_music(SEQUENCE_ARGS(4, SEQ_SOUND_PLAYER));
-    }
 }
 
 void whomp_prepare_jump(void) {
