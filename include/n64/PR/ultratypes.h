@@ -91,7 +91,7 @@ typedef volatile s64 vs64;
 #endif
 
 #ifndef NULL
-#define NULL    (void *)0
+#define NULL    0
 #endif
 
 #endif  /* _ULTRATYPES_H_ */
