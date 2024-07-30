@@ -29,12 +29,7 @@
 #include "actors/group16.h"
 #include "actors/group17.h"
 
-#include "levels/menu/header.h"
-#include "levels/intro/header.h"
-#include "levels/sr/header.h"
-#include "levels/course1/header.h"
 #include "levels/course0/header.h"
-#include "levels/bob/header.h"
 
 #include "level_headers.h"
 
@@ -129,36 +124,11 @@ const LevelScript level_main_scripts_entry[] = {
     POP_POOL(),
     CALL(/*arg*/ 0, /*func*/ lvl_init_from_save_file),
     LOOP_BEGIN(),
-        EXECUTE(/*seg*/ SEGMENT_MENU_INTRO, _menuSegmentRomStart, _menuSegmentRomEnd, level_main_menu_entry_act_select),
         JUMP_LINK(script_exec_level_table),
         SLEEP(/*frames*/ 1),
     LOOP_UNTIL(/*op*/ OP_LT, /*arg*/ WARP_SPECIAL_NONE),
-    JUMP_IF(   /*op*/ OP_EQ, /*arg*/ WARP_SPECIAL_ENDING,              goto_ending),
-    JUMP_IF(   /*op*/ OP_EQ, /*arg*/ WARP_SPECIAL_MARIO_HEAD_REGULAR,  goto_mario_head_regular),
-    JUMP_IF(   /*op*/ OP_EQ, /*arg*/ WARP_SPECIAL_MARIO_HEAD_DIZZY,    goto_mario_head_dizzy),
-    JUMP_IF(   /*op*/ OP_EQ, /*arg*/ WARP_SPECIAL_INTRO_SPLASH_SCREEN, goto_intro_splash_screen),
-    JUMP_IF(   /*op*/ OP_EQ, /*arg*/ WARP_SPECIAL_LEVEL_SELECT,        goto_debug_level_select),
 };
 
-static const LevelScript goto_intro_splash_screen[] = {
-    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_splash_screen, _introSegmentBssStart, _introSegmentBssEnd),
-};
-
-static const LevelScript goto_ending[] = {
-    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_splash_screen, _introSegmentBssStart, _introSegmentBssEnd),
-};
-
-static const LevelScript goto_mario_head_regular[] = {
-    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_mario_head_regular, _introSegmentBssStart, _introSegmentBssEnd),
-};
-
-static const LevelScript goto_mario_head_dizzy[] = {
-    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_mario_head_dizzy, _introSegmentBssStart, _introSegmentBssEnd),
-};
-
-static const LevelScript goto_debug_level_select[] = {
-    EXIT_AND_EXECUTE_WITH_CODE(/*seg*/ SEGMENT_MENU_INTRO, _introSegmentRomStart, _introSegmentRomEnd, level_intro_entry_level_select, _introSegmentBssStart, _introSegmentBssEnd),
-};
 
 // Include the level jumptable.
 

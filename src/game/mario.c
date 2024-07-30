@@ -1888,6 +1888,7 @@ void init_mario_from_save_file(void) {
     gMarioState->spawnInfo = &gPlayerSpawnInfos[0];
     gMarioState->statusForCamera = &gPlayerCameraState[0];
     gMarioState->marioBodyState = &gBodyStates[0];
+    gMarioStates[0].animList = &gMarioAnimsBuf;
     gMarioState->controller = &gControllers[0];
     gMarioState->numCoins = 0;
     gMarioState->numStars =

@@ -274,17 +274,6 @@ void bhv_mario_update(void) {
     particleFlags = execute_mario_action(gCurrentObject);
     gCurrentObject->oMarioParticleFlags = particleFlags;
 
-    switch (gMarioState->playerModel) {
-        case 0: cur_obj_set_model(MODEL_MARIO);
-         break;
-        case 1: cur_obj_set_model(MODEL_LUIGI); 
-        break;
-        case 2: cur_obj_set_model(MODEL_WALUIGI); 
-        break;
-        case 3: cur_obj_set_model(MODEL_WARIO); 
-        break;
-    }
-
     // Mario code updates MarioState's versions of position etc, so we need
     // to sync it with the Mario object
     copy_mario_state_to_object();

@@ -23,7 +23,6 @@
 #include "level_misc_macros.h"
 #include "level_table.h"
 #include "level_update.h"
-#include "levels/castle_inside/header.h"
 #include "main.h"
 #include "mario.h"
 #include "mario_actions_cutscene.h"

@@ -33,8 +33,6 @@
 #include "actors/group15.h"
 #include "actors/group16.h"
 #include "actors/group17.h"
-#include "levels/castle_inside/header.h"
-#include "levels/castle_grounds/header.h"
 
 #include "make_const_nonconst.h"
 #include "behavior_data.h"
@@ -375,7 +373,6 @@ enum BehaviorCommands {
 const BehaviorScript bhvStarDoor[] = {
     BEGIN(OBJ_LIST_SURFACE),
     SET_INT(oInteractType, INTERACT_DOOR),
-    LOAD_COLLISION_DATA(inside_castle_seg7_collision_star_door),
     SET_INT(oInteractionSubtype, INT_SUBTYPE_STAR_DOOR),
     OR_INT(oFlags, (OBJ_FLAG_ACTIVE_FROM_AFAR | OBJ_FLAG_COMPUTE_DIST_TO_MARIO | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
     SET_HITBOX(/*Radius*/ 80, /*Height*/ 100),
@@ -2110,7 +2107,6 @@ const BehaviorScript bhvInvisibleObjectsUnderBridge[] = {
 const BehaviorScript bhvWaterLevelPillar[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, (OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
-    LOAD_COLLISION_DATA(inside_castle_seg7_collision_water_level_pillar),
     CALL_NATIVE(bhv_water_level_pillar_init),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_water_level_pillar_loop),
@@ -2134,7 +2130,6 @@ const BehaviorScript bhvMoatGrills[] = {
     DEACTIVATE(),
 #else
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
-    LOAD_COLLISION_DATA(castle_grounds_seg7_collision_moat_grills),
     SET_FLOAT(oCollisionDistance, 30000),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_moat_grills_loop),
@@ -3021,7 +3016,6 @@ const BehaviorScript bhvCastleFloorTrap[] = {
 const BehaviorScript bhvFloorTrapInCastle[] = {
     BEGIN(OBJ_LIST_SURFACE),
     OR_INT(oFlags, (OBJ_FLAG_SET_FACE_YAW_TO_MOVE_YAW | OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE)),
-    LOAD_COLLISION_DATA(inside_castle_seg7_collision_floor_trap),
     BEGIN_LOOP(),
         CALL_NATIVE(bhv_floor_trap_in_castle_loop),
         CALL_NATIVE(load_object_collision_model),
@@ -4173,7 +4167,6 @@ const BehaviorScript bhvVolcanoSoundLoop[] = {
 const BehaviorScript bhvCastleFlagWaving[] = {
     BEGIN(OBJ_LIST_DEFAULT),
     OR_INT(oFlags, OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE),
-    LOAD_ANIMATIONS(oAnimations, castle_grounds_seg7_anims_flags),
     ANIMATE(CASTLE_FLAG_ANIM_WAVE),
     CALL_NATIVE(bhv_castle_flag_init),
     BEGIN_LOOP(),

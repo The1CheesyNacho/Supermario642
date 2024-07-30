@@ -19,45 +19,9 @@
 #include "levels/menu/header.h"
 
 const LevelScript level_main_menu_entry_file_select[] = {
-    INIT_LEVEL(),
-    LOAD_GODDARD(),
-    LOAD_LEVEL_DATA(menu),
-    LOAD_BEHAVIOR_DATA(),
-    ALLOC_LEVEL_POOL(),
-    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_MARIO_SAVE_BUTTON,      geo_menu_mario_save_button),
-    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_RED_ERASE_BUTTON,       geo_menu_erase_button),
-    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_BLUE_COPY_BUTTON,       geo_menu_copy_button),
-    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_YELLOW_FILE_BUTTON,     geo_menu_file_button),
-    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_GREEN_SCORE_BUTTON,     geo_menu_score_button),
-    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_MARIO_SAVE_BUTTON_FADE, geo_menu_mario_save_button_fade),
-    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_WARIO_SAVE_BUTTON_FADE, geo_menu_wario_save_button_fade),
-    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_LUIGI_SAVE_BUTTON_FADE, geo_menu_luigi_save_button_fade),
-    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_WALUIGI_SAVE_BUTTON_FADE, geo_menu_waluigi_save_button_fade),
-    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_MARIO_NEW_BUTTON,       geo_menu_mario_new_button),
-    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_MARIO_NEW_BUTTON_FADE,  geo_menu_mario_new_button_fade),
-    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_PURPLE_SOUND_BUTTON,    geo_menu_sound_button),
-    LOAD_MODEL_FROM_GEO(MODEL_MAIN_MENU_GENERIC_BUTTON,         geo_menu_generic_button),
-
-    AREA(/*index*/ 1, geo_menu_file_select_strings_and_menu_cursor),
-        OBJECT(/*model*/ MODEL_NONE,                         /*pos*/ 0, 0, -19000, /*angle*/ 0, 0, 0, /*behParam*/ BP(0x04, 0x00, 0x00, 0x00), /*beh*/ bhvMenuButtonManager),
-        OBJECT(/*model*/ MODEL_MAIN_MENU_YELLOW_FILE_BUTTON, /*pos*/ 0, 0, -19000, /*angle*/ 0, 0, 0, /*behParam*/ BP(0x04, 0x00, 0x00, 0x00), /*beh*/ bhvYellowBackgroundInMenu),
-        TERRAIN(/*terrainData*/ main_menu_seg7_collision),
-    END_AREA(),
-
-    FREE_LEVEL_POOL(),
-    LOAD_AREA(/*area*/ 1),
-    SET_MENU_MUSIC(/*seq*/ SEQ_GRASS),
-    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_FROM_COLOR, /*time*/ 16, /*color*/ 0xFF, 0xFF, 0xFF),
-    CALL(     /*arg*/ 0, /*func*/ lvl_init_menu_values_and_cursor_pos),
-    CALL_LOOP(/*arg*/ 0, /*func*/ lvl_update_obj_and_load_file_selected),
-    GET_OR_SET(/*op*/ OP_SET, /*var*/ VAR_CURR_SAVE_FILE_NUM),
-    STOP_MUSIC(/*fadeOutTime*/ 0x00BE),
-    TRANSITION(/*transType*/ WARP_TRANSITION_FADE_INTO_COLOR, /*time*/ 16, /*color*/ 0xFF, 0xFF, 0xFF),
-    SLEEP(/*frames*/ 16),
-    CLEAR_LEVEL(),
-    SLEEP_BEFORE_EXIT(/*frames*/ 1),
-    SET_REG(LEVEL_CASTLE),
-    EXIT_AND_EXECUTE(/*seg*/ SEGMENT_GLOBAL_LEVEL_SCRIPT, _scriptsSegmentRomStart, _scriptsSegmentRomEnd, level_main_scripts_entry),
+    SET_REG(LEVEL_COURSE1),
+    EXECUTE(/*seg*/ SEGMENT_GLOBAL_LEVEL_SCRIPT, /*script*/ _scriptsSegmentRomStart, /*scriptEnd*/ _scriptsSegmentRomEnd, /*entry*/ level_main_scripts_entry),
+    EXIT(),
 };
 
 const LevelScript level_main_menu_entry_act_select_exit[] = {

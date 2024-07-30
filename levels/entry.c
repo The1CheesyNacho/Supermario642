@@ -4,6 +4,7 @@
 #include "level_commands.h"
 
 #include "levels/intro/header.h"
+#include "game/level_update.h"
 
 #include "make_const_nonconst.h"
 
@@ -11,6 +12,7 @@
 
 extern const LevelScript level_main_scripts_entry[];
 const LevelScript level_script_entry[] = {
+    CALL(/*arg*/ 0, /*func*/ lvl_set_current_level),
     INIT_LEVEL(),
     SLEEP(/*frames*/ 2),
     BLACKOUT(/*active*/ FALSE),

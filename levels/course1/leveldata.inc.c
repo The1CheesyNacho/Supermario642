@@ -1,5 +1,0 @@
-#include "levels/course1/texture_include.inc.c"
-#include "levels/course1/area_1/collision.inc.c"
-#include "levels/course1/area_1/macro.inc.c"
-#include "levels/course1/area_1/spline.inc.c"
-#include "levels/course1/model.inc.c"

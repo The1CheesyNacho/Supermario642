@@ -1233,6 +1233,31 @@ s32 init_level(void) {
     } else {
         gHudDisplay.flags = HUD_DISPLAY_NONE;
     }
+s32 levelNum;
+
+#if MULTILANG
+    gInGameLanguage = eu_get_language()+1;
+    load_language_text();
+#endif
+    sWarpDest.type = WARP_TYPE_NOT_WARPING;
+    sDelayedWarpOp = WARP_OP_NONE;
+#ifdef ENABLE_VANILLA_LEVEL_SPECIFIC_CHECKS
+    gNeverEnteredCastle = !save_file_exists(gCurrSaveFileNum - 1);
+#else
+    gNeverEnteredCastle = 0;
+#endif
+    gCurrLevelNum = levelNum;
+    gCurrCourseNum = COURSE_NONE;
+    gSavedCourseNum = COURSE_NONE;
+    gCurrCreditsEntry = NULL;
+    gSpecialTripleJump = FALSE;
+
+    init_mario_from_save_file();
+    init_luigi_from_save_file();
+    disable_warp_checkpoint();
+    save_file_move_cap_to_default_location();
+    select_mario_cam_mode();
+    set_yoshi_as_not_dead();
 
     sTimerRunning = FALSE;
 
@@ -1262,8 +1287,8 @@ else {
                 set_mario_action(gLuigiState, ACT_IDLE, 0);
             } else if (!gDebugLevelSelect) {
                 if (gMarioState->action != ACT_UNINITIALIZED) {
-                    set_mario_action(gMarioState, ACT_INTRO_CUTSCENE, 0);
-                    set_mario_action(gLuigiState, ACT_INTRO_CUTSCENE, 0);
+                    set_mario_action(gMarioState, ACT_IDLE, 0);
+                    set_mario_action(gLuigiState, ACT_IDLE, 0);
                 }
             }
         }
@@ -1273,9 +1298,9 @@ else {
             } else if (!gDebugLevelSelect) {
                 if (gMarioState->action != ACT_UNINITIALIZED) {
                     if (save_file_exists(gCurrSaveFileNum - 1)) {
-                        set_mario_action(gMarioState, ACT_INTRO_CUTSCENE, 0);
+                        set_mario_action(gMarioState, ACT_IDLE, 0);
                     } else {
-                        set_mario_action(gMarioState, ACT_INTRO_CUTSCENE, 0);
+                        set_mario_action(gMarioState, ACT_IDLE, 0);
                         fadeFromColor = TRUE;
                     }
                 }

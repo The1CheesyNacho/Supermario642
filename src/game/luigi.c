@@ -102,6 +102,7 @@ void init_luigi_from_save_file(void) {
     gLuigiState->spawnInfo = &gPlayerSpawnInfos[1];
     gLuigiState->statusForCamera = &gPlayerCameraState[1];
     gLuigiState->marioBodyState = &gBodyStates[1];
+    gMarioStates[1].animList = &gLuigiAnimsBuf;
     gLuigiState->controller = &gControllers[1];
     gLuigiState->numCoins = 0;
     gLuigiState->numStars =

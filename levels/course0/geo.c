@@ -13,5 +13,4 @@
 
 #include "levels/course0/header.h"
 
-
-#include "levels/course0/geo.inc.c"
+#include "levels/course0/areas/1/geo.inc.c"
