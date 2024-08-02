@@ -388,28 +388,28 @@ const Gfx small_key_seg5_dl_05006700[] = {
 
 // 0x05006A08 - 0x05006A28
 const Gfx small_key_seg5_dl_05006A08[] = {
-    gsSPLightColor(LIGHT_1, 0x3264ffff),
-    gsSPLightColor(LIGHT_2, 0xc193fff),
+gsSPLightColor(LIGHT_2, 0x3264ffff),
+gsSPLightColor(LIGHT_3, 0xc193fff),
     gsSPBranchList(small_key_seg5_dl_05006700),
 };
 
 // 0x05006A28 - 0x05006A48
 const Gfx small_key_seg5_dl_05006A28[] = {
-    gsSPLightColor(LIGHT_1, 0x32ff64ff),
-    gsSPLightColor(LIGHT_2, 0xc3f19ff),
+gsSPLightColor(LIGHT_2, 0x32ff64ff),
+gsSPLightColor(LIGHT_3, 0xc3f19ff),
     gsSPBranchList(small_key_seg5_dl_05006700),
 };
 
 // 0x05006A48 - 0x05006A68
 const Gfx small_key_seg5_dl_05006A48[] = {
-    gsSPLightColor(LIGHT_1, 0xff6432ff),
-    gsSPLightColor(LIGHT_2, 0x3f190cff),
+gsSPLightColor(LIGHT_2, 0xff6432ff),
+gsSPLightColor(LIGHT_3, 0x3f190cff),
     gsSPBranchList(small_key_seg5_dl_05006700),
 };
 
 // 0x05006A68 - 0x05006A88
 const Gfx small_key_seg5_dl_05006A68[] = {
-    gsSPLightColor(LIGHT_1, 0xccff00ff),
-    gsSPLightColor(LIGHT_2, 0x333f00ff),
+gsSPLightColor(LIGHT_2, 0xccff00ff),
+gsSPLightColor(LIGHT_3, 0x333f00ff),
     gsSPBranchList(small_key_seg5_dl_05006700),
 };

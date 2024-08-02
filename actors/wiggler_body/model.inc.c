@@ -255,8 +255,8 @@ static const Vtx wiggler_seg5_vertex_0500BBC8[] = {
 
 // 0x0500BCB8 - 0x0500BE10
 const Gfx wiggler_seg5_dl_0500BCB8[] = {
-    gsSPLightColor(LIGHT_1, 0xdf0000ff),
-    gsSPLightColor(LIGHT_2, 0x370000ff),
+gsSPLightColor(LIGHT_2, 0xdf0000ff),
+gsSPLightColor(LIGHT_3, 0x370000ff),
     gsSPVertex(wiggler_seg5_vertex_0500B278, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  6,  7, 0x0),
@@ -284,8 +284,8 @@ const Gfx wiggler_seg5_dl_0500BCB8[] = {
 
 // 0x0500BE10 - 0x0500BE98
 const Gfx wiggler_seg5_dl_0500BE10[] = {
-    gsSPLightColor(LIGHT_1, 0xe74700ff),
-    gsSPLightColor(LIGHT_2, 0x391100ff),
+gsSPLightColor(LIGHT_2, 0xe74700ff),
+gsSPLightColor(LIGHT_3, 0x391100ff),
     gsSPVertex(wiggler_seg5_vertex_0500B5B8, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  6,  7, 0x0),
@@ -299,8 +299,8 @@ const Gfx wiggler_seg5_dl_0500BE10[] = {
 
 // 0x0500BE98 - 0x0500BF20
 const Gfx wiggler_seg5_dl_0500BE98[] = {
-    gsSPLightColor(LIGHT_1, 0xe74700ff),
-    gsSPLightColor(LIGHT_2, 0x391100ff),
+gsSPLightColor(LIGHT_2, 0xe74700ff),
+gsSPLightColor(LIGHT_3, 0x391100ff),
     gsSPVertex(wiggler_seg5_vertex_0500B6A8, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  6,  7, 0x0),
@@ -314,8 +314,8 @@ const Gfx wiggler_seg5_dl_0500BE98[] = {
 
 // 0x0500BF20 - 0x0500C078
 const Gfx wiggler_seg5_dl_0500BF20[] = {
-    gsSPLightColor(LIGHT_1, 0xdf0000ff),
-    gsSPLightColor(LIGHT_2, 0x370000ff),
+gsSPLightColor(LIGHT_2, 0xdf0000ff),
+gsSPLightColor(LIGHT_3, 0x370000ff),
     gsSPVertex(wiggler_seg5_vertex_0500B798, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  6,  7, 0x0),
@@ -343,8 +343,8 @@ const Gfx wiggler_seg5_dl_0500BF20[] = {
 
 // 0x0500C078 - 0x0500C100
 const Gfx wiggler_seg5_dl_0500C078[] = {
-    gsSPLightColor(LIGHT_1, 0xe74700ff),
-    gsSPLightColor(LIGHT_2, 0x391100ff),
+gsSPLightColor(LIGHT_2, 0xe74700ff),
+gsSPLightColor(LIGHT_3, 0x391100ff),
     gsSPVertex(wiggler_seg5_vertex_0500BAD8, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  6,  7, 0x0),
@@ -358,8 +358,8 @@ const Gfx wiggler_seg5_dl_0500C078[] = {
 
 // 0x0500C100 - 0x0500C188
 const Gfx wiggler_seg5_dl_0500C100[] = {
-    gsSPLightColor(LIGHT_1, 0xe74700ff),
-    gsSPLightColor(LIGHT_2, 0x391100ff),
+gsSPLightColor(LIGHT_2, 0xe74700ff),
+gsSPLightColor(LIGHT_3, 0x391100ff),
     gsSPVertex(wiggler_seg5_vertex_0500BBC8, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  6,  7, 0x0),

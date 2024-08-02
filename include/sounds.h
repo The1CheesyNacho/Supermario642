@@ -36,6 +36,7 @@ enum SoundBank {
     SOUND_BANK_MENU,
     SOUND_BANK_GENERAL2,
     SOUND_BANK_OBJ2,
+<<<<<<< HEAD
     #ifdef EXTRA_SFX_CHANNEL_BANKS
     SOUND_BANK_CUSTOM_FOREGROUND1,
     SOUND_BANK_CUSTOM_FOREGROUND2,
@@ -44,11 +45,21 @@ enum SoundBank {
     SOUND_BANK_CUSTOM_BACKGROUND2,
     SOUND_BANK_CUSTOM_BACKGROUND3,
     #endif
+=======
+    SOUND_BANK_CUSTOM_FOREGROUND_1,
+    SOUND_BANK_CUSTOM_FOREGROUND_2,
+    SOUND_BANK_CUSTOM_FOREGROUND_3,
+    SOUND_BANK_CUSTOM_BACKGROUND_1,
+    SOUND_BANK_CUSTOM_BACKGROUND_2,
+    SOUND_BANK_CUSTOM_BACKGROUND_3,
+
+>>>>>>> 3423721b4b0ee5c68ecacc0608a8b07a297165e3
     SOUND_BANK_COUNT
 };
 
 #define SOUND_BANKS_ALL_BITS 0xffff
 #define SOUND_BANKS_ALL ((1 << SOUND_BANK_COUNT) - 1)
+<<<<<<< HEAD
 #ifdef EXTRA_SFX_CHANNEL_BANKS
 #define SOUND_BANKS_FOREGROUND (\
     (1 << SOUND_BANK_ACTION) |\
@@ -63,6 +74,17 @@ enum SoundBank {
     (1 << SOUND_BANK_VOICE) |\
     (1 << SOUND_BANK_MENU))
 #endif
+=======
+
+#define SOUND_BANKS_FOREGROUND (\
+    (1 << SOUND_BANK_ACTION) |\
+    (1 << SOUND_BANK_VOICE) |\
+    (1 << SOUND_BANK_MENU) |\
+    (1 << SOUND_BANK_CUSTOM_FOREGROUND_1) |\
+    (1 << SOUND_BANK_CUSTOM_FOREGROUND_2) |\
+    (1 << SOUND_BANK_CUSTOM_FOREGROUND_3))
+
+>>>>>>> 3423721b4b0ee5c68ecacc0608a8b07a297165e3
 #define SOUND_BANKS_BACKGROUND (SOUND_BANKS_ALL & ~SOUND_BANKS_FOREGROUND)
 #define SOUND_BANKS_DISABLED_DURING_INTRO_CUTSCENE (\
     (1 << SOUND_BANK_ENV) |\
@@ -767,6 +789,7 @@ enum SoundBank {
 #define SOUND_OBJ2_BOSS_DIALOG_GRUNT             /* 0x90694081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x69, 0x40, SOUND_DISCRETE)
 #define SOUND_OBJ2_MRI_SPINNING                  /* 0x906B0081 */ SOUND_ARG_LOAD(SOUND_BANK_OBJ2,     0x6B, 0x00, SOUND_DISCRETE)
 
+<<<<<<< HEAD
 #define SOUND_CHARACTER_YAH_WAH_HOO           gCharacterSounds[0]
 #define SOUND_CHARACTER_HOOHOO                gCharacterSounds[1]
 #define SOUND_CHARACTER_YAHOO                 gCharacterSounds[2]
@@ -813,5 +836,8 @@ enum SoundBank {
 
 extern u32 gCharacterSounds[];
 extern void set_character_sound();
+=======
+// Add defines for sounds using extra custom banks here!
+>>>>>>> 3423721b4b0ee5c68ecacc0608a8b07a297165e3
 
 #endif // SOUNDS_H

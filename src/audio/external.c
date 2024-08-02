@@ -110,71 +110,6 @@ s32 gAudioErrorFlags = 0;
 #endif
 s32 sGameLoopTicked = 0;
 
-// Dialog sounds
-// The US difference is the sound for DIALOG_037 ("I win! You lose! Ha ha ha ha!
-// You're no slouch, but I'm a better sledder! Better luck next time!"), spoken
-// by Koopa instead of the penguin in JP.
-
-enum DialogSpeakers {
-    UKIKI,
-    TUXIE,
-    BOWS1, // Bowser Intro / Doors Laugh
-    KOOPA,
-    KBOMB,
-    BOO,
-    BOMB,
-    BOWS2, // Bowser Battle Laugh
-    GRUNT,
-    WIGLR,
-    YOSHI
-};
-
-#define _ 0xFF
-
-u8 sDialogSpeaker[] = {
-    //       0      1      2      3      4      5      6      7      8      9
-    /* 0*/ _,     BOMB,  BOMB,  BOMB,  BOMB,  KOOPA, KOOPA, KOOPA, _,     KOOPA,
-    /* 1*/ _,     _,     _,     _,     _,     _,     _,     KBOMB, _,     _,
-    /* 2*/ _,     BOWS1, BOWS1, BOWS1, BOWS1, BOWS1, BOWS1, BOWS1, BOWS1, BOWS1,
-    /* 3*/ _,     _,     _,     _,     _,     _,     _,     TUXIE, _,     _,
-    /* 4*/ _,     KOOPA, _,     _,     _,     _,     _,     BOMB,  _,     _,
-    /* 5*/ _,     _,     _,     _,     _,     TUXIE, TUXIE, TUXIE, TUXIE, TUXIE,
-    /* 6*/ _,     _,     _,     _,     _,     _,     _,     BOWS2, _,     _,
-    /* 7*/ _,     _,     _,     _,     _,     _,     _,     _,     _,     UKIKI,
-    /* 8*/ UKIKI, _,     _,     _,     _,     BOO,   _,     _,     _,     _,
-    /* 9*/ BOWS2, _,     BOWS2, BOWS2, _,     _,     _,     _,     BOO,   BOO,
-    /*10*/ UKIKI, UKIKI, _,     _,     _,     BOMB,  BOMB,  BOO,   BOO,   _,
-    /*11*/ _,     _,     _,     _,     GRUNT, GRUNT, KBOMB, GRUNT, GRUNT, _,
-    /*12*/ _,     _,     _,     _,     _,     _,     _,     _,     KBOMB, _,
-    /*13*/ _,     _,     TUXIE, _,     _,     _,     _,     _,     _,     _,
-    /*14*/ _,     _,     _,     _,     _,     _,     _,     _,     _,     _,
-    /*15*/ WIGLR, WIGLR, WIGLR, _,     _,     _,     _,     _,     _,     _,
-    /*16*/ _,     YOSHI, _,     _,     _,     _,     _,     _,     WIGLR, _
-};
-#undef _
-STATIC_ASSERT(ARRAY_COUNT(sDialogSpeaker) == DIALOG_COUNT,
-              "change this array if you are adding dialogs");
-
-s32 sDialogSpeakerVoice[] = {
-    SOUND_OBJ_UKIKI_CHATTER_LONG,
-    SOUND_OBJ_BIG_PENGUIN_YELL,
-    SOUND_OBJ_BOWSER_INTRO_LAUGH,
-    SOUND_OBJ_KOOPA_TALK,
-    SOUND_OBJ_KING_BOBOMB_TALK,
-    SOUND_OBJ_BOO_LAUGH_LONG,
-    SOUND_OBJ_BOBOMB_BUDDY_TALK,
-    SOUND_OBJ_BOWSER_LAUGH,
-    SOUND_OBJ2_BOSS_DIALOG_GRUNT,
-    SOUND_OBJ_WIGGLER_TALK,
-    SOUND_GENERAL_YOSHI_TALK,
-#if defined(VERSION_JP) || defined(VERSION_US)
-    NO_SOUND,
-    NO_SOUND,
-    NO_SOUND,
-    NO_SOUND,
-#endif
-};
-
 u8 sNumProcessedSoundRequests = 0;
 u8 sSoundRequestCount = 0;
 
@@ -345,10 +280,17 @@ STATIC_ASSERT(ARRAY_COUNT(sBackgroundMusicDefaultVolume) == SEQ_COUNT,
 
 u8 sCurrentBackgroundMusicSeqId = SEQUENCE_NONE;
 u8 sMusicDynamicDelay = 0;
+<<<<<<< HEAD
 u8 sSoundBankUsedListBack[SOUND_BANK_COUNT];
 u8 sSoundBankFreeListFront[SOUND_BANK_COUNT];
 u8 sNumSoundsInBank[SOUND_BANK_COUNT]; // only used for debugging
 u8 sMaxChannelsForSoundBank[SOUND_BANK_COUNT];
+=======
+u8 sSoundBankUsedListBack[SOUND_BANK_COUNT] = {[0 ... SOUND_BANK_COUNT-1] = 0};
+u8 sSoundBankFreeListFront[SOUND_BANK_COUNT] = {[0 ... SOUND_BANK_COUNT-1] = 1};
+u8 sNumSoundsInBank[SOUND_BANK_COUNT] = {[0 ... SOUND_BANK_COUNT-1] = 0}; // only used for debugging
+u8 sMaxChannelsForSoundBank[SOUND_BANK_COUNT] = {[0 ... SOUND_BANK_COUNT-1] = 1};
+>>>>>>> 3423721b4b0ee5c68ecacc0608a8b07a297165e3
 
 // sBackgroundMusicMaxTargetVolume and sBackgroundMusicTargetVolume use the 0x80
 // bit to indicate that they are set, and the rest of the bits for the actual value
@@ -379,7 +321,10 @@ struct UnkStruct80343D00 D_SH_80343D00;
 #endif
 
 struct Sound sSoundRequests[0x100];
+<<<<<<< HEAD
 // Curiously, this has size 3, despite SEQUENCE_PLAYERS == 4 on EU
+=======
+>>>>>>> 3423721b4b0ee5c68ecacc0608a8b07a297165e3
 struct ChannelVolumeScaleFade D_80360928[SEQUENCE_PLAYERS][CHANNELS_MAX];
 u8 sUsedChannelsForSoundBank[SOUND_BANK_COUNT];
 u8 sCurrentSound[SOUND_BANK_COUNT][MAX_CHANNELS_PER_SOUND_BANK]; // index into sSoundBanks
@@ -1161,7 +1106,7 @@ static f32 get_sound_freq_scale(u8 bank, u8 item) {
 
     // Goes from 1 at the camera to 1 + 1/15 at AUDIO_MAX_DISTANCE (and continues rising
     // farther than that)
-    return amount / 15.0f + 1.0f;
+    return (amount / 15.0f + 1.0f) * gConfig.audioFrequency;
 }
 
 /**
@@ -1268,6 +1213,7 @@ static void update_game_sound(void) {
                     // Begin playing the sound
                     gSequencePlayers[SEQ_PLAYER_SFX].channels[channelIndex]->soundScriptIO[4] = soundId;
                     gSequencePlayers[SEQ_PLAYER_SFX].channels[channelIndex]->soundScriptIO[0] = 1;
+                    gSequencePlayers[SEQ_PLAYER_SFX].channels[channelIndex]->stopScript = FALSE;
 
                     switch (bank) {
                         case SOUND_BANK_MOVING:
@@ -1343,7 +1289,7 @@ static void update_game_sound(void) {
 #else
                             gSequencePlayers[SEQ_PLAYER_SFX].channels[channelIndex]->volume = 1.0f;
                             gSequencePlayers[SEQ_PLAYER_SFX].channels[channelIndex]->pan = 0.5f;
-                            gSequencePlayers[SEQ_PLAYER_SFX].channels[channelIndex]->freqScale = 1.0f;
+                            gSequencePlayers[SEQ_PLAYER_SFX].channels[channelIndex]->freqScale = gConfig.audioFrequency;
 #endif
                             break;
                         case SOUND_BANK_ACTION:
@@ -1377,6 +1323,7 @@ static void update_game_sound(void) {
                                 get_sound_reverb(bank, soundIndex, channelIndex);
 #endif
                             break;
+<<<<<<< HEAD
                         case SOUND_BANK_GENERAL:
                         case SOUND_BANK_ENV:
                         case SOUND_BANK_OBJ:
@@ -1388,6 +1335,9 @@ static void update_game_sound(void) {
                         case SOUND_BANK_CUSTOM_BACKGROUND2:
                         case SOUND_BANK_CUSTOM_BACKGROUND3:
 #endif
+=======
+                        default:
+>>>>>>> 3423721b4b0ee5c68ecacc0608a8b07a297165e3
 #if defined(VERSION_EU) || defined(VERSION_SH)
                             func_802ad770(0x05020000 | ((channelIndex & 0xff) << 8),
                                           get_sound_reverb(bank, soundIndex, channelIndex));
@@ -1519,7 +1469,7 @@ static void update_game_sound(void) {
 #else
                             gSequencePlayers[SEQ_PLAYER_SFX].channels[channelIndex]->volume = 1.0f;
                             gSequencePlayers[SEQ_PLAYER_SFX].channels[channelIndex]->pan = 0.5f;
-                            gSequencePlayers[SEQ_PLAYER_SFX].channels[channelIndex]->freqScale = 1.0f;
+                            gSequencePlayers[SEQ_PLAYER_SFX].channels[channelIndex]->freqScale = gConfig.audioFrequency;
 #endif
                             break;
                         case SOUND_BANK_ACTION:
@@ -1553,6 +1503,7 @@ static void update_game_sound(void) {
                                 get_sound_reverb(bank, soundIndex, channelIndex);
 #endif
                             break;
+<<<<<<< HEAD
                         case SOUND_BANK_GENERAL:
                         case SOUND_BANK_ENV:
                         case SOUND_BANK_OBJ:
@@ -1564,6 +1515,9 @@ static void update_game_sound(void) {
                         case SOUND_BANK_CUSTOM_BACKGROUND2:
                         case SOUND_BANK_CUSTOM_BACKGROUND3:
 #endif
+=======
+                        default:
+>>>>>>> 3423721b4b0ee5c68ecacc0608a8b07a297165e3
 #if defined(VERSION_EU) || defined(VERSION_SH)
                             func_802ad770(0x05020000 | ((channelIndex & 0xff) << 8),
                                           get_sound_reverb(bank, soundIndex, channelIndex));
@@ -2003,7 +1957,7 @@ void sound_init(void) {
 
     for (i = 0; i < SOUND_BANK_COUNT; i++) {
         // Set each sound in the bank to STOPPED
-        for (j = 0; j < 40; j++) {
+        for (j = 0; j < ARRAY_COUNT(sSoundBanks[0]); j++) {
             sSoundBanks[i][j].soundStatus = SOUND_STATUS_STOPPED;
         }
 
@@ -2024,7 +1978,7 @@ void sound_init(void) {
         sSoundBanks[i][0].next = 0xff;
 
         // Set free list to contain every sound slot
-        for (j = 1; j < 40 - 1; j++) {
+        for (j = 1; j < ARRAY_COUNT(sSoundBanks[0]) - 1; j++) {
             sSoundBanks[i][j].prev = j - 1;
             sSoundBanks[i][j].next = j + 1;
         }
@@ -2205,6 +2159,7 @@ void set_sound_moving_speed(u8 bank, u8 speed) {
 /**
  * Called from threads: thread5_game_loop
  */
+<<<<<<< HEAD
 void play_dialog_sound(u8 dialogID) {
     u8 speaker;
 
@@ -2220,14 +2175,24 @@ void play_dialog_sound(u8 dialogID) {
         // castle or when trying to enter a door without enough stars
         if (speaker == BOWS1) {
             seq_player_play_sequence(SEQ_PLAYER_ENV, NULL, 0);
+=======
+void play_dialog_sound(s32 voice) {
+    // 1 was the default value for the unused field that the new speaker field replaces.
+    if (voice != NO_SOUND && voice != 1) {
+        // "You've stepped on the (Wing|Metal|Vanish) Cap Switch"
+        if (voice == SEQ_EVENT_SOLVE_PUZZLE) {
+            play_puzzle_jingle();
+>>>>>>> 3423721b4b0ee5c68ecacc0608a8b07a297165e3
         }
-    }
+        else {
+            play_sound(voice, gGlobalSoundSource);
 
-    // "You've stepped on the (Wing|Metal|Vanish) Cap Switch"
-    if (dialogID == DIALOG_010
-     || dialogID == DIALOG_011
-     || dialogID == DIALOG_012) {
-        play_puzzle_jingle();
+            // Play music during bowser message that appears when first entering the
+            // castle or when trying to enter a door without enough stars
+            if (voice == SOUND_OBJ_BOWSER_INTRO_LAUGH) {
+                seq_player_play_sequence(SEQ_PLAYER_ENV, SEQ_EVENT_KOOPA_MESSAGE, 0);
+            }
+        }
     }
 }
 
@@ -2399,9 +2364,9 @@ void play_secondary_music(u8 seqId, u8 bgMusicVolume, u8 volume, u16 fadeTimer) 
 
 /**
  * Called from threads: thread5_game_loop
- * Seems to be related to music fading based on position, such as sleeping Piranha Plants, BBH Merry-Go-Round, and Endless Stairs
+ * Plays the primary music and stops playing the secondary music. Call it to cancel the above function.
  */
-void func_80321080(u16 fadeTimer) {
+void stop_secondary_music(u16 fadeTimer) {
     if (sBackgroundMusicTargetVolume != TARGET_VOLUME_UNSET) {
         sBackgroundMusicTargetVolume = TARGET_VOLUME_UNSET;
         D_80332120 = 0;

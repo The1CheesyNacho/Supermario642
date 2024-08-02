@@ -266,8 +266,8 @@ static const Vtx scuttlebug_seg6_vertex_06013F28[] = {
 
 // 0x06013FC8 - 0x060140F0
 const Gfx scuttlebug_seg6_dl_06013FC8[] = {
-    gsSPLightColor(LIGHT_1, 0xcf8906ff),
-    gsSPLightColor(LIGHT_2, 0x332201ff),
+gsSPLightColor(LIGHT_2, 0xcf8906ff),
+gsSPLightColor(LIGHT_3, 0x332201ff),
     gsSPVertex(scuttlebug_seg6_vertex_06013E28, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 5,  6,  7, 0x0,  5,  4,  6, 0x0),
@@ -401,8 +401,8 @@ static const Vtx scuttlebug_seg6_vertex_060142F8[] = {
 
 // 0x06014338 - 0x06014378
 const Gfx scuttlebug_seg6_dl_06014338[] = {
-    gsSPLightColor(LIGHT_1, 0x991616ff),
-    gsSPLightColor(LIGHT_2, 0x260505ff),
+gsSPLightColor(LIGHT_2, 0x991616ff),
+gsSPLightColor(LIGHT_3, 0x260505ff),
     gsSPVertex(scuttlebug_seg6_vertex_060142F8, 4, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  2,  1, 0x0),
     gsSP2Triangles( 2,  3,  0, 0x0,  1,  0,  3, 0x0),

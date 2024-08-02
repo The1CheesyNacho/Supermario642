@@ -67,13 +67,14 @@ enum MenuButtonTypes {
     MENU_BUTTON_ERASE_MAX,
 
     // Sound Mode Menu (SOUND SELECT)
-    // This menu includes language settings on EU
+    // This menu includes language settings with multilang
     MENU_BUTTON_SOUND_MODE = MENU_BUTTON_ERASE_MAX,
     MENU_BUTTON_OPTION_MIN,
     MENU_BUTTON_STEREO = MENU_BUTTON_OPTION_MIN,
     MENU_BUTTON_MONO,
     MENU_BUTTON_HEADSET,
 
+<<<<<<< HEAD
 #ifdef VERSION_EU
     // Language Menu
     MENU_BUTTON_LANGUAGE_MIN,
@@ -83,6 +84,10 @@ enum MenuButtonTypes {
     MENU_BUTTON_LANGUAGE_RETURN,
 #endif
 
+=======
+#ifdef MULTILANG
+    MENU_BUTTON_OPTION_RETURN = MENU_BUTTON_SOUND_OPTION_MAX,
+>>>>>>> 3423721b4b0ee5c68ecacc0608a8b07a297165e3
     MENU_BUTTON_OPTION_MAX
 };
 

@@ -548,5 +548,14 @@ extern const BehaviorScript bhvLuigi[];
 extern const BehaviorScript bhvStub1D0C[];
 extern const BehaviorScript bhvStub1D0D[];
 extern const BehaviorScript bhvUnusedFakeStar[];
+extern const BehaviorScript bhvStaticLight[];
+extern const BehaviorScript bhvDynamicLight[];
+extern const BehaviorScript bhvSpecularLight[];
+extern const BehaviorScript bhvAmbientLight[];
+//extern const BehaviorScript bhvOcclusionZone[];
+//extern const BehaviorScript bhvLightField[];
+extern const BehaviorScript bhvLevelSettings[];
+extern const BehaviorScript bhvLoopDeLoopSettings[];
+extern const BehaviorScript bhvLoopDeLoopEndpoint[];
 
 #endif // BEHAVIOR_DATA_H

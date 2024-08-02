@@ -18,6 +18,7 @@
 #include "string.h"
 #include "color_presets.h"
 #include "emutest.h"
+#include "lantern_engine.h"
 
 #include "config.h"
 #include "config/config_world.h"
@@ -51,6 +52,7 @@ s16 gMatStackIndex = 0;
 ALIGNED16 Mat4 gMatStack[32];
 ALIGNED16 Mtx *gMatStackFixed[32];
 f32 sAspectRatio;
+Mat4 gCameraTransform;
 
 /**
  * Animation nodes have state in global variables, so this struct captures
@@ -195,76 +197,10 @@ static const Gfx dl_silhouette_end[] = {
 struct RenderPhase {
     u8 startLayer;
     u8 endLayer;
-#ifdef OBJECTS_REJ
-    u8 ucode;
-#endif
 };
 
 static struct RenderPhase sRenderPhases[] = {
-#ifdef OBJECTS_REJ
- #if SILHOUETTE
-    // Silhouette, .rej
-    [RENDER_PHASE_ZEX_BEFORE_SILHOUETTE]   = {
-        .startLayer = LAYER_FIRST,
-        .endLayer   = LAYER_LAST_BEFORE_SILHOUETTE,
-        .ucode      = GRAPH_NODE_UCODE_DEFAULT
-    },
-    [RENDER_PHASE_REJ_ZB]                  = {
-        .startLayer = LAYER_ZB_FIRST,
-        .endLayer   = LAYER_LAST_BEFORE_SILHOUETTE,
-        .ucode      = GRAPH_NODE_UCODE_REJ
-    },
-    [RENDER_PHASE_REJ_SILHOUETTE]          = {
-        .startLayer = LAYER_SILHOUETTE_FIRST,
-        .endLayer   = LAYER_SILHOUETTE_LAST,
-        .ucode      = GRAPH_NODE_UCODE_REJ
-    },
-    [RENDER_PHASE_REJ_NON_SILHOUETTE]      = {
-        .startLayer = LAYER_SILHOUETTE_FIRST,
-        .endLayer   = LAYER_SILHOUETTE_LAST,
-        .ucode      = GRAPH_NODE_UCODE_REJ
-    },
-    [RENDER_PHASE_REJ_OCCLUDE_SILHOUETTE]  = {
-        .startLayer = LAYER_OCCLUDE_SILHOUETTE_FIRST,
-        .endLayer   = LAYER_OCCLUDE_SILHOUETTE_LAST,
-        .ucode      = GRAPH_NODE_UCODE_REJ
-    },
-    [RENDER_PHASE_ZEX_AFTER_SILHOUETTE]    = {
-        .startLayer = LAYER_OCCLUDE_SILHOUETTE_FIRST,
-        .endLayer   = LAYER_LAST,
-        .ucode      = GRAPH_NODE_UCODE_DEFAULT
-    },
-    [RENDER_PHASE_REJ_NON_ZB]              = {
-        .startLayer = LAYER_NON_ZB_FIRST,
-        .endLayer   = LAYER_LAST,
-        .ucode      = GRAPH_NODE_UCODE_REJ
-    },
- #else
-    // No silhouette, .rej
-    [RENDER_PHASE_ZEX_BG]                  = {
-        .startLayer = LAYER_FIRST,
-        .endLayer   = LAYER_FIRST,
-        .ucode      = GRAPH_NODE_UCODE_DEFAULT
-    },
-    [RENDER_PHASE_REJ_ZB]                  = {
-        .startLayer = LAYER_ZB_FIRST,
-        .endLayer   = LAYER_ZB_LAST,
-        .ucode      = GRAPH_NODE_UCODE_REJ
-    },
-    [RENDER_PHASE_ZEX_ALL]                 = {
-        .startLayer = LAYER_ZB_FIRST,
-        .endLayer   = LAYER_LAST,
-        .ucode      = GRAPH_NODE_UCODE_DEFAULT
-    },
-    [RENDER_PHASE_REJ_NON_ZB]              = {
-        .startLayer = LAYER_NON_ZB_FIRST,
-        .endLayer   = LAYER_LAST,
-        .ucode      = GRAPH_NODE_UCODE_REJ
-    },
- #endif
-#else
- #if SILHOUETTE
-    // Silhouette, no .rej
+#if SILHOUETTE
     [RENDER_PHASE_ZEX_BEFORE_SILHOUETTE]   = {
         .startLayer = LAYER_FIRST,
         .endLayer   = LAYER_LAST_BEFORE_SILHOUETTE,
@@ -286,48 +222,18 @@ static struct RenderPhase sRenderPhases[] = {
     },
 
     [RENDER_PHASE_ZEX_AFTER_SILHOUETTE]    = {
-        .startLayer = LAYER_OCCLUDE_SILHOUETTE_FIRST,
+        .startLayer = LAYER_NON_ZB_FIRST,
         .endLayer   = LAYER_LAST,
     },
-
- #else
-    // No silhouette, no .rej
+#else
     [RENDER_PHASE_ZEX_ALL]                 = {
         .startLayer = LAYER_FIRST,
         .endLayer   = LAYER_LAST,
     },
-
- #endif
 #endif
 };
 
 extern const Gfx init_rsp[];
-
-#ifdef OBJECTS_REJ
-void switch_ucode(s32 ucode) {
-    // Set the ucode and RCP settings
-    switch (ucode) {
-        default: // GRAPH_NODE_UCODE_DEFAULT
-        case GRAPH_NODE_UCODE_DEFAULT:
-            gSPLoadUcodeL(gDisplayListHead++, gspF3DZEX2_NoN_PosLight_fifo); // F3DZEX2_PosLight
-            // Reload the necessary RSP settings
-            gSPDisplayList(gDisplayListHead++, init_rsp);
-            break;
-        case GRAPH_NODE_UCODE_REJ:
-            // Use .rej Microcode, skip sub-pixel processing on console
-            if (gEmulator & EMU_CONSOLE) {
-                gSPLoadUcodeL(gDisplayListHead++, gspF3DLX2_Rej_fifo); // F3DLX2_Rej
-            } else {
-                gSPLoadUcodeL(gDisplayListHead++, gspF3DEX2_Rej_fifo); // F3DEX2_Rej
-            }
-            // Reload the necessary RSP settings
-            gSPDisplayList(gDisplayListHead++, init_rsp);
-            // Set the clip ratio (see init_rsp)
-            gSPClipRatio(gDisplayListHead++, FRUSTRATIO_2);
-            break;
-    }
-}
-#endif
 
 #define UPPER_FIXED(x) ((int)((unsigned int)((x) * 0x10000) >> 16))
 #define LOWER_FIXED(x) ((int)((unsigned int)((x) * 0x10000) & 0xFFFF))
@@ -351,73 +257,122 @@ Mtx identityMatrixWorldScale = {{
  * 3. It does this, because layers 5-7 are non zbuffered, and just doing 0-7 of ZEX, then 0-7 of REJ
  * would make the ZEX 0-4 render on top of Rej's 5-7.
  */
+ 
+ Vec3uc gGlobalFogColor;
+//static Vec3f LookAtPos;
+
+//f32 player_z_diff(f32 zLoc) {
+    //f32 diff;
+    //one_diff(diff, gMarioState->pos[2], zLoc);
+    //return one_mag(diff);
+//}
+
+#define EVIL_FOG_DIST -7600
+/*#define EVIL_FOG_DIST2 -4600
+//#define EVIL_FOG_DIST3 -1600
+//#define EVIL_FOG_DIST4 700
+			if (gMarioState->pos[2] > EVIL_FOG_DIST3 && gMarioState->pos[2] < EVIL_FOG_DIST4) { \
+				castleFOG[1] = approach_color_linear(castleFOG[1], 0xB6); \
+			} else if (gMarioState->pos[2] > EVIL_FOG_DIST2 && gMarioState->pos[2] < EVIL_FOG_DIST3) { \
+				castleFOG[1] = approach_color_linear(castleFOG[1], 0x79); \
+			} else if (gMarioState->pos[2] > EVIL_FOG_DIST && gMarioState->pos[2] < EVIL_FOG_DIST2) { \
+				if (castleFOG[0] != 0x98) castleFOG[0] = approach_color_linear(castleFOG[0], 0x98); \
+				castleFOG[1] = approach_color_linear(castleFOG[1], 0x3C); \
+				if (castleFOG[2] != 0xFF) castleFOG[2] = approach_color_linear(castleFOG[2], 0xFF); \
+			} else if (gMarioState->pos[2] < EVIL_FOG_DIST) { \
+*/
+#define set_dynamic_fog() \
+	switch (gCurrLevelNum) { \
+		case LEVEL_PSS: \
+			gSPFogPosition(tempGfxHead++, 980, 1000); \
+		break; \
+		case LEVEL_CASTLE_GROUNDS: \
+		break; \
+		case LEVEL_SA: \
+		break; \
+		case LEVEL_TTM: \
+		break; \
+		case LEVEL_WDW: \
+		break; \
+		case LEVEL_DDD: \
+		break; \
+		case LEVEL_HMC: \
+		break; \
+		case LEVEL_COTMC: \
+		break; \
+		case LEVEL_JRB: \
+		break; \
+    } \
+	gDPSetFogColor(tempGfxHead++, gGlobalFogColor[0], gGlobalFogColor[1], gGlobalFogColor[2], 255); \
+ 
 void geo_process_master_list_sub(struct GraphNodeMasterList *node) {
     struct RenderPhase *renderPhase;
     struct DisplayListNode *currList;
     s32 currLayer     = LAYER_FIRST;
     s32 startLayer    = LAYER_FIRST;
     s32 endLayer      = LAYER_LAST;
-    s32 ucode         = GRAPH_NODE_UCODE_DEFAULT;
     s32 phaseIndex    = RENDER_PHASE_FIRST;
     s32 enableZBuffer = (node->node.flags & GRAPH_RENDER_Z_BUFFER) != 0;
+    s32 finalPhase    = enableZBuffer ? RENDER_PHASE_END : 1;
     struct RenderModeContainer *mode1List = &renderModeTable_1Cycle[enableZBuffer];
     struct RenderModeContainer *mode2List = &renderModeTable_2Cycle[enableZBuffer];
+    Gfx *tempGfxHead = gDisplayListHead;
 
     // Loop through the render phases
-    for (phaseIndex = RENDER_PHASE_FIRST; phaseIndex < RENDER_PHASE_END; phaseIndex++) {
-        // Get the render phase information.
-        renderPhase = &sRenderPhases[phaseIndex];
-        startLayer  = renderPhase->startLayer;
-        endLayer    = renderPhase->endLayer;
-#ifdef OBJECTS_REJ
-        ucode       = renderPhase->ucode;
-        // Set the ucode for the current render phase
-        switch_ucode(ucode);
-        gSPLookAt(gDisplayListHead++, gCurLookAt);
-#endif
+    for (phaseIndex = RENDER_PHASE_FIRST; phaseIndex < finalPhase; phaseIndex++) {
         if (enableZBuffer) {
+            // Get the render phase information.
+            renderPhase = &sRenderPhases[phaseIndex];
+            startLayer  = renderPhase->startLayer;
+            endLayer    = renderPhase->endLayer;
             // Enable z buffer.
-            gDPPipeSync(gDisplayListHead++);
-            gSPSetGeometryMode(gDisplayListHead++, G_ZBUFFER);
+            gDPPipeSync(tempGfxHead++);
+            gSPSetGeometryMode(tempGfxHead++, G_ZBUFFER);
+        } else {
+            startLayer = LAYER_FORCE;
+            endLayer = LAYER_TRANSPARENT;
         }
         // Iterate through the layers on the current render phase.
         for (currLayer = startLayer; currLayer <= endLayer; currLayer++) {
             // Set 'currList' to the first DisplayListNode on the current layer.
-            currList = node->listHeads[ucode][currLayer];
+            currList = node->listHeads[currLayer];
 #if defined(DISABLE_AA) || !SILHOUETTE
             // Set the render mode for the current layer.
-            gDPSetRenderMode(gDisplayListHead++, mode1List->modes[currLayer],
+            gDPSetRenderMode(tempGfxHead++, mode1List->modes[currLayer],
                                                  mode2List->modes[currLayer]);
 #else
             if (phaseIndex == RENDER_PHASE_NON_SILHOUETTE) {
                 // To properly cover the silhouette, disable AA.
                 // The silhouette model does not have AA due to the hack used to prevent triangle overlap.
-                gDPSetRenderMode(gDisplayListHead++, (mode1List->modes[currLayer] & ~IM_RD),
+                gDPSetRenderMode(tempGfxHead++, (mode1List->modes[currLayer] & ~IM_RD),
                                                      (mode2List->modes[currLayer] & ~IM_RD));
             } else {
                 // Set the render mode for the current dl.
-                gDPSetRenderMode(gDisplayListHead++, mode1List->modes[currLayer],
+                gDPSetRenderMode(tempGfxHead++, mode1List->modes[currLayer],
                                                      mode2List->modes[currLayer]);
             }
 #endif
+
+			set_dynamic_fog();
+			
             // Iterate through all the displaylists on the current layer.
             while (currList != NULL) {
                 // Add the display list's transformation to the master list.
-                gSPMatrix(gDisplayListHead++, VIRTUAL_TO_PHYSICAL(currList->transform),
+                gSPMatrix(tempGfxHead++, VIRTUAL_TO_PHYSICAL(currList->transform),
                           (G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH));
 #if SILHOUETTE
                 if (phaseIndex == RENDER_PHASE_SILHOUETTE) {
                     // Add the current display list to the master list, with silhouette F3D.
-                    gSPDisplayList(gDisplayListHead++, dl_silhouette_begin);
-                    gSPDisplayList(gDisplayListHead++, currList->displayList);
-                    gSPDisplayList(gDisplayListHead++, dl_silhouette_end);
+                    gSPDisplayList(tempGfxHead++, dl_silhouette_begin);
+                    gSPDisplayList(tempGfxHead++, currList->displayList);
+                    gSPDisplayList(tempGfxHead++, dl_silhouette_end);
                 } else {
                     // Add the current display list to the master list.
-                    gSPDisplayList(gDisplayListHead++, currList->displayList);
+                    gSPDisplayList(tempGfxHead++, currList->displayList);
                 }
 #else
                 // Add the current display list to the master list.
-                gSPDisplayList(gDisplayListHead++, currList->displayList);
+                gSPDisplayList(tempGfxHead++, currList->displayList);
 #endif
                 // Move to the next DisplayListNode.
                 currList = currList->next;
@@ -427,21 +382,17 @@ void geo_process_master_list_sub(struct GraphNodeMasterList *node) {
 
     if (enableZBuffer) {
         // Disable z buffer.
-        gDPPipeSync(gDisplayListHead++);
-        gSPClearGeometryMode(gDisplayListHead++, G_ZBUFFER);
-    }
-#ifdef OBJECTS_REJ
- #if defined(F3DEX_GBI_2) && defined(VISUAL_DEBUG)
-    if (hitboxView) render_debug_boxes(DEBUG_UCODE_REJ);
- #endif
-    switch_ucode(GRAPH_NODE_UCODE_DEFAULT);
-#endif
+        gDPPipeSync(tempGfxHead++);
+        gSPClearGeometryMode(tempGfxHead++, G_ZBUFFER);
 #ifdef VISUAL_DEBUG
-    if ( hitboxView) render_debug_boxes(DEBUG_UCODE_DEFAULT | DEBUG_BOX_CLEAR);
-    // Load the world scale identity matrix
-    gSPMatrix(gDisplayListHead++, &identityMatrixWorldScale, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
-    if (surfaceView) visual_surface_loop();
+        // Load the world scale identity matrix
+        gSPMatrix(tempGfxHead++, &identityMatrixWorldScale, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
+        if (surfaceView) visual_surface_loop(&tempGfxHead);
+        render_debug_boxes(&tempGfxHead);
 #endif
+    }
+
+    gDisplayListHead = tempGfxHead;
 }
 
 /**
@@ -450,16 +401,11 @@ void geo_process_master_list_sub(struct GraphNodeMasterList *node) {
  * render modes of layers.
  */
 void geo_append_display_list(void *displayList, s32 layer) {
-    s32 ucode = GRAPH_NODE_UCODE_DEFAULT;
 #ifdef F3DEX_GBI_2
     gSPLookAt(gDisplayListHead++, gCurLookAt);
 #endif
-#if defined(OBJECTS_REJ) || SILHOUETTE
+#if SILHOUETTE
     if (gCurGraphNodeObject != NULL) {
- #ifdef OBJECTS_REJ
-        ucode = gCurGraphNodeObject->ucode;
- #endif
- #if SILHOUETTE
         if (gCurGraphNodeObject->node.flags & GRAPH_RENDER_SILHOUETTE) {
             switch (layer) {
                 case LAYER_OPAQUE: layer = LAYER_SILHOUETTE_OPAQUE; break;
@@ -472,7 +418,6 @@ void geo_append_display_list(void *displayList, s32 layer) {
                 case LAYER_ALPHA:  layer = LAYER_OCCLUDE_SILHOUETTE_ALPHA;  break;
             }
         }
- #endif // SILHOUETTE
     }
 #endif // F3DEX_GBI_2 || SILHOUETTE
     if (gCurGraphNodeMasterList != NULL) {
@@ -482,12 +427,12 @@ void geo_append_display_list(void *displayList, s32 layer) {
         listNode->transform = gMatStackFixed[gMatStackIndex];
         listNode->displayList = displayList;
         listNode->next = NULL;
-        if (gCurGraphNodeMasterList->listHeads[ucode][layer] == NULL) {
-            gCurGraphNodeMasterList->listHeads[ucode][layer] = listNode;
+        if (gCurGraphNodeMasterList->listHeads[layer] == NULL) {
+            gCurGraphNodeMasterList->listHeads[layer] = listNode;
         } else {
-            gCurGraphNodeMasterList->listTails[ucode][layer]->next = listNode;
+            gCurGraphNodeMasterList->listTails[layer]->next = listNode;
         }
-        gCurGraphNodeMasterList->listTails[ucode][layer] = listNode;
+        gCurGraphNodeMasterList->listTails[layer] = listNode;
     }
 }
 
@@ -512,14 +457,12 @@ static void append_dl_and_return(struct GraphNodeDisplayList *node) {
  * Process the master list node.
  */
 void geo_process_master_list(struct GraphNodeMasterList *node) {
-    s32 ucode, layer;
+    s32 layer;
 
     if (gCurGraphNodeMasterList == NULL && node->node.children != NULL) {
         gCurGraphNodeMasterList = node;
-        for (ucode = 0; ucode < GRAPH_NODE_NUM_UCODES; ucode++) {
-            for (layer = LAYER_FIRST; layer < LAYER_COUNT; layer++) {
-                node->listHeads[ucode][layer] = NULL;
-            }
+        for (layer = LAYER_FIRST; layer < LAYER_COUNT; layer++) {
+            node->listHeads[layer] = NULL;
         }
         geo_process_node_and_siblings(node->node.children);
         geo_process_master_list_sub(gCurGraphNodeMasterList);
@@ -638,32 +581,542 @@ void geo_process_switch(struct GraphNodeSwitchCase *node) {
     }
 }
 
-Mat4 gCameraTransform;
 
-Lights1 defaultLight = gdSPDefLights1(
-    0x3F, 0x3F, 0x3F, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00
-);
+static Lights1* sSceneLight = NULL;
+static Lights1* sSpecularLight = NULL;
+static Lights1* sAmbientLight = NULL;
+//consider looking into point lights
 
-Vec3f globalLightDirection = { 0x28, 0x28, 0x28 };
+/**
+ * Creates a displaylist to set the active lights closest to a given location
+ */
+ 
+//Gfx* createLightDl(UNUSED Vec3f pos, UNUSED f32 yOffset) {
+Gfx* createLightDl(void) {
+    Gfx *lightDl, *lightDlHead;
+	if (gOccludeLighting) {
+		lightDlHead = lightDl = alloc_display_list(sizeof(Gfx) * 6);
+		gSPNumLights(lightDl++, NUMLIGHTS_3);
+	} else if (!gDisableLighting) {
+		// Allocate a displaylist with room for each gSPLight and the gSPEndDisplayList
+		//if (!gVanillaLighting && !gFileSelect) {
+		if (!gVanillaLighting) {
+			lightDlHead = lightDl = alloc_display_list(sizeof(Gfx) * (3 + gNumLightColors));
 
-void setup_global_light() {
-    Lights1* curLight = (Lights1*)alloc_display_list(sizeof(Lights1));
-    bcopy(&defaultLight, curLight, sizeof(Lights1));
+			gSPNumLights(lightDl++, gNumLightColors);
+		} else {
+			lightDlHead = lightDl = alloc_display_list(sizeof(Gfx) * 5);
 
-#ifdef WORLDSPACE_LIGHTING
-    curLight->l->l.dir[0] = (s8)(globalLightDirection[0]);
-    curLight->l->l.dir[1] = (s8)(globalLightDirection[1]);
-    curLight->l->l.dir[2] = (s8)(globalLightDirection[2]);
-#else
-    Vec3f transformedLightDirection;
-    linear_mtxf_transpose_mul_vec3f(gCameraTransform, transformedLightDirection, globalLightDirection);
-    curLight->l->l.dir[0] = (s8)(transformedLightDirection[0]);
-    curLight->l->l.dir[1] = (s8)(transformedLightDirection[1]);
-    curLight->l->l.dir[2] = (s8)(transformedLightDirection[2]);
-#endif
+			gSPNumLights(lightDl++, NUMLIGHTS_2);
+		}
+	
+		if (gNumLightSources > 1 || gNumLightColors > 1) gSPLight(lightDl++, &sSpecularLight->l, LIGHT_2);
+		gSPLight(lightDl++, &sSceneLight->l, LIGHT_1);
+		if (gNumLightSources > 2 || gNumLightColors > 2) gSPLight(lightDl++, &sAmbientLight->l, LIGHT_3);
+		
+		
+		//gSPLight(lightDl++, &sSpecularLight->l, LIGHT_1);
+		//gSPLight(lightDl++, &sSpecularLight->l, LIGHT_2);
+		//gSPLight(lightDl++, &sSceneLight->l, LIGHT_3);
+		//gSPLight(lightDl++, &sSceneLight->l, LIGHT_4);
+		//gSPLight(lightDl++, &sSceneLight->l, LIGHT_5);
+		//gSPLight(lightDl++, &sSceneLight->l, LIGHT_6);
+		//gSPLight(lightDl++, &sSceneLight->l, LIGHT_7);
+		//gSPLight(lightDl++, &sSceneLight->l, LIGHT_8);
+		
+	} else {
+		lightDlHead = lightDl = alloc_display_list(sizeof(Gfx) * 3);
+		gSPNumLights(lightDl++, NUMLIGHTS_0);
+	}
 
-    gSPSetLights1(gDisplayListHead++, (*curLight));
+    // Terminate the display list
+    gSPEndDisplayList(lightDl);
+
+    // Return the head of the created display list
+    return lightDlHead;
 }
+
+void determine_number_of_light_sources(void) {
+	//if (!gVanillaLighting && !gFileSelect) {
+	if (!gVanillaLighting) {
+		switch (gNumLightSources) {
+			case 0:
+			case 1:
+				gSPSetLights1(gDisplayListHead++, (*sSceneLight)); 
+			break;
+			case 2:
+				//gSPSetLights1(gDisplayListHead++, (*sSpecularLight)); 
+				gSPSetLights2(gDisplayListHead++, (*sSceneLight));
+			break;
+			case 3:
+				//gSPSetLights1(gDisplayListHead++, (*sSpecularLight)); 
+				//gSPSetLights2(gDisplayListHead++, (*sAmbientLight));
+				gSPSetLights3(gDisplayListHead++, (*sSceneLight));
+			break;
+		}
+	} else {
+		if (gOccludeLighting) {
+			gSPSetLights3(gDisplayListHead++, (*sSceneLight));
+		} else if (!gDisableLighting) {
+			gSPSetLights2(gDisplayListHead++, (*sSceneLight));
+		} else {
+			gSPSetLights0(gDisplayListHead++, (*sSceneLight));
+		}
+	}
+}
+
+Vec3uc pixColor;
+
+#include "buffers/framebuffers.h"
+#include "game_init.h"
+#include "engine/colors.h"
+
+ALWAYS_INLINE void framebuffer_probe_color(void) {
+    
+	#define IMAGE_SIZE 16
+	
+	#define SAMPLE_SIZE 1
+	
+	s32 pixel;
+    s32 iy, ix, sy, sx;
+    s32 idy, idx, sdy;
+    RGBA16 *fb = gFramebuffers[sRenderingFramebuffer];
+
+    for ((iy = 0); (iy < IMAGE_SIZE); (iy++)) {
+        idy = (SAMPLE_SIZE + 12) * iy;
+        for ((ix = 0); (ix < IMAGE_SIZE); (ix++)) {
+            vec3_zero(pixColor);
+            idx = (SAMPLE_SIZE + 12) * ix;
+
+            for ((sy = 0); (sy < 3); (sy++)) {
+                sdy = ((SCREEN_WIDTH * (idy + sy)) + idx);
+                for ((sx = 0); (sx < 3); (sx++)) {
+                    pixel = fb[sdy + sx];
+                    pixColor[0] += RGBA16_R(pixel);
+                    pixColor[1] += RGBA16_G(pixel);
+                    pixColor[2] += RGBA16_B(pixel);
+                }
+            }
+        }
+    }
+}
+
+ALWAYS_INLINE u8 approach_color_light(u8 current, u8 target) {
+	s16 diff = (target - current);
+	if (diff >= 0) {
+		current = (diff > 1) ? current + 2: target;
+	} else {
+		current = (diff < -1) ? current - 2 : target;
+	}
+	
+    return current;
+}
+
+void setup_light(Vec3c LDir, Lights1 LCol, u8 LType) {
+		sSceneLight = (Lights1*)alloc_display_list(sizeof(Lights1));
+		bcopy(&LCol, sSceneLight, sizeof(Lights1));
+		Vec3f transformedLightDirection;
+		Vec3f globalLightDirection;
+		switch (LType) {
+			case DIRECTIONAL_CAMERA:
+				for (u32 i = 0; i < 3; i++) {
+					globalLightDirection[i] = LDir[i];
+				}
+				
+				linear_mtxf_transpose_mul_vec3f(gCameraTransform, transformedLightDirection, globalLightDirection);
+				
+				sSceneLight->l->l.dir[0] = (s8)(transformedLightDirection[0]);
+				//sSceneLight->l->l.dir[1] = (s8)(transformedLightDirection[0]);
+				sSceneLight->l->l.dir[1] = LDir[1];
+				sSceneLight->l->l.dir[2] = (s8)(transformedLightDirection[0]);
+			break;
+			case DIRECTIONAL_GLOBAL:
+				sSceneLight->l->l.dir[0] = LDir[0];
+				sSceneLight->l->l.dir[1] = LDir[1];
+				sSceneLight->l->l.dir[2] = LDir[2];
+			break;
+			#if 0
+			case POINT_CAMERA:
+				for (u32 i = 0; i < 3; i++) {
+					globalLightDirection[i] = LDir[i];
+				}
+				
+				linear_mtxf_transpose_mul_vec3f(gCameraTransform, transformedLightDirection, globalLightDirection);
+				
+				sSceneLight->l->pl.pos[0] = (s8)(transformedLightDirection[0]) / gWorldScale;
+				//sSceneLight->l->pl.pos[1] = (s8)(transformedLightDirection[0]) / gWorldScale;
+				sSceneLight->l->pl.pos[1] = LDir[1] / gWorldScale;
+				sSceneLight->l->pl.pos[2] = (s8)(transformedLightDirection[0]) / gWorldScale;
+				//sSceneLight->l->pl.constant_attenuation = (constantFalloff == 0) ? 8 : constantFalloff;
+				//sSceneLight->l->pl.linear_attenuation = linearFalloff;
+				//sSceneLight->l->pl.quadratic_attenuation = quadraticFalloff;
+				sSceneLight->l->pl.constant_attenuation = 4;
+				sSceneLight->l->pl.linear_attenuation = 4;
+				sSceneLight->l->pl.quadratic_attenuation = 4;
+			break;
+			case POINT_GLOBAL:
+				//sSceneLight->l->pl.constant_attenuation = (constantFalloff == 0) ? 8 : constantFalloff;
+				//sSceneLight->l->pl.linear_attenuation = linearFalloff;
+				//sSceneLight->l->pl.quadratic_attenuation = quadraticFalloff;
+				sSceneLight->l->pl.constant_attenuation = 4;
+				sSceneLight->l->pl.linear_attenuation = 4;
+				sSceneLight->l->pl.quadratic_attenuation = 4;
+				sSceneLight->l->pl.pos[0] = LDir[0] / gWorldScale;
+				sSceneLight->l->pl.pos[1] = LDir[1] / gWorldScale;
+				sSceneLight->l->pl.pos[2] = LDir[2] / gWorldScale;
+			break;
+			#endif
+		}
+}
+
+//not actually specular light, its a quirk with the way I have lighting set up
+void setup_specular_light(Vec3c LDir, u8 LType) {
+		sSpecularLight = (Lights1*)alloc_display_list(sizeof(Lights1));
+		bcopy(&vanillaLight, sSpecularLight, sizeof(Lights1));
+		Vec3f transformedLightDirection;
+		Vec3f globalLightDirection;
+		switch (LType) { //allow for it to have a type later?
+			case FBPROBE_CAMERA:
+			case DIRECTIONAL_CAMERA:
+				for (u32 i = 0; i < 3; i++) {
+					globalLightDirection[i] = LDir[i];
+				}
+				
+				linear_mtxf_transpose_mul_vec3f(gCameraTransform, transformedLightDirection, globalLightDirection);
+				
+				sSpecularLight->l->l.dir[0] = (s8)(transformedLightDirection[0]);
+				//sSpecularLight->l->l.dir[1] = (s8)(transformedLightDirection[0]);
+				sSpecularLight->l->l.dir[1] = LDir[1];
+				sSpecularLight->l->l.dir[2] = (s8)(transformedLightDirection[0]);
+			break;
+			case FBPROBE_GLOBAL:
+			case DIRECTIONAL_GLOBAL:
+				sSpecularLight->l->l.dir[0] = LDir[0];
+				sSpecularLight->l->l.dir[1] = LDir[1];
+				sSpecularLight->l->l.dir[2] = LDir[2];
+			break;
+			#if 0
+			case POINT_CAMERA:
+				for (u32 i = 0; i < 3; i++) {
+					globalLightDirection[i] = LDir[i];
+				}
+				
+				linear_mtxf_transpose_mul_vec3f(gCameraTransform, transformedLightDirection, globalLightDirection);
+				
+				sSceneLight->l->pl.pos[0] = (s8)(transformedLightDirection[0]) / gWorldScale;
+				//sSceneLight->l->pl.pos[1] = (s8)(transformedLightDirection[0]) / gWorldScale;
+				sSceneLight->l->pl.pos[1] = LDir[1] / gWorldScale;
+				sSceneLight->l->pl.pos[2] = (s8)(transformedLightDirection[0]) / gWorldScale;
+				//sSceneLight->l->pl.constant_attenuation = (constantFalloff == 0) ? 8 : constantFalloff;
+				//sSceneLight->l->pl.linear_attenuation = linearFalloff;
+				//sSceneLight->l->pl.quadratic_attenuation = quadraticFalloff;
+				sSceneLight->l->pl.constant_attenuation = 4;
+				sSceneLight->l->pl.linear_attenuation = 4;
+				sSceneLight->l->pl.quadratic_attenuation = 4;
+			break;
+			case POINT_GLOBAL:
+				//sSpecularLight->l->pl.constant_attenuation = (constantFalloff == 0) ? 8 : constantFalloff;
+				//sSpecularLight->l->pl.linear_attenuation = linearFalloff;
+				//sSpecularLight->l->pl.quadratic_attenuation = quadraticFalloff;
+				sSpecularLight->l->pl.constant_attenuation = 4;
+				sSpecularLight->l->pl.linear_attenuation = 4;
+				sSpecularLight->l->pl.quadratic_attenuation = 4;
+				sSpecularLight->l->pl.pos[0] = LDir[0] / gWorldScale;
+				sSpecularLight->l->pl.pos[1] = LDir[1] / gWorldScale;
+				sSpecularLight->l->pl.pos[2] = LDir[2] / gWorldScale;
+			break;
+			#endif
+		}
+}
+
+//not actually an ambient light, once again just a unique lighting quirk
+void setup_ambient_light(Vec3c LDir, u8 LType) {
+		sAmbientLight = (Lights1*)alloc_display_list(sizeof(Lights1));
+		bcopy(&vanillaLight, sAmbientLight, sizeof(Lights1));
+		Vec3f transformedLightDirection;
+		Vec3f globalLightDirection;
+		switch (LType) { //allow for it to have a type later?
+			case FBPROBE_CAMERA:
+			case DIRECTIONAL_CAMERA:
+				for (u32 i = 0; i < 3; i++) {
+					globalLightDirection[i] = LDir[i];
+				}
+				
+				linear_mtxf_transpose_mul_vec3f(gCameraTransform, transformedLightDirection, globalLightDirection);
+				
+				sAmbientLight->l->l.dir[0] = (s8)(transformedLightDirection[0]);
+				//sAmbientLight->l->l.dir[1] = (s8)(transformedLightDirection[0]);
+				sAmbientLight->l->l.dir[1] = LDir[1];
+				sAmbientLight->l->l.dir[2] = (s8)(transformedLightDirection[0]);
+			break;
+			case FBPROBE_GLOBAL:
+			case DIRECTIONAL_GLOBAL:
+				sAmbientLight->l->l.dir[0] = LDir[0];
+				sAmbientLight->l->l.dir[1] = LDir[1];
+				sAmbientLight->l->l.dir[2] = LDir[2];
+			break;
+			#if 0
+			case POINT_CAMERA:
+				for (u32 i = 0; i < 3; i++) {
+					globalLightDirection[i] = LDir[i];
+				}
+				
+				linear_mtxf_transpose_mul_vec3f(gCameraTransform, transformedLightDirection, globalLightDirection);
+				
+				sSceneLight->l->pl.pos[0] = (s8)(transformedLightDirection[0]) / gWorldScale;
+				//sSceneLight->l->pl.pos[1] = (s8)(transformedLightDirection[0]) / gWorldScale;
+				sSceneLight->l->pl.pos[1] = LDir[1] / gWorldScale;
+				sSceneLight->l->pl.pos[2] = (s8)(transformedLightDirection[0]) / gWorldScale;
+				//sSceneLight->l->pl.constant_attenuation = (constantFalloff == 0) ? 8 : constantFalloff;
+				//sSceneLight->l->pl.linear_attenuation = linearFalloff;
+				//sSceneLight->l->pl.quadratic_attenuation = quadraticFalloff;
+				sSceneLight->l->pl.constant_attenuation = 4;
+				sSceneLight->l->pl.linear_attenuation = 4;
+				sSceneLight->l->pl.quadratic_attenuation = 4;
+			break;
+			case POINT_GLOBAL:
+				//sAmbientLight->l->pl.constant_attenuation = (constantFalloff == 0) ? 8 : constantFalloff;
+				//sAmbientLight->l->pl.linear_attenuation = linearFalloff;
+				//sAmbientLight->l->pl.quadratic_attenuation = quadraticFalloff;
+				sAmbientLight->l->pl.constant_attenuation = 4;
+				sAmbientLight->l->pl.linear_attenuation = 4;
+				sAmbientLight->l->pl.quadratic_attenuation = 4;
+				sAmbientLight->l->pl.pos[0] = LDir[0] / gWorldScale;
+				sAmbientLight->l->pl.pos[1] = LDir[1] / gWorldScale;
+				sAmbientLight->l->pl.pos[2] = LDir[2] / gWorldScale;
+			break;
+			#endif
+		}
+}
+
+//extern u8 gHasFrameBuffer;
+
+void setup_light_dynamic(Vec3c LDir, Vec3uc LCol, u8 LType) {
+		sSceneLight = (Lights1*)alloc_display_list(sizeof(Lights1));
+		if (gLightType < DIRECTIONAL_CAMERA && (gGlobalTimer & 15)) framebuffer_probe_color();
+		Vec3f transformedLightDirection;
+		Vec3f globalLightDirection;
+		switch (LType) {
+			case FBPROBE_CAMERA:
+				//if (!gHasFrameBuffer) LType = DIRECTIONAL_CAMERA;
+				for (u32 i = 0; i < 3; i++) {
+					globalLightDirection[i] = LDir[i];
+				}
+				linear_mtxf_transpose_mul_vec3f(gCameraTransform, transformedLightDirection, globalLightDirection);
+				
+				sSceneLight->l->l.dir[0] = (s8)(transformedLightDirection[0]);
+				//sSceneLight->l->l.dir[1] = (s8)(transformedLightDirection[1]);
+				sSceneLight->l->l.dir[1] = LDir[1];
+				sSceneLight->l->l.dir[2] = (s8)(transformedLightDirection[2]);
+	
+				sSceneLight->l->l.col[0] = approach_color_light(sSceneLight->l->l.col[0], pixColor[0]);
+				sSceneLight->l->l.col[1] = approach_color_light(sSceneLight->l->l.col[1], pixColor[1]);
+				sSceneLight->l->l.col[2] = approach_color_light(sSceneLight->l->l.col[2], pixColor[2]);
+	
+				sSceneLight->l->l.colc[0] = sSceneLight->l->l.col[0];
+				sSceneLight->l->l.colc[1] = sSceneLight->l->l.col[1];
+				sSceneLight->l->l.colc[2] = sSceneLight->l->l.col[2];
+			break;
+			case FBPROBE_GLOBAL:
+				//if (!gHasFrameBuffer) LType = DIRECTIONAL_GLOBAL;
+				sSceneLight->l->l.dir[0] = LDir[0];
+				sSceneLight->l->l.dir[1] = LDir[1];
+				sSceneLight->l->l.dir[2] = LDir[2];
+				
+				sSceneLight->l->l.col[0] = approach_color_light(sSceneLight->l->l.col[0], pixColor[0]);
+				sSceneLight->l->l.col[1] = approach_color_light(sSceneLight->l->l.col[1], pixColor[1]);
+				sSceneLight->l->l.col[2] = approach_color_light(sSceneLight->l->l.col[2], pixColor[2]);
+	
+				sSceneLight->l->l.colc[0] = sSceneLight->l->l.col[0];
+				sSceneLight->l->l.colc[1] = sSceneLight->l->l.col[1];
+				sSceneLight->l->l.colc[2] = sSceneLight->l->l.col[2];
+			break;
+			case DIRECTIONAL_CAMERA:
+				//if (!gHasFrameBuffer) gIsDynamic = FALSE;
+				for (u32 i = 0; i < 3; i++) {
+					globalLightDirection[i] = LDir[i];
+				}
+				linear_mtxf_transpose_mul_vec3f(gCameraTransform, transformedLightDirection, globalLightDirection);
+				
+				sSceneLight->l->l.dir[0] = (s8)(transformedLightDirection[0]);
+				//sSceneLight->l->l.dir[1] = (s8)(transformedLightDirection[1]);
+				sSceneLight->l->l.dir[1] = LDir[1];
+				sSceneLight->l->l.dir[2] = (s8)(transformedLightDirection[2]);
+	
+				sSceneLight->l->l.col[0] = LCol[0];
+				sSceneLight->l->l.col[1] = LCol[1];
+				sSceneLight->l->l.col[2] = LCol[2];
+	
+				sSceneLight->l->l.colc[0] = sSceneLight->l->l.col[0];
+				sSceneLight->l->l.colc[1] = sSceneLight->l->l.col[1];
+				sSceneLight->l->l.colc[2] = sSceneLight->l->l.col[2];
+			break;
+			case DIRECTIONAL_GLOBAL:
+				//if (!gHasFrameBuffer) gIsDynamic = FALSE;
+				sSceneLight->l->l.dir[0] = LDir[0];
+				sSceneLight->l->l.dir[1] = LDir[1];
+				sSceneLight->l->l.dir[2] = LDir[2];
+	
+				sSceneLight->l->l.col[0] = LCol[0];
+				sSceneLight->l->l.col[1] = LCol[1];
+				sSceneLight->l->l.col[2] = LCol[2];
+	
+				sSceneLight->l->l.colc[0] = sSceneLight->l->l.col[0];
+				sSceneLight->l->l.colc[1] = sSceneLight->l->l.col[1];
+				sSceneLight->l->l.colc[2] = sSceneLight->l->l.col[2];
+			break;
+			case OCCLUDE_CAMERA:
+				for (u32 i = 0; i < 3; i++) {
+					globalLightDirection[i] = LDir[i];
+				}
+				linear_mtxf_transpose_mul_vec3f(gCameraTransform, transformedLightDirection, globalLightDirection);
+				
+				sSceneLight->l->l.dir[0] = (s8)(transformedLightDirection[0]);
+				//sSceneLight->l->l.dir[1] = (s8)(transformedLightDirection[1]);
+				sSceneLight->l->l.dir[1] = LDir[1];
+				sSceneLight->l->l.dir[2] = (s8)(transformedLightDirection[2]);
+	
+				sSceneLight->l->l.col[0] = approach_color_light(sSceneLight->l->l.col[0], LCol[0]);
+				sSceneLight->l->l.col[1] = approach_color_light(sSceneLight->l->l.col[1], LCol[1]);
+				sSceneLight->l->l.col[2] = approach_color_light(sSceneLight->l->l.col[2], LCol[2]);
+	
+				sSceneLight->l->l.colc[0] = sSceneLight->l->l.col[0];
+				sSceneLight->l->l.colc[1] = sSceneLight->l->l.col[1];
+				sSceneLight->l->l.colc[2] = sSceneLight->l->l.col[2];
+			break;
+			#if 0
+			case OCCLUDE_GLOBAL:
+				sSceneLight->l->l.dir[0] = LDir[0];
+				sSceneLight->l->l.dir[1] = LDir[1];
+				sSceneLight->l->l.dir[2] = LDir[2];
+				
+				sSceneLight->l->l.col[0] = approach_color_light(sSceneLight->l->l.col[0], LCol[0]);
+				sSceneLight->l->l.col[1] = approach_color_light(sSceneLight->l->l.col[1], LCol[1]);
+				sSceneLight->l->l.col[2] = approach_color_light(sSceneLight->l->l.col[2], LCol[2]);
+	
+				sSceneLight->l->l.colc[0] = sSceneLight->l->l.col[0];
+				sSceneLight->l->l.colc[1] = sSceneLight->l->l.col[1];
+				sSceneLight->l->l.colc[2] = sSceneLight->l->l.col[2];
+			break;
+			#endif
+		}
+}
+
+void determine_dynamic_lighting(void) {
+	switch (gDynamicLightPreset) {
+		case LIGHT_RAINBOW:
+			gCurrDynamicColor[0] = gGlobalFogColor[0];
+			gCurrDynamicColor[1] = gGlobalFogColor[1];
+			gCurrDynamicColor[2] = gGlobalFogColor[2];
+			gGlobalFogColor[0] = (coss(gGlobalTimer * 200         ) + 1) * 127; //puppyprint rainbow code
+			gGlobalFogColor[1] = (coss((gGlobalTimer * 200) + 21845) + 1) * 127;
+			gGlobalFogColor[2] = (coss((gGlobalTimer * 200) - 21845) + 1) * 127;
+		break;
+		//case LIGHT_CASTLE_BASEMENT:
+		//break;
+	}
+}
+
+extern u8 gHasFrameBuffer;
+
+//void process_lighting(struct GraphNodeCamera *node) {
+void process_lighting(void) {
+	Gfx *setLightsDL = alloc_display_list(sizeof(Gfx) * 3);
+	Gfx *levelLightsDL = NULL;
+	
+	geo_append_display_list(setLightsDL, LAYER_OPAQUE);
+	
+	if (gOccludeLighting) {
+		Vec3uc sOccludedLight;
+		for (s32 i = 0; i < 3; i++) sOccludedLight[i] = 0;
+		setup_light_dynamic(gCurrLightDirection, sOccludedLight, OCCLUDE_CAMERA);
+	//} else if (gVanillaLighting || gFileSelect > 0) {
+	} else if (gVanillaLighting) {
+		setup_light(vanillaLightDirection, vanillaLight, DIRECTIONAL_CAMERA);
+	} else {
+		if (!gDisableLighting) {
+			//acts like a faux specular light when light colors is set to 1 and light sources is set to 2
+			//else cover the player in sSceneLight's colors, (on accurate video plugins)
+			if (gNumLightSources > 1 || gNumLightColors > 1) setup_specular_light(gCurrLightDirection2, gLightType);
+			
+			//fallback to static bounce lights if framebuffer is not being emulated
+			if (!gHasFrameBuffer) {
+				if (gLightType == FBPROBE_CAMERA) {
+					gLightType = DIRECTIONAL_CAMERA;
+					gIsDynamic = FALSE;
+				} else if (gLightType == FBPROBE_GLOBAL) {
+					gLightType = DIRECTIONAL_GLOBAL;
+					gIsDynamic = FALSE;
+				}
+			}
+			
+			if (!gIsDynamic && gLightType > FBPROBE_GLOBAL) {
+				setup_light(gCurrLightDirection, gCurrStaticColor, gLightType);
+			} else {
+				if (gLightType > FBPROBE_GLOBAL) determine_dynamic_lighting();
+				setup_light_dynamic(gCurrLightDirection, gCurrDynamicColor, gLightType);
+			}
+		
+			//behaves like a black "ambient" light when light colors is set to 3 and light sources is set to 2
+			//else cover the player in sSceneLight's colors (on accurate video plugins)
+			if (gNumLightSources > 2 || gNumLightColors > 2) setup_ambient_light(gCurrLightDirection3, gLightType);
+		}
+	}
+	
+	determine_number_of_light_sources();
+	
+	//print_text_fmt_int (30, 120, "%d", gVanillaLighting);
+	//print_text_fmt_int (30, 90, "%d", gNumLights);
+	//print_text_fmt_int (30, 60, "%d", gCurrLightDirection[0]);
+	//print_text_fmt_int (30, 40, "%d", gCurrLightDirection[1]);
+	//print_text_fmt_int (30, 20, "%d", gCurrLightDirection[2]);
+	
+	
+	//print_text_fmt_int (30, 60, "%d", rainbowLED[0]);
+	//print_text_fmt_int (30, 40, "%d", rainbowLED[1]);
+	//print_text_fmt_int (30, 20, "%d", rainbowLED[2]);
+    
+    // Set up the light display list
+    // This has to be done after the area's GeoLayout is processed, as
+    // some point lights may be defined there instead of by objects
+	//Vec3f probePos;
+    //if (gLightType > DIRECTIONAL_GLOBAL) {
+        // Enable point lighting
+        //gSPSetGeometryMode(setLightsDL++, G_POINT_LIGHTING);
+		//if (gMarioObject) {
+			//vec3f_copy(probePos, gMarioState->pos);
+		//} else {
+			//vec3f_copy(probePos, node->pos);
+		//}
+    //} else {
+        // Disable point lighting (may not be required, but doesn't hurt)
+        //gSPClearGeometryMode(setLightsDL++, G_POINT_LIGHTING);
+    //}
+	
+	// Enable the lights
+	
+	//levelLightsDL = createLightDl(probePos, 300.0f);
+	levelLightsDL = createLightDl();
+	
+    gSPDisplayList(setLightsDL++, levelLightsDL);
+
+    // Terminate the lighting DL
+    gSPEndDisplayList(setLightsDL++);
+}
+
+
+//this works as a function on inaccurate plugins
+#define init_lighting() \
+	static u8 init; \
+	if (!init) { \
+		gLightType = DIRECTIONAL_CAMERA;  \
+		gDisableLighting = FALSE; \
+		gIsDynamic = FALSE; \
+		gVanillaLighting = FALSE; \
+		gNumLightColors = 2; \
+		gNumLightSources = 2; \
+		init++; \
+	}
 
 /**
  * Process a camera node.
@@ -714,8 +1167,12 @@ void geo_process_camera(struct GraphNodeCamera *node) {
     guMtxF2L(gCameraTransform, viewMtx);
 #endif
     gSPMatrix(gDisplayListHead++, VIRTUAL_TO_PHYSICAL(viewMtx), G_MTX_PROJECTION | G_MTX_MUL | G_MTX_NOPUSH);
-    setup_global_light();
-
+    
+	init_lighting();
+	
+	//if (gCurrLevelNum > 0) process_lighting(node); //crashes ares otherwise
+	
+	if (gCurrLevelNum > 0) process_lighting(); //crashes ares otherwise
     if (node->fnNode.node.children != 0) {
         gCurGraphNodeCamera = node;
         node->matrixPtr = &gCameraTransform;
@@ -1128,16 +1585,16 @@ void visualise_object_hitbox(struct Object *node) {
             debug_box_color(COLOR_RGBA32_DEBUG_HITBOX);
         }
 
-        debug_box(bnds1, bnds2, (DEBUG_SHAPE_CYLINDER | DEBUG_UCODE_REJ));
+        debug_box(bnds1, bnds2, (DEBUG_SHAPE_CYLINDER));
         vec3f_set(bnds1, node->oPosX, (node->oPosY - node->hitboxDownOffset), node->oPosZ);
         vec3f_set(bnds2, node->hurtboxRadius, node->hurtboxHeight, node->hurtboxRadius);
         debug_box_color(COLOR_RGBA32_DEBUG_HURTBOX);
-        debug_box(bnds1, bnds2, (DEBUG_SHAPE_CYLINDER | DEBUG_UCODE_REJ));
+        debug_box(bnds1, bnds2, (DEBUG_SHAPE_CYLINDER));
     } else {
         vec3f_set(bnds1, node->oPosX, (node->oPosY - 15), node->oPosZ);
         vec3f_set(bnds2, 30, 30, 30);
         debug_box_color(COLOR_RGBA32_DEBUG_POSITION);
-        debug_box(bnds1, bnds2, (DEBUG_SHAPE_BOX | DEBUG_UCODE_REJ));
+        debug_box(bnds1, bnds2, (DEBUG_SHAPE_BOX));
     }
 }
 #endif
@@ -1149,6 +1606,8 @@ void geo_process_object(struct Object *node) {
     if (node->header.gfx.areaIndex == gCurGraphNodeRoot->areaIndex) {
         s32 isInvisible = (node->header.gfx.node.flags & GRAPH_RENDER_INVISIBLE);
         s32 noThrowMatrix = (node->header.gfx.throwMatrix == NULL);
+        // Maintain throw matrix pointer if the game is paused as it won't be updated.
+        Mat4 *oldThrowMatrix = (sCurrPlayMode == PLAY_MODE_PAUSED) ? node->header.gfx.throwMatrix : NULL;
 
         // If the throw matrix is null and the object is invisible, there is no need
         // to update billboarding, scale, rotation, etc. 
@@ -1197,7 +1656,7 @@ void geo_process_object(struct Object *node) {
 
         gMatStackIndex--;
         gCurrAnimType = ANIM_TYPE_NONE;
-        node->header.gfx.throwMatrix = NULL;
+        node->header.gfx.throwMatrix = oldThrowMatrix;
     }
 }
 
@@ -1233,7 +1692,7 @@ void geo_process_held_object(struct GraphNodeHeldObject *node) {
         node->fnNode.func(GEO_CONTEXT_RENDER, &node->fnNode.node, gMatStack[gMatStackIndex]);
     }
     if (node->objNode != NULL && node->objNode->header.gfx.sharedChild != NULL) {
-        vec3_prod_val(translation, node->translation, 0.25f);
+        vec3_scale_dest(translation, node->translation, 0.25f);
 
         mtxf_translate(mat, translation);
         mtxf_copy(gMatStack[gMatStackIndex + 1], *gCurGraphNodeObject->throwMatrix);
@@ -1348,6 +1807,11 @@ void geo_process_node_and_siblings(struct GraphNode *firstNode) {
  * The root node itself sets up the viewport, then all its children are processed
  * to set up the projection and draw display lists.
  */
+f32 screenXMultiplyer;
+f32 screenYMultiplyer;
+f32 sizeXMultiplyer;
+f32 sizeYMultiplyer;
+
 void geo_process_root(struct GraphNodeRoot *node, Vp *b, Vp *c, s32 clearColor) {
     if (node->node.flags & GRAPH_RENDER_ACTIVE) {
         Mtx *initialMatrix;
@@ -1360,8 +1824,30 @@ void geo_process_root(struct GraphNodeRoot *node, Vp *b, Vp *c, s32 clearColor) 
 
         gMatStackIndex = 0;
         gCurrAnimType = ANIM_TYPE_NONE;
-        vec3s_set(viewport->vp.vtrans, node->x * 4, node->y * 4, 511);
-        vec3s_set(viewport->vp.vscale, node->width * 4, node->height * 4, 511);
+		
+		screenYMultiplyer = 4;
+		screenXMultiplyer = 4;
+		
+        if (gCurrLevelNum > 0) {
+			vec3s_set(viewport->vp.vtrans, node->x * screenXMultiplyer, node->y * screenYMultiplyer, 511);
+		} else {
+			vec3s_set(viewport->vp.vtrans, node->x * 4, node->y * 4, 511);
+		}
+			//rainbowLED[0] = (coss(gGlobalTimer * 200         ) + 1) * 127; //puppyprint rainbow code
+			//rainbowLED[1] = (coss((gGlobalTimer * 200) + 21845) + 1) * 127;
+			//rainbowLED[2] = (coss((gGlobalTimer * 200) - 21845) + 1) * 127;
+		if (gLakituState.curPos[1] < gMarioState->waterLevel) {
+			sizeYMultiplyer = 4.9f + coss(gGlobalTimer * 250);
+			sizeXMultiplyer = 4.9f + sins(gGlobalTimer * 125);
+		} else {
+			sizeYMultiplyer = 4;
+			sizeXMultiplyer = 4;
+		}
+        vec3s_set(viewport->vp.vscale, node->width * sizeXMultiplyer, node->height * sizeYMultiplyer, 511);
+		
+		
+		//vec3s_set(viewport->vp.vtrans, gScreenWidth * 2, gScreenHeight * 2, 511);
+        //vec3s_set(viewport->vp.vscale, gScreenWidth * 2, gScreenHeight * 2, 511);
 
         if (b != NULL) {
             clear_framebuffer(clearColor);

@@ -75,6 +75,15 @@ const GeoLayout intro_geo_mario_head_regular[] = {
          GEO_CLOSE_NODE(),
       GEO_CLOSE_NODE(),
 #endif
+<<<<<<< HEAD
+=======
+#if (defined(COMPLETE_EN_US_SEGMENT2) && ENABLE_RUMBLE)
+      GEO_ZBUFFER(0),
+      GEO_OPEN_NODE(),
+         GEO_ASM(INTRO_CONTEXT_NORMAL, geo_intro_rumble_pak_graphic),
+      GEO_CLOSE_NODE(),
+#endif
+>>>>>>> 3423721b4b0ee5c68ecacc0608a8b07a297165e3
    GEO_CLOSE_NODE(),
    GEO_END(),
 };
@@ -105,6 +114,15 @@ const GeoLayout intro_geo_mario_head_dizzy[] = {
          GEO_CLOSE_NODE(),
       GEO_CLOSE_NODE(),
 #endif
+<<<<<<< HEAD
+=======
+#if (defined(COMPLETE_EN_US_SEGMENT2) && ENABLE_RUMBLE)
+      GEO_ZBUFFER(0),
+      GEO_OPEN_NODE(),
+         GEO_ASM(INTRO_CONTEXT_GAME_OVER, geo_intro_rumble_pak_graphic),
+      GEO_CLOSE_NODE(),
+#endif
+>>>>>>> 3423721b4b0ee5c68ecacc0608a8b07a297165e3
    GEO_CLOSE_NODE(),
    GEO_END(),
 };

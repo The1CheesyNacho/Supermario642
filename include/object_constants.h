@@ -20,14 +20,9 @@ enum ObjActiveFlags {
     ACTIVE_FLAG_IGNORE_ENV_BOXES               = (1 << 10), // 0x0400
 };
 
-/* respawnInfoType */
-enum RespawnInfoType {
-    RESPAWN_INFO_TYPE_NULL,
-    RESPAWN_INFO_TYPE_NORMAL,
-    RESPAWN_INFO_TYPE_MACRO_OBJECT
-};
-
 /* respawnInfo */
+#define RESPAWN_INFO_NONE                           0x00
+#define RESPAWN_INFO_NO_COINS                       0x01
 #define RESPAWN_INFO_DONT_RESPAWN                   0xFF
 
 /* oFlags */
@@ -47,10 +42,8 @@ enum ObjFlags {
     OBJ_FLAG_1000                              = (1 << 12), // 0x00001000
     OBJ_FLAG_COMPUTE_ANGLE_TO_MARIO            = (1 << 13), // 0x00002000
     OBJ_FLAG_PERSISTENT_RESPAWN                = (1 << 14), // 0x00004000
-    OBJ_FLAG_VELOCITY_PLATFORM                 = (1 << 15), // 0x00008000
+    OBJ_FLAG_NO_AUTO_DISPLACEMENT              = (1 << 15), // 0x00008000
     OBJ_FLAG_DONT_CALC_COLL_DIST               = (1 << 16), // 0x00010000
-    OBJ_FLAG_UCODE_SMALL                       = (1 << 17), // 0x00020000
-    OBJ_FLAG_UCODE_LARGE                       = (1 << 18), // 0x00040000
     OBJ_FLAG_SILHOUETTE                        = (1 << 19), // 0x00080000
     OBJ_FLAG_OCCLUDE_SILHOUETTE                = (1 << 20), // 0x00100000
     OBJ_FLAG_OPACITY_FROM_CAMERA_DIST          = (1 << 21), // 0x00200000

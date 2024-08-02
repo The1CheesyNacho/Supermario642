@@ -210,14 +210,14 @@ void iterate_surfaces_visual(s32 x, s32 z, Vtx *verts) {
 
     for (i = 0; i < (2 * NUM_SPATIAL_PARTITIONS); i++) {
         switch (i) {
-            case 0: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WALLS ].next; colorRGB_copy(col, (ColorRGB)COLOR_RGB_GREEN ); break;
-            case 1: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WALLS ].next; colorRGB_copy(col, (ColorRGB)COLOR_RGB_GREEN ); break;
-            case 2: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_FLOORS].next; colorRGB_copy(col, (ColorRGB)COLOR_RGB_BLUE  ); break;
-            case 3: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_FLOORS].next; colorRGB_copy(col, (ColorRGB)COLOR_RGB_BLUE  ); break;
-            case 4: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_CEILS ].next; colorRGB_copy(col, (ColorRGB)COLOR_RGB_RED   ); break;
-            case 5: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_CEILS ].next; colorRGB_copy(col, (ColorRGB)COLOR_RGB_RED   ); break;
-            case 6: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WATER ].next; colorRGB_copy(col, (ColorRGB)COLOR_RGB_YELLOW); break;
-            case 7: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WATER ].next; colorRGB_copy(col, (ColorRGB)COLOR_RGB_YELLOW); break;
+            case 0: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WALLS ]; colorRGB_copy(col, (ColorRGB)COLOR_RGB_GREEN ); break;
+            case 1: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WALLS ]; colorRGB_copy(col, (ColorRGB)COLOR_RGB_GREEN ); break;
+            case 2: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_FLOORS]; colorRGB_copy(col, (ColorRGB)COLOR_RGB_BLUE  ); break;
+            case 3: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_FLOORS]; colorRGB_copy(col, (ColorRGB)COLOR_RGB_BLUE  ); break;
+            case 4: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_CEILS ]; colorRGB_copy(col, (ColorRGB)COLOR_RGB_RED   ); break;
+            case 5: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_CEILS ]; colorRGB_copy(col, (ColorRGB)COLOR_RGB_RED   ); break;
+            case 6: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WATER ]; colorRGB_copy(col, (ColorRGB)COLOR_RGB_YELLOW); break;
+            case 7: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WATER ]; colorRGB_copy(col, (ColorRGB)COLOR_RGB_YELLOW); break;
         }
 
         while (node != NULL) {
@@ -263,30 +263,26 @@ void iterate_surfaces_envbox(Vtx *verts) {
 }
 
 // VERTCOUNT = The highest number divisible by 6, which is less than the maximum vertex buffer divided by 2.
-// The vertex buffer is 64 if OBJECTS_REJ is enabled, 32 otherwise.
-//! TODO: Why can this only use half of the vertex buffer?
-#ifdef OBJECTS_REJ
 #define VERTCOUNT 30
-#else
-#define VERTCOUNT 12
-#endif // OBJECTS_REJ
 
-void visual_surface_display(Vtx *verts, s32 iteration) {
+void visual_surface_display(Gfx **gfx, Vtx *verts, s32 iteration) {
     s32 vts = (iteration ? gVisualOffset : gVisualSurfaceCount);
     s32 vtl = 0;
     s32 count = VERTCOUNT;
     s32 ntx = 0;
 
+    Gfx *tempGfxHead = gDisplayListHead;
+
     while (vts > 0) {
         if (count == VERTCOUNT) {
             ntx = MIN(VERTCOUNT, vts);
-            gSPVertex(gDisplayListHead++, VIRTUAL_TO_PHYSICAL(verts + (gVisualSurfaceCount - vts)), ntx, 0);
+            gSPVertex((*gfx)++, VIRTUAL_TO_PHYSICAL(verts + (gVisualSurfaceCount - vts)), ntx, 0);
             count = 0;
             vtl   = VERTCOUNT;
         }
 
         if (vtl >= 6) {
-            gSP2Triangles(gDisplayListHead++, (count + 0),
+            gSP2Triangles((*gfx)++, (count + 0),
                                               (count + 1),
                                               (count + 2), 0x0,
                                               (count + 3),
@@ -296,7 +292,7 @@ void visual_surface_display(Vtx *verts, s32 iteration) {
             vtl   -= 6;
             count += 6;
         } else if (vtl >= 3) {
-            gSP1Triangle(gDisplayListHead++, (count + 0),
+            gSP1Triangle((*gfx)++, (count + 0),
                                              (count + 1),
                                              (count + 2), 0x0);
             vts   -= 3;
@@ -304,6 +300,8 @@ void visual_surface_display(Vtx *verts, s32 iteration) {
             count += 3;
         }
     }
+
+    gDisplayListHead = tempGfxHead;
 }
 
 s32 iterate_surface_count(s32 x, s32 z) {
@@ -320,14 +318,14 @@ s32 iterate_surface_count(s32 x, s32 z) {
 
     for (i = 0; i < (2 * NUM_SPATIAL_PARTITIONS); i++) {
         switch (i) {
-            case 0: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WALLS ].next; break;
-            case 1: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WALLS ].next; break;
-            case 2: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_FLOORS].next; break;
-            case 3: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_FLOORS].next; break;
-            case 4: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_CEILS ].next; break;
-            case 5: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_CEILS ].next; break;
-            case 6: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WATER ].next; break;
-            case 7: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WATER ].next; break;
+            case 0: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WALLS ]; break;
+            case 1: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WALLS ]; break;
+            case 2: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_FLOORS]; break;
+            case 3: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_FLOORS]; break;
+            case 4: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_CEILS ]; break;
+            case 5: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_CEILS ]; break;
+            case 6: node = gDynamicSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WATER ]; break;
+            case 7: node =  gStaticSurfacePartition[cellZ][cellX][SPATIAL_PARTITION_WATER ]; break;
         }
 
         while (node != NULL) {
@@ -343,7 +341,7 @@ s32 iterate_surface_count(s32 x, s32 z) {
     return j;
 }
 
-void visual_surface_loop(void) {
+void visual_surface_loop(Gfx **gfx) {
     if (!gSurfaceNodesAllocated
      || !gSurfacesAllocated
      || !gMarioState->marioObj) {
@@ -358,19 +356,20 @@ void visual_surface_loop(void) {
         return;
     }
 
-    gSPDisplayList(gDisplayListHead++, dl_visual_surface);
+    gSPDisplayList((*gfx)++, dl_visual_surface);
 
     iterate_surfaces_visual(gMarioState->pos[0], gMarioState->pos[2], verts);
 
-    visual_surface_display(verts, 0);
+    visual_surface_display(gfx, verts, 0);
 
+    gDPPipeSync((*gfx)++);
     iterate_surfaces_envbox(verts);
 
-    gDPSetRenderMode(gDisplayListHead++, G_RM_ZB_XLU_SURF, G_RM_NOOP2);
+    gDPSetRenderMode((*gfx)++, G_RM_ZB_XLU_SURF, G_RM_NOOP2);
 
-    visual_surface_display(verts, 1);
+    visual_surface_display(gfx, verts, 1);
 
-    gSPDisplayList(gDisplayListHead++, dl_debug_box_end);
+    gSPDisplayList((*gfx)++, dl_debug_box_end);
 }
 
 /**
@@ -388,9 +387,6 @@ static void append_debug_box(Vec3f center, Vec3f bounds, s16 yaw, s32 type) {
         sBoxes[sNumBoxes].yaw   = yaw;
         sBoxes[sNumBoxes].color = sCurBoxColor;
         sBoxes[sNumBoxes].type  = type;
-        if (!(sBoxes[sNumBoxes].type & (DEBUG_UCODE_REJ | DEBUG_UCODE_DEFAULT))) {
-            sBoxes[sNumBoxes].type |= DEBUG_UCODE_DEFAULT;
-        }
         ++sNumBoxes;
     }
 }
@@ -448,7 +444,7 @@ void debug_box_pos_rot(Vec3f pMin, Vec3f pMax, s16 yaw, s32 type) {
     append_debug_box(center, bounds, yaw, type);
 }
 
-static void render_box(int index) {
+static void render_box(Gfx **gfx, int index) {
     struct DebugBox *box = &sBoxes[index];
     s32 color = box->color;
     Mat4 mtxFloat;
@@ -477,20 +473,20 @@ static void render_box(int index) {
     mtxf_to_mtx(mtx, mtxFloat);
 
     // Load the calculated matrix
-    gSPMatrix(gDisplayListHead++, mtx, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
+    gSPMatrix((*gfx)++, mtx, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
 
     // Set env color to the color of this box
-    gDPSetColor(gDisplayListHead++, G_SETENVCOLOR, color);
+    gDPSetColor((*gfx)++, G_SETENVCOLOR, color);
 
     if (box->type & DEBUG_SHAPE_BOX) {
-        gSPDisplayList(gDisplayListHead++, dl_debug_box_verts);
+        gSPDisplayList((*gfx)++, dl_debug_box_verts);
     }
     if (box->type & DEBUG_SHAPE_CYLINDER) {
-        gSPDisplayList(gDisplayListHead++, dl_debug_cylinder_verts);
+        gSPDisplayList((*gfx)++, dl_debug_cylinder_verts);
     }
 }
 
-void render_debug_boxes(s32 type) {
+void render_debug_boxes(Gfx **gfx) {
     s32 i;
 
     debug_box_color(DBG_BOX_DEF_COLOR);
@@ -498,17 +494,14 @@ void render_debug_boxes(s32 type) {
     if (sNumBoxes == 0) return;
     if (gAreaUpdateCounter < 3) return;
 
-    gSPDisplayList(gDisplayListHead++, dl_debug_box_begin);
+    gSPDisplayList((*gfx)++, dl_debug_box_begin);
 
     for (i = 0; i < sNumBoxes; ++i) {
-        if ((type & DEBUG_UCODE_DEFAULT) && (sBoxes[i].type & DEBUG_UCODE_DEFAULT)) render_box(i);
-        if ((type & DEBUG_UCODE_REJ    ) && (sBoxes[i].type & DEBUG_UCODE_REJ    )) render_box(i);
+        render_box(gfx, i);
     }
 
-    if (type & DEBUG_BOX_CLEAR) {
-        sNumBoxes = 0;
-    }
-    gSPDisplayList(gDisplayListHead++, dl_debug_box_end);
+    sNumBoxes = 0;
+    gSPDisplayList((*gfx)++, dl_debug_box_end);
 }
 
 #endif
