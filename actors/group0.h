@@ -108,6 +108,7 @@ extern const Gfx mario_mustache_cap_on_dl[];
 extern const Gfx mario_face_part_cap_on_dl[];
 extern const Gfx mario_face_cap_dl[];
 extern const Gfx mario_face_back_hair_cap_on_dl[];
+extern const Gfx mario_cap_wings_transparent[];
 extern const Gfx mario_face_cap_on_dl[];
 extern const Gfx mario_cap_on_eyes_front[];
 extern const Gfx mario_cap_on_eyes_half_closed[];
@@ -803,8 +804,6 @@ extern const struct Animation *const yoshi_seg5_anims_05024100[];
 
 extern const GeoLayout metal_mario_geo[];
 
-
-#include "mario/geo_header.h"
 
 #include "metal_mario/geo_header.h"
 
