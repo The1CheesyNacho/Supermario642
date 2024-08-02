@@ -62,14 +62,18 @@ struct MainMenuSaveData {
 #ifdef WIDE
     u8 wideMode: 1;
 #endif
-#ifdef MULTILANG
-    u8 language: 3;
-#endif
 
-#ifdef PUPPYCAM
-    u8 firstBoot;
-    struct gPuppyOptions saveOptions;
+#if MULTILANG
+    u8 language: 2;
+#define SUBTRAHEND 8
+#else
+#define SUBTRAHEND 6
 #endif
+    u8 firstBoot;
+
+    #ifdef PUPPYCAM
+    struct gPuppyOptions saveOptions;
+    #endif
     struct SaveBlockSignature signature;
 };
 
@@ -193,10 +197,17 @@ void disable_warp_checkpoint(void);
 void check_if_should_set_warp_checkpoint(struct WarpNode *warpNode);
 s32 check_warp_checkpoint(struct WarpNode *warpNode);
 
-#ifdef MULTILANG
-void multilang_set_language(u32 language);
-u32 multilang_get_language(void);
-u32 get_language_index(u32 language);
+#if MULTILANG
+enum EuLanguages {
+    LANGUAGE_ENGLISH,
+    LANGUAGE_FRENCH,
+    LANGUAGE_GERMAN
+};
+
+void eu_set_language(u16 language);
+u32 eu_get_language(void);
+#else
+#define LANGUAGE_ENGLISH 0
 #endif
 
 #endif // SAVE_FILE_H

@@ -20,8 +20,8 @@
 #include "platform_displacement.h"
 #include "spawn_object.h"
 #include "puppyprint.h"
+#include "puppylights.h"
 #include "profiling.h"
-#include "lantern_engine.h"
 
 
 /**
@@ -68,6 +68,11 @@ u32 gTimeStopState;
  * The pool that objects are allocated from.
  */
 struct Object gObjectPool[OBJECT_POOL_CAPACITY];
+
+/**
+ * A special object whose purpose is to act as a parent for macro objects.
+ */
+struct Object gMacroObjectDefaultParent;
 
 /**
  * A pointer to gObjectListArray.
@@ -383,6 +388,10 @@ s32 unload_deactivated_objects_in_list(struct ObjectNode *objList) {
         obj = obj->next;
 
         if ((gCurrentObject->activeFlags & ACTIVE_FLAG_ACTIVE) != ACTIVE_FLAG_ACTIVE) {
+#ifdef PUPPYLIGHTS
+            if (gCurrentObject->oLightID != 0xFFFF)
+                obj_disable_light(gCurrentObject);
+#endif
             // Prevent object from respawning after exiting and re-entering the
             // area
             if (!(gCurrentObject->oFlags & OBJ_FLAG_PERSISTENT_RESPAWN)) {
@@ -399,11 +408,24 @@ s32 unload_deactivated_objects_in_list(struct ObjectNode *objList) {
 /**
  * OR the object's respawn info with bits << 8. If bits = 0xFF, this prevents
  * the object from respawning after leaving and re-entering the area.
+ * For macro objects, respawnInfo points to the 16 bit entry in the macro object
+ * list. For other objects, it points to the 32 bit behaviorArg in the
+ * SpawnInfo.
  */
 void set_object_respawn_info_bits(struct Object *obj, u8 bits) {
-    obj->respawnInfo |= bits;
-    if (obj->respawnInfoPointer != NULL) {
-        *obj->respawnInfoPointer |= bits;
+    u32 *info32;
+    u16 *info16;
+
+    switch (obj->respawnInfoType) {
+        case RESPAWN_INFO_TYPE_NORMAL:
+            info32 = (u32 *) obj->respawnInfo;
+            *info32 |= bits << 8;
+            break;
+
+        case RESPAWN_INFO_TYPE_MACRO_OBJECT:
+            info16 = (u16 *) obj->respawnInfo;
+            *info16 |= bits << 8;
+            break;
     }
 }
 
@@ -432,63 +454,6 @@ void unload_objects_from_area(UNUSED s32 unused, s32 areaIndex) {
     }
 }
 
-Lights1 determine_static_light_based_on_preset(u8 preset) {
-	Lights1 light = vanillaLight;
-	switch (preset) {
-		//case VANILLA_COLORS:
-			//light = vanillaLight;
-		//break;
-		case INDOOR_COLORS:
-			light = indoorLight;
-		break;
-		case BOB_COLORS:
-			light = bobLight;
-		break;
-		case RI_COLORS:
-			light = riLight;
-		break;
-		case LLL_COLORS:
-			light = lllLight;
-		break;
-		case SSL_COLORS:
-			light = sslLight;
-		break;
-		case WATER_COLORS:
-			light = waterLight;
-		break;
-		case BITS_COLORS:
-			light = bitsLight;
-		break;
-		case BITDW_COLORS:
-			light = bitdwLight;
-		break;
-		case WF_COLORS:
-			light = wfLight;
-		break;
-		case SNOW_COLORS:
-			light = snowLight;
-		break;
-		case THI_COLORS:
-			light = thiLight;
-		break;
-		case HMC_COLORS:
-			light = hmcLight;
-		break;
-		case JRB_COLORS:
-			light = jrbLight;
-		break;
-		case SW2_COLORS:
-			light = sw2Light;
-		break;
-		case GGZ_COLORS:
-			light = ggZLight;
-		break;
-	}
-	
-	return light;
-	
-}
-
 /**
  * Spawn objects given a list of SpawnInfos. Called when loading an area.
  */
@@ -508,107 +473,12 @@ void spawn_objects_from_info(s32 isLuigi, struct SpawnInfo *spawnInfo) {
     while (spawnInfo != NULL) {
         struct Object *object;
         const BehaviorScript *script;
-		
-		if (spawnInfo->behaviorScript == bhvStaticLight) {
-			//gDisableLighting = FALSE;
-			gIsDynamic = FALSE;
-			gNumLightColors = GET_BPARAM1(spawnInfo->behaviorArg);
-			gLightType = GET_BPARAM3(spawnInfo->behaviorArg);
-			gNumLightSources = GET_BPARAM4(spawnInfo->behaviorArg);
-			gCurrLightDirection[0] = (s8)spawnInfo->startPos[0];
-			gCurrLightDirection[1] = (s8)spawnInfo->startPos[1];
-			gCurrLightDirection[2] = (s8)spawnInfo->startPos[2];
-			gCurrLightPos[0] = spawnInfo->startPos[0];
-			gCurrLightPos[1] = spawnInfo->startPos[1];
-			gCurrLightPos[2] = spawnInfo->startPos[2];
-			gCurrStaticColor = determine_static_light_based_on_preset(GET_BPARAM2(spawnInfo->behaviorArg));
-			spawnInfo = spawnInfo->next;
-			continue;
-		} 
-		//else 
-		if (spawnInfo->behaviorScript == bhvDynamicLight) {
-			//gDisableLighting = FALSE;
-			gIsDynamic = TRUE;
-			gNumLightColors = GET_BPARAM1(spawnInfo->behaviorArg);
-			gDynamicLightPreset = GET_BPARAM2(spawnInfo->behaviorArg);
-			gLightType = GET_BPARAM3(spawnInfo->behaviorArg);
-			gNumLightSources = GET_BPARAM4(spawnInfo->behaviorArg);
-			gCurrLightDirection[0] = (s8)spawnInfo->startPos[0];
-			gCurrLightDirection[1] = (s8)spawnInfo->startPos[1];
-			gCurrLightDirection[2] = (s8)spawnInfo->startPos[2];
-			gCurrLightPos[0] = spawnInfo->startPos[0];
-			gCurrLightPos[1] = spawnInfo->startPos[1];
-			gCurrLightPos[2] = spawnInfo->startPos[2];
-			spawnInfo = spawnInfo->next;
-			continue;
-		}
-		if (spawnInfo->behaviorScript == bhvSpecularLight) {
-			//gIsDynamic = FALSE;
-			//gLightType2 = GET_BPARAM3(spawnInfo->behaviorArg);
-			gCurrLightDirection2[0] = (s8)spawnInfo->startPos[0];
-			gCurrLightDirection2[1] = (s8)spawnInfo->startPos[1];
-			gCurrLightDirection2[2] = (s8)spawnInfo->startPos[2];
-			//gCurrLightPos2[0] = spawnInfo->startPos[0];
-			//gCurrLightPos2[1] = spawnInfo->startPos[1];
-			//gCurrLightPos2[2] = spawnInfo->startPos[2];
-			//gCurrStaticColor = determine_static_light_based_on_preset(GET_BPARAM2(spawnInfo->behaviorArg));
-			spawnInfo = spawnInfo->next;
-			continue;
-		}
-		if (spawnInfo->behaviorScript == bhvAmbientLight) {
-			//gIsDynamic = FALSE;
-			//gLightType3 = GET_BPARAM3(spawnInfo->behaviorArg);
-			gCurrLightDirection3[0] = (s8)spawnInfo->startPos[0];
-			gCurrLightDirection3[1] = (s8)spawnInfo->startPos[1];
-			gCurrLightDirection3[2] = (s8)spawnInfo->startPos[2];
-			//gCurrLightPos3[0] = spawnInfo->startPos[0];
-			//gCurrLightPos3[1] = spawnInfo->startPos[1];
-			//gCurrLightPos3[2] = spawnInfo->startPos[2];
-			//gCurrStaticColor = determine_static_light_based_on_preset(GET_BPARAM2(spawnInfo->behaviorArg));
-			spawnInfo = spawnInfo->next;
-			continue;
-		}
-		//else 
-		//if (spawnInfo->behaviorScript == bhvOcclusionZone) {
-			//spawnInfo = spawnInfo->next;
-			//continue;
-		//}
-		//else 
-		//if (spawnInfo->behaviorScript == bhvLightField) {
-			//spawnInfo = spawnInfo->next;
-			//continue;
-		//}
-		
-		//collision settings
-		if (spawnInfo->behaviorScript == bhvLevelSettings) {
-			//gWorldScale = GET_BPARAM1(spawnInfo->behaviorArg);
-			//gCellSize = determine_cell_size_based_on_preset(GET_BPARAM2(spawnInfo->behaviorArg));
-			//gLevelBoundsMax = determine_level_bounds_based_on_preset(GET_BPARAM3(spawnInfo->behaviorArg));
-			//determine_surface_pool_sizes_based_on_preset(GET_BPARAM4(spawnInfo->behaviorArg));
-			//spawnInfo = spawnInfo->next;
-			continue;
-		}
-		
-		if (spawnInfo->behaviorScript == bhvLoopDeLoopSettings) {
-			spawnInfo = spawnInfo->next;
-			continue;
-		}
-		
-		if (spawnInfo->behaviorScript == bhvLoopDeLoopEndpoint) {
-			spawnInfo = spawnInfo->next;
-			continue;
-		}
-		
-		//bParams:
-		//1 = WORLD_SCALE
-		//2 = CELL_SIZE
-		//3 = LEVEL_BOUNDARY_MAX
-		//4 = SURFACE_POOL_SIZE & SURFACE_NODE_POOL_SIZE
 
         script = segmented_to_virtual(spawnInfo->behaviorScript);
 
         // If the object was previously killed/collected, don't respawn it
-        if ((spawnInfo->respawnInfo & RESPAWN_INFO_DONT_RESPAWN) != RESPAWN_INFO_DONT_RESPAWN) {
+        if ((spawnInfo->behaviorArg & (RESPAWN_INFO_DONT_RESPAWN << 8))
+            != (RESPAWN_INFO_DONT_RESPAWN << 8)) {
             object = create_object(script);
 
             // Behavior parameters are often treated as four separate bytes, but
@@ -622,8 +492,8 @@ void spawn_objects_from_info(s32 isLuigi, struct SpawnInfo *spawnInfo) {
             object->unused1 = 0;
 
             // Record death/collection in the SpawnInfo
-            object->respawnInfo = spawnInfo->respawnInfo;
-            object->respawnInfoPointer = &spawnInfo->respawnInfo;
+            object->respawnInfoType = RESPAWN_INFO_TYPE_NORMAL;
+            object->respawnInfo = &spawnInfo->behaviorArg;
 
             // Usually this checks if bparam4 is 1 to decide if this is mario
             // This change allows any object to use that param

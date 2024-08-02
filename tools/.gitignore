@@ -12,6 +12,7 @@
 /slienc
 /skyconv
 /tabledesign
+/textconv
 /vadpcm_enc
 /flips
 !/ido5.3_compiler/lib/*.so

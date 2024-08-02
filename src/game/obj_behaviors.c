@@ -15,6 +15,7 @@
 #include "game_init.h"
 #include "ingame_menu.h"
 #include "interaction.h"
+#include "level_misc_macros.h"
 #include "level_table.h"
 #include "level_update.h"
 #include "mario.h"
@@ -29,6 +30,7 @@
 #include "spawn_object.h"
 #include "spawn_sound.h"
 #include "rumble_init.h"
+#include "puppylights.h"
 
 /**
  * @file obj_behaviors.c
@@ -183,6 +185,8 @@ s8 turn_obj_away_from_steep_floor(struct Surface *objFloor, f32 floorY, f32 objV
 void obj_orient_graph(struct Object *obj, f32 normalX, f32 normalY, f32 normalZ) {
     Vec3f objVisualPosition, surfaceNormals;
 
+    Mat4 *throwMatrix;
+
     // Passes on orienting certain objects that shouldn't be oriented, like boulders.
     if (!sOrientObjWithFloor) {
         return;
@@ -193,11 +197,17 @@ void obj_orient_graph(struct Object *obj, f32 normalX, f32 normalY, f32 normalZ)
         return;
     }
 
+    throwMatrix = alloc_display_list(sizeof(*throwMatrix));
+    // If out of memory, fail to try orienting the object.
+    if (throwMatrix == NULL) {
+        return;
+    }
+
     vec3f_copy_y_off(objVisualPosition, &obj->oPosVec, obj->oGraphYOffset);
     vec3f_set(surfaceNormals, normalX, normalY, normalZ);
 
-    mtxf_align_terrain_normal(obj->transform, surfaceNormals, objVisualPosition, obj->oFaceAngleYaw);
-    obj->header.gfx.throwMatrix = &obj->transform;
+    mtxf_align_terrain_normal(*throwMatrix, surfaceNormals, objVisualPosition, obj->oFaceAngleYaw);
+    obj->header.gfx.throwMatrix = throwMatrix;
 }
 
 /**
@@ -243,7 +253,10 @@ void calc_new_obj_vel_and_pos_y(struct Surface *objFloor, f32 objFloorY, f32 obj
         }
     }
 
-    if ((o->oPosY >= objFloorY) && (o->oPosY < objFloorY + 37)) {
+    //! (Obj Position Crash) If you got an object with height past 2^31, the game would crash.
+    if ((s32) o->oPosY >= (s32) objFloorY && (s32) o->oPosY < (s32) objFloorY + 37) {
+        obj_orient_graph(o, floor_nX, floor_nY, floor_nZ);
+
         // Adds horizontal component of gravity for horizontal speed.
         f32 nxz = sqr(floor_nX) + sqr(floor_nZ);
         f32 vel = ((nxz) / (nxz + sqr(floor_nY))) * o->oGravity * 2;
@@ -297,7 +310,9 @@ void calc_new_obj_vel_and_pos_y_underwater(struct Surface *objFloor, f32 floorY,
         o->oVelY = -o->oVelY;
     }
 
-    if ((o->oPosY >= floorY) && (o->oPosY < floorY + 37)) {
+    if ((s32) o->oPosY >= (s32) floorY && (s32) o->oPosY < (s32) floorY + 37) {
+        obj_orient_graph(o, floor_nX, floor_nY, floor_nZ);
+
         // Adds horizontal component of gravity for horizontal speed.
         f32 nxz = sqr(floor_nX) + sqr(floor_nZ);
         f32 velm = (nxz / (nxz + sqr(floor_nY))) * netYAccel * 2;
@@ -394,11 +409,6 @@ s16 object_step(void) {
     }
 
     obj_update_pos_vel_xz();
-
-    if (sObjFloor && (o->oPosY >= floorY) && (o->oPosY < floorY + 37)) {
-        obj_orient_graph(o, sObjFloor->normal.x, sObjFloor->normal.y, sObjFloor->normal.z);
-    }
-
     if ((s32) o->oPosY == (s32) floorY) {
         collisionFlags += OBJ_COL_FLAG_GROUNDED;
     }
@@ -408,7 +418,7 @@ s16 object_step(void) {
     }
 
     // Generate a splash if in water.
-    obj_splash(waterY, o->oPosY);
+    obj_splash((s32) waterY, (s32) o->oPosY);
     return collisionFlags;
 }
 

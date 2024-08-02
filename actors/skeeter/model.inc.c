@@ -214,8 +214,8 @@ static const Vtx skeeter_seg6_vertex_06000E00[] = {
 
 // 0x06000E60 - 0x06000EC0
 const Gfx skeeter_seg6_dl_06000E60[] = {
-gsSPLightColor(LIGHT_2, 0xffaa00ff),
-gsSPLightColor(LIGHT_3, 0x7f5500ff),
+    gsSPLightColor(LIGHT_1, 0xffaa00ff),
+    gsSPLightColor(LIGHT_2, 0x7f5500ff),
     gsSPVertex(skeeter_seg6_vertex_06000E00, 6, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  3,  1, 0x0),
     gsSP2Triangles( 2,  1,  4, 0x0,  1,  3,  4, 0x0),

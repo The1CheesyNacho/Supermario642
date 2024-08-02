@@ -20,6 +20,7 @@
 #include "game_init.h"
 #include "ingame_menu.h"
 #include "interaction.h"
+#include "level_misc_macros.h"
 #include "level_table.h"
 #include "level_update.h"
 #include "main.h"
@@ -40,6 +41,7 @@
 #include "spawn_object.h"
 #include "spawn_sound.h"
 #include "rumble_init.h"
+#include "puppylights.h"
 
 #include "behaviors/star_door.inc.c"
 #include "behaviors/mr_i.inc.c"

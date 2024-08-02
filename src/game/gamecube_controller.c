@@ -1,5 +1,4 @@
 #include "PR/os_internal.h"
-#include "engine/math_util.h"
 
 #include "game_init.h"
 
@@ -9,6 +8,11 @@
 
 #define ARRLEN(x) ((s32)(sizeof(x) / sizeof(x[0])))
 #define CHNL_ERR(format) (((format).rxsize & CHNL_ERR_MASK) >> 4)
+
+#define CLAMP(x, low, high)  (((x) > (high)) ? (high) : (((x) < (low)) ? (low) : (x)))
+#define S8_MAX __SCHAR_MAX__
+#define S8_MIN (-S8_MAX - 1)
+#define CLAMP_S8( x)        CLAMP((x),  S8_MIN,  S8_MAX)
 
 #define CHNL_ERR_MASK		0xC0	/* Bit 6-7: channel errors */
 

@@ -27,8 +27,4 @@ void refine(double **table, int order, int npredictors, double **data, int dataS
 // print.c
 int print_entry(FILE *out, double *row, int order);
 
-#ifdef EXTRACT_CODEBOOK
-int tabledesign_entry(int, char**);
-#endif
-
 #endif

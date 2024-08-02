@@ -6,8 +6,6 @@
 #include "heap.h"
 #include "load.h"
 #include "seqplayer.h"
-#include "game/debug.h"
-#include "game/main.h"
 
 #ifdef VERSION_SH
 void seq_channel_layer_process_script_part1(struct SequenceChannelLayer *layer);
@@ -46,7 +44,7 @@ void sequence_channel_init(struct SequenceChannel *seqChannel) {
     seqChannel->scriptState.depth = 0;
     seqChannel->volume = 1.0f;
     seqChannel->volumeScale = 1.0f;
-    seqChannel->freqScale = gConfig.audioFrequency;
+    seqChannel->freqScale = 1.0f;
     seqChannel->pan = 0.5f;
     seqChannel->panChannelWeight = 1.0f;
     seqChannel->noteUnused = NULL;
@@ -79,7 +77,7 @@ void sequence_channel_init(struct SequenceChannel *seqChannel) {
 #if defined(VERSION_EU) || defined(VERSION_SH)
     seqChannel->volume = 1.0f;
     seqChannel->volumeScale = 1.0f;
-    seqChannel->freqScale = gConfig.audioFrequency;
+    seqChannel->freqScale = 1.0f;
 #endif
 
     for (i = 0; i < 8; i++) {
@@ -1686,7 +1684,7 @@ void sequence_channel_process_script(struct SequenceChannel *seqChannel) {
 
                     case 0xde: // chan_freqscale; pitch bend using raw frequency multiplier N/2^15 (N is u16)
                         sp5A = m64_read_s16(state);
-                        seqChannel->freqScale = FLOAT_CAST(sp5A) / 32768.0f * gConfig.audioFrequency;
+                        seqChannel->freqScale = FLOAT_CAST(sp5A) / 32768.0f;
 #if defined(VERSION_EU) || defined(VERSION_SH)
                         seqChannel->changes.as_bitfields.freqScale = TRUE;
 #endif
@@ -1694,8 +1692,12 @@ void sequence_channel_process_script(struct SequenceChannel *seqChannel) {
 
                     case 0xd3: // chan_pitchbend; pitch bend by <= 1 octave in either direction (-127..127)
                         // (m64_read_u8(state) is really s8 here)
+#ifdef VERSION_SH
                         cmd = m64_read_u8(state) + 128;
-                        seqChannel->freqScale = gPitchBendFrequencyScale[cmd] * gConfig.audioFrequency;
+#else
+                        cmd = m64_read_u8(state) + 127;
+#endif
+                        seqChannel->freqScale = gPitchBendFrequencyScale[cmd];
 #if defined(VERSION_EU) || defined(VERSION_SH)
                         seqChannel->changes.as_bitfields.freqScale = TRUE;
 #endif
@@ -1704,7 +1706,7 @@ void sequence_channel_process_script(struct SequenceChannel *seqChannel) {
 #ifdef VERSION_SH
                     case 0xee:
                         cmd = m64_read_u8(state) + 0x80;
-                        seqChannel->freqScale = unk_sh_data_1[cmd] * gConfig.audioFrequency;
+                        seqChannel->freqScale = unk_sh_data_1[cmd];
                         seqChannel->changes.as_bitfields.freqScale = TRUE;
                         break;
 #endif
@@ -1953,7 +1955,7 @@ void sequence_channel_process_script(struct SequenceChannel *seqChannel) {
                         seqChannel->vibratoRateTarget = 0;
                         seqChannel->vibratoRateStart = 0;
                         seqChannel->vibratoRateChangeDelay = 0;
-                        seqChannel->freqScale = gConfig.audioFrequency;
+                        seqChannel->freqScale = 1.0f;
                         break;
 
                     case 0xe9: // chan_setnotepriority
@@ -2072,14 +2074,15 @@ void sequence_channel_process_script(struct SequenceChannel *seqChannel) {
                         }
                         break;
 #else
-                    case 0x00: // chan_testlayersfinished (NOTE: does not use loBits)
-                        value = TRUE;
-                        for (i = 0; i < LAYERS_MAX; i++) {
-                            if (seqChannel->layers[i] != NULL && !seqChannel->layers[i]->finished) {
-                                value = FALSE;
-                                break;
-                            }
+                    case 0x00: // chan_testlayerfinished
+                        if (seqChannel->layers[loBits] != NULL) {
+                            value = seqChannel->layers[loBits]->finished;
                         }
+#ifdef VERSION_EU
+                        else {
+                            value = -1;
+                        }
+#endif
                         break;
 #endif
 
@@ -2119,10 +2122,8 @@ void sequence_channel_process_script(struct SequenceChannel *seqChannel) {
                         }
                         break;
 
-                    case 0xa0: // chan_freelayers (NOTE: does not use loBits)
-                        for (i = 0; i < LAYERS_MAX; i++) {
-                            seq_channel_layer_free(seqChannel, i);
-                        }
+                    case 0xa0: // chan_freelayer
+                        seq_channel_layer_free(seqChannel, loBits);
                         break;
 
                     case 0xb0: // chan_dynsetlayer

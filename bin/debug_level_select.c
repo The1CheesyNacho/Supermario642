@@ -176,8 +176,8 @@ static const Vtx debug_level_select_vertex_07000798[] = {
 // 0x07000858 - 0x07000A28
 const Gfx debug_level_select_dl_07000858[] = {
     gsDPPipeSync(),
-gsSPLightColor(LIGHT_2, 0xff0000ff),
-gsSPLightColor(LIGHT_3, 0x7f0000ff),
+    gsSPLightColor(LIGHT_1, 0xff0000ff),
+    gsSPLightColor(LIGHT_2, 0x7f0000ff),
     gsSPVertex(debug_level_select_vertex_07000018, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  9, 10, 11, 0x0),
@@ -361,8 +361,8 @@ static const Vtx debug_level_select_vertex_070010D0[] = {
 // 0x07001100 - 0x07001288
 const Gfx debug_level_select_dl_07001100[] = {
     gsDPPipeSync(),
-gsSPLightColor(LIGHT_2, 0xffff),
-gsSPLightColor(LIGHT_3, 0x7fff),
+    gsSPLightColor(LIGHT_1, 0xffff),
+    gsSPLightColor(LIGHT_2, 0x7fff),
     gsSPVertex(debug_level_select_vertex_07000A40, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  9, 10, 11, 0x0),
@@ -585,8 +585,8 @@ static const Vtx debug_level_select_vertex_07001B10[] = {
 // 0x07001BA0 - 0x07001D98
 const Gfx debug_level_select_dl_07001BA0[] = {
     gsDPPipeSync(),
-gsSPLightColor(LIGHT_2, 0xad00ff),
-gsSPLightColor(LIGHT_3, 0x5600ff),
+    gsSPLightColor(LIGHT_1, 0xad00ff),
+    gsSPLightColor(LIGHT_2, 0x5600ff),
     gsSPVertex(debug_level_select_vertex_070012A0, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  9, 10, 11, 0x0),
@@ -802,8 +802,8 @@ static const Vtx debug_level_select_vertex_07002530[] = {
 // 0x070025F0 - 0x070027C0
 const Gfx debug_level_select_dl_070025F0[] = {
     gsDPPipeSync(),
-gsSPLightColor(LIGHT_2, 0xff0000ff),
-gsSPLightColor(LIGHT_3, 0x7f0000ff),
+    gsSPLightColor(LIGHT_1, 0xff0000ff),
+    gsSPLightColor(LIGHT_2, 0x7f0000ff),
     gsSPVertex(debug_level_select_vertex_07001DB0, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  9, 10, 11, 0x0),
@@ -1063,8 +1063,8 @@ static const Vtx debug_level_select_vertex_07003228[] = {
 // 0x07003258 - 0x070034A0
 const Gfx debug_level_select_dl_07003258[] = {
     gsDPPipeSync(),
-gsSPLightColor(LIGHT_2, 0xffff),
-gsSPLightColor(LIGHT_3, 0x7fff),
+    gsSPLightColor(LIGHT_1, 0xffff),
+    gsSPLightColor(LIGHT_2, 0x7fff),
     gsSPVertex(debug_level_select_vertex_070027D8, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  9, 10, 11, 0x0),
@@ -1303,8 +1303,8 @@ static const Vtx debug_level_select_vertex_07003D28[] = {
 // 0x07003DB8 - 0x07003FB0
 const Gfx debug_level_select_dl_07003DB8[] = {
     gsDPPipeSync(),
-gsSPLightColor(LIGHT_2, 0xff0000ff),
-gsSPLightColor(LIGHT_3, 0x7f0000ff),
+    gsSPLightColor(LIGHT_1, 0xff0000ff),
+    gsSPLightColor(LIGHT_2, 0x7f0000ff),
     gsSPVertex(debug_level_select_vertex_070034B8, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  9, 10, 11, 0x0),
@@ -1536,8 +1536,8 @@ static const Vtx debug_level_select_vertex_07004838[] = {
 // 0x070048C8 - 0x07004AC0
 const Gfx debug_level_select_dl_070048C8[] = {
     gsDPPipeSync(),
-gsSPLightColor(LIGHT_2, 0xffff),
-gsSPLightColor(LIGHT_3, 0x7fff),
+    gsSPLightColor(LIGHT_1, 0xffff),
+    gsSPLightColor(LIGHT_2, 0x7fff),
     gsSPVertex(debug_level_select_vertex_07003FC8, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  9, 10, 11, 0x0),
@@ -1801,8 +1801,8 @@ static const Vtx debug_level_select_vertex_07005528[] = {
 // 0x07005558 - 0x070057A0
 const Gfx debug_level_select_dl_07005558[] = {
     gsDPPipeSync(),
-gsSPLightColor(LIGHT_2, 0xb200ff),
-gsSPLightColor(LIGHT_3, 0x5900ff),
+    gsSPLightColor(LIGHT_1, 0xb200ff),
+    gsSPLightColor(LIGHT_2, 0x5900ff),
     gsSPVertex(debug_level_select_vertex_07004AD8, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  9, 10, 11, 0x0),
@@ -1905,8 +1905,8 @@ static const Vtx debug_level_select_vertex_07005998[] = {
 // 0x070059F8 - 0x07005A98
 const Gfx debug_level_select_dl_070059F8[] = {
     gsDPPipeSync(),
-gsSPLightColor(LIGHT_2, 0xff0000ff),
-gsSPLightColor(LIGHT_3, 0x7f0000ff),
+    gsSPLightColor(LIGHT_1, 0xff0000ff),
+    gsSPLightColor(LIGHT_2, 0x7f0000ff),
     gsSPVertex(debug_level_select_vertex_070057B8, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  9, 10, 11, 0x0),
@@ -2109,8 +2109,8 @@ static const Vtx debug_level_select_vertex_07006320[] = {
 // 0x070063B0 - 0x070065A8
 const Gfx debug_level_select_dl_070063B0[] = {
     gsDPPipeSync(),
-gsSPLightColor(LIGHT_2, 0xffff),
-gsSPLightColor(LIGHT_3, 0x7fff),
+    gsSPLightColor(LIGHT_1, 0xffff),
+    gsSPLightColor(LIGHT_2, 0x7fff),
     gsSPVertex(debug_level_select_vertex_07005AB0, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  9, 10, 11, 0x0),

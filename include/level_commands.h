@@ -5,6 +5,7 @@
 
 #include "level_table.h"
 #include "config.h"
+#include "game/puppylights.h"
 
 enum LevelCommands {
     /*0x00*/ LEVEL_CMD_LOAD_AND_EXECUTE,
@@ -64,20 +65,16 @@ enum LevelCommands {
     /*0x36*/ LEVEL_CMD_SET_MUSIC,
     /*0x37*/ LEVEL_CMD_SET_MENU_MUSIC,
     /*0x38*/ LEVEL_CMD_FADEOUT_MUSIC,
-    /*0x39*/ LEVEL_CMD_39,
+    /*0x39*/ LEVEL_CMD_SET_MACRO_OBJECTS,
     /*0x3A*/ LEVEL_CMD_3A,
     /*0x3B*/ LEVEL_CMD_CREATE_WHIRLPOOL,
     /*0x3C*/ LEVEL_CMD_GET_OR_SET_VAR,
     /*0x3D*/ LEVEL_CMD_PUPPYVOLUME,
     /*0x3E*/ LEVEL_CMD_CHANGE_AREA_SKYBOX,
-<<<<<<< HEAD
     /*0x3F*/ LEVEL_CMD_PUPPYLIGHT_ENVIRONMENT,
     /*0x40*/ LEVEL_CMD_PUPPYLIGHT_NODE,
     /*0x41*/ LEVEL_CMD_SET_ECHO,
     /*0x42*/ LEVEL_CMD_SET_LUIGI_START_POS,
-=======
-    /*0x3F*/ LEVEL_CMD_SET_ECHO,
->>>>>>> 3423721b4b0ee5c68ecacc0608a8b07a297165e3
 };
 
 enum LevelActs {
@@ -460,14 +457,9 @@ enum GoddardScene {
 #define SET_ECHO(console, emulator) \
     CMD_BBBB(LEVEL_CMD_SET_ECHO, 0x04, console, emulator)
 
-// Required for backwards compatibility with Fast64
 #define MACRO_OBJECTS(objList) \
-    CMD_BBH(LEVEL_CMD_NOP, 0x04, 0x0000)
-
-// unused (previously MACRO_OBJECTS)
-#define CMD39(unk4) \
-    CMD_BBH(LEVEL_CMD_39, 0x08, 0x0000), \
-    CMD_PTR(unk4)
+    CMD_BBH(LEVEL_CMD_SET_MACRO_OBJECTS, 0x08, 0x0000), \
+    CMD_PTR(objList)
 
 // unused
 #define CMD3A(unk2, unk4, unk6, unk8, unk10) \

@@ -151,8 +151,8 @@ gMarioStates[1].animList = &gLuigiAnimsBuf;
     gCurrSaveFileNum = 4;
     gCurrActNum = 6;
 
-    print_text_aligned(160, 80, "SELECT STAGE", TEXT_ALIGN_CENTER);
-    print_text_aligned(160, 30, "PRESS START BUTTON", TEXT_ALIGN_CENTER);
+    print_text_centered(160, 80, "SELECT STAGE");
+    print_text_centered(160, 30, "PRESS START BUTTON");
     print_text_fmt_int(40, 60, "%2d", gCurrLevelNum);
     print_text(80, 60, sLevelSelectStageNames[gCurrLevelNum - 1]); // print stage name
 

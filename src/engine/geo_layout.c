@@ -5,7 +5,6 @@
 #include "math_util.h"
 #include "game/memory.h"
 #include "graph_node.h"
-#include "game/debug.h"
 
 typedef void (*GeoLayoutCommandProc)(void);
 
@@ -772,7 +771,6 @@ struct GraphNode *process_geo_layout(struct AllocOnlyPool *pool, void *segptr) {
     gGeoLayoutStack[1] = 0;
 
     while (gGeoLayoutCommand != NULL) {
-        assert((gGeoLayoutCommand[0x00] < GEO_CMD_COUNT), "Invalid or unloaded geo layout detected.");
         GeoLayoutJumpTable[gGeoLayoutCommand[0x00]]();
     }
 

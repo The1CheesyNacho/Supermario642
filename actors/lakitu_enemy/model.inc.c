@@ -90,8 +90,8 @@ const Gfx lakitu_enemy_seg5_dl_05012760[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, lakitu_enemy_seg5_texture_050114E0),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-gsSPLightColor(LIGHT_2, 0xffffffff),
-gsSPLightColor(LIGHT_3, 0x7f7f7fff),
+    gsSPLightColor(LIGHT_1, 0xffffffff),
+    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
     gsSPVertex(lakitu_enemy_seg5_vertex_05012510, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 4,  6,  7, 0x0,  4,  7,  5, 0x0),
@@ -114,8 +114,8 @@ gsSPLightColor(LIGHT_3, 0x7f7f7fff),
 
 // 0x05012890 - 0x05012910
 const Gfx lakitu_enemy_seg5_dl_05012890[] = {
-gsSPLightColor(LIGHT_2, 0xf2ab00ff),
-gsSPLightColor(LIGHT_3, 0x795500ff),
+    gsSPLightColor(LIGHT_1, 0xf2ab00ff),
+    gsSPLightColor(LIGHT_2, 0x795500ff),
     gsSPVertex(lakitu_enemy_seg5_vertex_050126B0, 11, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  2,  3,  4, 0x0),
     gsSP2Triangles( 1,  5,  2, 0x0,  4,  0,  2, 0x0),
@@ -260,8 +260,8 @@ const Gfx lakitu_enemy_seg5_dl_05012EF0[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, lakitu_enemy_seg5_texture_05011CE0),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-gsSPLightColor(LIGHT_2, 0xffffffff),
-gsSPLightColor(LIGHT_3, 0x7f7f7fff),
+    gsSPLightColor(LIGHT_1, 0xffffffff),
+    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
     gsSPVertex(lakitu_enemy_seg5_vertex_05012990, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  1,  4, 0x0),
     gsSP2Triangles( 3,  5,  1, 0x0,  1,  6,  7, 0x0),
@@ -342,8 +342,8 @@ static const Vtx lakitu_enemy_seg5_vertex_050131D8[] = {
 
 // 0x05013298 - 0x050132D8
 const Gfx lakitu_enemy_seg5_dl_05013298[] = {
-gsSPLightColor(LIGHT_2, 0xffffffff),
-gsSPLightColor(LIGHT_3, 0x7f7f7fff),
+    gsSPLightColor(LIGHT_1, 0xffffffff),
+    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
     gsSPVertex(lakitu_enemy_seg5_vertex_050131D8, 12, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  9, 10, 11, 0x0),
@@ -414,8 +414,8 @@ static const Vtx lakitu_enemy_seg5_vertex_050133B8[] = {
 
 // 0x050134A8 - 0x05013598
 const Gfx lakitu_enemy_seg5_dl_050134A8[] = {
-gsSPLightColor(LIGHT_2, 0xf2ab00ff),
-gsSPLightColor(LIGHT_3, 0x795500ff),
+    gsSPLightColor(LIGHT_1, 0xf2ab00ff),
+    gsSPLightColor(LIGHT_2, 0x795500ff),
     gsSPVertex(lakitu_enemy_seg5_vertex_050133B8, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  3,  5, 0x0,  3,  7,  4, 0x0),
@@ -456,8 +456,8 @@ static const Vtx lakitu_enemy_seg5_vertex_050135B0[] = {
 
 // 0x050136A0 - 0x05013790
 const Gfx lakitu_enemy_seg5_dl_050136A0[] = {
-gsSPLightColor(LIGHT_2, 0xf2ab00ff),
-gsSPLightColor(LIGHT_3, 0x795500ff),
+    gsSPLightColor(LIGHT_1, 0xf2ab00ff),
+    gsSPLightColor(LIGHT_2, 0x795500ff),
     gsSPVertex(lakitu_enemy_seg5_vertex_050135B0, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 4,  6,  7, 0x0,  4,  7,  5, 0x0),
@@ -494,8 +494,8 @@ static const Vtx lakitu_enemy_seg5_vertex_05013790[] = {
 
 // 0x05013860 - 0x050138B0
 const Gfx lakitu_enemy_seg5_dl_05013860[] = {
-gsSPLightColor(LIGHT_2, 0xa54f1bff),
-gsSPLightColor(LIGHT_3, 0x291306ff),
+    gsSPLightColor(LIGHT_1, 0xa54f1bff),
+    gsSPLightColor(LIGHT_2, 0x291306ff),
     gsSPVertex(lakitu_enemy_seg5_vertex_05013790, 13, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  0,  2, 0x0,  7,  8,  9, 0x0),
@@ -505,6 +505,6 @@ gsSPLightColor(LIGHT_3, 0x291306ff),
 
 // 0x050138B0 - 0x050138C0
 const Gfx lakitu_enemy_seg5_dl_050138B0[] = {
-    //gsSPNumLights(NUMLIGHTS_1),
+    gsSPNumLights(NUMLIGHTS_1),
     gsSPEndDisplayList(),
 };

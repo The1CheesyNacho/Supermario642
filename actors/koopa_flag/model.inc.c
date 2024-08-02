@@ -40,13 +40,13 @@ static const Vtx koopa_flag_seg6_vertex_060008C8[] = {
 
 // 0x06000968 - 0x06000A08
 const Gfx koopa_flag_seg6_dl_06000968[] = {
-gsSPLightColor(LIGHT_2, 0xdf9f1fff),
-gsSPLightColor(LIGHT_3, 0x372707ff),
+    gsSPLightColor(LIGHT_1, 0xdf9f1fff),
+    gsSPLightColor(LIGHT_2, 0x372707ff),
     gsSPVertex(koopa_flag_seg6_vertex_06000878, 5, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  0, 0x0),
     gsSP1Triangle( 3,  0,  2, 0x0),
-gsSPLightColor(LIGHT_2, 0x502800ff),
-gsSPLightColor(LIGHT_3, 0x140a00ff),
+    gsSPLightColor(LIGHT_1, 0x502800ff),
+    gsSPLightColor(LIGHT_2, 0x140a00ff),
     gsSPVertex(koopa_flag_seg6_vertex_060008C8, 10, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  2,  3,  0, 0x0),
     gsSP2Triangles( 4,  2,  1, 0x0,  5,  0,  3, 0x0),

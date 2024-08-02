@@ -30,21 +30,9 @@ typedef int SampleFormat;
 
 #endif
 
-#define mallocErr(var, size, msg) \
-    var = malloc(size); \
-    if (var == NULL) { \
-        fprintf(stderr, "%s: malloc failed at %s\n", programName, msg); \
-        exit(1); \
-    }
+char usage[80] = "[-o order -s bits -t thresh -i refine_iter -f frame_size] aifcfile";
 
-char filename[1024] = "";
-char usage[80] = "[-o order -s bits -t thresh -i refine_iter -f frame_size -p filename] aifcfile";
-
-#ifndef EXTRACT_CODEBOOK
 int main(int argc, char **argv)
-#else
-int tabledesign_entry(int argc, char **argv)
-#endif
 {
     const char *programName; // sp118
     double thresh; // sp110
@@ -76,7 +64,6 @@ int tabledesign_entry(int argc, char **argv)
     short *temp_s3;
     int i;
     int dataSize; // s4
-    FILE *outfile;
 
     order = 2;
     bits = 2;
@@ -92,7 +79,7 @@ int tabledesign_entry(int argc, char **argv)
         exit(1);
     }
 
-    while ((opt = getopt(argc, argv, "o:s:t:i:f:p:")) != -1)
+    while ((opt = getopt(argc, argv, "o:s:t:i:f:")) != -1)
     {
         switch (opt)
         {
@@ -116,23 +103,7 @@ int tabledesign_entry(int argc, char **argv)
             if (sscanf(optarg, "%lf", &thresh) != 1)
                 thresh = 10.0;
             break;
-        case 'p':
-            if (sscanf(optarg, "%s", filename) != 1) {
-                fprintf(stderr, "%s: No valid out file!\n", programName);
-                exit(1);
-            } else {
-                if ((outfile = fopen(filename, "w")) == NULL) {
-                    fprintf(stderr, "%s: Could not open %s for writing\n", programName, filename);
-                    exit(1);
-                }
-            }
-            break;
         }
-    }
-
-    if (outfile == NULL) {
-        fprintf(stderr, "%s: No out file!\n", programName);
-        exit(1);
     }
 
     argv = &argv[optind - 1];
@@ -143,10 +114,6 @@ int tabledesign_entry(int argc, char **argv)
         fprintf(stderr,
                 "%s: input AIFC file [%s] could not be opened.\n",
                 programName, argv[1]);
-
-        fclose(outfile);
-        outfile = NULL;
-
         exit(1);
     }
 
@@ -156,10 +123,6 @@ int tabledesign_entry(int argc, char **argv)
         fprintf(stderr,
                 "%s: file [%s] contains %d channels, only 1 channel supported.\n",
                 programName, argv[1], channels);
-
-        fclose(outfile);
-        outfile = NULL;
-
         exit(1);
     }
 
@@ -169,10 +132,6 @@ int tabledesign_entry(int argc, char **argv)
         fprintf(stderr,
                 "%s: file [%s] contains %d tracks, only 1 track supported.\n",
                 programName, argv[1], tracks);
-
-        fclose(outfile);
-        outfile = NULL;
-
         exit(1);
     }
 
@@ -182,38 +141,34 @@ int tabledesign_entry(int argc, char **argv)
         fprintf(stderr,
                 "%s: file [%s] contains %d bit samples, only 16 bit samples supported.\n",
                 programName, argv[1], (int)sampleWidth);
-
-        fclose(outfile);
-        outfile = NULL;
-
         exit(1);
     }
 
-    mallocErr(temp_s1, (1 << bits) * sizeof(double*), "temp_s1");
+    temp_s1 = malloc((1 << bits) * sizeof(double*));
     for (i = 0; i < (1 << bits); i++)
     {
-        mallocErr(temp_s1[i], (order + 1) * sizeof(double), "temp_si[i]");
+        temp_s1[i] = malloc((order + 1) * sizeof(double));
     }
 
-    mallocErr(splitDelta, (order + 1) * sizeof(double), "splitDelta");
-    mallocErr(temp_s3, frameSize * 2 * sizeof(short), "temp_s3");
+    splitDelta = malloc((order + 1) * sizeof(double));
+    temp_s3 = malloc(frameSize * 2 * sizeof(short));
     for (i = 0; i < frameSize * 2; i++)
     {
         temp_s3[i] = 0;
     }
 
-    mallocErr(vec, (order + 1) * sizeof(double), "vec");
-    mallocErr(spF4, (order + 1) * sizeof(double), "spF4");
-    mallocErr(mat, (order + 1) * sizeof(double*), "mat");
+    vec = malloc((order + 1) * sizeof(double));
+    spF4 = malloc((order + 1) * sizeof(double));
+    mat = malloc((order + 1) * sizeof(double*));
     for (i = 0; i <= order; i++)
     {
-        mallocErr(mat[i], (order + 1) * sizeof(double), "mat[i]");
+        mat[i] = malloc((order + 1) * sizeof(double));
     }
 
-    mallocErr(perm, (order + 1) * sizeof(int), "perm");
+    perm = malloc((order + 1) * sizeof(int));
     frameCount = AFgetframecnt(afFile, AF_DEFAULT_TRACK);
     rate = AFgetrate(afFile, AF_DEFAULT_TRACK);
-    mallocErr(data, frameCount * sizeof(double*), "data");
+    data = malloc(frameCount * sizeof(double*));
     dataSize = 0;
 
     while (AFreadframes(afFile, AF_DEFAULT_TRACK, temp_s3 + frameSize, frameSize) == frameSize)
@@ -228,7 +183,7 @@ int tabledesign_entry(int argc, char **argv)
                 vec[0] = 1.0;
                 if (kfroma(vec, spF4, order) == 0)
                 {
-                    mallocErr(data[dataSize], (order + 1) * sizeof(double), "data[dataSize]");
+                    data[dataSize] = malloc((order + 1) * sizeof(double));
                     data[dataSize][0] = 1.0;
 
                     for (i = 1; i <= order; i++)
@@ -292,20 +247,16 @@ int tabledesign_entry(int argc, char **argv)
     }
 
     npredictors = 1 << curBits;
-    fprintf(outfile, "%d\n%d\n", order, npredictors);
+    fprintf(stdout, "%d\n%d\n", order, npredictors);
 
     for (i = 0; i < npredictors; i++)
     {
-        numOverflows += print_entry(outfile, temp_s1[i], order);
+        numOverflows += print_entry(stdout, temp_s1[i], order);
     }
 
     if (numOverflows > 0)
     {
         fprintf(stderr, "There was overflow - check the table\n");
     }
-
-    fclose(outfile);
-    outfile = NULL;
-
     return 0;
 }

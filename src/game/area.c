@@ -90,12 +90,13 @@ Vp gViewport = { {
     { 640, 480, 511, 0 },
 } };
 
-LangArray gNoControllerMsg = DEFINE_LANGUAGE_ARRAY(
+#if MULTILANG
+const char *gNoControllerMsg[] = {
     "NO CONTROLLER",
     "MANETTE DEBRANCHEE",
     "CONTROLLER FEHLT",
-    "NO CONTROLLER",
-    "NO HAY MANDO");
+};
+#endif
 
 void override_viewport_and_clip(Vp *vpOverride, Vp *vpClip, Color red, Color green, Color blue) {
     RGBA16 color = ((red >> 3) << IDX_RGBA16_R) | ((green >> 3) << IDX_RGBA16_G) | ((blue >> 3) << IDX_RGBA16_B) | MSK_RGBA16_A;
@@ -115,12 +116,23 @@ void set_warp_transition_rgb(Color red, Color green, Color blue) {
 }
 
 void print_intro_text(void) {
+#if MULTILANG
+    s32 language = eu_get_language();
+#endif
     if ((gGlobalTimer & 31) < 20) {
         if (gControllerBits == 0) {
-            print_text_aligned(SCREEN_CENTER_X, 20, LANG_ARRAY(gNoControllerMsg), TEXT_ALIGN_CENTER);
+#if MULTILANG
+            print_text_centered(SCREEN_CENTER_X, 20, gNoControllerMsg[language]);
+#else
+            print_text_centered(SCREEN_CENTER_X, 20, "NO CONTROLLER");
+#endif
         } else {
-            print_text_aligned(60, 38, "PRESS", TEXT_ALIGN_CENTER);
-            print_text_aligned(60, 20, "START", TEXT_ALIGN_CENTER);
+#ifdef VERSION_EU
+            print_text(20, 20, "START");
+#else
+            print_text_centered(60, 38, "PRESS");
+            print_text_centered(60, 20, "START");
+#endif
         }
     }
 }
@@ -129,7 +141,7 @@ u32 get_mario_spawn_type(struct Object *obj) {
     s32 i;
     const BehaviorScript *behavior = virtual_to_segmented(SEGMENT_BEHAVIOR_DATA, obj->behavior);
 
-    for (i = 0; i < ARRAY_COUNT(sWarpBhvSpawnTable); i++) {
+    for (i = 0; i < 20; i++) {
         if (sWarpBhvSpawnTable[i] == behavior) {
             return sSpawnTypeFromWarpBhv[i];
         }
@@ -148,20 +160,25 @@ struct ObjectWarpNode *area_get_warp_node(u8 id) {
     return node;
 }
 
-struct Object *get_destination_warp_object(u8 warpDestId) {
+struct ObjectWarpNode *area_get_warp_node_from_params(struct Object *obj) {
+    return area_get_warp_node(GET_BPARAM2(obj->oBehParams));
+}
+
+void load_obj_warp_nodes(void) {
+    struct ObjectWarpNode *warpNode;
     struct Object *children = (struct Object *) gObjParentGraphNode.children;
 
     do {
         struct Object *obj = children;
 
-        u8 bparam2 = GET_BPARAM2(obj->oBehParams);
-        if (warpDestId == bparam2 && obj->activeFlags != ACTIVE_FLAG_DEACTIVATED && get_mario_spawn_type(obj) != MARIO_SPAWN_NONE) {
-            return obj;
+        if (obj->activeFlags != ACTIVE_FLAG_DEACTIVATED && get_mario_spawn_type(obj) != 0) {
+            warpNode = area_get_warp_node_from_params(obj);
+            if (warpNode != NULL) {
+                warpNode->object = obj;
+            }
         }
     } while ((children = (struct Object *) children->header.gfx.node.next)
              != (struct Object *) gObjParentGraphNode.children);
-
-    return NULL;
 }
 
 void clear_areas(void) {
@@ -179,6 +196,7 @@ void clear_areas(void) {
         gAreaData[i].graphNode = NULL;
         gAreaData[i].terrainData = NULL;
         gAreaData[i].surfaceRooms = NULL;
+        gAreaData[i].macroObjects = NULL;
         gAreaData[i].warpNodes = NULL;
         gAreaData[i].paintingWarpNodes = NULL;
         gAreaData[i].instantWarps = NULL;
@@ -227,13 +245,15 @@ void load_area(s32 index) {
         gMarioCurrentRoom = 0;
 
         if (gCurrentArea->terrainData != NULL) {
-            load_area_terrain(gCurrentArea->terrainData, gCurrentArea->surfaceRooms);
+            load_area_terrain(index, gCurrentArea->terrainData, gCurrentArea->surfaceRooms,
+                              gCurrentArea->macroObjects);
         }
 
         if (gCurrentArea->objectSpawnInfos != NULL) {
             spawn_objects_from_info(0, gCurrentArea->objectSpawnInfos);
         }
 
+        load_obj_warp_nodes();
         geo_call_global_function_nodes(&gCurrentArea->graphNode->node, GEO_CONTEXT_AREA_LOAD);
     }
 }
@@ -347,13 +367,11 @@ void play_transition(s16 transType, s16 time, Color red, Color green, Color blue
         red = gWarpTransRed, green = gWarpTransGreen, blue = gWarpTransBlue;
     }
 
-    if (transType & WARP_TRANSITION_TYPE_COLOR) {
+    if (transType < WARP_TRANSITION_TYPE_STAR) { // if transition is WARP_TRANSITION_TYPE_COLOR
         gWarpTransition.data.red = red;
         gWarpTransition.data.green = green;
         gWarpTransition.data.blue = blue;
     } else { // if transition is textured
-        set_and_reset_transition_fade_timer(0); // Reset transition timers by passing in 0 for time
-
         gWarpTransition.data.red = red;
         gWarpTransition.data.green = green;
         gWarpTransition.data.blue = blue;
@@ -371,7 +389,8 @@ void play_transition(s16 transType, s16 time, Color red, Color green, Color blue
 
         s16 fullRadius = GFX_DIMENSIONS_FULL_RADIUS;
 
-#ifdef POLISHED_TRANSITIONS
+        // HackerSM64: this fixes the pop-in with texture transition, comment out this switch
+        // statement if you want to restore the original full radius.
         switch (transType){
             case WARP_TRANSITION_TYPE_SKULL:
             case WARP_TRANSITION_TYPE_BOWSER:
@@ -387,7 +406,6 @@ void play_transition(s16 transType, s16 time, Color red, Color green, Color blue
                 fullRadius *= 1.5f;
             break;
         }
-#endif
 
         if (transType & WARP_TRANSITION_FADE_INTO) { // Is the image fading in?
             gWarpTransition.data.startTexRadius = fullRadius;

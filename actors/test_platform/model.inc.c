@@ -52,8 +52,8 @@ static const Vtx unknown_seg8_vertex_08026200[] = {
 
 // 0x08026260 - 0x080262F8
 const Gfx unknown_seg8_dl_08026260[] = {
-gsSPLightColor(LIGHT_2, 0xc8c81eff),
-gsSPLightColor(LIGHT_3, 0x323207ff),
+    gsSPLightColor(LIGHT_1, 0xc8c81eff),
+    gsSPLightColor(LIGHT_2, 0x323207ff),
     gsSPVertex(unknown_seg8_vertex_08026020, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  9, 10, 11, 0x0),

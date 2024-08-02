@@ -326,8 +326,8 @@ const Gfx chuckya_seg8_dl_0800A700[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, chuckya_seg8_texture_08006778),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-gsSPLightColor(LIGHT_2, 0xffffffff),
-gsSPLightColor(LIGHT_3, 0x666666ff),
+    gsSPLightColor(LIGHT_1, 0xffffffff),
+    gsSPLightColor(LIGHT_2, 0x666666ff),
     gsSPVertex(chuckya_seg8_vertex_0800A680, 8, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  1,  3,  2, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  7,  5, 0x0),
@@ -369,8 +369,8 @@ static const Vtx chuckya_seg8_vertex_0800A7E0[] = {
 
 // 0x0800A870 - 0x0800A8D0
 const Gfx chuckya_seg8_dl_0800A870[] = {
-gsSPLightColor(LIGHT_2, 0x89898aff),
-gsSPLightColor(LIGHT_3, 0x292929ff),
+    gsSPLightColor(LIGHT_1, 0x89898aff),
+    gsSPLightColor(LIGHT_2, 0x292929ff),
     gsSPVertex(chuckya_seg8_vertex_0800A7E0, 9, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  0,  2, 0x0),
     gsSP2Triangles( 1,  4,  2, 0x0,  5,  6,  2, 0x0),
@@ -400,8 +400,8 @@ static const Vtx chuckya_seg8_vertex_0800A908[] = {
 
 // 0x0800A958 - 0x0800A998
 const Gfx chuckya_seg8_dl_0800A958[] = {
-gsSPLightColor(LIGHT_2, 0xffff00ff),
-gsSPLightColor(LIGHT_3, 0x4c4c00ff),
+    gsSPLightColor(LIGHT_1, 0xffff00ff),
+    gsSPLightColor(LIGHT_2, 0x4c4c00ff),
     gsSPVertex(chuckya_seg8_vertex_0800A908, 5, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  3,  4, 0x0),
     gsSP2Triangles( 0,  2,  3, 0x0,  0,  4,  1, 0x0),
@@ -454,8 +454,8 @@ static const Vtx chuckya_seg8_vertex_0800AAC0[] = {
 
 // 0x0800AB70 - 0x0800ABE8
 const Gfx chuckya_seg8_dl_0800AB70[] = {
-gsSPLightColor(LIGHT_2, 0x323232ff),
-gsSPLightColor(LIGHT_3, 0xc0c0cff),
+    gsSPLightColor(LIGHT_1, 0x323232ff),
+    gsSPLightColor(LIGHT_2, 0xc0c0cff),
     gsSPVertex(chuckya_seg8_vertex_0800A9D0, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  9, 10, 11, 0x0),

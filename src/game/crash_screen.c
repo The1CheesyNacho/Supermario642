@@ -133,7 +133,6 @@ void crash_screen_print(s32 x, s32 y, const char *fmt, ...) {
     char *ptr;
     u32 glyph;
     s32 size;
-    s32 xOffset = x;
     char buf[0x108];
     bzero(&buf, sizeof(buf));
 
@@ -148,15 +147,12 @@ void crash_screen_print(s32 x, s32 y, const char *fmt, ...) {
         while (*ptr) {
             glyph = gCrashScreenCharToGlyph[*ptr & 0x7f];
 
-            if (*ptr == '\n') {
-                xOffset = x;
-                y += 10;
-            } else if (glyph != 0xff) {
-                crash_screen_draw_glyph(xOffset, y, glyph);
+            if (glyph != 0xff) {
+                crash_screen_draw_glyph(x, y, glyph);
             }
 
             ptr++;
-            xOffset += 6;
+            x += 6;
         }
     }
 

@@ -322,8 +322,8 @@ static const Vtx king_bobomb_seg5_vertex_0500AB00[] = {
 
 // 0x0500ABC0 - 0x0500AD08
 const Gfx king_bobomb_seg5_dl_0500ABC0[] = {
-gsSPLightColor(LIGHT_2, 0xdead23ff),
-gsSPLightColor(LIGHT_3, 0x6f5611ff),
+    gsSPLightColor(LIGHT_1, 0xdead23ff),
+    gsSPLightColor(LIGHT_2, 0x6f5611ff),
     gsSPVertex(king_bobomb_seg5_vertex_0500AA00, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  3,  1, 0x0),
     gsSP2Triangles( 1,  4,  5, 0x0,  1,  5,  6, 0x0),
@@ -398,8 +398,8 @@ static const Vtx king_bobomb_seg5_vertex_0500AE50[] = {
 
 // 0x0500AF20 - 0x0500B068
 const Gfx king_bobomb_seg5_dl_0500AF20[] = {
-gsSPLightColor(LIGHT_2, 0xde9e20ff),
-gsSPLightColor(LIGHT_3, 0x6f4f10ff),
+    gsSPLightColor(LIGHT_1, 0xde9e20ff),
+    gsSPLightColor(LIGHT_2, 0x6f4f10ff),
     gsSPVertex(king_bobomb_seg5_vertex_0500AD50, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  3,  1, 0x0),
     gsSP2Triangles( 1,  4,  5, 0x0,  1,  5,  2, 0x0),
@@ -514,8 +514,8 @@ const Gfx king_bobomb_seg5_dl_eyes_start_dl[] = {
 };
 
 const Gfx king_bobomb_seg5_dl_eyes_end_dl[] = {
-gsSPLightColor(LIGHT_2, 0xffffffff),
-gsSPLightColor(LIGHT_3, 0x3f3f3fff),
+    gsSPLightColor(LIGHT_1, 0xffffffff),
+    gsSPLightColor(LIGHT_2, 0x3f3f3fff),
     gsSPVertex(king_bobomb_seg5_vertex_eyes, 6, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  2,  4, 0x0),
     gsSP2Triangles( 2,  3,  0, 0x0,  4,  5,  3, 0x0),
@@ -560,8 +560,8 @@ static const Vtx king_bobomb_seg5_vertex_0500B348[] = {
 
 // 0x0500B3C8 - 0x0500B418
 const Gfx king_bobomb_seg5_dl_0500B3C8[] = {
-gsSPLightColor(LIGHT_2, 0xffffffff),
-gsSPLightColor(LIGHT_3, 0x7f7f7fff),
+    gsSPLightColor(LIGHT_1, 0xffffffff),
+    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
     gsSPVertex(king_bobomb_seg5_vertex_0500B348, 8, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  2,  3,  4, 0x0),
     gsSP2Triangles( 2,  4,  5, 0x0,  2,  5,  0, 0x0),
@@ -620,8 +620,8 @@ const Gfx king_bobomb_seg5_dl_0500B5F0[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, king_bobomb_seg5_texture_crown_rim),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 16 * 32 - 1, CALC_DXT(16, G_IM_SIZ_16b_BYTES)),
-gsSPLightColor(LIGHT_2, 0xffffffff),
-gsSPLightColor(LIGHT_3, 0x7f7f7fff),
+    gsSPLightColor(LIGHT_1, 0xffffffff),
+    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
     gsSPVertex(king_bobomb_seg5_vertex_0500B470, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  0, 0x0),
     gsSP2Triangles( 0,  2,  3, 0x0,  5,  4,  3, 0x0),

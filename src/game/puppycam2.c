@@ -13,6 +13,7 @@
 #include "print.h"
 #include "engine/surface_collision.h"
 #include "engine/surface_load.h"
+#include "include/text_strings.h"
 #include "segment2.h"
 #include "ingame_menu.h"
 #include "memory.h"
@@ -91,7 +92,7 @@ static const struct gPCOptionStruct gPCOptions[] = { //If the min and max are 0 
 #ifdef WIDE
     {/*Option Name*/ OPTION_STRING_WIDESCREEN, /*Option Variable*/ &gConfig.widescreen, /*Option Value Text Start*/ 0, /*Option Minimum*/ FALSE, /*Option Maximum*/ TRUE},
 #endif
-#ifdef MULTILANG
+#if MULTILANG
     {/*Option Name*/ OPTION_STRING_LANGUAGE, /*Option Variable*/ &gInGameLanguage, /*Option Value Text Start*/ 4, /*Option Minimum*/ 1, /*Option Maximum*/ 3},
 #endif
     {/*Option Name*/ OPTION_STRING_ANALOGUE, /*Option Variable*/ &gPuppyCam.options.analogue, /*Option Value Text Start*/ 0, /*Option Minimum*/ FALSE, /*Option Maximum*/ TRUE},
@@ -166,29 +167,24 @@ void puppycam_warp(f32 displacementX, f32 displacementY, f32 displacementZ) {
     gPuppyCam.floorY[1]             += displacementY;
 }
 
-#ifdef MULTILANG
+#if MULTILANG
 static void newcam_set_language(void) {
-    switch (gInGameLanguage) {
-        case LANGUAGE_ENGLISH:
-            gPCOptionStringsPtr = &gPCOptionStringsEN;
-            gPCFlagStringsPtr   = &gPCFlagStringsEN;
-            gPCToggleStringsPtr = &gPCToggleStringsEN;
-            break;
-        case LANGUAGE_FRENCH:
-            gPCOptionStringsPtr = &gPCOptionStringsFR;
-            gPCFlagStringsPtr   = &gPCFlagStringsFR;
-            gPCToggleStringsPtr = &gPCToggleStringsFR;
-            break;
-        case LANGUAGE_GERMAN:
-            gPCOptionStringsPtr = &gPCOptionStringsDE;
-            gPCFlagStringsPtr   = &gPCFlagStringsDE;
-            gPCToggleStringsPtr = &gPCToggleStringsDE;
-            break;
-        case LANGUAGE_SPANISH:
-            gPCOptionStringsPtr = &gPCOptionStringsES;
-            gPCFlagStringsPtr   = &gPCFlagStringsES;
-            gPCToggleStringsPtr = &gPCToggleStringsES;
-            break;
+    switch (gInGameLanguage - 1) {
+    case LANGUAGE_ENGLISH:
+        gPCOptionStringsPtr = &gPCOptionStringsEN;
+        gPCFlagStringsPtr   = &gPCFlagStringsEN;
+        gPCToggleStringsPtr = &gPCToggleStringsEN;
+        break;
+    case LANGUAGE_FRENCH:
+        gPCOptionStringsPtr = &gPCOptionStringsFR;
+        gPCFlagStringsPtr   = &gPCFlagStringsFR;
+        gPCToggleStringsPtr = &gPCToggleStringsFR;
+        break;
+    case LANGUAGE_GERMAN:
+        gPCOptionStringsPtr = &gPCOptionStringsDE;
+        gPCFlagStringsPtr   = &gPCFlagStringsDE;
+        gPCToggleStringsPtr = &gPCToggleStringsDE;
+        break;
     }
 }
 #endif
@@ -227,6 +223,7 @@ s32 puppycam_move_spline(struct sPuppySpline splinePos[], struct sPuppySpline sp
     f32 tempProgress[2] = {0.0f, 0.0f};
     f32 progChange = 0.0f;
     s32 i;
+    Vec3f prevPos;
 
     if (gPuppyCam.splineIndex == 65000) {
         gPuppyCam.splineIndex = index;
@@ -239,6 +236,7 @@ s32 puppycam_move_spline(struct sPuppySpline splinePos[], struct sPuppySpline sp
             return TRUE;
         }
     }
+    vec3f_set(prevPos, gPuppyCam.pos[0], gPuppyCam.pos[1], gPuppyCam.pos[2]);
 
     for (i = 0; i < 4; i++) {
         vec3f_set(tempPoints[i], splinePos[gPuppyCam.splineIndex + i].pos[0], splinePos[gPuppyCam.splineIndex + i].pos[1], splinePos[gPuppyCam.splineIndex + i].pos[2]);
@@ -290,23 +288,19 @@ static void puppycam_process_cutscene(void) {
 #define BLANK 0, 0, 0, ENVIRONMENT, 0, 0, 0, ENVIRONMENT
 
 static void puppycam_display_box(s32 x1, s32 y1, s32 x2, s32 y2, u8 r, u8 g, u8 b, u8 a) {
-    Gfx *tempGfxHead = gDisplayListHead;
-
-    gDPSetCombineMode(tempGfxHead++, BLANK, BLANK);
-    gDPSetCycleType(  tempGfxHead++, G_CYC_1CYCLE);
+    gDPSetCombineMode(gDisplayListHead++, BLANK, BLANK);
+    gDPSetCycleType(  gDisplayListHead++, G_CYC_1CYCLE);
     if (a !=255) {
-        gDPSetRenderMode(tempGfxHead++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+        gDPSetRenderMode(gDisplayListHead++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
     } else {
-        gDPSetRenderMode(tempGfxHead++, G_RM_OPA_SURF, G_RM_OPA_SURF);
+        gDPSetRenderMode(gDisplayListHead++, G_RM_OPA_SURF, G_RM_OPA_SURF);
     }
-    gDPSetEnvColor(   tempGfxHead++, r, g, b, a);
-    gDPFillRectangle( tempGfxHead++, x1, y1, x2, y2);
-    gDPPipeSync(      tempGfxHead++);
-    gDPSetEnvColor(   tempGfxHead++, 255, 255, 255, 255);
-    gDPSetCycleType(  tempGfxHead++, G_CYC_1CYCLE);
-    gSPDisplayList(   tempGfxHead++,dl_hud_img_end);
-
-    gDisplayListHead = tempGfxHead;
+    gDPSetEnvColor(   gDisplayListHead++, r, g, b, a);
+    gDPFillRectangle( gDisplayListHead++, x1, y1, x2, y2);
+    gDPPipeSync(      gDisplayListHead++);
+    gDPSetEnvColor(   gDisplayListHead++, 255, 255, 255, 255);
+    gDPSetCycleType(  gDisplayListHead++, G_CYC_1CYCLE);
+    gSPDisplayList(   gDisplayListHead++,dl_hud_img_end);
 }
 
 //I actually took the time to redo this, properly. Lmao. Please don't bully me over this anymore :(
@@ -329,13 +323,12 @@ void puppycam_change_setting(s8 toggle) {
 
 void puppycam_print_text(s32 x, s32 y, unsigned char *str, s32 col) {
     s32 textX = get_str_x_pos_from_center(x, str, 10.0f);
-    gDialogTextAlpha = 255;
-    set_text_color(0, 0, 0);
+    gDPSetEnvColor(gDisplayListHead++, 0, 0, 0, 255);
     print_generic_string(textX + 1, y - 1,str);
     if (col != 0) {
-        set_text_color(255, 255, 255);
+        gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
     } else {
-        set_text_color(255,  32,  32);
+        gDPSetEnvColor(gDisplayListHead++, 255,  32,  32, 255);
     }
     print_generic_string(textX,y,str);
 }
@@ -360,7 +353,7 @@ void puppycam_display_options() {
     puppycam_display_box(48,84,272,218,0x0,0x0,0x0, 0x50);
     gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
     gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
-    print_hud_lut_string(112, 40, (*gPCToggleStringsPtr)[2]);
+    print_hud_lut_string(HUD_LUT_GLOBAL, 112, 40, (*gPCToggleStringsPtr)[2]);
     gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
 
     if (gPCOptionCap > 4) {
@@ -381,7 +374,7 @@ void puppycam_display_options() {
                     puppycam_print_text(160, scroll - 12, (*gPCFlagStringsPtr)[var], gPCOptionSelected - i);
                 }
             } else {
-                sprintf(newstring, "%d", *gPCOptions[i].gPCOptionVar);
+                int_to_str(*gPCOptions[i].gPCOptionVar,newstring);
                 puppycam_print_text(160,scroll-12,newstring,gPCOptionSelected-i);
                 puppycam_display_box(96, 111 + (32 * i) - (gPCOptionScroll * 32), 224, 117 + (32 * i) - (gPCOptionScroll * 32), 0x80, 0x80, 0x80, 0xFF);
                 maxvar = gPCOptions[i].gPCOptionMax - gPCOptions[i].gPCOptionMin;
@@ -394,8 +387,7 @@ void puppycam_display_options() {
     }
     newcam_sinpos = sins(gGlobalTimer * 5000) * 4;
     gDPSetScissor(gDisplayListHead++, G_SC_NON_INTERLACE, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    gDialogTextAlpha = 255;
-    set_text_color(255, 255, 255);
+    gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
     print_generic_string( 80 - newcam_sinpos, 132 - (32 * (gPCOptionSelected - gPCOptionScroll)),  (*gPCToggleStringsPtr)[3]);
     print_generic_string(232 + newcam_sinpos, 132 - (32 * (gPCOptionSelected - gPCOptionScroll)),  (*gPCToggleStringsPtr)[4]);
     gSPDisplayList(gDisplayListHead++, dl_ia_text_end);
@@ -415,13 +407,13 @@ void puppycam_check_pause_buttons(void) {
         play_sound(SOUND_MENU_CHANGE_SELECT, gGlobalSoundSource);
         if (gPCOptionOpen == 0) {
             gPCOptionOpen = 1;
-#ifdef MULTILANG
+#if MULTILANG
             newcam_set_language();
-            multilang_set_language(gInGameLanguage);
+            eu_set_language(gInGameLanguage-1);
 #endif
         } else {
             gPCOptionOpen = 0;
-#ifdef MULTILANG
+#if MULTILANG
             load_language_text();
 #endif
             puppycam_set_save();
@@ -688,6 +680,7 @@ static void puppycam_input_hold_preset2(f32 ivX) {
 
 // Another alternative control scheme. This one aims to mimic the parallel camera scheme down to the last bit from the original game.
 static void puppycam_input_hold_preset3(f32 ivX) {
+    f32 stickMag[2] = {gPlayer1Controller->rawStickX*0.65f, gPlayer1Controller->rawStickY*0.2f};
     // Just in case it happens to be nonzero.
     gPuppyCam.yawAcceleration = 0;
 
@@ -1024,7 +1017,7 @@ static s32 puppycam_check_volume_bounds(struct sPuppyVolume *volume, s32 index) 
         vec3f_set(debugPos[0], sPuppyVolumeStack[index]->pos[0],    sPuppyVolumeStack[index]->pos[1],    sPuppyVolumeStack[index]->pos[2]);
         vec3f_set(debugPos[1], sPuppyVolumeStack[index]->radius[0], sPuppyVolumeStack[index]->radius[1], sPuppyVolumeStack[index]->radius[2]);
         debug_box_color(0x00FF0000);
-        debug_box_rot(debugPos[0], debugPos[1], sPuppyVolumeStack[index]->rot, DEBUG_SHAPE_BOX);
+        debug_box_rot(debugPos[0], debugPos[1], sPuppyVolumeStack[index]->rot, DEBUG_SHAPE_BOX | DEBUG_UCODE_DEFAULT);
 #endif
         // Now compare values.
         if (-sPuppyVolumeStack[index]->radius[0] < pos[0] && pos[0] < sPuppyVolumeStack[index]->radius[0] &&
@@ -1042,7 +1035,7 @@ static s32 puppycam_check_volume_bounds(struct sPuppyVolume *volume, s32 index) 
         vec3f_set(debugPos[0], sPuppyVolumeStack[index]->pos[0],    sPuppyVolumeStack[index]->pos[1],    sPuppyVolumeStack[index]->pos[2]);
         vec3f_set(debugPos[1], sPuppyVolumeStack[index]->radius[0], sPuppyVolumeStack[index]->radius[1], sPuppyVolumeStack[index]->radius[2]);
         debug_box_color(0x00FF0000);
-        debug_box_rot(debugPos[0], debugPos[1], sPuppyVolumeStack[index]->rot, DEBUG_SHAPE_CYLINDER);
+        debug_box_rot(debugPos[0], debugPos[1], sPuppyVolumeStack[index]->rot, DEBUG_SHAPE_CYLINDER | DEBUG_UCODE_DEFAULT);
 #endif
         f32 distCheck = (dist < sqr(sPuppyVolumeStack[index]->radius[0]));
 
@@ -1381,7 +1374,7 @@ static void puppycam_collision(void) {
     vec3f_normalize(dirToCam);
     // Get the vector from mario's head to the camera plus the extra check dist
     Vec3f vecToCam;
-    vec3_scale_dest(vecToCam, dirToCam, colCheckDist);
+    vec3_prod_val(vecToCam, dirToCam, colCheckDist);
 
     dist[0] = find_surface_on_ray(target[0], vecToCam, &surf[0], hitpos[0], RAYCAST_FIND_FLOOR | RAYCAST_FIND_CEIL | RAYCAST_FIND_WALL);
     dist[1] = find_surface_on_ray(target[1], vecToCam, &surf[1], hitpos[1], RAYCAST_FIND_FLOOR | RAYCAST_FIND_CEIL | RAYCAST_FIND_WALL);
@@ -1398,7 +1391,7 @@ static void puppycam_collision(void) {
             closestDist -= surfOffset;
             // Allow the camera to ride right up next to the wall (mario's wall radius is 50u so this is safe)
             closestDist = MAX(closestDist, 50);
-            vec3_scale(dirToCam, closestDist);
+            vec3_mul_val(dirToCam, closestDist);
             vec3_sum(gPuppyCam.pos, target[0], dirToCam);
 
             // If the camera is uncomfortably close to the wall, move it up a bit

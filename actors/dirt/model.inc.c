@@ -104,32 +104,32 @@ const Gfx dirt_seg3_sub_dl_cartoon_star[] = {
 
 // 0x0302C298 - 0x0302C2B8
 const Gfx dirt_seg3_dl_cartoon_star_red[] = {
-gsSPLightColor(LIGHT_2, 0xff6464ff),
-gsSPLightColor(LIGHT_3, 0x3f1919ff),
+    gsSPLightColor(LIGHT_1, 0xff6464ff),
+    gsSPLightColor(LIGHT_2, 0x3f1919ff),
     gsSPDisplayList(dirt_seg3_sub_dl_cartoon_star),
     gsSPEndDisplayList(),
 };
 
 // 0x0302C2B8 - 0x0302C2D8
 const Gfx dirt_seg3_dl_cartoon_star_green[] = {
-gsSPLightColor(LIGHT_2, 0x64ff64ff),
-gsSPLightColor(LIGHT_3, 0x193f19ff),
+    gsSPLightColor(LIGHT_1, 0x64ff64ff),
+    gsSPLightColor(LIGHT_2, 0x193f19ff),
     gsSPDisplayList(dirt_seg3_sub_dl_cartoon_star),
     gsSPEndDisplayList(),
 };
 
 // 0x0302C2D8 - 0x0302C2F8
 const Gfx dirt_seg3_dl_cartoon_star_blue[] = {
-gsSPLightColor(LIGHT_2, 0x6464ffff),
-gsSPLightColor(LIGHT_3, 0x19193fff),
+    gsSPLightColor(LIGHT_1, 0x6464ffff),
+    gsSPLightColor(LIGHT_2, 0x19193fff),
     gsSPDisplayList(dirt_seg3_sub_dl_cartoon_star),
     gsSPEndDisplayList(),
 };
 
 // 0x0302C2F8 - 0x0302C318
 const Gfx dirt_seg3_dl_cartoon_star_yellow[] = {
-gsSPLightColor(LIGHT_2, 0xffff64ff),
-gsSPLightColor(LIGHT_3, 0x3f3f19ff),
+    gsSPLightColor(LIGHT_1, 0xffff64ff),
+    gsSPLightColor(LIGHT_2, 0x3f3f19ff),
     gsSPDisplayList(dirt_seg3_sub_dl_cartoon_star),
     gsSPEndDisplayList(),
 };
@@ -148,8 +148,8 @@ const Gfx dirt_seg3_dl_cartoon_star_billboard[] = {
 
 // 0x0302C378 - 0x0302C3B0
 const Gfx dirt_seg3_dl_tiny_particle_red[] = {
-gsSPLightColor(LIGHT_2, 0xff6464ff),
-gsSPLightColor(LIGHT_3, 0x3f1919ff),
+    gsSPLightColor(LIGHT_1, 0xff6464ff),
+    gsSPLightColor(LIGHT_2, 0x3f1919ff),
     gsSPClearGeometryMode(G_CULL_BACK),
     gsSPVertex(dirt_seg3_vertex_tiny_particle, 3, 0),
     gsSP1Triangle( 0,  1,  2, 0x0),
@@ -159,8 +159,8 @@ gsSPLightColor(LIGHT_3, 0x3f1919ff),
 
 // 0x0302C3B0 - 0x0302C3E8
 const Gfx dirt_seg3_dl_tiny_particle_green[] = {
-gsSPLightColor(LIGHT_2, 0x64ff64ff),
-gsSPLightColor(LIGHT_3, 0x193f19ff),
+    gsSPLightColor(LIGHT_1, 0x64ff64ff),
+    gsSPLightColor(LIGHT_2, 0x193f19ff),
     gsSPClearGeometryMode(G_CULL_BACK),
     gsSPVertex(dirt_seg3_vertex_tiny_particle, 3, 0),
     gsSP1Triangle( 0,  1,  2, 0x0),
@@ -170,8 +170,8 @@ gsSPLightColor(LIGHT_3, 0x193f19ff),
 
 // 0x0302C3E8 - 0x0302C420
 const Gfx dirt_seg3_dl_tiny_particle_blue[] = {
-gsSPLightColor(LIGHT_2, 0x6464ffff),
-gsSPLightColor(LIGHT_3, 0x19193fff),
+    gsSPLightColor(LIGHT_1, 0x6464ffff),
+    gsSPLightColor(LIGHT_2, 0x19193fff),
     gsSPClearGeometryMode(G_CULL_BACK),
     gsSPVertex(dirt_seg3_vertex_tiny_particle, 3, 0),
     gsSP1Triangle( 0,  1,  2, 0x0),
@@ -181,8 +181,8 @@ gsSPLightColor(LIGHT_3, 0x19193fff),
 
 // 0x0302C420 - 0x0302C458
 const Gfx dirt_seg3_dl_tiny_particle_yellow[] = {
-gsSPLightColor(LIGHT_2, 0xffff64ff),
-gsSPLightColor(LIGHT_3, 0x3f3f19ff),
+    gsSPLightColor(LIGHT_1, 0xffff64ff),
+    gsSPLightColor(LIGHT_2, 0x3f3f19ff),
     gsSPClearGeometryMode(G_CULL_BACK),
     gsSPVertex(dirt_seg3_vertex_tiny_particle, 3, 0),
     gsSP1Triangle( 0,  1,  2, 0x0),

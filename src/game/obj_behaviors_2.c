@@ -32,6 +32,7 @@
 #include "save_file.h"
 #include "seq_ids.h"
 #include "spawn_sound.h"
+#include "puppylights.h"
 
 //! TODO: remove static
 
@@ -529,30 +530,24 @@ static void obj_set_squished_action(void) {
 }
 
 static s32 obj_die_if_above_lava_and_health_non_positive(void) {
-    if (o->oMoveFlags & OBJ_MOVE_MASK_IN_WATER) {
+    if (o->oMoveFlags & OBJ_MOVE_UNDERWATER_ON_GROUND) {
         if (o->oGravity + o->oBuoyancy > 0.0f
-            || find_water_level(o->oPosX, o->oPosZ) - o->oPosY < 10.0f) {
+            || find_water_level(o->oPosX, o->oPosZ) - o->oPosY < 150.0f) {
             return FALSE;
         }
-        obj_die_if_health_non_positive();
-        return TRUE;
-
-    } else if (o->oMoveFlags & OBJ_MOVE_ABOVE_LAVA) {
-        if (o->oMoveFlags & (OBJ_MOVE_ON_GROUND | OBJ_MOVE_LANDED)) {
-            obj_die_if_health_non_positive();
-            return TRUE;
+    } else if (!(o->oMoveFlags & OBJ_MOVE_ABOVE_LAVA)) {
+        if (o->oMoveFlags & OBJ_MOVE_ENTERED_WATER) {
+            if (o->oWallHitboxRadius < 200.0f) {
+                cur_obj_play_sound_2(SOUND_OBJ_DIVING_INTO_WATER);
+            } else {
+                cur_obj_play_sound_2(SOUND_OBJ_DIVING_IN_WATER);
+            }
         }
+        return FALSE;
     }
 
-    if (o->oMoveFlags & OBJ_MOVE_ENTERED_WATER) {
-        if (o->oWallHitboxRadius < 200.0f) {
-            cur_obj_play_sound_2(SOUND_OBJ_DIVING_INTO_WATER);
-        } else {
-            cur_obj_play_sound_2(SOUND_OBJ_DIVING_IN_WATER);
-        }
-    }
-
-    return FALSE;
+    obj_die_if_health_non_positive();
+    return TRUE;
 }
 
 static s32 obj_handle_attacks(struct ObjectHitbox *hitbox, s32 attackedMarioAction,

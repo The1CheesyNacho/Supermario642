@@ -228,8 +228,8 @@ static const Vtx bowser_key_dl_vertex_group12[] = {
 
 // 0x030161F8 - 0x03016530
 const Gfx bowser_key_dl[] = {
-gsSPLightColor(LIGHT_2, 0xffb200ff),
-gsSPLightColor(LIGHT_3, 0x3f2c00ff),
+    gsSPLightColor(LIGHT_1, 0xffb200ff),
+    gsSPLightColor(LIGHT_2, 0x3f2c00ff),
     gsSPVertex(bowser_key_dl_vertex_group1, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  6,  7, 0x0),

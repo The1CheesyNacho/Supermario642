@@ -76,8 +76,8 @@ static const Vtx exclamation_box_seg8_vertex_08018F28[] = {
 
 // 0x08018FA8 - 0x08019008
 const Gfx exclamation_box_seg8_dl_08018FA8[] = {
-gsSPLightColor(LIGHT_2, 0xffffffff),
-gsSPLightColor(LIGHT_3, 0x3f3f3fff),
+    gsSPLightColor(LIGHT_1, 0xffffffff),
+    gsSPLightColor(LIGHT_2, 0x3f3f3fff),
     gsSPVertex(exclamation_box_seg8_vertex_08018E28, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 3,  5,  6, 0x0,  7,  8,  9, 0x0),
@@ -145,8 +145,8 @@ static const Vtx exclamation_box_seg8_vertex_080191A0[] = {
 
 // 0x08019220 - 0x08019280
 const Gfx exclamation_box_seg8_dl_08019220[] = {
-gsSPLightColor(LIGHT_2, 0xffffffff),
-gsSPLightColor(LIGHT_3, 0x3f3f3fff),
+    gsSPLightColor(LIGHT_1, 0xffffffff),
+    gsSPLightColor(LIGHT_2, 0x3f3f3fff),
     gsSPVertex(exclamation_box_seg8_vertex_080190A0, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 3,  5,  6, 0x0,  7,  8,  9, 0x0),

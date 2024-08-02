@@ -88,7 +88,7 @@ else ifeq ($(VERSION),sh)
 endif
 
 # FIXLIGHTS - converts light objects to light color commands for assets, needed for vanilla-style lighting
-FIXLIGHTS ?= 0
+FIXLIGHTS ?= 1
 
 DEBUG_MAP_STACKTRACE_FLAG := -D DEBUG_MAP_STACKTRACE
 

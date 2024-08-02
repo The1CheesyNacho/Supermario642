@@ -149,12 +149,6 @@ Gfx *geo_exec_cake_end_screen(s32 callContext, struct GraphNode *node, UNUSED Ma
         displayListHead = displayList;
 
         SET_GRAPH_NODE_LAYER(generatedNode->fnNode.node.flags, LAYER_OPAQUE);
-<<<<<<< HEAD
-=======
-        gSPDisplayList(displayListHead++, dl_proj_mtx_fullscreen);
-        gSPDisplayList(displayListHead++, dl_cake_end_screen);
-        gSPEndDisplayList(displayListHead);
->>>>>>> 3423721b4b0ee5c68ecacc0608a8b07a297165e3
     }
 
     return displayList;
