@@ -267,8 +267,8 @@ static const Vtx bobomb_seg8_vertex_08023190[] = {
 
 // 0x08023270 - 0x08023378
 const Gfx bobomb_seg8_dl_08023270[] = {
-    gsSPLightColor(LIGHT_1, 0xff9912ff),
-    gsSPLightColor(LIGHT_2, 0x3f2604ff),
+gsSPLightColor(LIGHT_2, 0xff9912ff),
+gsSPLightColor(LIGHT_3, 0x3f2604ff),
     gsSPVertex(bobomb_seg8_vertex_08022E30, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 3,  5,  6, 0x0,  7,  8,  9, 0x0),
@@ -290,8 +290,8 @@ const Gfx bobomb_seg8_dl_08023270[] = {
 
 // 0x08023378 - 0x08023480
 const Gfx bobomb_seg8_dl_08023378[] = {
-    gsSPLightColor(LIGHT_1, 0xff9912ff),
-    gsSPLightColor(LIGHT_2, 0x3f2604ff),
+gsSPLightColor(LIGHT_2, 0xff9912ff),
+gsSPLightColor(LIGHT_3, 0x3f2604ff),
     gsSPVertex(bobomb_seg8_vertex_08022F70, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 3,  5,  6, 0x0,  7,  8,  9, 0x0),
@@ -313,8 +313,8 @@ const Gfx bobomb_seg8_dl_08023378[] = {
 
 // 0x08023480 - 0x08023528
 const Gfx bobomb_seg8_dl_08023480[] = {
-    gsSPLightColor(LIGHT_1, 0xb2b2b2ff),
-    gsSPLightColor(LIGHT_2, 0x2c2c2cff),
+gsSPLightColor(LIGHT_2, 0xb2b2b2ff),
+gsSPLightColor(LIGHT_3, 0x2c2c2cff),
     gsSPVertex(bobomb_seg8_vertex_080230B0, 14, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSP2Triangles( 4,  0,  3, 0x0,  4,  3,  5, 0x0),

@@ -1025,13 +1025,13 @@ static const Vtx manta_seg5_vertex_05006A88[] = {
 
 // 0x05006B08 - 0x05006B70
 const Gfx manta_seg5_dl_05006B08[] = {
-    gsSPLightColor(LIGHT_1, 0x35b63ff),
-    gsSPLightColor(LIGHT_2, 0x1618ff),
+gsSPLightColor(LIGHT_2, 0x35b63ff),
+gsSPLightColor(LIGHT_3, 0x1618ff),
     gsSPVertex(manta_seg5_vertex_05006808, 6, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  1, 0x0),
     gsSP2Triangles( 1,  4,  2, 0x0,  1,  0,  5, 0x0),
-    gsSPLightColor(LIGHT_1, 0xc6eeedff),
-    gsSPLightColor(LIGHT_2, 0x313b3bff),
+gsSPLightColor(LIGHT_2, 0xc6eeedff),
+gsSPLightColor(LIGHT_3, 0x313b3bff),
     gsSPVertex(manta_seg5_vertex_05006868, 6, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSPEndDisplayList(),
@@ -1039,15 +1039,15 @@ const Gfx manta_seg5_dl_05006B08[] = {
 
 // 0x05006B70 - 0x05006C08
 const Gfx manta_seg5_dl_05006B70[] = {
-    gsSPLightColor(LIGHT_1, 0x35b63ff),
-    gsSPLightColor(LIGHT_2, 0x1618ff),
+gsSPLightColor(LIGHT_2, 0x35b63ff),
+gsSPLightColor(LIGHT_3, 0x1618ff),
     gsSPVertex(manta_seg5_vertex_050068C8, 8, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 5,  4,  6, 0x0,  1,  7,  2, 0x0),
     gsSP2Triangles( 5,  1,  0, 0x0,  5,  0,  3, 0x0),
     gsSP2Triangles( 6,  7,  1, 0x0,  6,  1,  5, 0x0),
-    gsSPLightColor(LIGHT_1, 0xc6eeedff),
-    gsSPLightColor(LIGHT_2, 0x313b3bff),
+gsSPLightColor(LIGHT_2, 0xc6eeedff),
+gsSPLightColor(LIGHT_3, 0x313b3bff),
     gsSPVertex(manta_seg5_vertex_05006948, 8, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 5,  6,  7, 0x0,  5,  7,  3, 0x0),
@@ -1056,15 +1056,15 @@ const Gfx manta_seg5_dl_05006B70[] = {
 
 // 0x05006C08 - 0x05006CA0
 const Gfx manta_seg5_dl_05006C08[] = {
-    gsSPLightColor(LIGHT_1, 0x35b63ff),
-    gsSPLightColor(LIGHT_2, 0x1618ff),
+gsSPLightColor(LIGHT_2, 0x35b63ff),
+gsSPLightColor(LIGHT_3, 0x1618ff),
     gsSPVertex(manta_seg5_vertex_050069C8, 12, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 5,  4,  6, 0x0,  1,  7,  2, 0x0),
     gsSP2Triangles( 5,  8,  9, 0x0,  5,  9,  3, 0x0),
     gsSP2Triangles( 6, 10, 11, 0x0,  6, 11,  5, 0x0),
-    gsSPLightColor(LIGHT_1, 0xc6eeedff),
-    gsSPLightColor(LIGHT_2, 0x313b3bff),
+gsSPLightColor(LIGHT_2, 0xc6eeedff),
+gsSPLightColor(LIGHT_3, 0x313b3bff),
     gsSPVertex(manta_seg5_vertex_05006A88, 8, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 5,  6,  7, 0x0,  5,  7,  3, 0x0),

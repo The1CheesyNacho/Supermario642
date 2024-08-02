@@ -90,8 +90,8 @@ static const Vtx chilly_chief_seg6_vertex_06002AA0[] = {
 
 // 0x06002B30 - 0x06002BC8
 const Gfx chilly_chief_seg6_dl_06002B30[] = {
-    gsSPLightColor(LIGHT_1, 0xe300ff),
-    gsSPLightColor(LIGHT_2, 0x3800ff),
+gsSPLightColor(LIGHT_2, 0xe300ff),
+gsSPLightColor(LIGHT_3, 0x3800ff),
     gsSPVertex(chilly_chief_seg6_vertex_06002860, 14, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  2,  1,  3, 0x0),
     gsSP2Triangles( 2,  3,  4, 0x0,  1,  5,  6, 0x0),
@@ -106,8 +106,8 @@ const Gfx chilly_chief_seg6_dl_06002B30[] = {
 
 // 0x06002BC8 - 0x06002C60
 const Gfx chilly_chief_seg6_dl_06002BC8[] = {
-    gsSPLightColor(LIGHT_1, 0xff00ff),
-    gsSPLightColor(LIGHT_2, 0x3f00ff),
+gsSPLightColor(LIGHT_2, 0xff00ff),
+gsSPLightColor(LIGHT_3, 0x3f00ff),
     gsSPVertex(chilly_chief_seg6_vertex_06002980, 14, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  1, 0x0),
     gsSP2Triangles( 3,  1,  0, 0x0,  5,  6,  7, 0x0),
@@ -122,8 +122,8 @@ const Gfx chilly_chief_seg6_dl_06002BC8[] = {
 
 // 0x06002C60 - 0x06002C98
 const Gfx chilly_chief_seg6_dl_06002C60[] = {
-    gsSPLightColor(LIGHT_1, 0xffa500ff),
-    gsSPLightColor(LIGHT_2, 0x3f2900ff),
+gsSPLightColor(LIGHT_2, 0xffa500ff),
+gsSPLightColor(LIGHT_3, 0x3f2900ff),
     gsSPVertex(chilly_chief_seg6_vertex_06002AA0, 9, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP1Triangle( 6,  7,  8, 0x0),

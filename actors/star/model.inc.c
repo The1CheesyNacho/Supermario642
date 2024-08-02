@@ -30,8 +30,8 @@ static const Vtx star_seg3_vertex_body[] = {
 
 // 0x0302B7B0 - 0x0302B870
 const Gfx star_seg3_sub_dl_body[] = {
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x3f3f3fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x3f3f3fff),
     gsSPVertex(star_seg3_vertex_body, 12, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  3,  1, 0x0),
     gsSP2Triangles( 2,  1,  4, 0x0,  1,  3,  4, 0x0),
@@ -82,8 +82,8 @@ const Gfx star_seg3_sub_dl_eyes[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, star_seg3_texture_0302AEF0),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x3f3f3fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x3f3f3fff),
     gsSPVertex(star_seg3_vertex_eyes, 10, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  3,  1, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  7,  8,  9, 0x0),

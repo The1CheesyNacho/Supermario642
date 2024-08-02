@@ -219,8 +219,8 @@ const Gfx toad_seg6_dl_06007300[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, toad_seg6_texture_06005920),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(toad_seg6_vertex_06006920, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  0,  4, 0x0),
     gsSP2Triangles( 2,  4,  0, 0x0,  0,  5,  6, 0x0),
@@ -383,8 +383,8 @@ static const Vtx toad_seg6_vertex_060078A0[] = {
 
 // 0x06007960 - 0x06007A48
 const Gfx toad_seg6_dl_06007960[] = {
-    gsSPLightColor(LIGHT_1, 0x4227b5ff),
-    gsSPLightColor(LIGHT_2, 0x21135aff),
+gsSPLightColor(LIGHT_2, 0x4227b5ff),
+gsSPLightColor(LIGHT_3, 0x21135aff),
     gsSPVertex(toad_seg6_vertex_060077A0, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 4,  6,  7, 0x0,  4,  7,  8, 0x0),
@@ -478,8 +478,8 @@ static const Vtx toad_seg6_vertex_06007C50[] = {
 
 // 0x06007D10 - 0x06007EB0
 const Gfx toad_seg6_dl_06007D10[] = {
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(toad_seg6_vertex_06007AB0, 14, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 3,  5,  6, 0x0,  3,  6,  7, 0x0),
@@ -498,8 +498,8 @@ const Gfx toad_seg6_dl_06007D10[] = {
     gsSP2Triangles( 5,  9,  0, 0x0,  0,  9,  1, 0x0),
     gsSP2Triangles(11,  6,  0, 0x0, 11,  0,  2, 0x0),
     gsSP1Triangle( 0,  6,  5, 0x0),
-    gsSPLightColor(LIGHT_1, 0xfed5a1ff),
-    gsSPLightColor(LIGHT_2, 0x7f6a50ff),
+gsSPLightColor(LIGHT_2, 0xfed5a1ff),
+gsSPLightColor(LIGHT_3, 0x7f6a50ff),
     gsSPVertex(toad_seg6_vertex_06007C50, 12, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  2,  3,  0, 0x0),
     gsSP2Triangles( 4,  2,  1, 0x0,  4,  1,  5, 0x0),
@@ -561,8 +561,8 @@ static const Vtx toad_seg6_vertex_06007FF0[] = {
 
 // 0x060080C0 - 0x060081F8
 const Gfx toad_seg6_dl_060080C0[] = {
-    gsSPLightColor(LIGHT_1, 0xfed5a1ff),
-    gsSPLightColor(LIGHT_2, 0x7f6a50ff),
+gsSPLightColor(LIGHT_2, 0xfed5a1ff),
+gsSPLightColor(LIGHT_3, 0x7f6a50ff),
     gsSPVertex(toad_seg6_vertex_06007EF0, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  1,  0,  3, 0x0),
     gsSP2Triangles( 0,  2,  4, 0x0,  4,  3,  0, 0x0),
@@ -633,8 +633,8 @@ static const Vtx toad_seg6_vertex_06008338[] = {
 
 // 0x060083E8 - 0x06008520
 const Gfx toad_seg6_dl_060083E8[] = {
-    gsSPLightColor(LIGHT_1, 0xfed5a1ff),
-    gsSPLightColor(LIGHT_2, 0x7f6a50ff),
+gsSPLightColor(LIGHT_2, 0xfed5a1ff),
+gsSPLightColor(LIGHT_3, 0x7f6a50ff),
     gsSPVertex(toad_seg6_vertex_06008238, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  0, 0x0),
     gsSP2Triangles( 5,  1,  0, 0x0,  0,  4,  6, 0x0),
@@ -724,8 +724,8 @@ static const Vtx toad_seg6_vertex_06008678[] = {
 
 // 0x06008748 - 0x06008890
 const Gfx toad_seg6_dl_06008748[] = {
-    gsSPLightColor(LIGHT_1, 0x68401bff),
-    gsSPLightColor(LIGHT_2, 0x34200dff),
+gsSPLightColor(LIGHT_2, 0x68401bff),
+gsSPLightColor(LIGHT_3, 0x34200dff),
     gsSPVertex(toad_seg6_vertex_06008578, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSP2Triangles( 2,  4,  5, 0x0,  2,  5,  6, 0x0),
@@ -799,8 +799,8 @@ static const Vtx toad_seg6_vertex_060089D0[] = {
 
 // 0x06008A90 - 0x06008BD8
 const Gfx toad_seg6_dl_06008A90[] = {
-    gsSPLightColor(LIGHT_1, 0x68401bff),
-    gsSPLightColor(LIGHT_2, 0x34200dff),
+gsSPLightColor(LIGHT_2, 0x68401bff),
+gsSPLightColor(LIGHT_3, 0x34200dff),
     gsSPVertex(toad_seg6_vertex_060088D0, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  3,  4, 0x0),
     gsSP2Triangles( 0,  4,  1, 0x0,  0,  2,  5, 0x0),

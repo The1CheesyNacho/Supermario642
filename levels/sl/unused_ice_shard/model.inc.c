@@ -9,8 +9,8 @@ static const Vtx sl_seg7_vertex_0700A928[] = {
 
 // 0x0700A958 - 0x0700A980
 static const Gfx sl_seg7_dl_0700A958[] = {
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(sl_seg7_vertex_0700A928, 3, 0),
     gsSP1Triangle( 0,  1,  2, 0x0),
     gsSPEndDisplayList(),

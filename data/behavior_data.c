@@ -6074,4 +6074,49 @@ const BehaviorScript bhvIntroScene[] = {
     END_LOOP(),
 };
 
+const BehaviorScript bhvStaticLight[] = {
+	BEGIN(OBJ_LIST_DEFAULT),
+	BREAK(),
+};
+
+const BehaviorScript bhvDynamicLight[] = {
+	BEGIN(OBJ_LIST_DEFAULT),
+	BREAK(),
+};
+
+const BehaviorScript bhvSpecularLight[] = {
+	BEGIN(OBJ_LIST_DEFAULT),
+	BREAK(),
+};
+
+const BehaviorScript bhvAmbientLight[] = {
+	BEGIN(OBJ_LIST_DEFAULT),
+	BREAK(),
+};
+
+//const BehaviorScript bhvOcclusionZone[] = {
+	//BEGIN(OBJ_LIST_DEFAULT),
+	//BREAK(),
+//};
+
+//const BehaviorScript bhvLightField[] = {
+	//BEGIN(OBJ_LIST_DEFAULT),
+	//BREAK(),
+//};
+
+const BehaviorScript bhvLevelSettings[] = {
+	BEGIN(OBJ_LIST_DEFAULT),
+	BREAK(),
+};
+
+const BehaviorScript bhvLoopDeLoopSettings[] = {
+	BEGIN(OBJ_LIST_DEFAULT),
+	BREAK(),
+};
+
+const BehaviorScript bhvLoopDeLoopEndpoint[] = {
+	BEGIN(OBJ_LIST_DEFAULT),
+	BREAK(),
+};
+
 

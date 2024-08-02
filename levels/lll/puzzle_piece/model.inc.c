@@ -29,8 +29,8 @@ static const Gfx lll_seg7_sub_dl_bowser_puzzle_piece_begin[] = {
 
 // 0x0701A338 - 0x0701A388
 static const Gfx lll_seg7_sub_dl_bowser_puzzle_piece_end[] = {
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x3f3f3fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x3f3f3fff),
     gsSPVertex(lll_seg7_vertex_puzzle_piece, 4, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_OFF),

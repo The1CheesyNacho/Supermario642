@@ -95,8 +95,8 @@ const Gfx heave_ho_seg5_dl_05011D98[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, heave_ho_seg5_texture_0500E9C8),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(heave_ho_seg5_vertex_05011BF8, 4, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSPEndDisplayList(),
@@ -127,8 +127,8 @@ const Gfx heave_ho_seg5_dl_05011E28[] = {
 
 // 0x05011E80 - 0x05011EC0
 const Gfx heave_ho_seg5_dl_05011E80[] = {
-    gsSPLightColor(LIGHT_1, 0x81011aff),
-    gsSPLightColor(LIGHT_2, 0x40000dff),
+gsSPLightColor(LIGHT_2, 0x81011aff),
+gsSPLightColor(LIGHT_3, 0x40000dff),
     gsSPVertex(heave_ho_seg5_vertex_05011D38, 6, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  3,  1, 0x0),
     gsSP2Triangles( 3,  4,  5, 0x0,  3,  5,  1, 0x0),
@@ -192,8 +192,8 @@ const Gfx heave_ho_seg5_dl_050120A0[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, heave_ho_seg5_texture_050109C8),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(heave_ho_seg5_vertex_05011F80, 11, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 5,  6,  3, 0x0,  7,  8,  9, 0x0),
@@ -203,8 +203,8 @@ const Gfx heave_ho_seg5_dl_050120A0[] = {
 
 // 0x05012100 - 0x05012148
 const Gfx heave_ho_seg5_dl_05012100[] = {
-    gsSPLightColor(LIGHT_1, 0x99002dff),
-    gsSPLightColor(LIGHT_2, 0x4c0016ff),
+gsSPLightColor(LIGHT_2, 0x99002dff),
+gsSPLightColor(LIGHT_3, 0x4c0016ff),
     gsSPVertex(heave_ho_seg5_vertex_05012030, 7, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  2,  3,  0, 0x0),
     gsSP2Triangles( 4,  0,  3, 0x0,  3,  5,  4, 0x0),
@@ -264,8 +264,8 @@ const Gfx heave_ho_seg5_dl_05012300[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, heave_ho_seg5_texture_050109C8),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(heave_ho_seg5_vertex_050121E0, 11, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 5,  6,  3, 0x0,  7,  8,  9, 0x0),
@@ -275,8 +275,8 @@ const Gfx heave_ho_seg5_dl_05012300[] = {
 
 // 0x05012360 - 0x050123A8
 const Gfx heave_ho_seg5_dl_05012360[] = {
-    gsSPLightColor(LIGHT_1, 0x99002dff),
-    gsSPLightColor(LIGHT_2, 0x4c0016ff),
+gsSPLightColor(LIGHT_2, 0x99002dff),
+gsSPLightColor(LIGHT_3, 0x4c0016ff),
     gsSPVertex(heave_ho_seg5_vertex_05012290, 7, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  2,  4, 0x0,  4,  3,  6, 0x0),
@@ -336,8 +336,8 @@ const Gfx heave_ho_seg5_dl_05012560[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, heave_ho_seg5_texture_0500F1C8),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(heave_ho_seg5_vertex_05012440, 4, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSPEndDisplayList(),
@@ -345,8 +345,8 @@ const Gfx heave_ho_seg5_dl_05012560[] = {
 
 // 0x050125A8 - 0x050125F8
 const Gfx heave_ho_seg5_dl_050125A8[] = {
-    gsSPLightColor(LIGHT_1, 0xbbdacbff),
-    gsSPLightColor(LIGHT_2, 0x5d6d65ff),
+gsSPLightColor(LIGHT_2, 0xbbdacbff),
+gsSPLightColor(LIGHT_3, 0x5d6d65ff),
     gsSPVertex(heave_ho_seg5_vertex_05012480, 14, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  6,  9,  7, 0x0),
@@ -424,8 +424,8 @@ const Gfx heave_ho_seg5_dl_050127B0[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, heave_ho_seg5_texture_050113C8),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x93737cff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x93737cff),
     gsSPVertex(heave_ho_seg5_vertex_05012770, 4, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  2,  1,  3, 0x0),
     gsSPEndDisplayList(),
@@ -957,8 +957,8 @@ static const Vtx heave_ho_seg5_vertex_05014128[] = {
 
 // 0x05014188 - 0x05014560
 const Gfx heave_ho_seg5_dl_05014188[] = {
-    gsSPLightColor(LIGHT_1, 0x505054ff),
-    gsSPLightColor(LIGHT_2, 0x141415ff),
+gsSPLightColor(LIGHT_2, 0x505054ff),
+gsSPLightColor(LIGHT_3, 0x141415ff),
     gsSPVertex(heave_ho_seg5_vertex_05012868, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  1,  0,  3, 0x0),
     gsSP2Triangles( 1,  3,  4, 0x0,  4,  3,  5, 0x0),
@@ -1028,8 +1028,8 @@ const Gfx heave_ho_seg5_dl_05014188[] = {
 
 // 0x05014560 - 0x050145D0
 const Gfx heave_ho_seg5_dl_05014560[] = {
-    gsSPLightColor(LIGHT_1, 0xffe085ff),
-    gsSPLightColor(LIGHT_2, 0x733f32ff),
+gsSPLightColor(LIGHT_2, 0xffe085ff),
+gsSPLightColor(LIGHT_3, 0x733f32ff),
     gsSPVertex(heave_ho_seg5_vertex_05013068, 12, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 4,  3,  6, 0x0,  5,  7,  3, 0x0),
@@ -1041,8 +1041,8 @@ const Gfx heave_ho_seg5_dl_05014560[] = {
 
 // 0x050145D0 - 0x050149A8
 const Gfx heave_ho_seg5_dl_050145D0[] = {
-    gsSPLightColor(LIGHT_1, 0x505054ff),
-    gsSPLightColor(LIGHT_2, 0x141415ff),
+gsSPLightColor(LIGHT_2, 0x505054ff),
+gsSPLightColor(LIGHT_3, 0x141415ff),
     gsSPVertex(heave_ho_seg5_vertex_05013128, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  1,  0,  3, 0x0),
     gsSP2Triangles( 1,  3,  4, 0x0,  4,  3,  5, 0x0),
@@ -1112,8 +1112,8 @@ const Gfx heave_ho_seg5_dl_050145D0[] = {
 
 // 0x050149A8 - 0x05014D80
 const Gfx heave_ho_seg5_dl_050149A8[] = {
-    gsSPLightColor(LIGHT_1, 0x505054ff),
-    gsSPLightColor(LIGHT_2, 0x141415ff),
+gsSPLightColor(LIGHT_2, 0x505054ff),
+gsSPLightColor(LIGHT_3, 0x141415ff),
     gsSPVertex(heave_ho_seg5_vertex_05013928, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  1,  0,  3, 0x0),
     gsSP2Triangles( 1,  3,  4, 0x0,  4,  3,  5, 0x0),
@@ -1183,8 +1183,8 @@ const Gfx heave_ho_seg5_dl_050149A8[] = {
 
 // 0x05014D80 - 0x05014DD0
 const Gfx heave_ho_seg5_dl_05014D80[] = {
-    gsSPLightColor(LIGHT_1, 0xffe085ff),
-    gsSPLightColor(LIGHT_2, 0x733f32ff),
+gsSPLightColor(LIGHT_2, 0xffe085ff),
+gsSPLightColor(LIGHT_3, 0x733f32ff),
     gsSPVertex(heave_ho_seg5_vertex_05014128, 6, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  1,  3,  4, 0x0),
     gsSP2Triangles( 4,  3,  5, 0x0,  0,  2,  5, 0x0),

@@ -1876,7 +1876,7 @@ Gfx *geo_bits_bowser_coloring(s32 callContext, struct GraphNode *node, UNUSED s3
         Gfx *gfx = gfxHead = alloc_display_list(2 * sizeof(Gfx));
         // If TRUE, clear lighting to give rainbow color
         if (obj->oBowserRainbowLight) {
-            gSPClearGeometryMode(gfx++, G_LIGHTING);
+            //gSPClearGeometryMode(gfx++, G_LIGHTING);
         }
 
         gSPEndDisplayList(gfx);

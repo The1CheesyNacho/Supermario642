@@ -21,6 +21,7 @@
 #include "spawn_object.h"
 #include "puppyprint.h"
 #include "profiling.h"
+#include "lantern_engine.h"
 
 
 /**
@@ -425,6 +426,63 @@ void unload_objects_from_area(UNUSED s32 unused, s32 areaIndex) {
     }
 }
 
+Lights1 determine_static_light_based_on_preset(u8 preset) {
+	Lights1 light = vanillaLight;
+	switch (preset) {
+		//case VANILLA_COLORS:
+			//light = vanillaLight;
+		//break;
+		case INDOOR_COLORS:
+			light = indoorLight;
+		break;
+		case BOB_COLORS:
+			light = bobLight;
+		break;
+		case RI_COLORS:
+			light = riLight;
+		break;
+		case LLL_COLORS:
+			light = lllLight;
+		break;
+		case SSL_COLORS:
+			light = sslLight;
+		break;
+		case WATER_COLORS:
+			light = waterLight;
+		break;
+		case BITS_COLORS:
+			light = bitsLight;
+		break;
+		case BITDW_COLORS:
+			light = bitdwLight;
+		break;
+		case WF_COLORS:
+			light = wfLight;
+		break;
+		case SNOW_COLORS:
+			light = snowLight;
+		break;
+		case THI_COLORS:
+			light = thiLight;
+		break;
+		case HMC_COLORS:
+			light = hmcLight;
+		break;
+		case JRB_COLORS:
+			light = jrbLight;
+		break;
+		case SW2_COLORS:
+			light = sw2Light;
+		break;
+		case GGZ_COLORS:
+			light = ggZLight;
+		break;
+	}
+	
+	return light;
+	
+}
+
 /**
  * Spawn objects given a list of SpawnInfos. Called when loading an area.
  */
@@ -444,6 +502,102 @@ void spawn_objects_from_info(UNUSED s32 unused, struct SpawnInfo *spawnInfo) {
     while (spawnInfo != NULL) {
         struct Object *object;
         const BehaviorScript *script;
+		
+		if (spawnInfo->behaviorScript == bhvStaticLight) {
+			//gDisableLighting = FALSE;
+			gIsDynamic = FALSE;
+			gNumLightColors = GET_BPARAM1(spawnInfo->behaviorArg);
+			gLightType = GET_BPARAM3(spawnInfo->behaviorArg);
+			gNumLightSources = GET_BPARAM4(spawnInfo->behaviorArg);
+			gCurrLightDirection[0] = (s8)spawnInfo->startPos[0];
+			gCurrLightDirection[1] = (s8)spawnInfo->startPos[1];
+			gCurrLightDirection[2] = (s8)spawnInfo->startPos[2];
+			gCurrLightPos[0] = spawnInfo->startPos[0];
+			gCurrLightPos[1] = spawnInfo->startPos[1];
+			gCurrLightPos[2] = spawnInfo->startPos[2];
+			gCurrStaticColor = determine_static_light_based_on_preset(GET_BPARAM2(spawnInfo->behaviorArg));
+			spawnInfo = spawnInfo->next;
+			continue;
+		} 
+		//else 
+		if (spawnInfo->behaviorScript == bhvDynamicLight) {
+			//gDisableLighting = FALSE;
+			gIsDynamic = TRUE;
+			gNumLightColors = GET_BPARAM1(spawnInfo->behaviorArg);
+			gDynamicLightPreset = GET_BPARAM2(spawnInfo->behaviorArg);
+			gLightType = GET_BPARAM3(spawnInfo->behaviorArg);
+			gNumLightSources = GET_BPARAM4(spawnInfo->behaviorArg);
+			gCurrLightDirection[0] = (s8)spawnInfo->startPos[0];
+			gCurrLightDirection[1] = (s8)spawnInfo->startPos[1];
+			gCurrLightDirection[2] = (s8)spawnInfo->startPos[2];
+			gCurrLightPos[0] = spawnInfo->startPos[0];
+			gCurrLightPos[1] = spawnInfo->startPos[1];
+			gCurrLightPos[2] = spawnInfo->startPos[2];
+			spawnInfo = spawnInfo->next;
+			continue;
+		}
+		if (spawnInfo->behaviorScript == bhvSpecularLight) {
+			//gIsDynamic = FALSE;
+			//gLightType2 = GET_BPARAM3(spawnInfo->behaviorArg);
+			gCurrLightDirection2[0] = (s8)spawnInfo->startPos[0];
+			gCurrLightDirection2[1] = (s8)spawnInfo->startPos[1];
+			gCurrLightDirection2[2] = (s8)spawnInfo->startPos[2];
+			//gCurrLightPos2[0] = spawnInfo->startPos[0];
+			//gCurrLightPos2[1] = spawnInfo->startPos[1];
+			//gCurrLightPos2[2] = spawnInfo->startPos[2];
+			//gCurrStaticColor = determine_static_light_based_on_preset(GET_BPARAM2(spawnInfo->behaviorArg));
+			spawnInfo = spawnInfo->next;
+			continue;
+		}
+		if (spawnInfo->behaviorScript == bhvAmbientLight) {
+			//gIsDynamic = FALSE;
+			//gLightType3 = GET_BPARAM3(spawnInfo->behaviorArg);
+			gCurrLightDirection3[0] = (s8)spawnInfo->startPos[0];
+			gCurrLightDirection3[1] = (s8)spawnInfo->startPos[1];
+			gCurrLightDirection3[2] = (s8)spawnInfo->startPos[2];
+			//gCurrLightPos3[0] = spawnInfo->startPos[0];
+			//gCurrLightPos3[1] = spawnInfo->startPos[1];
+			//gCurrLightPos3[2] = spawnInfo->startPos[2];
+			//gCurrStaticColor = determine_static_light_based_on_preset(GET_BPARAM2(spawnInfo->behaviorArg));
+			spawnInfo = spawnInfo->next;
+			continue;
+		}
+		//else 
+		//if (spawnInfo->behaviorScript == bhvOcclusionZone) {
+			//spawnInfo = spawnInfo->next;
+			//continue;
+		//}
+		//else 
+		//if (spawnInfo->behaviorScript == bhvLightField) {
+			//spawnInfo = spawnInfo->next;
+			//continue;
+		//}
+		
+		//collision settings
+		if (spawnInfo->behaviorScript == bhvLevelSettings) {
+			//gWorldScale = GET_BPARAM1(spawnInfo->behaviorArg);
+			//gCellSize = determine_cell_size_based_on_preset(GET_BPARAM2(spawnInfo->behaviorArg));
+			//gLevelBoundsMax = determine_level_bounds_based_on_preset(GET_BPARAM3(spawnInfo->behaviorArg));
+			//determine_surface_pool_sizes_based_on_preset(GET_BPARAM4(spawnInfo->behaviorArg));
+			//spawnInfo = spawnInfo->next;
+			continue;
+		}
+		
+		if (spawnInfo->behaviorScript == bhvLoopDeLoopSettings) {
+			spawnInfo = spawnInfo->next;
+			continue;
+		}
+		
+		if (spawnInfo->behaviorScript == bhvLoopDeLoopEndpoint) {
+			spawnInfo = spawnInfo->next;
+			continue;
+		}
+		
+		//bParams:
+		//1 = WORLD_SCALE
+		//2 = CELL_SIZE
+		//3 = LEVEL_BOUNDARY_MAX
+		//4 = SURFACE_POOL_SIZE & SURFACE_NODE_POOL_SIZE
 
         script = segmented_to_virtual(spawnInfo->behaviorScript);
 

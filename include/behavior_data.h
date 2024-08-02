@@ -540,5 +540,14 @@ extern const BehaviorScript bhvEndBirds1[];
 extern const BehaviorScript bhvEndBirds2[];
 extern const BehaviorScript bhvIntroScene[];
 extern const BehaviorScript bhvUnusedFakeStar[];
+extern const BehaviorScript bhvStaticLight[];
+extern const BehaviorScript bhvDynamicLight[];
+extern const BehaviorScript bhvSpecularLight[];
+extern const BehaviorScript bhvAmbientLight[];
+//extern const BehaviorScript bhvOcclusionZone[];
+//extern const BehaviorScript bhvLightField[];
+extern const BehaviorScript bhvLevelSettings[];
+extern const BehaviorScript bhvLoopDeLoopSettings[];
+extern const BehaviorScript bhvLoopDeLoopEndpoint[];
 
 #endif // BEHAVIOR_DATA_H

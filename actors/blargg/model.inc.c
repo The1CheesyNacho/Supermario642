@@ -363,8 +363,8 @@ static const Vtx blargg_seg5_vertex_050057E0[] = {
 
 // 0x050058D0 - 0x05005A60
 const Gfx blargg_seg5_dl_050058D0[] = {
-    gsSPLightColor(LIGHT_1, 0xb2b2b2ff),
-    gsSPLightColor(LIGHT_2, 0x2c2c2cff),
+gsSPLightColor(LIGHT_2, 0xb2b2b2ff),
+gsSPLightColor(LIGHT_3, 0x2c2c2cff),
     gsSPVertex(blargg_seg5_vertex_050047A0, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  6,  7, 0x0),
@@ -378,8 +378,8 @@ const Gfx blargg_seg5_dl_050058D0[] = {
     gsSPVertex(blargg_seg5_vertex_050049A0, 8, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  6,  7, 0x0),
-    gsSPLightColor(LIGHT_1, 0xff3616ff),
-    gsSPLightColor(LIGHT_2, 0x3f0d05ff),
+gsSPLightColor(LIGHT_2, 0xff3616ff),
+gsSPLightColor(LIGHT_3, 0x3f0d05ff),
     gsSPVertex(blargg_seg5_vertex_05004A20, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  6,  7, 0x0),
@@ -398,8 +398,8 @@ const Gfx blargg_seg5_dl_050058D0[] = {
 
 // 0x05005A60 - 0x05005D00
 const Gfx blargg_seg5_dl_05005A60[] = {
-    gsSPLightColor(LIGHT_1, 0xb2b2b2ff),
-    gsSPLightColor(LIGHT_2, 0x2c2c2cff),
+gsSPLightColor(LIGHT_2, 0xb2b2b2ff),
+gsSPLightColor(LIGHT_3, 0x2c2c2cff),
     gsSPVertex(blargg_seg5_vertex_05004BE0, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  6,  7, 0x0),
@@ -413,8 +413,8 @@ const Gfx blargg_seg5_dl_05005A60[] = {
     gsSPVertex(blargg_seg5_vertex_05004DE0, 8, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  6,  7, 0x0),
-    gsSPLightColor(LIGHT_1, 0xff2a1aff),
-    gsSPLightColor(LIGHT_2, 0x3f0a06ff),
+gsSPLightColor(LIGHT_2, 0xff2a1aff),
+gsSPLightColor(LIGHT_3, 0x3f0a06ff),
     gsSPVertex(blargg_seg5_vertex_05004E60, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 2,  6,  7, 0x0,  2,  7,  8, 0x0),
@@ -452,8 +452,8 @@ const Gfx blargg_seg5_dl_05005A60[] = {
 
 // 0x05005D00 - 0x05005EB8
 const Gfx blargg_seg5_dl_05005D00[] = {
-    gsSPLightColor(LIGHT_1, 0xff2e1fff),
-    gsSPLightColor(LIGHT_2, 0x3f0b07ff),
+gsSPLightColor(LIGHT_2, 0xff2e1fff),
+gsSPLightColor(LIGHT_3, 0x3f0b07ff),
     gsSPVertex(blargg_seg5_vertex_050053E0, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  6,  7, 0x0),

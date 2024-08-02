@@ -361,12 +361,42 @@ void init_rcp(s32 resetZB) {
     select_framebuffer();
 }
 
+u8 gHasFrameBuffer = FALSE;
+static u8 gFBE;
+
+#define FUNNY_FBE_COLOR 0xFF00
+
+static u8 checkingFBE = 0;
+static u8 checkedFBE = FALSE;
+
+//checks to see if framebuffer is being properly emulated
+s32 check_fb_emulation(void) {
+
+    if (checkedFBE) return gFBE;
+    else if (!checkedFBE && gEmulator & (EMU_CONSOLE | EMU_ARES)) {
+        checkedFBE = gFBE = TRUE;
+        return TRUE;
+    }
+
+    if (checkingFBE == 0) {
+        checkingFBE = TRUE;
+        gFramebuffers[0][12] = FUNNY_FBE_COLOR;
+    } else if (checkingFBE < 3) {
+        checkingFBE++;
+    } else {
+        checkedFBE = TRUE;
+        gFBE = gFramebuffers[0][12] != FUNNY_FBE_COLOR;
+    }
+
+    return gFBE;
+}
+
 /**
  * End the master display list and initialize the graphics task structure for the next frame to be rendered.
  */
 void end_master_display_list(void) {
+	gHasFrameBuffer = check_fb_emulation();
     draw_screen_borders();
-
     gDPFullSync(gDisplayListHead++);
     gSPEndDisplayList(gDisplayListHead++);
 

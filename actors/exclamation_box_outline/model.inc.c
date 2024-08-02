@@ -78,32 +78,32 @@ const Gfx exclamation_box_outline_seg8_dl_08024F58[] = {
 // 0x08024F88 - 0x08024FA8
 const Gfx exclamation_box_outline_seg8_dl_08024F88[] = {
     gsSPDisplayList(exclamation_box_outline_seg8_dl_08024F30),
-    gsSPLightColor(LIGHT_1, 0xff0000ff),
-    gsSPLightColor(LIGHT_2, 0x7f0000ff),
+gsSPLightColor(LIGHT_2, 0xff0000ff),
+gsSPLightColor(LIGHT_3, 0x7f0000ff),
     gsSPBranchList(exclamation_box_outline_seg8_dl_08024F58),
 };
 
 // 0x08024FA8 - 0x08024FC8
 const Gfx exclamation_box_outline_seg8_dl_08024FA8[] = {
     gsSPDisplayList(exclamation_box_outline_seg8_dl_08024F30),
-    gsSPLightColor(LIGHT_1, 0xff00ff),
-    gsSPLightColor(LIGHT_2, 0x7f00ff),
+gsSPLightColor(LIGHT_2, 0xff00ff),
+gsSPLightColor(LIGHT_3, 0x7f00ff),
     gsSPBranchList(exclamation_box_outline_seg8_dl_08024F58),
 };
 
 // 0x08024FC8 - 0x08024FE8
 const Gfx exclamation_box_outline_seg8_dl_08024FC8[] = {
     gsSPDisplayList(exclamation_box_outline_seg8_dl_08024F30),
-    gsSPLightColor(LIGHT_1, 0xffff),
-    gsSPLightColor(LIGHT_2, 0x7fff),
+gsSPLightColor(LIGHT_2, 0xffff),
+gsSPLightColor(LIGHT_3, 0x7fff),
     gsSPBranchList(exclamation_box_outline_seg8_dl_08024F58),
 };
 
 // 0x08024FE8 - 0x08025008
 const Gfx exclamation_box_outline_seg8_dl_08024FE8[] = {
     gsSPDisplayList(exclamation_box_outline_seg8_dl_08024F30),
-    gsSPLightColor(LIGHT_1, 0xffd400ff),
-    gsSPLightColor(LIGHT_2, 0x7f6a00ff),
+gsSPLightColor(LIGHT_2, 0xffd400ff),
+gsSPLightColor(LIGHT_3, 0x7f6a00ff),
     gsSPBranchList(exclamation_box_outline_seg8_dl_08024F58),
 };
 
@@ -196,8 +196,8 @@ const Gfx exclamation_box_outline_seg8_dl_08025EC0[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, exclamation_box_outline_seg8_texture_08025A80),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 16 * 32 - 1, CALC_DXT(16, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(exclamation_box_outline_seg8_vertex_08025E80, 4, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSPEndDisplayList(),

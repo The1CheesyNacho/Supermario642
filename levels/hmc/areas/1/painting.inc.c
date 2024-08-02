@@ -26,8 +26,8 @@ static const Vtx hmc_seg7_vertex_07024228[] = {
 const Gfx hmc_seg7_dl_07024268[] = {
     gsDPPipeSync(),
     gsDPSetCombineMode(G_CC_MODULATERGB, G_CC_MODULATERGB),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x505050ff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x505050ff),
     gsSPTexture(0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON),
     gsSPVertex(hmc_seg7_vertex_070241E8, 4, 0),
     gsSPEndDisplayList(),
@@ -496,8 +496,8 @@ ALIGNED8 static const Texture hmc_seg7_texture_07024CE0[] = {
 // 0x070254E0 - 0x07025518
 static const Gfx hmc_seg7_painting_dl_070254E0[] = {
     gsDPPipeSync(),
-    gsSPLightColor(LIGHT_1, 0x6464ffff),
-    gsSPLightColor(LIGHT_2, 0x404080ff),
+gsSPLightColor(LIGHT_2, 0x6464ffff),
+gsSPLightColor(LIGHT_3, 0x404080ff),
     gsSPVertex(hmc_seg7_vertex_07024228, 4, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSPEndDisplayList(),

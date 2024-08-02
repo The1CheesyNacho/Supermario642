@@ -353,8 +353,8 @@ const Gfx peach_seg5_dl_05005648[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, peach_seg5_texture_05002A28),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 16 * 16 - 1, CALC_DXT(16, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(peach_seg5_vertex_05004828, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  1,  0, 0x0),
     gsSP2Triangles( 4,  1,  5, 0x0,  5,  1,  6, 0x0),
@@ -421,8 +421,8 @@ const Gfx peach_seg5_dl_050058B8[] = {
 
 // 0x050058E0 - 0x05005C48
 const Gfx peach_seg5_dl_050058E0[] = {
-    gsSPLightColor(LIGHT_1, 0xffbf18ff),
-    gsSPLightColor(LIGHT_2, 0x7f5f0cff),
+gsSPLightColor(LIGHT_2, 0xffbf18ff),
+gsSPLightColor(LIGHT_3, 0x7f5f0cff),
     gsSPVertex(peach_seg5_vertex_05004E88, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  0,  4, 0x0),
     gsSP2Triangles( 3,  5,  0, 0x0,  6,  4,  0, 0x0),
@@ -653,8 +653,8 @@ const Gfx peach_seg5_dl_05006058[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, peach_seg5_texture_05000A28),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(peach_seg5_vertex_05005FB8, 10, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  1,  3,  2, 0x0),
     gsSP2Triangles( 1,  4,  3, 0x0,  4,  5,  3, 0x0),
@@ -812,8 +812,8 @@ const Gfx peach_seg5_dl_05006728[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, peach_seg5_texture_05002C28),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 16 * 16 - 1, CALC_DXT(16, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(peach_seg5_vertex_05006168, 8, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  1,  4, 0x0),
     gsSP2Triangles( 4,  1,  5, 0x0,  6,  1,  3, 0x0),
@@ -827,13 +827,13 @@ const Gfx peach_seg5_dl_05006798[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, peach_seg5_texture_05004028),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xd9a9beff),
-    gsSPLightColor(LIGHT_2, 0x6c545fff),
+gsSPLightColor(LIGHT_2, 0xd9a9beff),
+gsSPLightColor(LIGHT_3, 0x6c545fff),
     gsSPVertex(peach_seg5_vertex_050061E8, 5, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  0, 0x0),
     gsSP1Triangle( 3,  0,  2, 0x0),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(peach_seg5_vertex_05006238, 14, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  3,  1, 0x0),
     gsSP2Triangles( 4,  5,  0, 0x0,  0,  6,  7, 0x0),
@@ -1002,8 +1002,8 @@ const Gfx peach_seg5_dl_05006FA8[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, peach_seg5_texture_05004028),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(peach_seg5_vertex_05006AA8, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  3,  7, 0x0,  3,  8,  9, 0x0),
@@ -1194,8 +1194,8 @@ static const Vtx peach_seg5_vertex_05007780[] = {
 
 // 0x05007810 - 0x05007AB8
 const Gfx peach_seg5_dl_05007810[] = {
-    gsSPLightColor(LIGHT_1, 0xffbf18ff),
-    gsSPLightColor(LIGHT_2, 0x7f5f0cff),
+gsSPLightColor(LIGHT_2, 0xffbf18ff),
+gsSPLightColor(LIGHT_3, 0x7f5f0cff),
     gsSPVertex(peach_seg5_vertex_050072A0, 14, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  2,  4, 0x0),
     gsSP2Triangles( 2,  1,  4, 0x0,  2,  3,  0, 0x0),
@@ -1299,8 +1299,8 @@ const Gfx peach_seg5_dl_05007CE8[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, peach_seg5_texture_05004028),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(peach_seg5_vertex_05007AF8, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  0, 0x0),
     gsSP2Triangles( 5,  3,  0, 0x0,  4,  6,  0, 0x0),
@@ -1386,8 +1386,8 @@ const Gfx peach_seg5_dl_050080B8[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, peach_seg5_texture_05004028),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(peach_seg5_vertex_05007EC8, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  2,  3,  0, 0x0),
     gsSP2Triangles( 2,  1,  4, 0x0,  4,  3,  2, 0x0),
@@ -1468,8 +1468,8 @@ const Gfx peach_seg5_dl_05008428[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, peach_seg5_texture_05000A28),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(peach_seg5_vertex_05008298, 12, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  3,  1, 0x0),
     gsSP2Triangles( 4,  3,  0, 0x0,  1,  5,  6, 0x0),
@@ -1535,8 +1535,8 @@ static const Vtx peach_seg5_vertex_050085E8[] = {
 
 // 0x050086C8 - 0x050087A8
 const Gfx peach_seg5_dl_050086C8[] = {
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(peach_seg5_vertex_050085E8, 14, 0),
     gsSP1Triangle( 0,  1,  2, 0x0),
     gsSP2Triangles( 3,  4,  2, 0x0,  2,  5,  3, 0x0),
@@ -1603,8 +1603,8 @@ const Gfx peach_seg5_dl_05008978[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, peach_seg5_texture_05000A28),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(peach_seg5_vertex_050087E8, 12, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  1,  0,  3, 0x0),
     gsSP2Triangles( 2,  4,  0, 0x0,  0,  5,  3, 0x0),
@@ -1670,8 +1670,8 @@ static const Vtx peach_seg5_vertex_05008B38[] = {
 
 // 0x05008C18 - 0x05008CF8
 const Gfx peach_seg5_dl_05008C18[] = {
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(peach_seg5_vertex_05008B38, 14, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  2,  3,  4, 0x0),
     gsSP2Triangles( 2,  5,  0, 0x0,  5,  2,  6, 0x0),
@@ -1721,8 +1721,8 @@ static const Vtx peach_seg5_vertex_05008D38[] = {
 
 // 0x05008E38 - 0x05008F20
 const Gfx peach_seg5_dl_05008E38[] = {
-    gsSPLightColor(LIGHT_1, 0x1635ceff),
-    gsSPLightColor(LIGHT_2, 0xb1a67ff),
+gsSPLightColor(LIGHT_2, 0x1635ceff),
+gsSPLightColor(LIGHT_3, 0xb1a67ff),
     gsSPVertex(peach_seg5_vertex_05008D38, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  1,  0, 0x0),
     gsSP2Triangles( 3,  4,  5, 0x0,  3,  0,  4, 0x0),
@@ -1773,8 +1773,8 @@ static const Vtx peach_seg5_vertex_05008F60[] = {
 
 // 0x05009060 - 0x05009148
 const Gfx peach_seg5_dl_05009060[] = {
-    gsSPLightColor(LIGHT_1, 0x1635ceff),
-    gsSPLightColor(LIGHT_2, 0xb1a67ff),
+gsSPLightColor(LIGHT_2, 0x1635ceff),
+gsSPLightColor(LIGHT_3, 0xb1a67ff),
     gsSPVertex(peach_seg5_vertex_05008F60, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 5,  4,  6, 0x0,  7,  3,  5, 0x0),
@@ -1845,8 +1845,8 @@ static const Vtx peach_seg5_vertex_05009288[] = {
 
 // 0x05009388 - 0x05009500
 const Gfx peach_seg5_dl_05009388[] = {
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(peach_seg5_vertex_05009188, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  0,  2, 0x0),
     gsSP2Triangles( 4,  5,  0, 0x0,  0,  5,  6, 0x0),
@@ -1939,8 +1939,8 @@ static const Vtx peach_seg5_vertex_05009740[] = {
 
 // 0x050097C0 - 0x05009940
 const Gfx peach_seg5_dl_050097C0[] = {
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(peach_seg5_vertex_05009540, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  2,  4, 0x0),
     gsSP2Triangles( 5,  0,  2, 0x0,  2,  3,  5, 0x0),
@@ -2079,8 +2079,8 @@ const Gfx peach_seg5_dl_05009E20[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, peach_seg5_texture_05004028),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(peach_seg5_vertex_05009980, 15, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  2,  3,  0, 0x0),
     gsSP2Triangles( 4,  2,  1, 0x0,  5,  2,  4, 0x0),

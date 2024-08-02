@@ -45,8 +45,8 @@ const Gfx moneybag_seg6_dl_06005300[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, moneybag_seg6_texture_060039B0),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 64 * 32 - 1, CALC_DXT(64, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(moneybag_seg6_vertex_060051E0, 10, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  0, 0x0,  8,  4,  9, 0x0),
@@ -55,8 +55,8 @@ const Gfx moneybag_seg6_dl_06005300[] = {
 
 // 0x06005358 - 0x060053B8
 const Gfx moneybag_seg6_dl_06005358[] = {
-    gsSPLightColor(LIGHT_1, 0x7f47ff),
-    gsSPLightColor(LIGHT_2, 0x3f23ff),
+gsSPLightColor(LIGHT_2, 0x7f47ff),
+gsSPLightColor(LIGHT_3, 0x3f23ff),
     gsSPVertex(moneybag_seg6_vertex_06005280, 8, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  1,  0,  3, 0x0),
     gsSP2Triangles( 3,  0,  4, 0x0,  3,  5,  1, 0x0),
@@ -119,8 +119,8 @@ const Gfx moneybag_seg6_dl_06005590[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, moneybag_seg6_texture_060039B0),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 64 * 32 - 1, CALC_DXT(64, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(moneybag_seg6_vertex_06005440, 14, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 6,  7,  8, 0x0,  9, 10,  7, 0x0),
@@ -237,8 +237,8 @@ static const Vtx moneybag_seg6_vertex_060058D0[] = {
 // 0x06005980 - 0x060059F0
 const Gfx moneybag_seg6_dl_06005980[] = {
     gsDPSetCombineMode(G_CC_SHADEFADEA, G_CC_SHADEFADEA),
-    gsSPLightColor(LIGHT_1, 0xffff00ff),
-    gsSPLightColor(LIGHT_2, 0x3f3f00ff),
+gsSPLightColor(LIGHT_2, 0xffff00ff),
+gsSPLightColor(LIGHT_3, 0x3f3f00ff),
     gsSPVertex(moneybag_seg6_vertex_06005820, 11, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  3,  4, 0x0),
     gsSP2Triangles( 5,  6,  7, 0x0,  5,  7,  8, 0x0),
@@ -251,8 +251,8 @@ const Gfx moneybag_seg6_dl_06005980[] = {
 // 0x060059F0 - 0x06005A60
 const Gfx moneybag_seg6_dl_060059F0[] = {
     gsDPSetCombineMode(G_CC_SHADEFADEA, G_CC_SHADEFADEA),
-    gsSPLightColor(LIGHT_1, 0xffff00ff),
-    gsSPLightColor(LIGHT_2, 0x3f3f00ff),
+gsSPLightColor(LIGHT_2, 0xffff00ff),
+gsSPLightColor(LIGHT_3, 0x3f3f00ff),
     gsSPVertex(moneybag_seg6_vertex_060058D0, 11, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  2, 0x0),
     gsSP2Triangles( 5,  6,  7, 0x0,  8,  5,  7, 0x0),

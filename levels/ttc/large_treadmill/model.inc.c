@@ -59,8 +59,8 @@ static const Gfx ttc_seg7_dl_0700FAA0[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, machine_09005800),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x7f7f7fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x7f7f7fff),
     gsSPVertex(ttc_seg7_vertex_0700F860, 8, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  3,  1, 0x0),
     gsSP2Triangles( 4,  5,  6, 0x0,  4,  7,  5, 0x0),
@@ -86,8 +86,8 @@ static const Gfx ttc_seg7_dl_0700FAF8[] = {
 
 // 0x0700FB88 - 0x0700FBB8
 static const Gfx ttc_seg7_dl_0700FB88[] = {
-    gsSPLightColor(LIGHT_1, 0x8c8c8cff),
-    gsSPLightColor(LIGHT_2, 0x464646ff),
+gsSPLightColor(LIGHT_2, 0x8c8c8cff),
+gsSPLightColor(LIGHT_3, 0x464646ff),
     gsSPVertex(ttc_seg7_vertex_0700FA60, 4, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  0,  2,  3, 0x0),
     gsSPEndDisplayList(),

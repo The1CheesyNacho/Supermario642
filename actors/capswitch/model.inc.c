@@ -43,8 +43,8 @@ const Gfx capswitch_seg5_dl_05002D88[] = {
     gsDPSetTextureImage(G_IM_FMT_IA, G_IM_SIZ_16b, 1, capswitch_seg5_texture_05001C48),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 32 * 64 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x3f3f3fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x3f3f3fff),
     gsSPVertex(capswitch_seg5_vertex_05002CC8, 12, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  1,  0,  3, 0x0),
     gsSP2Triangles( 4,  3,  0, 0x0,  5,  4,  0, 0x0),
@@ -110,8 +110,8 @@ const Gfx capswitch_seg5_dl_05003020[] = {
     gsDPSetTextureImage(G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, capswitch_seg5_texture_05002C48),
     gsDPLoadSync(),
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, 16 * 4 - 1, CALC_DXT(16, G_IM_SIZ_16b_BYTES)),
-    gsSPLightColor(LIGHT_1, 0xffffffff),
-    gsSPLightColor(LIGHT_2, 0x3f3f3fff),
+gsSPLightColor(LIGHT_2, 0xffffffff),
+gsSPLightColor(LIGHT_3, 0x3f3f3fff),
     gsSPVertex(capswitch_seg5_vertex_05002E60, 16, 0),
     gsSP2Triangles( 0,  1,  2, 0x0,  3,  4,  5, 0x0),
     gsSP2Triangles( 4,  6,  5, 0x0,  4,  7,  6, 0x0),
@@ -186,32 +186,32 @@ const Gfx capswitch_seg5_dl_05003280[] = {
 
 // 0x05003350 - 0x05003370
 const Gfx capswitch_seg5_dl_05003350[] = {
-    gsSPLightColor(LIGHT_1, 0xff0000ff),
-    gsSPLightColor(LIGHT_2, 0x3f0000ff),
+gsSPLightColor(LIGHT_2, 0xff0000ff),
+gsSPLightColor(LIGHT_3, 0x3f0000ff),
     gsSPDisplayList(capswitch_seg5_dl_05003280),
     gsSPEndDisplayList(),
 };
 
 // 0x05003370 - 0x05003390
 const Gfx capswitch_seg5_dl_05003370[] = {
-    gsSPLightColor(LIGHT_1, 0x7a925ff),
-    gsSPLightColor(LIGHT_2, 0x12a09ff),
+gsSPLightColor(LIGHT_2, 0x7a925ff),
+gsSPLightColor(LIGHT_3, 0x12a09ff),
     gsSPDisplayList(capswitch_seg5_dl_05003280),
     gsSPEndDisplayList(),
 };
 
 // 0x05003390 - 0x050033B0
 const Gfx capswitch_seg5_dl_05003390[] = {
-    gsSPLightColor(LIGHT_1, 0xffff),
-    gsSPLightColor(LIGHT_2, 0x3fff),
+gsSPLightColor(LIGHT_2, 0xffff),
+gsSPLightColor(LIGHT_3, 0x3fff),
     gsSPDisplayList(capswitch_seg5_dl_05003280),
     gsSPEndDisplayList(),
 };
 
 // 0x050033B0 - 0x050033D0
 const Gfx capswitch_seg5_dl_050033B0[] = {
-    gsSPLightColor(LIGHT_1, 0xff9608ff),
-    gsSPLightColor(LIGHT_2, 0x3f2502ff),
+gsSPLightColor(LIGHT_2, 0xff9608ff),
+gsSPLightColor(LIGHT_3, 0x3f2502ff),
     gsSPDisplayList(capswitch_seg5_dl_05003280),
     gsSPEndDisplayList(),
 };

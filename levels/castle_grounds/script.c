@@ -173,6 +173,8 @@ const LevelScript level_castle_grounds_entry[] = {
     LOAD_MODEL_FROM_GEO(MODEL_CASTLE_GROUNDS_CANNON_GRILL, castle_grounds_geo_000724),
 
     AREA(/*index*/ 1, castle_grounds_geo_00073C),
+		OBJECT(MODEL_NONE, 0x28, 0x7F, 0x28, 0, 0, 0, 0x00000000, bhvSpecularLight),
+		OBJECT(MODEL_NONE, -0x28, -0x7F, -0x28, 0, 0, 0, 0x020B0002, bhvStaticLight),
         WARP_NODE(/*id*/ 0xF1, /*destLevel*/ LEVEL_CASTLE_GROUNDS, /*destArea*/ 0x01, /*destNode*/ 0x03, /*flags*/ WARP_NO_CHECKPOINT),
         JUMP_LINK(script_castle_grounds_objects_1),
         JUMP_LINK(script_castle_grounds_objects_2),
