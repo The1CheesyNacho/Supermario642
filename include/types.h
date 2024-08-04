@@ -485,6 +485,7 @@ struct MarioState {
              s16 wallYaw;
     // -- HackerSM64 MarioState fields end --
     u8 playerModel;
+    s16 lhealth;
 };
 
 

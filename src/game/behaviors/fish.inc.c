@@ -18,8 +18,8 @@ static void fish_spawner_act_spawn(void) {
     switch (o->oBehParams2ndByte) {
         case FISH_SPAWNER_BP_MANY_BLUE: model = MODEL_FISH;      schoolQuantity = 20; minDistToMario = 1500.0f; fishAnimation = blue_fish_seg3_anims_0301C2B0; break;
         case FISH_SPAWNER_BP_FEW_BLUE:  model = MODEL_FISH;      schoolQuantity =  5; minDistToMario = 1500.0f; fishAnimation = blue_fish_seg3_anims_0301C2B0; break;
-        case FISH_SPAWNER_BP_MANY_CYAN: model = MODEL_CYAN_FISH; schoolQuantity = 20; minDistToMario = 1500.0f; fishAnimation = cyan_fish_seg6_anims_0600E264; break;
-        case FISH_SPAWNER_BP_FEW_CYAN:  model = MODEL_CYAN_FISH; schoolQuantity =  5; minDistToMario = 1500.0f; fishAnimation = cyan_fish_seg6_anims_0600E264; break;
+        case FISH_SPAWNER_BP_MANY_CYAN: model = MODEL_CYAN_FISH; schoolQuantity = 20; minDistToMario = 1500.0f; fishAnimation = NULL; break;
+        case FISH_SPAWNER_BP_FEW_CYAN:  model = MODEL_CYAN_FISH; schoolQuantity =  5; minDistToMario = 1500.0f; fishAnimation = NULL; break;
         default: return;
     }
 

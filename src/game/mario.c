@@ -17,6 +17,7 @@
 #include "level_update.h"
 #include "main.h"
 #include "mario.h"
+#include "luigi.h"
 #include "mario_actions_airborne.h"
 #include "mario_actions_automatic.h"
 #include "mario_actions_cutscene.h"
@@ -1429,6 +1430,66 @@ void set_submerged_cam_preset_and_spawn_bubbles(struct MarioState *m) {
 void update_mario_health(struct MarioState *m) {
     s32 terrainIsSnow;
 
+
+    if (m->lhealth  >= 0x100) {
+        // When already healing or hurting Mario, Mario's HP is not changed any more here.
+        if (((u32) m->healCounter | (u32) m->hurtCounter) == 0) {
+            if ((m->input & INPUT_IN_POISON_GAS) && !(m->action & ACT_FLAG_INTANGIBLE)) {
+                if (!(m->flags & MARIO_METAL_CAP || m->flags & MARIO_GOLD_CAP) && !gDebugLevelSelect) {
+                    m->lhealth  -= 4;
+                }
+            } else {
+                if ((m->action & ACT_FLAG_SWIMMING) && !(m->action & ACT_FLAG_INTANGIBLE)) {
+                    terrainIsSnow = (m->area->terrainType & TERRAIN_MASK) == TERRAIN_SNOW;
+#ifdef BREATH_METER
+                    // when in snow terrains lose 3 lhealth .
+                    if ((m->pos[1] < (m->waterLevel - 140)) && terrainIsSnow) {
+                        m->lhealth  -= 3;
+                    }
+#else
+                    // When Mario is near the water surface, recover lhealth  (unless in snow),
+                    // when in snow terrains lose 3 lhealth .
+                    // If using the debug level select, do not lose any HP to water.
+                    if ((m->pos[1] >= (m->waterLevel - 140)) && !terrainIsSnow) {
+                        m->lhealth  += 0x1A;
+                    } else if (!gDebugLevelSelect) {
+                        m->lhealth  -= (terrainIsSnow ? 3 : 1);
+                    }
+#endif
+                }
+            }
+        }
+
+        if (m->healCounter > 0) {
+            m->lhealth  += 0x40;
+            m->healCounter--;
+        }
+        if (m->hurtCounter > 0) {
+            m->lhealth  -= 0x40;
+            m->hurtCounter--;
+        }
+
+        if (m->lhealth  > 0x880) m->lhealth  = 0x880;
+        if (m->lhealth  < 0x100) m->lhealth  = 0xFF;
+
+#ifndef BREATH_METER
+        // Play a noise to alert the player when Mario is close to drowning.
+        if (((m->action & ACT_GROUP_MASK) == ACT_GROUP_SUBMERGED) && (m->lhealth  < 0x300)) {
+            play_sound(SOUND_MOVING_ALMOST_DROWNING, gGlobalSoundSource);
+#if ENABLE_RUMBLE
+            if (gRumblePakTimer == 0) {
+                gRumblePakTimer = 36;
+                if (is_rumble_finished_and_queue_empty()) {
+                    queue_rumble_data(3, 30);
+                }
+            }
+        } else {
+            gRumblePakTimer = 0;
+#endif
+        }
+#endif
+    }
+
     if (m->health >= 0x100) {
         // When already healing or hurting Mario, Mario's HP is not changed any more here.
         if (((u32) m->healCounter | (u32) m->hurtCounter) == 0) {
@@ -1763,6 +1824,7 @@ s32 execute_mario_action(UNUSED struct Object *obj) {
         // The function can loop through many action shifts in one frame,
         // which can lead to unexpected sub-frame behavior. Could potentially hang
         // if a loop of actions were found, but there has not been a situation found.
+        hud_set_idle(0);
         while (inLoop) {
             switch (gMarioState->action & ACT_GROUP_MASK) {
                 case ACT_GROUP_STATIONARY: inLoop = mario_execute_stationary_action(gMarioState); break;

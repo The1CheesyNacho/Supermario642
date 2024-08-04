@@ -1,15 +1,16 @@
 #include <PR/ultratypes.h>
-#include <ultra64.h>
 
+#include "gex.h"
 #include "sm64.h"
 #include "actors/common1.h"
+#include "audio/external.h"
+#include "audio/load.h"
 #include "gfx_dimensions.h"
 #include "game_init.h"
 #include "level_update.h"
 #include "camera.h"
 #include "print.h"
 #include "ingame_menu.h"
-#include "main.h"
 #include "hud.h"
 #include "segment2.h"
 #include "area.h"
@@ -19,7 +20,6 @@
 #include "engine/math_util.h"
 #include "puppycam2.h"
 #include "puppyprint.h"
-#include "mario.h"
 
 #include "config.h"
 
@@ -104,6 +104,13 @@ static struct PowerMeterHUD sPowerMeterHUD = {
 // when the power meter is hidden.
 s32 sPowerMeterVisibleTimer = 0;
 
+u8 gHudIdle = 0;
+s32 gHudIdleTimer = 0;
+s32 gHudForceIdle = 0;
+s32 gHudRedCoinTimer = 0;
+f32 gHudOffset = 0;
+f32 gHudRedCoinOffset = 0;
+
 #ifdef BREATH_METER
 static s16 sBreathMeterStoredValue;
 static struct PowerMeterHUD sBreathMeterHUD = {
@@ -124,6 +131,17 @@ void render_hud_tex_lut(s32 x, s32 y, Texture *texture) {
     gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture);
     gSPDisplayList(gDisplayListHead++, &dl_hud_img_load_tex_block);
     gSPTextureRectangle(gDisplayListHead++, x << 2, y << 2, (x + 15) << 2, (y + 15) << 2,
+                        G_TX_RENDERTILE, 0, 0, 4 << 10, 1 << 10);
+}
+
+/**
+ * Renders a rgba16 16x16 glyph texture from a table list.
+ */
+void render_hud_tex_lut_big(s32 x, s32 y, Texture *texture) {
+    gDPPipeSync(gDisplayListHead++);
+    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture);
+    gSPDisplayList(gDisplayListHead++, &dl_hud_img_load_tex_block_32);
+    gSPTextureRectangle(gDisplayListHead++, x << 2, y << 2, (x + 31) << 2, (y + 31) << 2,
                         G_TX_RENDERTILE, 0, 0, 4 << 10, 1 << 10);
 }
 
@@ -149,15 +167,17 @@ void render_hud_small_tex_lut(s32 x, s32 y, Texture *texture) {
  * Renders power meter health segment texture using a table list.
  */
 void render_power_meter_health_segment(s16 numHealthWedges) {
-    Texture *(*healthLUT)[] = segmented_to_virtual(&power_meter_health_segments_lut);
+    u8 *(*healthLUT)[];
+
+    healthLUT = segmented_to_virtual(power_meter_health_segments_lut);
 
     gDPPipeSync(gDisplayListHead++);
-    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1,
-                       (*healthLUT)[numHealthWedges - 1]);
-    gDPLoadSync(gDisplayListHead++);
-    gDPLoadBlock(gDisplayListHead++, G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES));
-    gSP1Triangle(gDisplayListHead++, 0, 1, 2, 0);
+    g_Tani_LoadTextureImage2(gDisplayListHead++, (*healthLUT)[numHealthWedges * 2], G_IM_FMT_RGBA,
+                             G_IM_SIZ_16b, 32, 64, 0, 7) gSP1Triangle(gDisplayListHead++, 0, 1, 2, 0);
     gSP1Triangle(gDisplayListHead++, 0, 2, 3, 0);
+    g_Tani_LoadTextureImage2(gDisplayListHead++, (*healthLUT)[(numHealthWedges * 2) + 1], G_IM_FMT_RGBA,
+                             G_IM_SIZ_16b, 32, 64, 0, 7) gSP1Triangle(gDisplayListHead++, 4, 5, 6, 0);
+    gSP1Triangle(gDisplayListHead++, 4, 6, 7, 0);
 }
 
 /**
@@ -165,23 +185,28 @@ void render_power_meter_health_segment(s16 numHealthWedges) {
  * That includes the "POWER" base and the colored health segment textures.
  */
 void render_dl_power_meter(s16 numHealthWedges) {
-    Mtx *mtx = alloc_display_list(sizeof(Mtx));
+    Mtx *translateMtx;
+    Mtx *scaleMtx;
 
-    if (mtx == NULL) {
+    translateMtx = alloc_display_list(sizeof(Mtx));
+    scaleMtx = alloc_display_list(sizeof(Mtx));
+
+    if (translateMtx == NULL || scaleMtx == NULL) {
         return;
     }
 
-    guTranslate(mtx, (f32) sPowerMeterHUD.x, (f32) sPowerMeterHUD.y, 0);
+    guTranslate(translateMtx, (f32) sPowerMeterHUD.x, (f32) sPowerMeterHUD.y, 0);
+    guScale(scaleMtx, 0.75f, 0.75f, 1.0f);
 
-    gSPMatrix(gDisplayListHead++, VIRTUAL_TO_PHYSICAL(mtx++),
+    gSPMatrix(gDisplayListHead++, VIRTUAL_TO_PHYSICAL(translateMtx++),
               G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
+
+    gSPMatrix(gDisplayListHead++, VIRTUAL_TO_PHYSICAL(scaleMtx++),
+              G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_NOPUSH);
+
     gSPDisplayList(gDisplayListHead++, &dl_power_meter_base);
 
-    if (numHealthWedges != 0) {
-        gSPDisplayList(gDisplayListHead++, &dl_power_meter_health_segments_begin);
-        render_power_meter_health_segment(numHealthWedges);
-        gSPDisplayList(gDisplayListHead++, &dl_power_meter_health_segments_end);
-    }
+    render_power_meter_health_segment(numHealthWedges);
 
     gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
 }
@@ -275,129 +300,110 @@ void handle_power_meter_actions(s16 numHealthWedges) {
  * or has taken damage and has less than 8 health segments.
  * And calls a power meter animation function depending of the value defined.
  */
+f32 prevHurt = 0;
+f32 hurt = 0;
+f32 hurtTimer = 0;
+
+f32 map_value(f32 srcMin, f32 srcMax, f32 dstMin, f32 dstMax, f32 x) {
+    return (x - srcMin) / (srcMax - srcMin) * (dstMax - dstMin) + dstMin;
+}
+
 void render_hud_power_meter(void) {
     s16 shownHealthWedges = gHudDisplay.wedges;
-    if (sPowerMeterHUD.animation != POWER_METER_HIDING) handle_power_meter_actions(shownHealthWedges);
-    if (sPowerMeterHUD.animation == POWER_METER_HIDDEN) return;
-    switch (sPowerMeterHUD.animation) {
-        case POWER_METER_EMPHASIZED:    animate_power_meter_emphasized();    break;
-        case POWER_METER_DEEMPHASIZING: animate_power_meter_deemphasizing(); break;
-        case POWER_METER_HIDING:        animate_power_meter_hiding();        break;
-        default:                                                             break;
+    f32 powerMeterX, powerMeterY;
+    f32 srcX, srcY, dstX, dstY;
+    f32 interpolation, shakiness, range;
+    prevHurt = hurt;
+    hurt = gMarioState->hurtCounter;
+    if (hurtTimer != 0) {
+        hurtTimer--;
+        if (hurtTimer < 16 && gMarioState->health < 0x0300) hurtTimer = 16;
     }
+    if (hurt != 0 && prevHurt == 0) hurtTimer = 90;
+    powerMeterX = SCREEN_CENTER_X;
+    powerMeterY = SCREEN_HEIGHT - 32 - 10;
+    if (hurtTimer > 15) {
+        powerMeterX = SCREEN_WIDTH / 2.f - 28;
+        powerMeterY = SCREEN_HEIGHT / 2.f + 32;
+    }
+    else if (hurtTimer <= 15 && hurtTimer != 0) {
+        srcX = SCREEN_WIDTH / 2.f - 28;
+        srcY = SCREEN_HEIGHT / 2.f + 32;
+        dstX = powerMeterX;
+        dstY = powerMeterY;
+        interpolation = 1 - sqr(1 - map_value(15, 1, 0, 1, hurtTimer));
+        powerMeterX = map_value(0, 1, srcX, dstX, interpolation);
+        powerMeterY = map_value(0, 1, srcY, dstY, interpolation);
+    }
+    shakiness = gMarioState->hurtCounter;
+    range = (s32)(shakiness * 3);
+    if (range > 0) {
+        powerMeterX = powerMeterX + (random_float() * (range + range) - range);
+        powerMeterY = powerMeterY + (random_float() * (range + range) - range);
+    }
+    sPowerMeterHUD.x = powerMeterX - 12;
+    sPowerMeterHUD.y = powerMeterY;
     render_dl_power_meter(shownHealthWedges);
-    sPowerMeterVisibleTimer++;
 }
 
-#ifdef BREATH_METER
-/**
- * Renders breath meter health segment texture using a table list.
- */
-void render_breath_meter_segment(s16 numBreathWedges) {
-    Texture *(*breathLUT)[];
-    breathLUT = segmented_to_virtual(&breath_meter_segments_lut);
-    gDPPipeSync(gDisplayListHead++);
-    gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, (*breathLUT)[numBreathWedges - 1]);
-    gDPLoadSync(gDisplayListHead++);
-    gDPLoadBlock(gDisplayListHead++, G_TX_LOADTILE, 0, 0, 32 * 32 - 1, CALC_DXT(32, G_IM_SIZ_16b_BYTES));
-    gSP1Triangle(gDisplayListHead++, 0, 1, 2, 0);
-    gSP1Triangle(gDisplayListHead++, 0, 2, 3, 0);
+
+void render_hud_power_meter_luigi(void) {
+    s16 shownHealthWedges = gHudDisplay.wedgesluigi;
+    f32 powerMeterX, powerMeterY;
+    f32 srcX, srcY, dstX, dstY;
+    f32 interpolation, shakiness, range;
+    prevHurt = hurt;
+    hurt = gLuigiState->hurtCounter;
+    if (hurtTimer != 0) {
+        hurtTimer--;
+        if (hurtTimer < 16 && gLuigiState->lhealth < 0x0300) hurtTimer = 16;
+    }
+    if (hurt != 0 && prevHurt == 0) hurtTimer = 90;
+    powerMeterX = SCREEN_CENTER_X;
+    powerMeterY = SCREEN_HEIGHT - 32 - 10;
+    if (hurtTimer > 15) {
+        powerMeterX = SCREEN_WIDTH / 2.f - 28;
+        powerMeterY = SCREEN_HEIGHT / 2.f + 32;
+    }
+    else if (hurtTimer <= 15 && hurtTimer != 0) {
+        srcX = SCREEN_WIDTH / 2.f - 28;
+        srcY = SCREEN_HEIGHT / 2.f + 32;
+        dstX = powerMeterX;
+        dstY = powerMeterY;
+        interpolation = 1 - sqr(1 - map_value(15, 1, 0, 1, hurtTimer));
+        powerMeterX = map_value(0, 1, srcX, dstX, interpolation);
+        powerMeterY = map_value(0, 1, srcY, dstY, interpolation);
+    }
+    shakiness = gLuigiState->hurtCounter;
+    range = (s32)(shakiness * 3);
+    if (range > 0) {
+        powerMeterX = powerMeterX + (random_float() * (range + range) - range);
+        powerMeterY = powerMeterY + (random_float() * (range + range) - range);
+    }
+    sPowerMeterHUD.x = powerMeterX + 12;
+    sPowerMeterHUD.y = powerMeterY;
+    render_dl_power_meter(shownHealthWedges);
 }
-
-/**
- * Renders breath meter display lists.
- * That includes the base and the colored segment textures.
- */
-void render_dl_breath_meter(s16 numBreathWedges) {
-    Mtx *mtx = alloc_display_list(sizeof(Mtx));
-
-    if (mtx == NULL) {
-        return;
-    }
-
-    guTranslate(mtx, (f32) sBreathMeterHUD.x, (f32) sBreathMeterHUD.y, 0);
-    gSPMatrix(      gDisplayListHead++, VIRTUAL_TO_PHYSICAL(mtx++),
-                    G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
-    gSPDisplayList( gDisplayListHead++, &dl_breath_meter_base);
-    if (numBreathWedges != 0) {
-        gSPDisplayList(gDisplayListHead++, &dl_breath_meter_health_segments_begin);
-        render_breath_meter_segment(numBreathWedges);
-        gSPDisplayList(gDisplayListHead++, &dl_breath_meter_health_segments_end);
-    }
-    gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
-}
-
-/**
- * Breath meter animation called after emphasized mode.
- * Moves breath meter y pos speed until it's visible.
- */
-static void animate_breath_meter_sliding_in(void) {
-    approach_s16_symmetric_bool(&sBreathMeterHUD.y, HUD_BREATH_METER_Y, 5);
-    if (sBreathMeterHUD.y         == HUD_BREATH_METER_Y) {
-        sBreathMeterHUD.animation = BREATH_METER_VISIBLE;
-    }
-}
-
-/**
- * Breath meter animation called when there's 8 health segments.
- * Moves breath meter y pos quickly until it's hidden.
- */
-static void animate_breath_meter_sliding_out(void) {
-    approach_s16_symmetric_bool(&sBreathMeterHUD.y, HUD_BREATH_METER_HIDDEN_Y, 20);
-    if (sBreathMeterHUD.y         == HUD_BREATH_METER_HIDDEN_Y) {
-        sBreathMeterHUD.animation = BREATH_METER_HIDDEN;
-    }
-}
-
-/**
- * Handles breath meter actions depending of the health segments values.
- */
-void handle_breath_meter_actions(s16 numBreathWedges) {
-    // Show breath meter if health is not full, less than 8
-    if ((numBreathWedges < 8) && (sBreathMeterStoredValue == 8) && sBreathMeterHUD.animation == BREATH_METER_HIDDEN) {
-        sBreathMeterHUD.animation = BREATH_METER_SHOWING;
-        // sBreathMeterHUD.y         = HUD_BREATH_METER_Y;
-    }
-    // Show breath meter if breath is full, has 8
-    if ((numBreathWedges == 8) && (sBreathMeterStoredValue  == 7)) sBreathMeterVisibleTimer  = 0;
-    // After breath is full, hide breath meter
-    if ((numBreathWedges == 8) && (sBreathMeterVisibleTimer > 45)) sBreathMeterHUD.animation = BREATH_METER_HIDING;
-    // Update to match breath value
-    sBreathMeterStoredValue = numBreathWedges;
-    // If Mario is swimming, keep breath meter visible
-    if (gPlayerCameraState->action & ACT_FLAG_SWIMMING) {
-        if (sBreathMeterHUD.animation == BREATH_METER_HIDDEN) {
-            sBreathMeterHUD.animation = BREATH_METER_SHOWING;
-        }
-        sBreathMeterVisibleTimer = 0;
-    }
-}
-
-void render_hud_breath_meter(void) {
-    s16 shownBreathAmount = gHudDisplay.breath;
-    if (sBreathMeterHUD.animation != BREATH_METER_HIDING) handle_breath_meter_actions(shownBreathAmount);
-    if (sBreathMeterHUD.animation == BREATH_METER_HIDDEN) return;
-    switch (sBreathMeterHUD.animation) {
-        case BREATH_METER_SHOWING:       animate_breath_meter_sliding_in();  break;
-        case BREATH_METER_HIDING:        animate_breath_meter_sliding_out(); break;
-        default:                                                             break;
-    }
-    render_dl_breath_meter(shownBreathAmount);
-    sBreathMeterVisibleTimer++;
-}
-#endif
 
 
 /**
  * Renders the amount of lives Mario has.
  */
 void render_hud_mario_lives(void) {
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71), HUD_TOP_Y, ","); // 'Mario Head' glyph
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56), HUD_TOP_Y, "*"); // 'X' glyph
-    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44), HUD_TOP_Y, "%d", gHudDisplay.lives);
-
+if(gSoundMode == SOUND_MODE_MONO){
+    print_text(SCREEN_CENTER_X - 15 - 7, HUD_TOP_Y - 60, ","); // 'Mario Head' glyph
+    print_text(SCREEN_CENTER_X - 7, HUD_TOP_Y - 60, "*"); // 'X' glyph
+    print_text_fmt_int(SCREEN_CENTER_X + 15 - 7, HUD_TOP_Y - 60, "%d", gHudDisplay.lives);
 }
-
+if(gSoundMode == SOUND_MODE_STEREO){
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(20) - (1 - gHudOffset) * 120, HUD_TOP_Y, ","); // 'Mario Head' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(36) - (1 - gHudOffset) * 120, HUD_TOP_Y, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(51) - (1 - gHudOffset) * 120, HUD_TOP_Y, "%d", gHudDisplay.lives);
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120, HUD_TOP_Y, "+"); // 'Luigi Head' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56) + (1 - gHudOffset) * 120, HUD_TOP_Y, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(40) + (1 - gHudOffset) * 120, HUD_TOP_Y, "%d", gHudDisplay.lives);
+}
+}
 
 #ifdef VANILLA_STYLE_CUSTOM_DEBUG
 void render_debug_mode(void) {
@@ -415,9 +421,9 @@ void render_debug_mode(void) {
  * Renders the amount of coins collected.
  */
 void render_hud_coins(void) {
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71), HUD_TOP_Y - 20, "$"); // 'Coin' glyph
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56), HUD_TOP_Y - 20, "*"); // 'X' glyph
-    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44), HUD_TOP_Y - 20, "%d", gHudDisplay.coins);
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(132) - 4 , HUD_TOP_Y, "$"); // 'Coin' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(119) - 2, HUD_TOP_Y, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(103) -4, HUD_TOP_Y, "%d", gHudDisplay.coins);
 }
 
 /**
@@ -426,9 +432,9 @@ void render_hud_coins(void) {
  */
 void render_hud_stars(void) {
     if (gHudFlash == HUD_FLASH_STARS && gGlobalTimer & 0x8) return;
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71), HUD_TOP_Y - 40, "^"); // 'Star' glyph
-    print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(56), HUD_TOP_Y - 40, "*"); // 'X' glyph
-    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(44),HUD_TOP_Y - 40, "%d", gHudDisplay.stars);
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(100) - 10, HUD_TOP_Y, "^"); // 'Star' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(116) - 10, HUD_TOP_Y, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(129) - 10,HUD_TOP_Y, "%d", gHudDisplay.stars);
 }
 
 /**
@@ -436,13 +442,11 @@ void render_hud_stars(void) {
  * Leftover function from the beta version of the game.
  */
 void render_hud_keys(void) {
-    s16 i;
-
-    for (i = 0; i < gHudDisplay.keys; i++) {
-        print_text((i * 16) + 220, 142, "|"); // unused glyph - beta key
+    char* keys[] = { ".", "/" };
+    for (u8 i = 0; i < 3; i++) {
+        print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(71) + (1 - gHudOffset) * 120 + i * 15, HUD_TOP_Y - 60, keys[i < gMarioState->numKeys]);
     }
 }
-
 
 /**
  * Renders the timer when Mario start sliding in PSS.
@@ -522,89 +526,41 @@ void render_hud_camera_status(void) {
     gSPDisplayList(gDisplayListHead++, dl_hud_img_end);
 }
 
+void render_hud_red_coins() {
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(8), 16 - (1 - gHudRedCoinOffset) * 120, "@"); // 'Coin' glyph
+    print_text(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(23), 16 - (1 - gHudRedCoinOffset) * 120, "*"); // 'X' glyph
+    print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_LEFT_EDGE(35), 16 - (1 - gHudRedCoinOffset) * 120, "%d", gRedCoinsCollected);
+}
+
+void hud_set_idle(u8 idle) {
+    gHudIdle = idle;
+}
+
+void hud_force_idle() {
+    gHudIdleTimer = MAX(15, gHudIdleTimer);
+    gHudForceIdle = 150;
+}
+
 /**
  * Render HUD strings using hudDisplayFlags with it's render functions,
  * excluding the cannon reticle which detects a camera preset for it.
  */
-void render_hud_p1(s32 x, s32 y, s32 width, s32 height, s32 s, s32 t) {
-	s32 xl = MAX(0, x);
-	s32 yl = MAX(0, y);
-	s32 xh = MAX(0, x + width - 1);
-	s32 yh = MAX(0, y + height - 1);
-	s = (x < 0) ? s - x : s;
-	t = (y < 0) ? t - y : t;
-	gDPPipeSync(gDisplayListHead++);
-	gDPSetCycleType(gDisplayListHead++, G_CYC_COPY);
-	gDPSetTexturePersp(gDisplayListHead++, G_TP_NONE);
-	gDPSetAlphaCompare(gDisplayListHead++, G_AC_THRESHOLD);
-	gDPSetBlendColor(gDisplayListHead++, 255, 255, 255, 255);
-	gDPSetRenderMode(gDisplayListHead++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
-	gDPSetTextureLUT(gDisplayListHead++, G_TT_RGBA16);
-	gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, segmented_to_virtual(render_hud_p1_texture_pal_rgba16));
-	gDPTileSync(gDisplayListHead++);
-	gDPSetTile(gDisplayListHead++, 0, 0, 0, 256, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0);
-	gDPLoadSync(gDisplayListHead++);
-	gDPLoadTLUTCmd(gDisplayListHead++, 7, 25);
-	gDPPipeSync(gDisplayListHead++);
-	gDPTileSync(gDisplayListHead++);
-	gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_CI, G_IM_SIZ_8b_LOAD_BLOCK, 1, segmented_to_virtual(render_hud_p1_texture));
-	gDPSetTile(gDisplayListHead++, G_IM_FMT_CI, G_IM_SIZ_8b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0);
-	gDPLoadSync(gDisplayListHead++);
-	gDPLoadBlock(gDisplayListHead++, 7, 0, 0, 511, 512);
-	gDPPipeSync(gDisplayListHead++);
-	gDPSetTile(gDisplayListHead++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0);
-	gDPSetTileSize(gDisplayListHead++, 0, 0, 0, 124, 124);
-	gSPScisTextureRectangle(gDisplayListHead++, xl << 2, yl << 2, xh << 2, yh << 2, 0, s << 5, t << 5,  4096, 1024);
-	gDPSetTextureLUT(gDisplayListHead++, G_TT_NONE);
-	gDPPipeSync(gDisplayListHead++);
-	gDPSetCycleType(gDisplayListHead++, G_CYC_1CYCLE);
-	gSPTexture(gDisplayListHead++, 65535, 65535, 0, G_TX_RENDERTILE, G_OFF);
-	gDPSetTexturePersp(gDisplayListHead++, G_TP_PERSP);
-	gDPSetAlphaCompare(gDisplayListHead++, G_AC_NONE);
-	gDPSetRenderMode(gDisplayListHead++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
-}
-
-
-void render_hud_p2(s32 x, s32 y, s32 width, s32 height, s32 s, s32 t) {
-	s32 xl = MAX(0, x);
-	s32 yl = MAX(0, y);
-	s32 xh = MAX(0, x + width - 1);
-	s32 yh = MAX(0, y + height - 1);
-	s = (x < 0) ? s - x : s;
-	t = (y < 0) ? t - y : t;
-	gDPPipeSync(gDisplayListHead++);
-	gDPSetCycleType(gDisplayListHead++, G_CYC_COPY);
-	gDPSetTexturePersp(gDisplayListHead++, G_TP_NONE);
-	gDPSetAlphaCompare(gDisplayListHead++, G_AC_THRESHOLD);
-	gDPSetBlendColor(gDisplayListHead++, 255, 255, 255, 255);
-	gDPSetRenderMode(gDisplayListHead++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
-	gDPSetTextureLUT(gDisplayListHead++, G_TT_RGBA16);
-	gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, segmented_to_virtual(render_hud_p2_texture_pal_rgba16));
-	gDPTileSync(gDisplayListHead++);
-	gDPSetTile(gDisplayListHead++, 0, 0, 0, 256, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 0, 0);
-	gDPLoadSync(gDisplayListHead++);
-	gDPLoadTLUTCmd(gDisplayListHead++, 7, 27);
-	gDPPipeSync(gDisplayListHead++);
-	gDPTileSync(gDisplayListHead++);
-	gDPSetTextureImage(gDisplayListHead++, G_IM_FMT_CI, G_IM_SIZ_8b_LOAD_BLOCK, 1, segmented_to_virtual(render_hud_p2_texture));
-	gDPSetTile(gDisplayListHead++, G_IM_FMT_CI, G_IM_SIZ_8b_LOAD_BLOCK, 0, 0, 7, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0);
-	gDPLoadSync(gDisplayListHead++);
-	gDPLoadBlock(gDisplayListHead++, 7, 0, 0, 511, 512);
-	gDPPipeSync(gDisplayListHead++);
-	gDPSetTile(gDisplayListHead++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, 0, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0, G_TX_WRAP | G_TX_NOMIRROR, 5, 0);
-	gDPSetTileSize(gDisplayListHead++, 0, 0, 0, 124, 124);
-	gSPScisTextureRectangle(gDisplayListHead++, xl << 2, yl << 2, xh << 2, yh << 2, 0, s << 5, t << 5,  4096, 1024);
-	gDPSetTextureLUT(gDisplayListHead++, G_TT_NONE);
-	gDPPipeSync(gDisplayListHead++);
-	gDPSetCycleType(gDisplayListHead++, G_CYC_1CYCLE);
-	gSPTexture(gDisplayListHead++, 65535, 65535, 0, G_TX_RENDERTILE, G_OFF);
-	gDPSetTexturePersp(gDisplayListHead++, G_TP_PERSP);
-	gDPSetAlphaCompare(gDisplayListHead++, G_AC_NONE);
-	gDPSetRenderMode(gDisplayListHead++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
-}
-
-
 void render_hud(void) {
+    if (gHudIdle || gHudForceIdle > 0) {
+        gHudIdleTimer++;
+        if (gHudIdleTimer > 60) gHudIdleTimer = 60;
+    }
+    else {
+        gHudIdleTimer--;
+        if (gHudIdleTimer < 0) gHudIdleTimer = 0;
+    }
+    if (gHudForceIdle > 0) gHudForceIdle--;
+    gHudOffset = (1 - (1 - gHudIdleTimer / 60.f) * (1 - gHudIdleTimer / 60.f));
+    if (gRedCoinsCollected > 0) {
+        gHudRedCoinTimer++;
+        if (gHudRedCoinTimer > 60) gHudRedCoinTimer = 60;
+        gHudRedCoinOffset = (1 - (1 - gHudRedCoinTimer / 60.f) * (1 - gHudRedCoinTimer / 60.f));
+    }
     s16 hudDisplayFlags = gHudDisplay.flags;
 
     if (hudDisplayFlags == HUD_DISPLAY_NONE) {
@@ -644,22 +600,18 @@ void render_hud(void) {
         }
 #endif
 
-
         if (hudDisplayFlags & HUD_DISPLAY_FLAG_COIN_COUNT) {
             render_hud_coins();
+            render_hud_red_coins();
         }
 
         if (hudDisplayFlags & HUD_DISPLAY_FLAG_STAR_COUNT) {
             render_hud_stars();
         }
 
-        if (hudDisplayFlags & HUD_DISPLAY_FLAG_KEYS) {
-            render_hud_keys();
-        }
 
-#ifdef BREATH_METER
-        if (hudDisplayFlags & HUD_DISPLAY_FLAG_BREATH_METER) render_hud_breath_meter();
-#endif
+        if (hudDisplayFlags & HUD_DISPLAY_FLAG_CAMERA_AND_POWER) render_hud_power_meter_luigi();
+
 
         if (hudDisplayFlags & HUD_DISPLAY_FLAG_CAMERA_AND_POWER) {
             render_hud_power_meter();
@@ -683,4 +635,3 @@ void render_hud(void) {
 #endif
     }
 }
-

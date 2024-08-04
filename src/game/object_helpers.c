@@ -2037,6 +2037,11 @@ s32 cur_obj_update_dialog(s32 actionArg, s32 dialogFlags, s32 dialogID, UNUSED s
                 o->activeFlags |= ACTIVE_FLAG_INITIATED_TIME_STOP;
                 o->oDialogState++;
             }
+            if (gMarioState->lhealth >= 0x100) {
+                gTimeStopState |= TIME_STOP_ENABLED;
+                o->activeFlags |= ACTIVE_FLAG_INITIATED_TIME_STOP;
+                o->oDialogState++;
+            }
             break;
 #endif
         case DIALOG_STATUS_INTERRUPT:
@@ -2119,6 +2124,12 @@ s32 cur_obj_update_dialog_with_cutscene(s32 actionArg, s32 dialogFlags, s32 cuts
             //  allows us to move during time stop as long as Mario never enters
             //  an action that can be interrupted with text.
             if (gMarioState->health >= 0x0100) {
+                gTimeStopState |= TIME_STOP_ENABLED;
+                o->activeFlags |= ACTIVE_FLAG_INITIATED_TIME_STOP;
+                o->oDialogState++;
+                o->oDialogResponse = DIALOG_RESPONSE_NONE;
+            }
+            if (gMarioState->lhealth >= 0x0100) {
                 gTimeStopState |= TIME_STOP_ENABLED;
                 o->activeFlags |= ACTIVE_FLAG_INITIATED_TIME_STOP;
                 o->oDialogState++;

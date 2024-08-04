@@ -1097,6 +1097,7 @@ s32 check_common_stationary_cancels(struct MarioState *m) {
 
 s32 mario_execute_stationary_action(struct MarioState *m) {
     s32 cancel;
+    u8 is_idle;
 
     if (check_common_stationary_cancels(m)) {
         return TRUE;
@@ -1106,47 +1107,52 @@ s32 mario_execute_stationary_action(struct MarioState *m) {
         return TRUE;
     }
 
-    /* clang-format off */
+#define i is_idle = 1;
+#define n is_idle = 0;
     switch (m->action) {
-        case ACT_IDLE:                    cancel = act_idle(m);                             break;
-        case ACT_START_SLEEPING:          cancel = act_start_sleeping(m);                   break;
-        case ACT_SLEEPING:                cancel = act_sleeping(m);                         break;
-        case ACT_WAKING_UP:               cancel = act_waking_up(m);                        break;
-        case ACT_PANTING:                 cancel = act_panting(m);                          break;
-        case ACT_HOLD_PANTING_UNUSED:     cancel = act_hold_panting_unused(m);              break;
-        case ACT_HOLD_IDLE:               cancel = act_hold_idle(m);                        break;
-        case ACT_HOLD_HEAVY_IDLE:         cancel = act_hold_heavy_idle(m);                  break;
-        case ACT_IN_QUICKSAND:            cancel = act_in_quicksand(m);                     break;
-        case ACT_STANDING_AGAINST_WALL:   cancel = act_standing_against_wall(m);            break;
-        case ACT_COUGHING:                cancel = act_coughing(m);                         break;
-        case ACT_SHIVERING:               cancel = act_shivering(m);                        break;
-        case ACT_CROUCHING:               cancel = act_crouching(m);                        break;
-        case ACT_START_CROUCHING:         cancel = act_start_crouching(m);                  break;
-        case ACT_STOP_CROUCHING:          cancel = act_stop_crouching(m);                   break;
-        case ACT_START_CRAWLING:          cancel = act_start_crawling(m);                   break;
-        case ACT_STOP_CRAWLING:           cancel = act_stop_crawling(m);                    break;
-        case ACT_SLIDE_KICK_SLIDE_STOP:   cancel = act_slide_kick_slide_stop(m);            break;
-        case ACT_SHOCKWAVE_BOUNCE:        cancel = act_shockwave_bounce(m);                 break;
-        case ACT_FIRST_PERSON:            cancel = act_first_person(m);                     break;
-        case ACT_JUMP_LAND_STOP:          cancel = act_jump_land_stop(m);                   break;
-        case ACT_DOUBLE_JUMP_LAND_STOP:   cancel = act_double_jump_land_stop(m);            break;
-        case ACT_FREEFALL_LAND_STOP:      cancel = act_freefall_land_stop(m);               break;
-        case ACT_SIDE_FLIP_LAND_STOP:     cancel = act_side_flip_land_stop(m);              break;
-        case ACT_HOLD_JUMP_LAND_STOP:     cancel = act_hold_jump_land_stop(m);              break;
-        case ACT_HOLD_FREEFALL_LAND_STOP: cancel = act_hold_freefall_land_stop(m);          break;
-        case ACT_AIR_THROW_LAND:          cancel = act_air_throw_land(m);                   break;
-        case ACT_LAVA_BOOST_LAND:         cancel = act_lava_boost_land(m);                  break;
-        case ACT_TWIRL_LAND:              cancel = act_twirl_land(m);                       break;
-        case ACT_TRIPLE_JUMP_LAND_STOP:   cancel = act_triple_jump_land_stop(m);            break;
-        case ACT_BACKFLIP_LAND_STOP:      cancel = act_backflip_land_stop(m);               break;
-        case ACT_LONG_JUMP_LAND_STOP:     cancel = act_long_jump_land_stop(m);              break;
-        case ACT_GROUND_POUND_LAND:       cancel = act_ground_pound_land(m);                break;
-        case ACT_BRAKING_STOP:            cancel = act_braking_stop(m);                     break;
-        case ACT_BUTT_SLIDE_STOP:         cancel = act_butt_slide_stop(m);                  break;
-        case ACT_HOLD_BUTT_SLIDE_STOP:    cancel = act_hold_butt_slide_stop(m);             break;
-        default:                          cancel = TRUE;                                    break;
+        case ACT_IDLE:                    i cancel = act_idle(m);                             break;
+        case ACT_START_SLEEPING:          i cancel = act_start_sleeping(m);                   break;
+        case ACT_SLEEPING:                i cancel = act_sleeping(m);                         break;
+        case ACT_WAKING_UP:               i cancel = act_waking_up(m);                        break;
+        case ACT_PANTING:                 i cancel = act_panting(m);                          break;
+        case ACT_HOLD_PANTING_UNUSED:     i cancel = act_hold_panting_unused(m);              break;
+        case ACT_HOLD_IDLE:               i cancel = act_hold_idle(m);                        break;
+        case ACT_HOLD_HEAVY_IDLE:         i cancel = act_hold_heavy_idle(m);                  break;
+        case ACT_IN_QUICKSAND:            i cancel = act_in_quicksand(m);                     break;
+        case ACT_STANDING_AGAINST_WALL:   i cancel = act_standing_against_wall(m);            break;
+        case ACT_COUGHING:                i cancel = act_coughing(m);                         break;
+        case ACT_SHIVERING:               i cancel = act_shivering(m);                        break;
+        case ACT_CROUCHING:               i cancel = act_crouching(m);                        break;
+        case ACT_START_CROUCHING:         n cancel = act_start_crouching(m);                  break;
+        case ACT_STOP_CROUCHING:          n cancel = act_stop_crouching(m);                   break;
+        case ACT_START_CRAWLING:          n cancel = act_start_crawling(m);                   break;
+        case ACT_STOP_CRAWLING:           n cancel = act_stop_crawling(m);                    break;
+        case ACT_SLIDE_KICK_SLIDE_STOP:   n cancel = act_slide_kick_slide_stop(m);            break;
+        case ACT_SHOCKWAVE_BOUNCE:        n cancel = act_shockwave_bounce(m);                 break;
+        case ACT_FIRST_PERSON:            i cancel = act_first_person(m);                     break;
+        case ACT_JUMP_LAND_STOP:          n cancel = act_jump_land_stop(m);                   break;
+        case ACT_DOUBLE_JUMP_LAND_STOP:   n cancel = act_double_jump_land_stop(m);            break;
+        case ACT_FREEFALL_LAND_STOP:      n cancel = act_freefall_land_stop(m);               break;
+        case ACT_SIDE_FLIP_LAND_STOP:     n cancel = act_side_flip_land_stop(m);              break;
+        case ACT_HOLD_JUMP_LAND_STOP:     n cancel = act_hold_jump_land_stop(m);              break;
+        case ACT_HOLD_FREEFALL_LAND_STOP: n cancel = act_hold_freefall_land_stop(m);          break;
+        case ACT_AIR_THROW_LAND:          n cancel = act_air_throw_land(m);                   break;
+        case ACT_LAVA_BOOST_LAND:         n cancel = act_lava_boost_land(m);                  break;
+        case ACT_TWIRL_LAND:              n cancel = act_twirl_land(m);                       break;
+        case ACT_TRIPLE_JUMP_LAND_STOP:   n cancel = act_triple_jump_land_stop(m);            break;
+        case ACT_BACKFLIP_LAND_STOP:      n cancel = act_backflip_land_stop(m);               break;
+        case ACT_LONG_JUMP_LAND_STOP:     n cancel = act_long_jump_land_stop(m);              break;
+        case ACT_GROUND_POUND_LAND:       n cancel = act_ground_pound_land(m);                break;
+        case ACT_BRAKING_STOP:            n cancel = act_braking_stop(m);                     break;
+        case ACT_BUTT_SLIDE_STOP:         n cancel = act_butt_slide_stop(m);                  break;
+        case ACT_HOLD_BUTT_SLIDE_STOP:    n cancel = act_hold_butt_slide_stop(m);             break;
+        default:                          n cancel = TRUE;                                    break;
     }
+#undef i
+#undef n
     /* clang-format on */
+
+    hud_set_idle(is_idle);
 
     if (!cancel && (m->input & INPUT_IN_WATER)) {
         m->particleFlags |= PARTICLE_IDLE_WATER_WAVE;

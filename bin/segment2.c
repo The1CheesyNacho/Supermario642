@@ -337,15 +337,9 @@ ALIGNED8 static const Texture texture_hud_char_double_quote[] = {
 #include "textures/segment2/segment2.04A00.rgba16.inc.c"
 };
 
-#if defined(VERSION_EU) || defined(COMPLETE_EN_US_SEGMENT2)
-ALIGNED8 static const Texture texture_hud_char_umlaut[] = {
-#include "textures/segment2/segment2.04A00.rgba16.inc.c" //EU ¨
-};
-#else
 ALIGNED8 static const Texture texture_hud_char_umlaut[] = {
 #include "textures/segment2/segment2.umlaut_us.rgba16.inc.c"// EU ¨
 };
-#endif
 
 #if defined(VERSION_JP) || defined(VERSION_SH) || defined(COMPLETE_EN_US_SEGMENT2)
 ALIGNED8 static const Texture texture_hud_char_exclamation[] = {
@@ -399,7 +393,7 @@ ALIGNED8 static const Texture texture_hud_char_multiply[] = {
 };
 
 ALIGNED8 static const Texture texture_hud_char_coin[] = {
-#include "textures/segment2/segment2.05800.rgba16.inc.c"
+#include "textures/segment2/custom_segment2.05800.rgba16.inc.c"
 };
 
 ALIGNED8 static const Texture texture_hud_char_red_coin[] = {
@@ -411,20 +405,20 @@ ALIGNED8 static const Texture texture_hud_char_silver_coin[] = {
 };
 
 ALIGNED8 static const Texture texture_hud_char_mario_head[] = {
-#include "textures/segment2/segment2.05A00.rgba16.inc.c"
+#include "textures/segment2/custom_segment2.05A00.rgba16.inc.c"
 };
 
 ALIGNED8 static const Texture texture_hud_char_star[] = {
-#include "textures/segment2/segment2.05C00.rgba16.inc.c"
+#include "textures/segment2/custom_segment2.05C00.rgba16.inc.c"
 };
 
 #if defined(VERSION_JP) || defined(VERSION_SH) || defined(COMPLETE_EN_US_SEGMENT2)
 ALIGNED8 static const Texture texture_hud_char_decimal_point[] = {
-#include "textures/segment2/segment2.05E00.rgba16.inc.c"
+#include "textures/segment2/custom_segment2.05E00.rgba16.inc.c"
 };
 
 ALIGNED8 static const Texture texture_hud_char_beta_key[] = {
-#include "textures/segment2/segment2.06000.rgba16.inc.c"
+#include "textures/segment2/custom_segment2.06000.rgba16.inc.c"
 };
 #else
 ALIGNED8 static const Texture texture_hud_char_decimal_point[] = {
@@ -432,7 +426,7 @@ ALIGNED8 static const Texture texture_hud_char_decimal_point[] = {
 };
 
 ALIGNED8 static const Texture texture_hud_char_beta_key[] = {
-#include "textures/segment2/segment2.beta_key.rgba16.inc.c"
+#include "textures/segment2/custom_segment2.beta_key.rgba16.inc.c"
 };
 #endif
 
@@ -2012,6 +2006,10 @@ ALIGNED8 static const Texture texture_hud_char_arrow_down[] = {
 #include "textures/segment2/segment2.081D0.rgba16.inc.c"
 };
 
+ALIGNED8 static const Texture texture_hud_char_playerone[] = {
+#include "textures/segment2/segment2.07F694.rgba16.inc.c"
+};
+
 // Main HUD print table 0x02008250-0x02008337
 const Texture *const main_hud_lut[] = {
     texture_hud_char_0, texture_hud_char_1, texture_hud_char_2, texture_hud_char_3,
@@ -2250,13 +2248,17 @@ const Texture *const main_credits_font_lut[] = {
 // HUD camera table 0x020087CC-0x020087E3
 const Texture *const main_hud_camera_lut[] = {
     texture_hud_char_camera, texture_hud_char_mario_head, texture_hud_char_lakitu, texture_hud_char_no_camera,
-    texture_hud_char_arrow_up, texture_hud_char_arrow_down,
+    texture_hud_char_arrow_up, texture_hud_char_arrow_down, texture_hud_char_playerone,
 };
 
 // If you change the language here, the following Makefile rule also needs to
 // change, to generate the right version of define_text.inc.c:
 // $(BUILD_DIR)/bin/segment2.o: $(BUILD_DIR)/text/$(VERSION)/define_text.inc.c
+#if defined(VERSION_JP) || defined(VERSION_SH)
+#include "text/jp/define_text.inc.c"
+#elif defined(VERSION_US)
 #include "text/us/define_text.inc.c"
+#endif
 
 // 0x0200EC60 - 0x0200EC98
 const Gfx dl_hud_img_begin[] = {
@@ -2277,6 +2279,16 @@ const Gfx dl_hud_img_load_tex_block[] = {
     gsDPLoadBlock(G_TX_LOADTILE, 0, 0, ((16 * 16) - 1), CALC_DXT(16, G_IM_SIZ_16b_BYTES)),
     gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 4, 0, G_TX_RENDERTILE, 0, (G_TX_WRAP | G_TX_NOMIRROR), 4, G_TX_NOLOD, (G_TX_WRAP | G_TX_NOMIRROR), 4, G_TX_NOLOD),
     gsDPSetTileSize(0, 0, 0, ((16 - 1) << G_TEXTURE_IMAGE_FRAC), ((16 - 1) << G_TEXTURE_IMAGE_FRAC)),
+    gsSPEndDisplayList(),
+};
+
+// 0x0200EC98 - 0x0200ECC8
+const Gfx dl_hud_img_load_tex_block_32[] = {
+    gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, (G_TX_WRAP | G_TX_NOMIRROR), 8, G_TX_NOLOD, (G_TX_WRAP | G_TX_NOMIRROR), 8, G_TX_NOLOD),
+    gsDPLoadSync(),
+    gsDPLoadBlock(G_TX_LOADTILE, 0, 0, ((32 * 32) - 1), CALC_DXT(32, G_IM_SIZ_16b_BYTES)),
+    gsDPSetTile(G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, G_TX_RENDERTILE, 0, (G_TX_WRAP | G_TX_NOMIRROR), 8, G_TX_NOLOD, (G_TX_WRAP | G_TX_NOMIRROR), 8, G_TX_NOLOD),
+    gsDPSetTileSize(0, 0, 0, (32 - 1) << G_TEXTURE_IMAGE_FRAC, (32 - 1) << G_TEXTURE_IMAGE_FRAC),
     gsSPEndDisplayList(),
 };
 
@@ -2370,8 +2382,8 @@ static const Vtx vertex_ia8_char[] = {
 #else
     {{{     0,      0,      0}, 0, {     0,    256}, {0xff, 0xff, 0xff, 0xff}}},
     {{{     8,      0,      0}, 0, {     0,      0}, {0xff, 0xff, 0xff, 0xff}}},
-    {{{     8,     16,      0}, 0, {   480,      0}, {0xff, 0xff, 0xff, 0xff}}},
-    {{{     0,     16,      0}, 0, {   480,    256}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{     8,     16,      0}, 0, {   512,      0}, {0xff, 0xff, 0xff, 0xff}}},
+    {{{     0,     16,      0}, 0, {   512,    256}, {0xff, 0xff, 0xff, 0xff}}},
 #endif
 };
 
@@ -2390,11 +2402,11 @@ const Gfx dl_ia_text_begin[] = {
 
 // 0x020073E8 - 0x02007418
 const Gfx dl_ia_text_tex_settings[] = {
-    gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, (G_TX_WRAP | G_TX_MIRROR), 3, G_TX_NOLOD, (G_TX_WRAP | G_TX_MIRROR), 4, G_TX_NOLOD),
+    gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_WRAP | G_TX_NOMIRROR, 3, G_TX_NOLOD, G_TX_WRAP | G_TX_NOMIRROR, 4, G_TX_NOLOD),
     gsDPLoadSync(),
-    gsDPLoadBlock(G_TX_LOADTILE, 0, 0, ((((16 * 8) + G_IM_SIZ_4b_INCR) >> G_IM_SIZ_4b_SHIFT) - 1), CALC_DXT(16, G_IM_SIZ_4b_BYTES)),
-    gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_4b, 1, 0, G_TX_RENDERTILE, 0, (G_TX_WRAP | G_TX_MIRROR), 3, G_TX_NOLOD, (G_TX_WRAP | G_TX_MIRROR), 4, G_TX_NOLOD),
-    gsDPSetTileSize(0, 0, 0, ((16 - 1) << G_TEXTURE_IMAGE_FRAC), ((8 - 1) << G_TEXTURE_IMAGE_FRAC)),
+    gsDPLoadBlock(G_TX_LOADTILE, 0, 0, ((16 * 8 + G_IM_SIZ_4b_INCR) >> G_IM_SIZ_4b_SHIFT) - 1, CALC_DXT(16, G_IM_SIZ_4b_BYTES)),
+    gsDPSetTile(G_IM_FMT_IA, G_IM_SIZ_4b, 1, 0, G_TX_RENDERTILE, 0, G_TX_WRAP | G_TX_NOMIRROR, 3, G_TX_NOLOD, G_TX_WRAP | G_TX_NOMIRROR, 4, G_TX_NOLOD),
+    gsDPSetTileSize(0, 0, 0, (16 - 1) << G_TEXTURE_IMAGE_FRAC, (8 - 1) << G_TEXTURE_IMAGE_FRAC),
     gsSPVertex(vertex_ia8_char, 4, 0),
     gsSP2Triangles( 0,  1,  2, 0x0, 0,  2,  3, 0x0),
     gsSPEndDisplayList(),
@@ -2682,7 +2694,7 @@ const Texture texture_transition_mario[] = {
 };
 
 const Texture texture_transition_bowser_half[] = {
-#include "textures/segment2/custom_segment2.11458.ia8.inc.c"
+#include "textures/segment2/segment2.11458.ia8.inc.c"
 };
 
 const Texture texture_transition_skull_half[] = {

@@ -110,11 +110,12 @@ void init_luigi_from_save_file(void) {
     gLuigiState->numKeys = 0;
 
     gLuigiState->numLives = 4;
-    gLuigiState->health = 0x880;
+    gLuigiState->lhealth = 0x880;
+    gMarioState->lhealth = 0x880;
 
     gLuigiState->prevNumStarsForDialog = gLuigiState->numStars;
     gLuigiState->animYTrans = 0xBD;
 
     gHudDisplay.coins = 0;
-    gHudDisplay.wedges = 8;
+    gHudDisplay.wedgesluigi = 8;
 }

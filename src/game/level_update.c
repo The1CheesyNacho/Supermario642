@@ -309,6 +309,7 @@ void set_mario_initial_action(struct MarioState *m, u32 spawnType, u32 actionArg
 #ifdef PREVENT_DEATH_LOOP
     if (m->isDead) {
         m->health = 0x880;
+        m->lhealth = 0x880;
         m->isDead = FALSE;
     }
 #endif
@@ -937,6 +938,7 @@ void initiate_delayed_warp(void) {
 void update_hud_values(void) {
     if (gCurrCreditsEntry == NULL) {
         s16 numHealthWedges = gMarioState->health > 0 ? gMarioState->health >> 8 : 0;
+        s16 numHealthWedgesLuigi = gLuigiState->lhealth > 0 ? gMarioState->lhealth >> 8 : 0;
 
 #ifdef BREATH_METER
         s16 numBreathWedges = gMarioState->breath > 0 ? gMarioState->breath >> 8 : 0;
@@ -978,13 +980,13 @@ void update_hud_values(void) {
         if (numHealthWedges > gHudDisplay.wedges) {
             play_sound(SOUND_MENU_POWER_METER, gGlobalSoundSource);
         }
+        if (numHealthWedgesLuigi > gHudDisplay.wedgesluigi) {
+            play_sound(SOUND_MENU_POWER_METER, gGlobalSoundSource);
+        }
         gHudDisplay.wedges = numHealthWedges;
+        gHudDisplay.wedgesluigi = numHealthWedgesLuigi;
 
         COND_BIT((gMarioState->hurtCounter > 0), gHudDisplay.flags, HUD_DISPLAY_FLAG_EMPHASIZE_POWER);
-#ifdef BREATH_METER
-        gHudDisplay.breath = numBreathWedges;
-        COND_BIT((gMarioState->breath > 0), gHudDisplay.flags, HUD_DISPLAY_FLAG_BREATH_METER);
-#endif
     }
 }
 

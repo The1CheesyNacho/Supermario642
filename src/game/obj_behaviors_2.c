@@ -2,8 +2,6 @@
 
 #include "sm64.h"
 #include "actors/common0.h"
-#include "actors/group11.h"
-#include "actors/group17.h"
 #include "audio/external.h"
 #include "behavior_actions.h"
 #include "behavior_data.h"

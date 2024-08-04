@@ -26,7 +26,7 @@ void dorrie_act_move(void) {
 
     if (o->oDorrieForwardDistToMario < 320.0f && o->oDorrieGroundPounded) {
         cur_obj_play_sound_2(SOUND_OBJ_DORRIE);
-        o->collisionData = segmented_to_virtual(dorrie_seg6_collision_0600FBB8);
+        o->collisionData = segmented_to_virtual(NULL);
         o->oAction = DORRIE_ACT_LOWER_HEAD;
         o->oForwardVel = 0.0f;
         o->oDorrieYawVel = 0;
@@ -80,7 +80,7 @@ void dorrie_act_lower_head(void) {
 }
 
 void dorrie_act_raise_head(void) {
-    o->collisionData = segmented_to_virtual(dorrie_seg6_collision_0600F644);
+    o->collisionData = segmented_to_virtual(NULL);
     if (cur_obj_check_if_near_animation_end()) {
         o->oAction = DORRIE_ACT_MOVE;
     } else if (o->oDorrieLiftingMario && o->header.gfx.animInfo.animFrame < 74) {
