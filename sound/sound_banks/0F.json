@@ -29,28 +29,32 @@
     },
     "instruments": {
         "inst0": {
-            "release_rate": 100,
-            "normal_range_lo": 55,
-            "normal_range_hi": 56,
-            "envelope": "envelope0",
-            "sound_lo": "2A",
-            "sound": "2B",
-            "sound_hi": "2C"
+            "release_rate": 19,
+            "normal_range_hi": 50,
+            "envelope": "envelope2",
+            "sound": "54_original_betadrum",
+            "sound_hi": "54_original_betadrum"
         },
         "inst1": {
             "release_rate": 10,
             "envelope": "envelope1",
-            "sound": "22_boys_choir"
+            "sound": "55_snare_beta"
         },
         "inst2": {
-            "release_rate": 90,
+            "release_rate": 19,
+            "normal_range_hi": 50,
             "envelope": "envelope2",
-            "sound": "28_sitar_1"
+            "sound": "54_original_betadrum",
+            "sound_hi": "54_original_betadrum"
         },
         "inst3": {
             "release_rate": 10,
+            "normal_range_hi": 90,
+            "normal_range_lo": 55,
             "envelope": "envelope3",
-            "sound": "39_sitar_2"
+            "sound": "53_DDDBetasoundfont_beta",
+            "sound_hi": "22_boys_choir",
+            "sound_lo": "53_DDDBetasoundfont_beta"
         }
     },
     "instrument_list": [

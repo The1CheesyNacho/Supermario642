@@ -18,7 +18,7 @@ static const LevelScript script_func_local_2[] = {
     OBJECT(/*model*/ MODEL_NONE, /*pos*/ -1328,   260,  4664, /*angle*/ 0, 180, 0, /*behParam*/ 0x00040000, /*beh*/ bhvSpinAirborneCircleWarp),
 	OBJECT_WITH_ACTS(/*model*/ MODEL_GUMMY,    /*pos*/     -2500, 0, -1500, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvGoomba,          /*acts*/ ALL_ACTS),
 	OBJECT_WITH_ACTS(/*model*/ MODEL_GUMMY,    /*pos*/     0, 0, -2000, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvGoomba,          /*acts*/ ALL_ACTS),
-	OBJECT_WITH_ACTS(/*model*/ MODEL_GUMMY,    /*pos*/     -2500, 0, 1000, /*angle*/ 0, 0, 0, /*behParam*/ 0x00000000, /*beh*/ bhvGoomba,          /*acts*/ ALL_ACTS), 
+    OBJECT_WITH_ACTS(/*model*/ MODEL_MIPS_X,      /*pos*/ -2500, 0, 1000, /*angle*/ 0, 0, 0,    /*behParam*/ 0x01020000, /*beh*/ bhvKoopa,                 /*acts*/ ALL_ACTS), 
     RETURN(),
 };
 
@@ -36,8 +36,8 @@ const LevelScript level_course0_entry[] = {
     WARP_NODE(/*id*/ 0x01, /*destLevel*/ LEVEL_COURSE1,         /*destArea*/ 1, /*destNode*/ 0x01, /*flags*/ WARP_NO_CHECKPOINT),
     WARP_NODE(/*id*/ 0x02, /*destLevel*/ LEVEL_COURSE1,         /*destArea*/ 3, /*destNode*/ 0x02, /*flags*/ WARP_NO_CHECKPOINT),
     WARP_NODE(/*id*/ 0xF1, /*destLevel*/ LEVEL_COURSE1, /*destArea*/ 1, /*destNode*/ 0x03, /*flags*/ WARP_NO_CHECKPOINT),
-        TERRAIN(/*terrainData*/ course0_area_1_collision),
- //       SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0002, /*seq*/ SEQ_LEVEL_SLIDE), 
+    TERRAIN(/*terrainData*/ course0_area_1_collision),
+    SET_BACKGROUND_MUSIC(/*settingsPreset*/ 0x0002, /*seq*/ SEQ_WARIO), 
     TERRAIN_TYPE(/*terrainType*/ TERRAIN_STONE),
     JUMP_LINK(script_func_global_1),
 	        JUMP_LINK(script_func_local_2),

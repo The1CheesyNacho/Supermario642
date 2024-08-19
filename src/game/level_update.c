@@ -9,7 +9,7 @@
 #include "audio/synthesis.h"
 #include "level_update.h"
 #include "game_init.h"
-#include "level_update.h"
+#include "emutest.h"
 #include "main.h"
 #include "engine/math_util.h"
 #include "engine/graph_node.h"
@@ -305,14 +305,6 @@ void set_mario_initial_action(struct MarioState *m, u32 spawnType, u32 actionArg
             set_mario_action(m, ACT_SPECIAL_DEATH_EXIT, 0);
             break;
     }
-
-#ifdef PREVENT_DEATH_LOOP
-    if (m->isDead) {
-        m->health = 0x880;
-        m->lhealth = 0x880;
-        m->isDead = FALSE;
-    }
-#endif
 
     set_mario_initial_cap_powerup(m);
 }
@@ -937,8 +929,8 @@ void initiate_delayed_warp(void) {
 
 void update_hud_values(void) {
     if (gCurrCreditsEntry == NULL) {
-        s16 numHealthWedges = gMarioState->health > 0 ? gMarioState->health >> 8 : 0;
-        s16 numHealthWedgesLuigi = gLuigiState->lhealth > 0 ? gMarioState->lhealth >> 8 : 0;
+        s16 numHealthWedges = gMarioStates[0].health > 0 ? gMarioStates[0].health >> 8 : 0;
+        s16 numHealthWedgesLuigi = gMarioStates[1].lhealth > 0 ? gMarioStates[1].lhealth >> 8 : 0;
 
 #ifdef BREATH_METER
         s16 numBreathWedges = gMarioState->breath > 0 ? gMarioState->breath >> 8 : 0;
@@ -987,6 +979,7 @@ void update_hud_values(void) {
         gHudDisplay.wedgesluigi = numHealthWedgesLuigi;
 
         COND_BIT((gMarioState->hurtCounter > 0), gHudDisplay.flags, HUD_DISPLAY_FLAG_EMPHASIZE_POWER);
+        COND_BIT((gLuigiState->hurtCounterl > 0), gHudDisplay.flags, HUD_DISPLAY_FLAG_EMPHASIZE_POWER);
     }
 }
 
@@ -1262,6 +1255,7 @@ s32 levelNum;
     set_yoshi_as_not_dead();
 
     sTimerRunning = FALSE;
+
 
     if (sWarpDest.type != WARP_TYPE_NOT_WARPING) {
         if (sWarpDest.nodeId >= WARP_NODE_CREDITS_MIN) {

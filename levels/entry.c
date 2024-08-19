@@ -20,7 +20,8 @@ const LevelScript level_script_entry[] = {
     SET_REG(/*value*/ TEST_LEVEL),
     EXECUTE(/*seg*/ SEGMENT_GLOBAL_LEVEL_SCRIPT, /*script*/ _scriptsSegmentRomStart, /*scriptEnd*/ _scriptsSegmentRomEnd, /*entry*/ level_main_scripts_entry),
 #else
-    SET_REG(/*value*/ 0),
+    SET_REG(TEST_LEVEL),
+    CALL(     /*arg*/ 0, /*func*/ lvl_start_at_correct_location),
     EXECUTE(/*seg*/ SEGMENT_MENU_INTRO, /*script*/ _introSegmentRomStart, /*scriptEnd*/ _introSegmentRomEnd, /*entry*/ level_intro_splash_screen),
 #endif
     JUMP(/*target*/ level_script_entry),

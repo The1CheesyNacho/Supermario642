@@ -2037,7 +2037,7 @@ s32 cur_obj_update_dialog(s32 actionArg, s32 dialogFlags, s32 dialogID, UNUSED s
                 o->activeFlags |= ACTIVE_FLAG_INITIATED_TIME_STOP;
                 o->oDialogState++;
             }
-            if (gMarioState->lhealth >= 0x100) {
+            if (gLuigiState->lhealth >= 0x100) {
                 gTimeStopState |= TIME_STOP_ENABLED;
                 o->activeFlags |= ACTIVE_FLAG_INITIATED_TIME_STOP;
                 o->oDialogState++;
@@ -2129,7 +2129,7 @@ s32 cur_obj_update_dialog_with_cutscene(s32 actionArg, s32 dialogFlags, s32 cuts
                 o->oDialogState++;
                 o->oDialogResponse = DIALOG_RESPONSE_NONE;
             }
-            if (gMarioState->lhealth >= 0x0100) {
+            if (gLuigiState->lhealth >= 0x0100) {
                 gTimeStopState |= TIME_STOP_ENABLED;
                 o->activeFlags |= ACTIVE_FLAG_INITIATED_TIME_STOP;
                 o->oDialogState++;

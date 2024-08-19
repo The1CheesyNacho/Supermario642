@@ -11,12 +11,15 @@
 #include "actors/common0.h"
 #include "actors/common1.h"
 #include "actors/group0.h"
-#include "levels/course0/header.h"
 
+
+#include "levels/course0/header.h"
+#include "levels/pj64warn/header.h"
 
 #include "level_headers.h"
 
 #include "level_table.h"
+
 
 #define STUB_LEVEL(_0, _1, _2, _3, _4, _5, _6, _7, _8)
 #define DEFINE_LEVEL(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10) + 3
@@ -60,6 +63,7 @@ const LevelScript level_main_scripts_entry[] = {
     LOAD_MODEL_FROM_GEO(MODEL_WATER_SPLASH,            water_splash_geo),
     LOAD_MODEL_FROM_GEO(MODEL_WAVE_TRAIL,              wave_trail_geo),
     LOAD_MODEL_FROM_GEO(MODEL_YELLOW_COIN,             yellow_coin_geo),
+    LOAD_MODEL_FROM_GEO(MODEL_MIPS_X,                  mips_x_geo),
     LOAD_MODEL_FROM_GEO(MODEL_STAR,                    star_geo),
     LOAD_MODEL_FROM_GEO(MODEL_TRANSPARENT_STAR,        transparent_star_geo),
     LOAD_MODEL_FROM_GEO(MODEL_WOODEN_SIGNPOST,         wooden_signpost_geo),

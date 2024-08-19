@@ -314,10 +314,10 @@ void render_hud_power_meter(void) {
     f32 srcX, srcY, dstX, dstY;
     f32 interpolation, shakiness, range;
     prevHurt = hurt;
-    hurt = gMarioState->hurtCounter;
+    hurt = gMarioStates[0].hurtCounter;
     if (hurtTimer != 0) {
         hurtTimer--;
-        if (hurtTimer < 16 && gMarioState->health < 0x0300) hurtTimer = 16;
+        if (hurtTimer < 16 && gMarioStates[0].health < 0x0300) hurtTimer = 16;
     }
     if (hurt != 0 && prevHurt == 0) hurtTimer = 90;
     powerMeterX = SCREEN_CENTER_X;
@@ -335,7 +335,7 @@ void render_hud_power_meter(void) {
         powerMeterX = map_value(0, 1, srcX, dstX, interpolation);
         powerMeterY = map_value(0, 1, srcY, dstY, interpolation);
     }
-    shakiness = gMarioState->hurtCounter;
+    shakiness = gMarioStates[0].hurtCounter;
     range = (s32)(shakiness * 3);
     if (range > 0) {
         powerMeterX = powerMeterX + (random_float() * (range + range) - range);
@@ -347,16 +347,69 @@ void render_hud_power_meter(void) {
 }
 
 
+
+/**
+ * Renders power meter health segment texture using a table list.
+ */
+void render_luigi_meter_health_segment(s16 numHealthWedges) {
+    u8 *(*healthLUT)[];
+
+    healthLUT = segmented_to_virtual(luigi_meter_health_segments_lut);
+
+    gDPPipeSync(gDisplayListHead++);
+    g_Tani_LoadTextureImage2(gDisplayListHead++, (*healthLUT)[numHealthWedges * 2], G_IM_FMT_RGBA,
+                             G_IM_SIZ_16b, 32, 64, 0, 7) gSP1Triangle(gDisplayListHead++, 0, 1, 2, 0);
+    gSP1Triangle(gDisplayListHead++, 0, 2, 3, 0);
+    g_Tani_LoadTextureImage2(gDisplayListHead++, (*healthLUT)[(numHealthWedges * 2) + 1], G_IM_FMT_RGBA,
+                             G_IM_SIZ_16b, 32, 64, 0, 7) gSP1Triangle(gDisplayListHead++, 4, 5, 6, 0);
+    gSP1Triangle(gDisplayListHead++, 4, 6, 7, 0);
+}
+
+
+
+/**
+ * Renders breath meter display lists.
+ * That includes the base and the colored segment textures.
+ */
+void render_dl_breath_meter(s16 numBreathWedges) {
+    Mtx *translateMtx;
+    Mtx *scaleMtx;
+
+    translateMtx = alloc_display_list(sizeof(Mtx));
+    scaleMtx = alloc_display_list(sizeof(Mtx));
+
+    if (translateMtx == NULL) {
+        return;
+    }
+
+    guTranslate(translateMtx, (f32) sBreathMeterHUD.x, (f32) sBreathMeterHUD.y, 0);
+    guScale(scaleMtx, 0.75f, 0.75f, 1.0f);
+
+    gSPMatrix(gDisplayListHead++, VIRTUAL_TO_PHYSICAL(translateMtx++),
+              G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
+
+    gSPMatrix(gDisplayListHead++, VIRTUAL_TO_PHYSICAL(scaleMtx++),
+              G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_NOPUSH);
+
+    gSPDisplayList(gDisplayListHead++, &dl_power_meter_base);
+
+    render_luigi_meter_health_segment(numBreathWedges);
+
+    gSPPopMatrix(gDisplayListHead++, G_MTX_MODELVIEW);
+}
+
+
+
 void render_hud_power_meter_luigi(void) {
     s16 shownHealthWedges = gHudDisplay.wedgesluigi;
     f32 powerMeterX, powerMeterY;
     f32 srcX, srcY, dstX, dstY;
     f32 interpolation, shakiness, range;
     prevHurt = hurt;
-    hurt = gLuigiState->hurtCounter;
+    hurt = gMarioStates[1].hurtCounter;
     if (hurtTimer != 0) {
         hurtTimer--;
-        if (hurtTimer < 16 && gLuigiState->lhealth < 0x0300) hurtTimer = 16;
+        if (hurtTimer < 16 && gMarioStates[1].lhealth < 0x0300) hurtTimer = 16;
     }
     if (hurt != 0 && prevHurt == 0) hurtTimer = 90;
     powerMeterX = SCREEN_CENTER_X;
@@ -374,7 +427,7 @@ void render_hud_power_meter_luigi(void) {
         powerMeterX = map_value(0, 1, srcX, dstX, interpolation);
         powerMeterY = map_value(0, 1, srcY, dstY, interpolation);
     }
-    shakiness = gLuigiState->hurtCounter;
+    shakiness = gMarioStates[1].hurtCounter;
     range = (s32)(shakiness * 3);
     if (range > 0) {
         powerMeterX = powerMeterX + (random_float() * (range + range) - range);
@@ -382,7 +435,7 @@ void render_hud_power_meter_luigi(void) {
     }
     sPowerMeterHUD.x = powerMeterX + 12;
     sPowerMeterHUD.y = powerMeterY;
-    render_dl_power_meter(shownHealthWedges);
+    render_dl_breath_meter(shownHealthWedges);
 }
 
 
@@ -424,6 +477,17 @@ void render_hud_coins(void) {
     print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(132) - 4 , HUD_TOP_Y, "$"); // 'Coin' glyph
     print_text(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(119) - 2, HUD_TOP_Y, "*"); // 'X' glyph
     print_text_fmt_int(GFX_DIMENSIONS_RECT_FROM_RIGHT_EDGE(103) -4, HUD_TOP_Y, "%d", gHudDisplay.coins);
+}
+
+/**
+ * Renders the amount of coins collected.
+ */
+void render_hud_meme(void) {
+    gSPDisplayList(gDisplayListHead++, dl_rgba16_text_begin);
+    gDPSetEnvColor(gDisplayListHead++, 255, 255, 255, 255);
+    print_generic_string(0, 0, "THIS ROM HACK DOES NOT SUPPORT PJ64"); // 'Coin' glyph
+    print_generic_string(0, 0, "IF U USE PJ64 U GOT HELL BEFOFRE U DIE"); // 'Coin' glyph
+    gSPDisplayList(gDisplayListHead++, dl_rgba16_text_end);
 }
 
 /**

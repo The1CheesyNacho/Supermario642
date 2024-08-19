@@ -9,6 +9,7 @@
 #include "game/area.h"
 #include "game/level_update.h"
 #include "menu/file_select.h"
+#include "game/game_init.h"
 #include "menu/star_select.h"
 
 #include "levels/scripts.h"
@@ -19,7 +20,8 @@
 #include "levels/menu/header.h"
 
 const LevelScript level_main_menu_entry_file_select[] = {
-    SET_REG(LEVEL_COURSE1),
+    SET_REG(TEST_LEVEL),
+    CALL(     /*arg*/ 0, /*func*/ lvl_start_at_correct_location),
     EXECUTE(/*seg*/ SEGMENT_GLOBAL_LEVEL_SCRIPT, /*script*/ _scriptsSegmentRomStart, /*scriptEnd*/ _scriptsSegmentRomEnd, /*entry*/ level_main_scripts_entry),
     EXIT(),
 };

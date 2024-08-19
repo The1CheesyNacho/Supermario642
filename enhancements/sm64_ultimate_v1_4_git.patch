@@ -880,7 +880,7 @@ index 1ae0b24..5b03381 100644
      }
 @@ -773,7 +773,7 @@ u32 interact_star_or_key(struct MarioState *m, UNUSED u32 interactType, struct O
  
-     if (m->health >= 0x100) {
+     if (gMarioStates[0].health >= 0x100) {
          mario_stop_riding_and_holding(m);
 -#ifdef VERSION_SH
 +#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
@@ -1072,7 +1072,7 @@ index 96df793..b542e2f 100644
 +++ b/src/game/mario.c
 @@ -1495,7 +1495,7 @@ void update_mario_health(struct MarioState *m) {
          // Play a noise to alert the player when Mario is close to drowning.
-         if (((m->action & ACT_GROUP_MASK) == ACT_GROUP_SUBMERGED) && (m->health < 0x300)) {
+         if (((m->action & ACT_GROUP_MASK) == ACT_GROUP_SUBMERGED) && (gMarioStates[0].health < 0x300)) {
              play_sound(SOUND_MOVING_ALMOST_DROWNING, gGlobalSoundSource);
 -#ifdef VERSION_SH
 +#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
@@ -1192,8 +1192,8 @@ index 34090a5..9a251c8 100644
  #endif
  #ifdef VERSION_JP
 @@ -998,7 +998,7 @@ s32 act_burning_jump(struct MarioState *m) {
-     if (m->health < 0x100) {
-         m->health = 0xFF;
+     if (gMarioStates[0].health < 0x100) {
+         gMarioStates[0].health = 0xFF;
      }
 -#ifdef VERSION_SH
 +#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)
@@ -1201,8 +1201,8 @@ index 34090a5..9a251c8 100644
  #endif
      return FALSE;
 @@ -1020,7 +1020,7 @@ s32 act_burning_fall(struct MarioState *m) {
-     if (m->health < 0x100) {
-         m->health = 0xFF;
+     if (gMarioStates[0].health < 0x100) {
+         gMarioStates[0].health = 0xFF;
      }
 -#ifdef VERSION_SH
 +#if defined(VERSION_SH) || defined(VERSION_JP_ULTIMATE) || defined(VERSION_US_ULTIMATE) || defined(VERSION_EU_ULTIMATE)

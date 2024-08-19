@@ -87,6 +87,7 @@ extern u16 sRenderingFramebuffer;
 extern u32 gGlobalTimer;
 
 void setup_game_memory(void);
+void lvl_start_at_correct_location(UNUSED s32 arg, UNUSED s32 unused);
 void thread5_game_loop(UNUSED void *arg);
 void clear_framebuffer(s32 color);
 void clear_viewport(Vp *viewport, s32 color);

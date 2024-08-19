@@ -15,6 +15,7 @@
 #include "interaction.h"
 #include "camera.h"
 #include "level_table.h"
+#include "level_update.h"
 #include "rumble_init.h"
 
 #include "config.h"
@@ -97,7 +98,7 @@ s32 set_pole_position(struct MarioState *m, f32 offsetY) {
 s32 act_holding_pole(struct MarioState *m) {
     struct Object *marioObj = m->marioObj;
 
-    if ((m->input & INPUT_Z_PRESSED) || m->health < 0x100) {
+    if ((m->input & INPUT_Z_PRESSED) || gMarioStates[0].health < 0x100) {
         add_tree_leaf_particles(m);
         m->forwardVel = -2.0f;
         return set_mario_action(m, ACT_SOFT_BONK, 0);
@@ -153,7 +154,7 @@ s32 act_climbing_pole(struct MarioState *m) {
     struct Object *marioObj = m->marioObj;
     s16 cameraAngle = m->area->camera->yaw;
 
-    if (m->health < 0x100) {
+    if (gMarioStates[0].health < 0x100) {
         add_tree_leaf_particles(m);
         m->forwardVel = -2.0f;
         return set_mario_action(m, ACT_SOFT_BONK, 0);

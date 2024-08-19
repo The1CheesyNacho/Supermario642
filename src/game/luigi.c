@@ -14,6 +14,7 @@
 #include "interaction.h"
 #include "level_table.h"
 #include "level_update.h"
+#include "emutest.h"
 #include "main.h"
 #include "mario.h"
 #include "mario_actions_airborne.h"
@@ -44,7 +45,7 @@ void init_luigi(void) {
     gMarioStates[1].forwardVel = 0.0f;
     gMarioStates[1].squishTimer = 0;
 
-    gMarioStates[1].hurtCounter = 0;
+    gMarioStates[1].hurtCounterl = 0;
     gMarioStates[1].healCounter = 0;
 
     gMarioStates[1].capTimer = 0;
@@ -96,6 +97,30 @@ void init_luigi(void) {
 
 
 void init_luigi_from_save_file(void) {
+    if (gEmulator == EMU_PROJECT64_ANY){
+    gLuigiState->playerID = 0;
+    gLuigiState->flags = 0;
+    gLuigiState->action = 0;
+    gLuigiState->spawnInfo = &gPlayerSpawnInfos[1];
+    gLuigiState->statusForCamera = &gPlayerCameraState[1];
+    gLuigiState->marioBodyState = &gBodyStates[1];
+    gMarioStates[1].animList = &gLuigiAnimsBuf;
+    gLuigiState->controller = &gControllers[1];
+    gLuigiState->numCoins = 0;
+    gLuigiState->numStars = 0;
+    gLuigiState->numKeys = 0;
+
+    gLuigiState->numLives = 4;
+    gLuigiState->lhealth = 0;
+    gMarioState->lhealth = 0;
+
+    gLuigiState->prevNumStarsForDialog = 0;
+    gLuigiState->animYTrans = 0;
+
+    gHudDisplay.coins = 0;
+    gHudDisplay.wedgesluigi = 0;
+    }
+    else{
     gLuigiState->playerID = 1;
     gLuigiState->flags = 0;
     gLuigiState->action = 0;
@@ -118,4 +143,5 @@ void init_luigi_from_save_file(void) {
 
     gHudDisplay.coins = 0;
     gHudDisplay.wedgesluigi = 8;
+    }
 }

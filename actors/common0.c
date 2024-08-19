@@ -58,6 +58,8 @@ UNUSED static const u64 binid_12 = 12;
 #include "goomba/model.inc.c"
 #include "goomba/anims/data.inc.c"
 #include "goomba/anims/table.inc.c"
+#include "koopa/anims/data.inc.c"
+#include "koopa/anims/table.inc.c"
 UNUSED static const u64 binid_13 = 13;
 
 #include "bobomb/model.inc.c"

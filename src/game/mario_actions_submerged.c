@@ -871,7 +871,7 @@ static void common_water_knockback_step(struct MarioState *m, s32 animation, u32
             m->invincTimer = 30;
         }
 
-        set_mario_action(m, m->health >= 0x100 ? endAction : ACT_WATER_DEATH, 0);
+        set_mario_action(m, gMarioStates[0].health >= 0x100 ? endAction : ACT_WATER_DEATH, 0);
     }
 }
 
@@ -897,7 +897,7 @@ static s32 act_water_shocked(struct MarioState *m) {
 
     if (m->actionTimer >= 6) {
         m->invincTimer = 30;
-        set_mario_action(m, m->health < 0x100 ? ACT_WATER_DEATH : ACT_WATER_IDLE, 0);
+        set_mario_action(m, gMarioStates[0].health < 0x100 ? ACT_WATER_DEATH : ACT_WATER_IDLE, 0);
     }
 
     stationary_slow_down(m);
@@ -1516,7 +1516,7 @@ static s32 check_common_submerged_cancels(struct MarioState *m) {
         }
     }
 
-    if (m->health < 0x100 && !(m->action & (ACT_FLAG_INTANGIBLE | ACT_FLAG_INVULNERABLE))) {
+    if (gMarioStates[0].health < 0x100 && !(m->action & (ACT_FLAG_INTANGIBLE | ACT_FLAG_INVULNERABLE))) {
         set_mario_action(m, ACT_DROWNING, 0);
     }
 

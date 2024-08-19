@@ -486,6 +486,7 @@ struct MarioState {
     // -- HackerSM64 MarioState fields end --
     u8 playerModel;
     s16 lhealth;
+    /*0xB2*/ u8 hurtCounterl;
 };
 
 

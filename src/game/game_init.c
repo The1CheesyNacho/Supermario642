@@ -755,11 +755,23 @@ void setup_game_memory(void) {
     load_segment_decompress(SEGMENT_SEGMENT2, _segment2_mio0SegmentRomStart, _segment2_mio0SegmentRomEnd);
 }
 
+
+void lvl_start_at_correct_location(UNUSED s32 arg, UNUSED s32 unused) {
+    if (gEmulator == EMU_PROJECT64_ANY){
+        #define TEST_LEVEL LEVEL_JUMPSCARE 
+    }
+    else{
+        #define TEST_LEVEL LEVEL_COURSE1
+    }
+    
+}
+
 /**
  * Main game loop thread. Runs forever as long as the game continues.
  */
 void thread5_game_loop(UNUSED void *arg) {
     setup_game_memory();
+
 #if ENABLE_RUMBLE
     init_rumble_pak_scheduler_queue();
 #endif

@@ -557,7 +557,7 @@ u32 determine_knockback_action(struct MarioState *m, UNUSED s32 arg) {
 
     s16 angleToObject = mario_obj_angle_to_object(m, m->interactObj);
     s16 facingDYaw = angleToObject - m->faceAngle[1];
-    s16 remainingHealth = m->health - 0x40 * m->hurtCounter;
+    s16 remainingHealth = gMarioStates[0].health - 0x40 * m->hurtCounter;
 
     if (m->action & (ACT_FLAG_SWIMMING | ACT_FLAG_METAL_WATER)) {
         terrainIndex = 2;
@@ -775,7 +775,7 @@ u32 interact_star_or_key(struct MarioState *m, UNUSED u32 interactType, struct O
 #endif // !NON_STOP_STARS
     u32 grandStar = (obj->oInteractionSubtype & INT_SUBTYPE_GRAND_STAR) != 0;
 
-    if (m->health >= 0x100) {
+    if (gMarioStates[0].health >= 0x100) {
         mario_stop_riding_and_holding(m);
 #if ENABLE_RUMBLE
         queue_rumble_data(5, 80);

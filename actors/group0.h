@@ -809,6 +809,4 @@ extern const GeoLayout metal_mario_geo[];
 
 #include "luigi/geo_header.h"
 
-#include "mario/geo_header.h"
-
 #endif

@@ -14,6 +14,7 @@
 #include "memory.h"
 #include "behavior_data.h"
 #include "rumble_init.h"
+#include "level_update.h"
 
 #include "config.h"
 
@@ -1422,8 +1423,8 @@ s32 act_burning_ground(struct MarioState *m) {
     m->particleFlags |= PARTICLE_FIRE;
     play_sound(SOUND_MOVING_LAVA_BURN, m->marioObj->header.gfx.cameraToObject);
 
-    m->health -= 10;
-    if (m->health < 0x100) {
+    gMarioStates[0].health -= 10;
+    if (gMarioStates[0].health < 0x100) {
         set_mario_action(m, ACT_STANDING_DEATH, 0);
     }
 
@@ -1691,7 +1692,7 @@ s32 common_ground_knockback_action(struct MarioState *m, s32 animation, s32 chec
             set_mario_action(m, ACT_BACKWARD_AIR_KB, actionArg);
         }
     } else if (is_anim_at_end(m)) {
-        if (m->health < 0x100) {
+        if (gMarioStates[0].health < 0x100) {
             set_mario_action(m, ACT_STANDING_DEATH, 0);
         } else {
             if (actionArg > 0) {
@@ -1707,7 +1708,7 @@ s32 common_ground_knockback_action(struct MarioState *m, s32 animation, s32 chec
 s32 act_hard_backward_ground_kb(struct MarioState *m) {
     s32 animFrame =
         common_ground_knockback_action(m, MARIO_ANIM_FALL_OVER_BACKWARDS, 43, TRUE, m->actionArg);
-    if (animFrame == 43 && m->health < 0x100) {
+    if (animFrame == 43 && gMarioStates[0].health < 0x100) {
         set_mario_action(m, ACT_DEATH_ON_BACK, 0);
     }
 
@@ -1725,7 +1726,7 @@ s32 act_hard_backward_ground_kb(struct MarioState *m) {
 s32 act_hard_forward_ground_kb(struct MarioState *m) {
     s32 animFrame =
         common_ground_knockback_action(m, MARIO_ANIM_LAND_ON_STOMACH, 21, TRUE, m->actionArg);
-    if (animFrame == 23 && m->health < 0x100) {
+    if (animFrame == 23 && gMarioStates[0].health < 0x100) {
         set_mario_action(m, ACT_DEATH_ON_STOMACH, 0);
     }
 
@@ -2036,7 +2037,7 @@ s32 check_common_moving_cancels(struct MarioState *m) {
     }
 
     if (!(m->action & ACT_FLAG_INVULNERABLE)) {
-        if (m->health < 0x100) {
+        if (gMarioStates[0].health < 0x100) {
             return drop_and_set_mario_action(m, ACT_STANDING_DEATH, 0);
         }
     }

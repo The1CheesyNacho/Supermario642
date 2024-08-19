@@ -75,7 +75,6 @@
 
 #ifdef DISABLE_ALL
     #undef DEBUG_ALL
-    #undef TEST_LEVEL
     #undef DEBUG_LEVEL_SELECT
     #undef ENABLE_DEBUG_FREE_MOVE
     #undef VANILLA_DEBUG
